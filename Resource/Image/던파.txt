@@ -1,0 +1,30 @@
+던파 만들것
+
+
+레벨업 시스템
+
+인벤토리
+
+아이템 드랍
+
+결과창
+
+전투
+
+스킬 분배
+
+
+
+Jelva01 Sign Lamp(1130, 167)
+
+Jelva01 Gate Left (1315, 190)
+
+Jelva01 Gate Right(1496, 190)
+
+
+Jelva01 Lava Pos (136, -65)
+2328, 616
+
+Jelva02 (691, 458)
+Jelva02 (923, 458)
+Jelva02 Lava Pos (238, -107)
