@@ -4,6 +4,7 @@
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngineBase/GameEngineTime.h>
 #include "GameEngineLevel.h"
+#include "GameEngineVertexs.h"
 #include <math.h>
 
 // Resources Header
@@ -20,17 +21,11 @@ void GameEngineCore::EngineResourcesInitialize()
 	// 리소스들을 이니셜라이즈하는 단계
 
 	{
-		// 0       1
-
-		//    원점
-		
-		// 3       2
-
-		std::vector<float4> Vertex;
-		Vertex.push_back(float4(-0.5f, 0.5f));
-		Vertex.push_back(float4(0.5f, 0.5f));
-		Vertex.push_back(float4(0.5f, -0.5f));
-		Vertex.push_back(float4(-0.5f, -0.5f));
+		std::vector<GameEngineVertex> Vertex;
+		Vertex.push_back({ float4(-0.5f, 0.5f) });
+		Vertex.push_back({ float4(0.5f, 0.5f) });
+		Vertex.push_back({ float4(0.5f, -0.5f) });
+		Vertex.push_back({ float4(-0.5f, -0.5f) });
 
 		GameEngineVertexBuffer::Create("Rect", Vertex);
 	}
@@ -62,11 +57,6 @@ void GameEngineCore::EngineResourcesInitialize()
 	}
 
 	{
-		// 0       1
-
-		//    원점
-
-		// 3       2
 
 		std::vector<float4> Vertex;
 		Vertex.resize(24);

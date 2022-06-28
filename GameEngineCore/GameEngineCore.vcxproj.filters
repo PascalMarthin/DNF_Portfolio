@@ -57,6 +57,16 @@
     <ClInclude Include="GameEngineRenderTarget.h">
       <Filter>Resources</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineBlend.h" />
+    <ClInclude Include="GameEngineDefaultRenderer.h" />
+    <ClInclude Include="GameEngineDepthStencil.h" />
+    <ClInclude Include="GameEngineInputLayOut.h" />
+    <ClInclude Include="GameEnginePixelShader.h" />
+    <ClInclude Include="GameEngineRasterizer.h" />
+    <ClInclude Include="GameEngineRenderingPipeLine.h" />
+    <ClInclude Include="GameEngineShader.h" />
+    <ClInclude Include="GameEngineVertexShader.h" />
+    <ClInclude Include="GameEngineVertexs.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineActor.cpp">
@@ -117,6 +127,15 @@
     <ClCompile Include="GameEngineRenderTarget.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
+    <ClCompile Include="GameEngineBlend.cpp" />
+    <ClCompile Include="GameEngineDefaultRenderer.cpp" />
+    <ClCompile Include="GameEngineDepthStencil.cpp" />
+    <ClCompile Include="GameEngineInputLayOut.cpp" />
+    <ClCompile Include="GameEnginePixelShader.cpp" />
+    <ClCompile Include="GameEngineRasterizer.cpp" />
+    <ClCompile Include="GameEngineRenderingPipeLine.cpp" />
+    <ClCompile Include="GameEngineShader.cpp" />
+    <ClCompile Include="GameEngineVertexShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Object">

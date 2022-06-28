@@ -41,7 +41,6 @@ void GameEngineCamera::Render(float _DeltaTime)
 
 	float4 WindowSize = GameEngineWindow::GetInst()->GetScale();
 
-	ViewPort.ViewPort(WindowSize.x, WindowSize.y, 0.0f, 0.0f, 0.0f, 0.0f);
 
 
 	for (const std::pair<int, std::list<GameEngineRenderer*>>& Group : AllRenderer_)
@@ -52,7 +51,6 @@ void GameEngineCamera::Render(float _DeltaTime)
 			Renderer->GetTransform().SetView(View);
 			Renderer->GetTransform().SetProjection(Projection);
 			Renderer->GetTransform().CalculateWorldViewProjection();
-			Renderer->ViewPort = ViewPort;
 			Renderer->Render(ScaleTime);
 		}
 	}
