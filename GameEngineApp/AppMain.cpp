@@ -1,4 +1,5 @@
 #include <Windows.h>
+#include <GameEngineContents/DNF.h>
 
 #pragma comment(lib, "GameEngineBase.lib")
 #pragma comment(lib, "GameEngineCore.lib")
