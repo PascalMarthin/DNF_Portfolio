@@ -2,6 +2,7 @@
 #include "GameEngineDefaultRenderer.h"
 
 GameEngineDefaultRenderer::GameEngineDefaultRenderer() 
+	:PipeLine(nullptr)
 {
 }
 
@@ -16,7 +17,7 @@ void GameEngineDefaultRenderer::Start()
 	// 뭔가 또 할일이 있다면 여기서 해라.
 }
 
-void GameEngineDefaultRenderer::Render(float _DeltaTime)
+void GameEngineDefaultRenderer::Render(float _DeltaTime) 
 {
 	// PipeLine->Draw();
 }

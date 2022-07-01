@@ -42,7 +42,6 @@ void GameEngineCamera::Render(float _DeltaTime)
 	float4 WindowSize = GameEngineWindow::GetInst()->GetScale();
 
 
-
 	for (const std::pair<int, std::list<GameEngineRenderer*>>& Group : AllRenderer_)
 	{
 		float ScaleTime = GameEngineTime::GetInst()->GetDeltaTime(Group.first);

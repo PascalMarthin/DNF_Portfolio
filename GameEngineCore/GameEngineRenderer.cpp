@@ -48,11 +48,14 @@ void GameEngineRenderer::Start()
 //
 //	//	auto& tran = GetTransform();
 //
+//	//	// 버텍스쉐이더
 //	//	CopyBuffer[i] = CopyBuffer[i] * GetTransform().GetWorldViewProjection();
+//
+//
+//	//	// 레스터라이저
 //	//	//// 기록해놨던 z값으로 나뉘는것
 //	//	CopyBuffer[i] = CopyBuffer[i] / CopyBuffer[i].w;
 //
-//	//	CopyBuffer[i] = CopyBuffer[i] * ViewPort;
 //
 //	//	DrawVertex[i] = CopyBuffer[i].GetConvertWindowPOINT();
 //	//}
