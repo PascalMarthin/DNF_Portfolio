@@ -1,0 +1,23 @@
+#pragma once
+#include "GamePlayItemBag.h"
+
+// Ό³Έν :
+class ItemBagInventory : public GamePlayItemBag
+{
+public:
+	// constrcuter destructer
+	~ItemBagInventory();
+
+	// delete Function
+	ItemBagInventory(const ItemBagInventory& _Other) = delete;
+	ItemBagInventory(ItemBagInventory&& _Other) noexcept = delete;
+	ItemBagInventory& operator=(const ItemBagInventory& _Other) = delete;
+	ItemBagInventory& operator=(ItemBagInventory&& _Other) noexcept = delete;
+
+protected:
+	ItemBagInventory(GamePlayCharacter* _Owner);
+
+private:
+
+};
+

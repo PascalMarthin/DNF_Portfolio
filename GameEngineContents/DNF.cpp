@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "DNF.h"
+#include "DebugLevel.h"
 
 //#pragma comment(lib, "GameEngineBase.lib")
 
@@ -16,9 +17,9 @@ void DNF::Start()
 {
 	// GameEngineDebug::ConsoleOpen();
 
-	//CreateLevel<TitleLevel>("Title");
+	CreateLevel<DebugLevel>("Debug");
 	//CreateLevel<PlayLevel>("Play");
-	//ChangeLevel("Play");
+	ChangeLevel("Debug");
 
 	// 게임컨텐츠 정의
 	// 이 게임에는 타이틀화면

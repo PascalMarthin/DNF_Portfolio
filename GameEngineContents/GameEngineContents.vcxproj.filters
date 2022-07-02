@@ -2,10 +2,93 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="DNF.h" />
-    <ClInclude Include="PreCompile.h" />
+    <ClInclude Include="PreCompile.h">
+      <Filter>PreCompile</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlayItem.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlayEnum.h" />
+    <ClInclude Include="GamePlayCharacter.h" />
+    <ClInclude Include="GamePlayObject.h" />
+    <ClInclude Include="GamePlayItemBag.h">
+      <Filter>Item\Bag</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemBagEquipmentWindow.h">
+      <Filter>Item\Bag\BagEQ</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemBagQuickslot.h">
+      <Filter>Item\Bag\BagEQ</Filter>
+    </ClInclude>
+    <ClInclude Include="AvatarInventory.h">
+      <Filter>Item\Bag\ItemBag</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemBagInventory.h">
+      <Filter>Item\Bag\ItemBag</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemInventory.h">
+      <Filter>Item\Bag\ItemBag</Filter>
+    </ClInclude>
+    <ClInclude Include="PetInventory.h">
+      <Filter>Item\Bag\ItemBag</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
-    <ClCompile Include="PreCompile.cpp" />
+    <ClCompile Include="PreCompile.cpp">
+      <Filter>PreCompile</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlayItem.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlayCharacter.cpp" />
+    <ClCompile Include="GamePlayObject.cpp" />
+    <ClCompile Include="GamePlayItemBag.cpp">
+      <Filter>Item\Bag</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemBagEquipmentWindow.cpp">
+      <Filter>Item\Bag\BagEQ</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemBagQuickslot.cpp">
+      <Filter>Item\Bag\BagEQ</Filter>
+    </ClCompile>
+    <ClCompile Include="AvatarInventory.cpp">
+      <Filter>Item\Bag\ItemBag</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemBagInventory.cpp">
+      <Filter>Item\Bag\ItemBag</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemInventory.cpp">
+      <Filter>Item\Bag\ItemBag</Filter>
+    </ClCompile>
+    <ClCompile Include="PetInventory.cpp">
+      <Filter>Item\Bag\ItemBag</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="PreCompile">
+      <UniqueIdentifier>{74f67102-4535-4ae3-a649-284492b97612}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Item">
+      <UniqueIdentifier>{7821cb10-ef30-49a3-adfc-7b130392f39f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Item\Bag">
+      <UniqueIdentifier>{cfb7f177-97e7-451d-8166-cdde378698e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Item\Bag\ItemBag">
+      <UniqueIdentifier>{d00b2ddb-40ec-4e62-a141-92717fb41186}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Item\Bag\BagEQ">
+      <UniqueIdentifier>{935a4a46-d4a6-4e54-afb7-46508ac2399d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level">
+      <UniqueIdentifier>{b0e858b0-a810-40e1-8e4a-2bd6537ef08b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
