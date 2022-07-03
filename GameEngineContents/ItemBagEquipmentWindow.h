@@ -18,6 +18,16 @@ public:
 
 protected:
 
+	void Update(float _DeltaTime) override;
+
+	void OnEvent() override;
+
+	void OffEvent() override;
+
+	void Start() override;
+
+	void End() override;
+
 private:
 
 	bool PushItembyDrag(GamePlayItem* _Item, GamePlayItemBag* _From) override;

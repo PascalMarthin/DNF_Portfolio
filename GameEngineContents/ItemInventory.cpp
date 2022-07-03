@@ -74,7 +74,6 @@ bool ItemInventory::PushItembyLoot(GamePlayItem* _Item)
 		}
 	}
 
-
 	if (Empty == true)
 	{
 		(*EmptyIter) = _Item;

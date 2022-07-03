@@ -8,9 +8,6 @@
     <ClInclude Include="GamePlayItem.h">
       <Filter>Item</Filter>
     </ClInclude>
-    <ClInclude Include="GamePlayEnum.h" />
-    <ClInclude Include="GamePlayCharacter.h" />
-    <ClInclude Include="GamePlayObject.h" />
     <ClInclude Include="GamePlayItemBag.h">
       <Filter>Item\Bag</Filter>
     </ClInclude>
@@ -35,6 +32,15 @@
     <ClInclude Include="DebugLevel.h">
       <Filter>Level</Filter>
     </ClInclude>
+    <ClInclude Include="GamePlayCharacter.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlayObject.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlayEnum.h">
+      <Filter>Gobal</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -44,8 +50,6 @@
     <ClCompile Include="GamePlayItem.cpp">
       <Filter>Item</Filter>
     </ClCompile>
-    <ClCompile Include="GamePlayCharacter.cpp" />
-    <ClCompile Include="GamePlayObject.cpp" />
     <ClCompile Include="GamePlayItemBag.cpp">
       <Filter>Item\Bag</Filter>
     </ClCompile>
@@ -70,6 +74,12 @@
     <ClCompile Include="DebugLevel.cpp">
       <Filter>Level</Filter>
     </ClCompile>
+    <ClCompile Include="GamePlayCharacter.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlayObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -89,6 +99,12 @@
     </Filter>
     <Filter Include="Level">
       <UniqueIdentifier>{b0e858b0-a810-40e1-8e4a-2bd6537ef08b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{91370155-16e8-41d5-9137-7b6217da51a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gobal">
+      <UniqueIdentifier>{954e544e-74b5-406d-bc79-ccacd289a99a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

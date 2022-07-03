@@ -27,7 +27,19 @@ public:
 	// 스택형인 경우 차곡차곡 쌓인다
 
 
+
+
 protected:
+
+	void Update(float _DeltaTime) override;
+
+	void OnEvent() override;
+
+	void OffEvent() override;
+
+	void Start() override;
+
+	void End() override;
 
 private:
 	bool PushItembyDrag(GamePlayItem* _Item, GamePlayItemBag* _From) override;

@@ -2,11 +2,12 @@
 #include <vector>
 #include <list>
 #include <GameEngineBase/GameEngineMath.h>
+#include <GameEngineCore/GameEngineActor.h>
 
 // Ό³Έν :
 class GamePlayCharacter;
 class GamePlayItem;
-class GamePlayItemBag
+class GamePlayItemBag : public GameEngineActor
 {
 protected:
 	GamePlayItemBag(GamePlayCharacter* _Owner);
