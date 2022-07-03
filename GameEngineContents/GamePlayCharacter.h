@@ -45,10 +45,7 @@ public:
 	}
 
 protected:
-
-
-
-
+	void Start() override;
 
 private:
 	// ItemBag ฐüทร

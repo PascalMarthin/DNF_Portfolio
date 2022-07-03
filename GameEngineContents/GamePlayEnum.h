@@ -14,8 +14,9 @@ enum class GamePlayItemType
 
 enum class GamePlayItemCode
 {
-	None,
-	Error = 99
+	Error,
+	Empty
+	 
 
 };
 //    0 ~   99 µð¹ö±×

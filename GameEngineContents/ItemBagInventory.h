@@ -15,7 +15,7 @@ public:
 	ItemBagInventory& operator=(ItemBagInventory&& _Other) noexcept = delete;
 
 protected:
-	ItemBagInventory(GamePlayCharacter* _Owner);
+	ItemBagInventory();
 
 private:
 

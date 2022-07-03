@@ -10,7 +10,7 @@ class GamePlayItem;
 class GamePlayItemBag : public GameEngineActor
 {
 protected:
-	GamePlayItemBag(GamePlayCharacter* _Owner);
+	GamePlayItemBag();
 public:
 	virtual ~GamePlayItemBag();
 
@@ -23,14 +23,28 @@ public:
 	{
 		return Owner;
 	}
+	inline void SetOwner(GamePlayCharacter* _Owner)
+	{
+		if (nullptr == Owner)
+		{
+			Owner = _Owner;
+		}
+		else
+		{
+			MsgBoxAssert("이미 오너 설정한 클래스입니다");
+		}
+		// Const처럼 한번 지정시 바꿀수 없도록 함
+	}
 
 	virtual bool PushItembyDrag(GamePlayItem* _Item, GamePlayItemBag* _From) = 0;
 
 protected:
 	std::vector<GamePlayItem*> ItemList;
+	GamePlayCharacter* Owner;
+
+	void Start() override;
 
 private:
-	GamePlayCharacter* const Owner;
 
 };
 

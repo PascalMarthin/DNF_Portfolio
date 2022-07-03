@@ -6,7 +6,7 @@ class PetInventory : public ItemBagInventory
 {
 public:
 	// constrcuter destructer
-	PetInventory(GamePlayCharacter* _Owner);
+	PetInventory();
 	~PetInventory();
 
 	// delete Function
@@ -18,9 +18,9 @@ public:
 protected:
 	void Update(float _DeltaTime) override;
 
-	void OnEvent() override;
+	void OnEvent() override {}
 
-	void OffEvent() override;
+	void OffEvent() override {}
 
 	void Start() override;
 

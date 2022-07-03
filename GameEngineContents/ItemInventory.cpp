@@ -2,15 +2,34 @@
 #include "ItemInventory.h"
 #include "GamePlayItem.h"
 
-ItemInventory::ItemInventory(GamePlayCharacter* _Owner)
-	: ItemBagInventory(_Owner)
+ItemInventory::ItemInventory()
 {
-	ItemList.resize(8 * 6);
+
 }
 
 ItemInventory::~ItemInventory() 
 {
 }
+
+void ItemInventory::Start()
+{
+	ItemList.resize(48);
+	for (size_t i = 0; i < 48; i++)
+	{
+	}
+}
+
+void ItemInventory::Update(float _DeltaTime)
+{
+
+}
+
+
+void ItemInventory::End()
+{
+
+}
+
 
 bool ItemInventory::PushItembyDrag(GamePlayItem* _Item, GamePlayItemBag* _From)
 {

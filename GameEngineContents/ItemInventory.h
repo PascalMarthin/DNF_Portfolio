@@ -8,7 +8,7 @@ class ItemInventory : public ItemBagInventory
 {
 public:
 	// constrcuter destructer
-	ItemInventory(GamePlayCharacter* _Owner);
+	ItemInventory();
 	~ItemInventory();
 
 
@@ -33,9 +33,9 @@ protected:
 
 	void Update(float _DeltaTime) override;
 
-	void OnEvent() override;
+	void OnEvent() override {}
 
-	void OffEvent() override;
+	void OffEvent() override {}
 
 	void Start() override;
 

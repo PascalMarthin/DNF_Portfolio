@@ -41,6 +41,9 @@
     <ClInclude Include="GamePlayEnum.h">
       <Filter>Gobal</Filter>
     </ClInclude>
+    <ClInclude Include="ChararcterFighter.h">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -78,6 +81,9 @@
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="GamePlayObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="ChararcterFighter.cpp">
       <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>

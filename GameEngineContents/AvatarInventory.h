@@ -6,7 +6,7 @@ class AvatarInventory : public ItemBagInventory
 {
 public:
 	// constrcuter destructer
-	AvatarInventory(GamePlayCharacter* _Owner);
+	AvatarInventory();
 	~AvatarInventory();
 
 	// delete Function
@@ -19,9 +19,9 @@ protected:
 
 	void Update(float _DeltaTime) override;
 
-	void OnEvent() override;
+	void OnEvent() override {}
 
-	void OffEvent() override;
+	void OffEvent() override {}
 
 	void Start() override;
 

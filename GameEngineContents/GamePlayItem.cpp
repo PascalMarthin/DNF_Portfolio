@@ -3,10 +3,9 @@
 #include "GamePlayItemBag.h"
 #include "GamePlayCharacter.h"
 
-GamePlayItem::GamePlayItem(const GamePlayItemCode _ItemCode, float4& _Pos)
+GamePlayItem::GamePlayItem()
 	: ItemBag(nullptr)
-	, ItemCode(_ItemCode)
-	, Pos(&_Pos)
+	, ItemCode(GamePlayItemCode::Error)
 	, Stack(0)
 	, Field(false)
 {
@@ -18,38 +17,53 @@ GamePlayItem::~GamePlayItem()
 
 }
 
-GamePlayItem* GamePlayItem::CreateItemByDrop(const GamePlayItemCode _ItemCode, float4& _Pos, int _Stack)
+void GamePlayItem::Start()
 {
-	if (_Stack > 99)
-	{
-		MsgBoxAssert("최대 스택은 99개입니다");
-		return nullptr;
-	}
-	GamePlayItem* NewDropItem = new GamePlayItem(_ItemCode, _Pos);
-	NewDropItem->Field = true;
-	NewDropItem->Stack = _Stack;
-	AllFieldItemList.push_back(NewDropItem);
 
-	return NewDropItem;
 }
-// static
 
-GamePlayItem* GamePlayItem::CreateItemByBag(const GamePlayItemCode _ItemCode, float4& _Pos, GamePlayItemBag* _ItemBag, int _Stack)
+void GamePlayItem::Update(float _DeltaTime)
 {
-	if (_Stack > 99)
-	{
-		MsgBoxAssert("최대 스택은 99개입니다");
-		return nullptr;
-	}
-	GamePlayItem* NewBagItem = new GamePlayItem(_ItemCode, _Pos);
-	//NewBagItem->Field = false;
-	NewBagItem->Stack = _Stack;
-	NewBagItem->ItemBag = _ItemBag;
 
-	AllItemList.push_back(NewBagItem);
-
-	return NewBagItem;
 }
+
+void GamePlayItem::End()
+{
+
+}
+
+//GamePlayItem* GamePlayItem::CreateItemByDrop(const GamePlayItemCode _ItemCode, float4& _Pos, int _Stack)
+//{
+//	if (_Stack > 99)
+//	{
+//		MsgBoxAssert("최대 스택은 99개입니다");
+//		return nullptr;
+//	}
+//	GamePlayItem* NewDropItem = new GamePlayItem(_ItemCode, _Pos);
+//	NewDropItem->Field = true;
+//	NewDropItem->Stack = _Stack;
+//	AllFieldItemList.push_back(NewDropItem);
+//
+//	return NewDropItem;
+//}
+//// static
+//
+//GamePlayItem* GamePlayItem::CreateItemByBag(const GamePlayItemCode _ItemCode, float4& _Pos, GamePlayItemBag* _ItemBag, int _Stack)
+//{
+//	if (_Stack > 99)
+//	{
+//		MsgBoxAssert("최대 스택은 99개입니다");
+//		return nullptr;
+//	}
+//	GamePlayItem* NewBagItem = new GamePlayItem(_ItemCode, _Pos);
+//	//NewBagItem->Field = false;
+//	NewBagItem->Stack = _Stack;
+//	NewBagItem->ItemBag = _ItemBag;
+//
+//	AllItemList.push_back(NewBagItem);
+//
+//	return NewBagItem;
+//}
 // static
 
 void GamePlayItem::DestroyAllFieldItem()
@@ -58,7 +72,7 @@ void GamePlayItem::DestroyAllFieldItem()
 	{
 		if (Item != nullptr)
 		{
-			delete Item;
+			Item->Death();
 			//Item = nullptr;
 		}
 	}
@@ -66,20 +80,6 @@ void GamePlayItem::DestroyAllFieldItem()
 }
 // static
 
-void GamePlayItem::DestroyAll()
-{
-	DestroyAllFieldItem();
-	for (GamePlayItem* Item : AllItemList)
-	{
-		if (Item != nullptr)
-		{
-			delete Item;
-			//Item = nullptr;
-		}
-	}
-	AllItemList.clear();
-
-}
 // static
 
 GamePlayItemType GamePlayItem::CheckItemType()
@@ -139,7 +139,6 @@ void GamePlayItem::DestroyItem()
 	//{
 		GamePlayItem::AllItemList.remove(this);
 	//}
-	delete this;
 }
 
 void GamePlayItem::PickupFieldItem(GamePlayCharacter* _Character)

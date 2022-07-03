@@ -1,4 +1,5 @@
 #include "PreCompile.h"
+#include <GameEngineCore/GameEngineLevel.h>
 #include "GamePlayCharacter.h"
 #include "ItemBagEquipmentWindow.h"
 #include "ItemBagQuickslot.h"
@@ -7,11 +8,11 @@
 #include "ItemInventory.h"
 
 GamePlayCharacter::GamePlayCharacter()
-	: PlayerEquipment(new ItemBagEquipmentWindow(this))
-	, PlayerQuickslot(new ItemBagQuickslot(this))
-	, PlayerItemInventory(new ItemInventory(this))
-	, PlayerAvatarInventory(new AvatarInventory(this))
-	, PlayerPetInventory(new PetInventory(this))
+	: PlayerEquipment(nullptr)
+	, PlayerQuickslot(nullptr)
+	, PlayerItemInventory(nullptr)
+	, PlayerAvatarInventory(nullptr)
+	, PlayerPetInventory(nullptr)
 {
 
 	
@@ -19,26 +20,30 @@ GamePlayCharacter::GamePlayCharacter()
 
 GamePlayCharacter::~GamePlayCharacter() 
 {
-	if (PlayerEquipment != nullptr)
-	{
-		delete PlayerEquipment;
-	}
-	if (PlayerQuickslot != nullptr)
-	{
-		delete PlayerQuickslot;
-	}
-	if (PlayerItemInventory != nullptr)
-	{
-		delete PlayerItemInventory;
-	}
-	if (PlayerAvatarInventory != nullptr)
-	{
-		delete PlayerAvatarInventory;
-	}
-	if (PlayerPetInventory != nullptr)
-	{
-		delete PlayerPetInventory;
-	}
+
 	
+}
+
+void GamePlayCharacter::Start()
+{
+
+	{
+		PlayerEquipment = GetLevel()->CreateActor<ItemBagEquipmentWindow>();
+		PlayerEquipment->SetOwner(this);
+
+		PlayerQuickslot = GetLevel()->CreateActor<ItemBagQuickslot>();
+		PlayerQuickslot->SetOwner(this);
+
+		PlayerItemInventory = GetLevel()->CreateActor<ItemInventory>();
+		PlayerItemInventory->SetOwner(this);
+
+		PlayerAvatarInventory = GetLevel()->CreateActor<AvatarInventory>();
+		PlayerAvatarInventory->SetOwner(this);
+
+		PlayerPetInventory = GetLevel()->CreateActor<PetInventory>();
+		PlayerPetInventory->SetOwner(this);
+
+	}
+
 }
 

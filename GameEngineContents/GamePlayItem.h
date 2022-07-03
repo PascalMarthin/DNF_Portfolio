@@ -2,21 +2,18 @@
 #include <list>
 #include <map>
 #include <GameEngineBase/GameEngineMath.h>
+#include <GameEngineCore/GameEngineComponent.h>
 
 #include "GamePlayEnum.h"
 
 // 설명 : 모든 아이템 관리는 여기서
 // 생성 및 삭제도 여기서
 class GamePlayItemBag;
-class GamePlayItem
+class GamePlayItem : public GameEngineTransformComponent
 {
-private:
-	~GamePlayItem();
-	// 소멸자 private
-
-
 public:
-	GamePlayItem(const GamePlayItemCode _ItemCode, float4& _Pos);
+	GamePlayItem();
+	~GamePlayItem();
 
 	GamePlayItem(const GamePlayItem& _Other) = delete;
 	GamePlayItem(GamePlayItem&& _Other) noexcept = delete;
@@ -34,6 +31,19 @@ public:
 		return ItemType;
 	}
 
+	inline void SetItemCode(GamePlayItemCode _Code)
+	{
+		if (ItemCode == GamePlayItemCode::Error)
+		{
+			ItemCode = _Code;
+		}
+		else
+		{
+			MsgBoxAssert("무슨 이유로 아이템을 바꾸는지?")
+		}
+		
+	}
+
 	int CombineStackItem(GamePlayItem* _Item);
 	// 99개 초과시 초과된 갯수만큼 리턴
 
@@ -49,8 +59,6 @@ public:
 	// ItemBag으로 다이렉트 생성
 
 	static void DestroyAllFieldItem();
-
-	static void DestroyAll();
 	
 	void DestroyItem();
 
@@ -59,6 +67,15 @@ public:
 
 protected:
 
+	void Update(float _DeltaTime) override;
+
+	void OnEvent() override {}
+
+	void OffEvent() override {}
+
+	void Start() override;
+
+	void End() override;
 
 private:
 	GamePlayItemType CheckItemType();
@@ -69,8 +86,7 @@ private:
 	GamePlayItemBag* ItemBag;
 	GamePlayItemType ItemType;
 	
-	GamePlayItemCode const ItemCode;
-	const float4* Pos; // 편리하게 동기화 시키려고, 일단 만듬
+	GamePlayItemCode ItemCode;
 	// 상대적으로 할 것인가 절대적으로 할 것인가. 필드도 포함 할 것인가 아닌가
 
 	int Stack;
