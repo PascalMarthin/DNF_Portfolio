@@ -36,6 +36,7 @@ public:
 		if (ItemCode == GamePlayItemCode::Error)
 		{
 			ItemCode = _Code;
+			CheckItemType();
 		}
 		else
 		{

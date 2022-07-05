@@ -44,6 +44,9 @@
     <ClInclude Include="ChararcterFighter.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="ChararcterKeyManager.h">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -84,6 +87,9 @@
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="ChararcterFighter.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="ChararcterKeyManager.cpp">
       <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>

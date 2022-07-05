@@ -9,7 +9,7 @@ GamePlayItem::GamePlayItem()
 	, Stack(0)
 	, Field(false)
 {
-	CheckItemType();
+	
 }
 
 GamePlayItem::~GamePlayItem() 

@@ -55,5 +55,6 @@ private:
 	AvatarInventory* PlayerAvatarInventory;
 	PetInventory* PlayerPetInventory;
 
+	GameEngineComponent* const PlayerKeyManager;
 };
 
