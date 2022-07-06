@@ -65,19 +65,19 @@ void GamePlayItem::End()
 //	return NewBagItem;
 //}
 // static
-
-void GamePlayItem::DestroyAllFieldItem()
-{
-	for (GamePlayItem* Item : AllFieldItemList)
-	{
-		if (Item != nullptr)
-		{
-			Item->Death();
-			//Item = nullptr;
-		}
-	}
-	AllFieldItemList.clear();
-}
+//
+//void GamePlayItem::DestroyAllFieldItem()
+//{
+//	for (GamePlayItem* Item : AllFieldItemList)
+//	{
+//		if (Item != nullptr)
+//		{
+//			Item->Death();
+//			//Item = nullptr;
+//		}
+//	}
+//	AllFieldItemList.clear();
+//}
 // static
 
 // static
@@ -137,14 +137,14 @@ void GamePlayItem::DestroyItem()
 	//}
 	//else
 	//{
-		GamePlayItem::AllItemList.remove(this);
+		//GamePlayItem::AllItemList.remove(this);
 	//}
 }
 
 void GamePlayItem::PickupFieldItem(GamePlayCharacter* _Character)
 {
 	Field = false;
-	AllFieldItemList.remove(this);
+	//AllFieldItemList.remove(this);
 	_Character->GetItemInventory();
 	//AllItemList.push_back(this);
 	// 필드 아이템 목록에서 삭제

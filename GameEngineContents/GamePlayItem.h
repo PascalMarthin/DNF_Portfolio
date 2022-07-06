@@ -53,10 +53,10 @@ public:
 	// 생성은 직접 생성하는 것이 아닌 Create로
 	// 이유 : 좀더 체계적인 생성을 위해
 
-	static GamePlayItem* CreateItemByDrop(const GamePlayItemCode _ItemCode, float4& _Pos, int _Stack = 1);
-	// 던전에서 드롭 생성
+	//static GamePlayItem* CreateItemByDrop(const GamePlayItemCode _ItemCode, float4& _Pos, int _Stack = 1);
+	//// 던전에서 드롭 생성
 
-	static GamePlayItem* CreateItemByBag(const GamePlayItemCode _ItemCode, float4& _Pos, GamePlayItemBag* _ItemBag, int _Stack = 1);
+	//static GamePlayItem* CreateItemByBag(const GamePlayItemCode _ItemCode, float4& _Pos, GamePlayItemBag* _ItemBag, int _Stack = 1);
 	// ItemBag으로 다이렉트 생성
 
 	static void DestroyAllFieldItem();
@@ -94,9 +94,9 @@ private:
 	bool Field;
 
 
-	static std::list<GamePlayItem*> AllFieldItemList;
+	//static std::list<GamePlayItem*> AllFieldItemList;
 	// 필드에 떨어져 있는 아이템
-	static std::list<GamePlayItem*> AllItemList;
+	//static std::list<GamePlayItem*> AllItemList;
 	// 필드에 떨어져 있는 아이템을 제외한 모든 아이템
 };
 
