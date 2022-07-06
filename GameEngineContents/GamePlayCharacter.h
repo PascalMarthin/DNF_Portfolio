@@ -1,5 +1,6 @@
 #pragma once
 #include "GamePlayObject.h"
+#include "GamePlayEnum.h"
 
 // 설명 :
 class ItemBagEquipmentWindow;
@@ -8,6 +9,8 @@ class ItemBagQuickslot;
 class ItemInventory;
 class AvatarInventory;
 class PetInventory;
+class ChararcterSkillKeyManager;
+class ChararcterUIKeyManager;
 class GamePlayCharacter : public GamePlayObject
 {
 public:
@@ -47,6 +50,11 @@ public:
 protected:
 	void Start() override;
 
+
+
+protected:
+	unsigned int PlayerCurrentState;
+	// 
 private:
 	// ItemBag 관련
 	ItemBagEquipmentWindow* PlayerEquipment;
@@ -55,6 +63,7 @@ private:
 	AvatarInventory* PlayerAvatarInventory;
 	PetInventory* PlayerPetInventory;
 
-	GameEngineComponent* const PlayerKeyManager;
+	ChararcterUIKeyManager* const PlayerUIKeyManager;
+	ChararcterSkillKeyManager* const PlayerSkillKeyManager;
 };
 

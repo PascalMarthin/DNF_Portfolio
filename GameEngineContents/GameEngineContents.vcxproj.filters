@@ -44,7 +44,10 @@
     <ClInclude Include="ChararcterFighter.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="ChararcterKeyManager.h">
+    <ClInclude Include="ChararcterUIKeyManager.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="ChararcterSkillKeyManager.h">
       <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
@@ -89,7 +92,10 @@
     <ClCompile Include="ChararcterFighter.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="ChararcterKeyManager.cpp">
+    <ClCompile Include="ChararcterUIKeyManager.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="ChararcterSkillKeyManager.cpp">
       <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>

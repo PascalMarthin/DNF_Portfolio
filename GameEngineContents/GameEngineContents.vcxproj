@@ -157,14 +157,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GameEngineBase\GameEngineBase.vcxproj">
-      <Project>{33315545-4554-4677-8527-7c61beda9cf4}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\GameEngineCore\GameEngineCore.vcxproj">
-      <Project>{056025fa-ee6b-4d5a-a2f0-ca4fc17c0c6e}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="AvatarInventory.h">
       <SubType>
       </SubType>
@@ -173,7 +165,11 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ChararcterKeyManager.h">
+    <ClInclude Include="ChararcterUIKeyManager.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ChararcterSkillKeyManager.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -236,7 +232,11 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="ChararcterKeyManager.cpp">
+    <ClCompile Include="ChararcterUIKeyManager.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ChararcterSkillKeyManager.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -288,6 +288,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GameEngineBase\GameEngineBase.vcxproj">
+      <Project>{33315545-4554-4677-8527-7c61beda9cf4}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\GameEngineCore\GameEngineCore.vcxproj">
+      <Project>{056025fa-ee6b-4d5a-a2f0-ca4fc17c0c6e}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

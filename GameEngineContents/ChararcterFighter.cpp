@@ -2,7 +2,7 @@
 #include <GameEngineCore/GameEngineLevel.h>
 #include <GameEngineCore/GameEngineComponent.h>
 #include "ChararcterFighter.h"
-#include "ChararcterKeyManager.h"
+#include "ChararcterUIKeyManager.h"
 
 ChararcterFighter::ChararcterFighter() 
 {
