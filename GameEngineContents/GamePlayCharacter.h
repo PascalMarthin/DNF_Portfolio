@@ -9,8 +9,8 @@ class ItemBagQuickslot;
 class ItemInventory;
 class AvatarInventory;
 class PetInventory;
-class ChararcterSkillKeyManager;
-class ChararcterUIKeyManager;
+class CharacterSkillKeyManager;
+class CharacterUIKeyManager;
 class GamePlayCharacter : public GamePlayObject
 {
 public:
@@ -54,7 +54,7 @@ protected:
 
 protected:
 	unsigned int PlayerCurrentState;
-	// 
+	
 private:
 	// ItemBag ฐüทร
 	ItemBagEquipmentWindow* PlayerEquipment;
@@ -63,7 +63,7 @@ private:
 	AvatarInventory* PlayerAvatarInventory;
 	PetInventory* PlayerPetInventory;
 
-	ChararcterUIKeyManager* const PlayerUIKeyManager;
-	ChararcterSkillKeyManager* const PlayerSkillKeyManager;
+	CharacterUIKeyManager* const PlayerUIKeyManager;
+	CharacterSkillKeyManager* const PlayerSkillKeyManager;
 };
 

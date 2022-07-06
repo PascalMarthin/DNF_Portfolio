@@ -161,15 +161,15 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ChararcterFighter.h">
+    <ClInclude Include="CharacterFighter.h">
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ChararcterUIKeyManager.h">
+    <ClInclude Include="CharacterUIKeyManager.h">
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ChararcterSkillKeyManager.h">
+    <ClInclude Include="CharacterSkillKeyManager.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -228,15 +228,15 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="ChararcterFighter.cpp">
+    <ClCompile Include="CharacterFighter.cpp">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="ChararcterUIKeyManager.cpp">
+    <ClCompile Include="CharacterUIKeyManager.cpp">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="ChararcterSkillKeyManager.cpp">
+    <ClCompile Include="CharacterSkillKeyManager.cpp">
       <SubType>
       </SubType>
     </ClCompile>

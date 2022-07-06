@@ -1,17 +1,17 @@
 #include "PreCompile.h"
-#include "ChararcterUIKeyManager.h"
+#include "CharacterUIKeyManager.h"
 
 #include <GameEngineBase/GameEngineInput.h>
 
-ChararcterUIKeyManager::ChararcterUIKeyManager()
+CharacterUIKeyManager::CharacterUIKeyManager()
 {
 }
 
-ChararcterUIKeyManager::~ChararcterUIKeyManager()
+CharacterUIKeyManager::~CharacterUIKeyManager()
 {
 }
 
-void ChararcterUIKeyManager::Start()
+void CharacterUIKeyManager::Start()
 {
 	{
 		GameEngineInput::GetInst()->CreateKey("Key_A", 'A');
@@ -54,12 +54,12 @@ void ChararcterUIKeyManager::Start()
 
 }
 
-void ChararcterUIKeyManager::Update(float _DeltaTime)
+void CharacterUIKeyManager::Update(float _DeltaTime)
 {
 
 }
 
-void ChararcterUIKeyManager::End()
+void CharacterUIKeyManager::End()
 {
 
 }
