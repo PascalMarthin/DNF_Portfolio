@@ -4,13 +4,32 @@
 #include "GameEngineVertexShader.h"
 
 GameEngineInputLayOut::GameEngineInputLayOut() 
+	: InputLayOut(nullptr)
 {
 }
 
 GameEngineInputLayOut::~GameEngineInputLayOut() 
 {
+	if (nullptr != InputLayOut)
+	{
+		InputLayOut->Release();
+	}
 }
 
+
+void GameEngineInputLayOut::Setting()
+{
+	if (nullptr == InputLayOut)
+	{
+		MsgBoxAssert("인풋레이아웃에 문제가 있습니다.");
+	}
+
+	GameEngineDevice::GetContext()->IASetInputLayout(InputLayOut);
+
+	// GameEngineDevice::GetContext()->VSSetConstantBuffers(0, 1, nullptr);
+
+	// GameEngineDevice::GetContext()->VSSetConstantBuffers(5, 1, nullptr);
+}
 
 void GameEngineInputLayOut::Create(const GameEngineLayOutDesc& _Desc, GameEngineVertexShader* _Shader)
 {
@@ -25,7 +44,4 @@ void GameEngineInputLayOut::Create(const GameEngineLayOutDesc& _Desc, GameEngine
 	{
 		MsgBoxAssert("인풋레이아웃 생성에 실패했습니다");
 	}
-
-	
-
 }

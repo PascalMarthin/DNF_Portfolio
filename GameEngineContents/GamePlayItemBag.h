@@ -42,7 +42,7 @@ protected:
 	std::vector<GamePlayItem*> ItemList;
 	GamePlayCharacter* Owner;
 
-	void Start() override;
+	//void Start() override;
 
 private:
 

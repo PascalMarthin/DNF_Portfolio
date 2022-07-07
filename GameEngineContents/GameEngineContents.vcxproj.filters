@@ -41,10 +41,13 @@
     <ClInclude Include="GamePlayEnum.h">
       <Filter>Gobal</Filter>
     </ClInclude>
-    <ClInclude Include="ChararcterFighter.h">
+    <ClInclude Include="CharacterFighter.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="ChararcterKeyManager.h">
+    <ClInclude Include="CharacterUIKeyManager.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterSkillKeyManager.h">
       <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
@@ -86,10 +89,13 @@
     <ClCompile Include="GamePlayObject.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="ChararcterFighter.cpp">
+    <ClCompile Include="CharacterFighter.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="ChararcterKeyManager.cpp">
+    <ClCompile Include="CharacterUIKeyManager.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterSkillKeyManager.cpp">
       <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
@@ -117,6 +123,12 @@
     </Filter>
     <Filter Include="Gobal">
       <UniqueIdentifier>{954e544e-74b5-406d-bc79-ccacd289a99a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Character">
+      <UniqueIdentifier>{7c8402f8-fcaa-4753-8b78-c6c41c3703bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Character\Fighter">
+      <UniqueIdentifier>{b24f830f-d346-4a51-b2d6-49dfc1f5e225}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

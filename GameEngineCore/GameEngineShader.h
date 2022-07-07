@@ -1,5 +1,24 @@
 #pragma once
 #include <string>
+#include <map>
+
+class ConstantBuffer
+{
+
+};
+
+class ShaderResSetter 
+{
+public:
+	int BindPoint;
+};
+
+class GameEngineConstantBuffer;
+class GameEngineConstantShaderResSetter : public ShaderResSetter
+{
+public:
+	GameEngineConstantBuffer* Buffer;
+};
 
 // Ό³Έν :
 class GameEngineShader 
@@ -30,8 +49,16 @@ protected:
 
 	std::string Version;
 
+	void ShaderResCheck();
+
 private:
+	std::map<std::string, GameEngineConstantShaderResSetter> ResSetterMap;
+
 	std::string EntryPoint;
+
+	// std::map<unsigned int, ConstantBuffer> 
+
+	
 
 };
 

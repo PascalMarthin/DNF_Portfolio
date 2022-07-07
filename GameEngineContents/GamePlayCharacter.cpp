@@ -6,7 +6,8 @@
 #include "AvatarInventory.h"
 #include "PetInventory.h"
 #include "ItemInventory.h"
-#include "ChararcterKeyManager.h"
+#include "CharacterUIKeyManager.h"
+#include "CharacterSkillKeyManager.h"
 
 GamePlayCharacter::GamePlayCharacter()
 	: PlayerEquipment(nullptr)
@@ -14,7 +15,9 @@ GamePlayCharacter::GamePlayCharacter()
 	, PlayerItemInventory(nullptr)
 	, PlayerAvatarInventory(nullptr)
 	, PlayerPetInventory(nullptr)
-	, PlayerKeyManager(CreateComponent<ChararcterKeyManager>())
+	, PlayerUIKeyManager(CreateComponent<CharacterUIKeyManager>())
+	, PlayerSkillKeyManager(CreateComponent<CharacterSkillKeyManager>())
+	, PlayerCurrentState(0x0)
 {
 
 	
