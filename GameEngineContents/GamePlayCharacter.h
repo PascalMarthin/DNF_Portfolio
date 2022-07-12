@@ -65,5 +65,9 @@ private:
 
 	CharacterUIKeyManager* const PlayerUIKeyManager;
 	CharacterSkillKeyManager* const PlayerSkillKeyManager;
+
+private:
+	//std::map<std::string, std::vector<>>
+	// 모션관련
 };
 

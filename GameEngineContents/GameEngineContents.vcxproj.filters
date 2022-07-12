@@ -32,23 +32,26 @@
     <ClInclude Include="DebugLevel.h">
       <Filter>Level</Filter>
     </ClInclude>
-    <ClInclude Include="GamePlayCharacter.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="GamePlayObject.h">
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="GamePlayEnum.h">
       <Filter>Gobal</Filter>
     </ClInclude>
-    <ClInclude Include="CharacterFighter.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="CharacterUIKeyManager.h">
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="CharacterSkillKeyManager.h">
       <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterFighter.h">
+      <Filter>Object\Character\Fighter</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlayCharacter.h">
+      <Filter>Object\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterStryker.h">
+      <Filter>Object\Character\Fighter\Skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -83,13 +86,7 @@
     <ClCompile Include="DebugLevel.cpp">
       <Filter>Level</Filter>
     </ClCompile>
-    <ClCompile Include="GamePlayCharacter.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="GamePlayObject.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="CharacterFighter.cpp">
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="CharacterUIKeyManager.cpp">
@@ -97,6 +94,18 @@
     </ClCompile>
     <ClCompile Include="CharacterSkillKeyManager.cpp">
       <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterFighter.cpp">
+      <Filter>Object\Character\Fighter</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlayCharacter.cpp">
+      <Filter>Object\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterStryker.cpp">
+      <Filter>Object\Character\Fighter\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterStryker_Skill.cpp">
+      <Filter>Object\Character\Fighter\Skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -129,6 +138,9 @@
     </Filter>
     <Filter Include="Object\Character\Fighter">
       <UniqueIdentifier>{b24f830f-d346-4a51-b2d6-49dfc1f5e225}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Character\Fighter\Skill">
+      <UniqueIdentifier>{0c6ca484-5771-4eab-8684-2a4b5cc6f4ae}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

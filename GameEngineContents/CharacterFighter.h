@@ -1,7 +1,7 @@
 #pragma once
 #include "GamePlayCharacter.h"
 
-// 설명 :
+// 설명 : 캐릭터 모션에 관련된 클래스
 class CharacterFighter : public GamePlayCharacter
 {
 public:
@@ -16,15 +16,6 @@ public:
 	CharacterFighter& operator=(CharacterFighter&& _Other) noexcept = delete;
 
 protected:
-	void Update(float _DeltaTime) override;
-
-	void OnEvent() override {}
-
-	void OffEvent() override {}
-
-	void Start() override;
-
-	void End() override;
 
 private:
 

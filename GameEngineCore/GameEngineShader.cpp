@@ -4,6 +4,30 @@
 #include "GameEnginePixelShader.h"
 #include "GameEngineConstantBuffer.h"
 
+void GameEngineConstantBufferSetter::Setting() const
+{
+	Res->ChangeData(SetData, Size);
+	
+	// 함수포인터(BindPoint);
+
+	//void(GameEngineConstantBuffer:: * GetNameConstPtr)(int);
+	//GetNameConstPtr = GameEngineConstantBuffer::VSSetting;
+
+	SettingFunction();
+
+	//switch (ShaderType)
+	//{
+	//case ShaderType::Vertex:
+	//	Res->VSSetting(BindPoint);
+	//	break;
+	//case ShaderType::Pixel:
+	//	Res->PSSetting(BindPoint);
+	//	break;
+	//default:
+	//	break;
+	//}
+}
+
 void GameEngineShader::AutoCompile(const std::string& _Path)
 {
 	GameEngineFile File = GameEngineFile(_Path);
@@ -98,7 +122,6 @@ void GameEngineShader::ShaderResCheck()
 		return;
 	}
 
-	
 
 	D3D11_SHADER_DESC Info;
 	CompileInfo->GetDesc(&Info);
@@ -120,6 +143,7 @@ void GameEngineShader::ShaderResCheck()
 		{
 		case D3D_SIT_CBUFFER:
 		{
+
 			// 리소스가 상수버퍼라면
 			ID3D11ShaderReflectionConstantBuffer* CBufferPtr = CompileInfo->GetConstantBufferByName(ResInfo.Name);
 
@@ -133,9 +157,10 @@ void GameEngineShader::ShaderResCheck()
 
 			// 중복으로 만드는일이 생기면 안되니까.
 			// 만든걸 또 만들라고 하는게 
-			NewSetter.Buffer = GameEngineConstantBuffer::Create(Name, BufferDesc, CBufferPtr);
+			NewSetter.SetName(Name);
+			NewSetter.ShaderType = ShaderSettingType;
+			NewSetter.Res = GameEngineConstantBuffer::CreateAndFind(Name, BufferDesc, CBufferPtr);
 			NewSetter.BindPoint = ResInfo.BindPoint;
-
 			ConstantBufferMap.insert(std::make_pair(Name, NewSetter));
 
 			break;

@@ -13,19 +13,3 @@ CharacterFighter::~CharacterFighter()
 }
 
 
-void CharacterFighter::Start()
-{
-	GamePlayCharacter::Start();
-
-
-}
-
-void CharacterFighter::Update(float _DeltaTime)
-{
-
-}
-
-void CharacterFighter::End()
-{
-
-}

@@ -165,6 +165,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="CharacterStryker.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="CharacterUIKeyManager.h">
       <SubType>
       </SubType>
@@ -232,6 +236,11 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="CharacterStryker.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="CharacterStryker_Skill.cpp" />
     <ClCompile Include="CharacterUIKeyManager.cpp">
       <SubType>
       </SubType>

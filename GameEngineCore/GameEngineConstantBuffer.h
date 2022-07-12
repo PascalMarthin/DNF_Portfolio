@@ -47,6 +47,28 @@ public:
 		return NewBuffer;
 	}
 
+
+	static GameEngineConstantBuffer* CreateAndFind(
+		const std::string& _Name,
+		D3D11_SHADER_BUFFER_DESC _Desc,
+		ID3D11ShaderReflectionConstantBuffer* _CBufferPtr
+	)
+	{
+		GameEngineConstantBuffer* FindBuffer = Find(_Name, _Desc.Size);
+
+		if (nullptr != FindBuffer)
+		{
+			return FindBuffer;
+		}
+
+		GameEngineConstantBuffer* NewBuffer = CreateResName(_Name, _Desc.Size);
+
+		NewBuffer->Create(_Desc, _CBufferPtr);
+
+		return NewBuffer;
+	}
+
+
 	static void ResourcesDestroy()
 	{
 		//for (auto& Res : UnNamedRes)
@@ -105,11 +127,6 @@ private:
 
 
 public:
-	ID3D11Buffer* Buffer;
-	D3D11_BUFFER_DESC BufferDesc;
-	D3D11_SHADER_BUFFER_DESC ShaderDesc;
-	D3D11_MAPPED_SUBRESOURCE SettingResources;
-
 	// constrcuter destructer
 	GameEngineConstantBuffer();
 	~GameEngineConstantBuffer();
@@ -120,11 +137,20 @@ public:
 	GameEngineConstantBuffer& operator=(const GameEngineConstantBuffer& _Other) = delete;
 	GameEngineConstantBuffer& operator=(GameEngineConstantBuffer&& _Other) noexcept = delete;
 
-	void ChangeData(const void* _Data, size_t _Size);
+	void ChangeData(const void* _Data, size_t _Size) const;
+
+	void VSSetting(int _BindPoint);
+
+	void PSSetting(int _BindPoint);
 
 protected:
 
 private:
+	ID3D11Buffer* Buffer;
+	D3D11_BUFFER_DESC BufferDesc;
+	D3D11_SHADER_BUFFER_DESC ShaderDesc;
+	// D3D11_MAPPED_SUBRESOURCE SettingResources;
+
 	void Create(const D3D11_SHADER_BUFFER_DESC& _Desc, ID3D11ShaderReflectionConstantBuffer* _CBufferPtr);
 };
 

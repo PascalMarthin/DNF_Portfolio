@@ -230,7 +230,7 @@ public:
 		Data.ProjectionMatrix = _Mat;
 	}
 
-	const TransformData& GetTransformData()
+	const TransformData& GetTransformData() 
 	{
 		return Data;
 	}

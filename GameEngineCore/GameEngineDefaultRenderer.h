@@ -1,5 +1,6 @@
 #pragma once
 #include "GameEngineRenderer.h"
+#include "GameEngineShaderResourcesHelper.h"
 
 // 설명 :
 class GameEngineRenderingPipeLine;
@@ -13,6 +14,8 @@ class GameEngineDefaultRenderer : public GameEngineRenderer
 
 
 public:
+	GameEngineShaderResourcesHelper PipeLineHelper;
+
 	// constrcuter destructer
 	GameEngineRenderingPipeLine* GetPipeLine()
 	{
@@ -39,7 +42,8 @@ protected:
 
 
 private:
-	// 네모난 빨간색을 출력한다.
+	// 공통적인 메모리 공유하는 메로리들을 들고 있고
 	GameEngineRenderingPipeLine* PipeLine;
+
 };
 

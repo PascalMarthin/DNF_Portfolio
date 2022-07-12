@@ -1,30 +1,54 @@
 #pragma once
 #include <string>
 #include <map>
+#include <GameEngineBase/GameEngineNameObject.h>
+#include <functional>
 
-class ConstantBuffer
+
+enum class ShaderType
 {
-
+	Vertex,
+	Pixel,
 };
 
-class ShaderResSetter 
+class ShaderResSetter : public GameEngineNameObject
 {
 public:
+	ShaderType ShaderType;
 	int BindPoint;
-	std::string* Name;
+	std::function<void()> SettingFunction;
 };
 
 class GameEngineConstantBuffer;
 class GameEngineConstantBufferSetter : public ShaderResSetter
 {
 public:
-	GameEngineConstantBuffer* Buffer;
+	GameEngineConstantBuffer* Res;
+	// 각자가 가진 정보에 대한 주소
+	const void* SetData;
+	UINT Size;
+
+
+	// 자기메모리로 할당할 것이다.
+	std::vector<char> OriginalData;
+
+	void Setting() const;
+
+public:
+	GameEngineConstantBufferSetter() 
+		: Res(nullptr)
+		, SetData(nullptr)
+		, Size(-1)
+	{
+
+	}
 };
 
 class GameEngineConstantBuffer;
 class GameEngineTextureSetter : public ShaderResSetter
 {
 };
+
 
 // 설명 :
 class GameEngineShaderResourcesHelper;
@@ -38,7 +62,7 @@ public:
 public:
 	// constrcuter destructer
 	GameEngineShader();
-	~GameEngineShader();
+	virtual ~GameEngineShader();
 
 	// delete Function
 	GameEngineShader(const GameEngineShader& _Other) = delete;
@@ -61,6 +85,8 @@ protected:
 
 	void ShaderResCheck();
 
+	ShaderType ShaderSettingType;
+
 private:
 	std::map<std::string, GameEngineConstantBufferSetter> ConstantBufferMap;
 	std::map<std::string, GameEngineTextureSetter> TextureSetterMap;
@@ -69,7 +95,7 @@ private:
 
 	// std::map<unsigned int, ConstantBuffer> 
 
-	
+	// void SetConstantBuffer() override;
 
 };
 
