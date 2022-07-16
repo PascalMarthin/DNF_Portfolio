@@ -13,9 +13,9 @@ DebugLevel::~DebugLevel()
 
 void DebugLevel::Start()
 {
-	GameEngineCameraActor* actor = CreateActor<GameEngineCameraActor>();
-	actor->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
-	CreateActor<CharacterFighter>();
+	//GameEngineCameraActor* actor = CreateActor<GameEngineCameraActor>();
+	//actor->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
+	//CreateActor<CharacterFighter>();
 }
 
 void DebugLevel::Update(float _DeltaTime)

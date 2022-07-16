@@ -30,4 +30,10 @@ protected:
 
 private:
 
+	void AllResourceLoad();
+	void BaseSoundLoad();
+	void BaseTextureLoad();
+	void BaseFolderTextureLoad();
+	
+
 };

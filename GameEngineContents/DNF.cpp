@@ -1,4 +1,11 @@
 #include "PreCompile.h"
+#include <GameEngineBase/GameEngineSound.h>
+#include <GameEngineBase/GameEngineDirectory.h>
+
+#include <GameEngineCore/GameEngineTexture.h>
+#include <GameEngineCore/GameEngineFolderTexture.h>
+
+
 #include "DNF.h"
 #include "DebugLevel.h"
 
@@ -17,14 +24,35 @@ void DNF::Start()
 {
 	// GameEngineDebug::ConsoleOpen();
 
+	AllResourceLoad();
+
 	CreateLevel<DebugLevel>("Debug");
 	//CreateLevel<PlayLevel>("Play");
 	ChangeLevel("Debug");
 
-	// 게임컨텐츠 정의
-	// 이 게임에는 타이틀화면
-	//            스테이지1
-	//            스테이지2
+}
+
+
+void DNF::AllResourceLoad()
+{
+	BaseSoundLoad();
+	BaseTextureLoad();
+	BaseFolderTextureLoad();
+}
+
+void DNF::BaseSoundLoad()
+{
+
+}
+
+void DNF::BaseTextureLoad()
+{
+
+}
+
+void DNF::BaseFolderTextureLoad()
+{
+
 }
 
 void DNF::Update(float _DeltaTime)

@@ -29,20 +29,11 @@
     <ClInclude Include="PetInventory.h">
       <Filter>Item\Bag\ItemBag</Filter>
     </ClInclude>
-    <ClInclude Include="DebugLevel.h">
-      <Filter>Level</Filter>
-    </ClInclude>
     <ClInclude Include="GamePlayObject.h">
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="GamePlayEnum.h">
       <Filter>Gobal</Filter>
-    </ClInclude>
-    <ClInclude Include="CharacterUIKeyManager.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="CharacterSkillKeyManager.h">
-      <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="CharacterFighter.h">
       <Filter>Object\Character\Fighter</Filter>
@@ -52,6 +43,24 @@
     </ClInclude>
     <ClInclude Include="CharacterStryker.h">
       <Filter>Object\Character\Fighter\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugLevel.h">
+      <Filter>Level\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="SeriaRoom_Level.h">
+      <Filter>Level\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayLevel.h">
+      <Filter>Level\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterSkillKeyManager.h">
+      <Filter>KeyManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterUIKeyManager.h">
+      <Filter>KeyManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Seria_NPC.h">
+      <Filter>Object\NPC</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -83,16 +92,7 @@
     <ClCompile Include="PetInventory.cpp">
       <Filter>Item\Bag\ItemBag</Filter>
     </ClCompile>
-    <ClCompile Include="DebugLevel.cpp">
-      <Filter>Level</Filter>
-    </ClCompile>
     <ClCompile Include="GamePlayObject.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="CharacterUIKeyManager.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="CharacterSkillKeyManager.cpp">
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="CharacterFighter.cpp">
@@ -106,6 +106,24 @@
     </ClCompile>
     <ClCompile Include="CharacterStryker_Skill.cpp">
       <Filter>Object\Character\Fighter\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugLevel.cpp">
+      <Filter>Level\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="SeriaRoom_Level.cpp">
+      <Filter>Level\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayLevel.cpp">
+      <Filter>Level\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterSkillKeyManager.cpp">
+      <Filter>KeyManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterUIKeyManager.cpp">
+      <Filter>KeyManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Seria_NPC.cpp">
+      <Filter>Object\NPC</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +159,21 @@
     </Filter>
     <Filter Include="Object\Character\Fighter\Skill">
       <UniqueIdentifier>{0c6ca484-5771-4eab-8684-2a4b5cc6f4ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\Debug">
+      <UniqueIdentifier>{1decfd01-ac37-4ed5-8437-104f6329b914}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\Play">
+      <UniqueIdentifier>{33ca5c78-2444-427a-b206-ada540f67ce7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\Title">
+      <UniqueIdentifier>{14bce10d-5d32-427e-b77a-3ff2c14cf78b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KeyManager">
+      <UniqueIdentifier>{dc2d6d1b-4730-484a-a894-4289ebf38848}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\NPC">
+      <UniqueIdentifier>{d99b5e75-8b7b-4c26-9385-c970db845620}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
