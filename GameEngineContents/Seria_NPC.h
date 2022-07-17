@@ -1,9 +1,10 @@
 #pragma once
 
-#include <GameEngineCore/GameEngineActor.h>
 #include <GameEngineCore/GameEngineTextureRenderer.h>
 
-class Seria_NPC : public GameEngineActor
+#include "GamePlayObjectNPC.h"
+
+class Seria_NPC : public GamePlayObjectNPC
 {
 public:
 	// constrcuter destructer

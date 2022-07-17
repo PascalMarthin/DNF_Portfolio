@@ -1,10 +1,12 @@
 #pragma once
 #include <GameEngineCore/GameEngineLevel.h>
-#include "PlayLevel.h"
+#include "TownLevel.h"
+#include "Seria_NPC.h"
 
 
 //class GameEngineFolderTexture;
-class SeriaRoom_Level : public GameEngineLevel, public PlayLevel
+class SeriaRoomBackground;
+class SeriaRoom_Level : public GameEngineLevel, public TownLevel
 {
 public:
 	// constrcuter destructer
@@ -29,11 +31,15 @@ protected:
 	// void OffEvent() {}
 
 private:
-	void TextureLoad() override;
 	
 
 private:
-	GameEngineFolderTexture* Texture_SeriaRoom;
+	GameEngineCameraActor* const Camera;
+
+	SeriaRoomBackground* Texture_SeriaRoom;
+	
+	
+	Seria_NPC* const NPCSeria;
 
 };
 

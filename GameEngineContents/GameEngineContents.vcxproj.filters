@@ -50,7 +50,7 @@
     <ClInclude Include="SeriaRoom_Level.h">
       <Filter>Level\Play</Filter>
     </ClInclude>
-    <ClInclude Include="PlayLevel.h">
+    <ClInclude Include="TownLevel.h">
       <Filter>Level\Play</Filter>
     </ClInclude>
     <ClInclude Include="CharacterSkillKeyManager.h">
@@ -61,6 +61,12 @@
     </ClInclude>
     <ClInclude Include="Seria_NPC.h">
       <Filter>Object\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlayObjectNPC.h">
+      <Filter>Object\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="SeriaRoomBackground.h">
+      <Filter>BackGround</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -113,7 +119,7 @@
     <ClCompile Include="SeriaRoom_Level.cpp">
       <Filter>Level\Play</Filter>
     </ClCompile>
-    <ClCompile Include="PlayLevel.cpp">
+    <ClCompile Include="TownLevel.cpp">
       <Filter>Level\Play</Filter>
     </ClCompile>
     <ClCompile Include="CharacterSkillKeyManager.cpp">
@@ -124,6 +130,12 @@
     </ClCompile>
     <ClCompile Include="Seria_NPC.cpp">
       <Filter>Object\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlayObjectNPC.cpp">
+      <Filter>Object\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="SeriaRoomBackground.cpp">
+      <Filter>BackGround</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +186,12 @@
     </Filter>
     <Filter Include="Object\NPC">
       <UniqueIdentifier>{d99b5e75-8b7b-4c26-9385-c970db845620}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\Battle">
+      <UniqueIdentifier>{37192671-0765-45d3-bff8-2cb2c8abe9c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BackGround">
+      <UniqueIdentifier>{614b6c49-5105-4946-8a43-10276928e9ae}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
