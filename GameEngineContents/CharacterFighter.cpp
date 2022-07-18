@@ -6,8 +6,6 @@
 #include "CharacterUIKeyManager.h"
 #include <GameEngineCore/GameEngineFolderTexture.h>
 
-GameEngineTextureRenderer* CharacterFighter::FighterRenderer = nullptr;
-
 CharacterFighter::CharacterFighter() 
 {
 }
@@ -19,24 +17,39 @@ CharacterFighter::~CharacterFighter()
 
 void CharacterFighter::Start()
 {
-	if (CharacterFighter::FighterRenderer == nullptr)
-	{
-		CharacterFighter::FighterRenderer = CreateComponent<GameEngineTextureRenderer>();
-	}
-	Seria_Renderer 
-	SettingCharactorAnimation();
-
-
+	GamePlayCharacter::Start();
 }
 
-void CharacterFighter::SettingCharactorAnimation()
-{
-	GameEngineFolderTexture* asd = nullptr;
-	asd->
-	Seria_Renderer->CreateFrameAnimationFolder("Seria_Town_Standing", FrameAnimation_DESC("Seria", 0, 11, 0.25f));
 
-	Seria_Renderer->ChangeFrameAnimation("Seria_Town_Standing");
-	Seria_Renderer->GetTransform().SetLocalScale({ 120, 240 });
+
+
+void CharacterFighter::SettingCharactorAnimation(GameEngineTextureRenderer* _TextureRenderer)
+{
+	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
+	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
+	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
+	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
+	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
+	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
+	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
+	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
+	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
+	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
+	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
+	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
+	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
+	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
+	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
+	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
+	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
+	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
+	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
+	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
+	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
+	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
+	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
+	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
+
 }
 
 void CharacterFighter::Update(float _DeltaTime)

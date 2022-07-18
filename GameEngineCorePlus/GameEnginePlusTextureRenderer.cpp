@@ -1,7 +1,17 @@
-#include "PreCompile.h"
-#include "GameEngineTextureRenderer.h"
-#include "GameEngineTexture.h"
-#include "GameEngineFolderTexture.h"
+#include <GameEngineBase/GameEngineDebug.h>
+#include <GameEngineCore/GameEngineTextureRenderer.h>
+#include <GameEngineCore/GameEngineTexture.h>
+#include <GameEngineCore/GameEngineFolderTexture.h>
+
+#include "GameEnginePlusTextureRenderer.h"
+
+GameEnginePlusTextureRenderer::GameEnginePlusTextureRenderer() 
+{
+}
+
+GameEnginePlusTextureRenderer::~GameEnginePlusTextureRenderer() 
+{
+}
 
 void FrameAnimation::Reset()
 {
@@ -10,7 +20,7 @@ void FrameAnimation::Reset()
 }
 
 
-void FrameAnimation::Update(float _Delta) 
+void FrameAnimation::Update(float _Delta)
 {
 
 	Info.FrameTime += _Delta;
@@ -20,7 +30,7 @@ void FrameAnimation::Update(float _Delta)
 		Time(Info, _Delta);
 	}
 
-	if (false == bOnceStart 
+	if (false == bOnceStart
 		&& Info.CurFrame == Info.Start
 		&& nullptr != Start)
 	{
@@ -41,12 +51,12 @@ void FrameAnimation::Update(float _Delta)
 		{
 			ParentRenderer->SetTexture(Texture, Info.CurFrame);
 		}
-		else if(nullptr != FolderTexture)
+		else if (nullptr != FolderTexture)
 		{
 			ParentRenderer->FrameDataReset();
 			ParentRenderer->SetTexture(FolderTexture->GetTexture(Info.CurFrame));
 		}
-		else 
+		else
 		{
 			MsgBoxAssert("텍스처가 세팅되지 않은 애니메이션 입니다.");
 		}
@@ -73,15 +83,15 @@ void FrameAnimation::Update(float _Delta)
 	}
 }
 
-GameEngineTextureRenderer::GameEngineTextureRenderer() 
+GameEngineTextureRenderer::GameEngineTextureRenderer()
 {
 }
 
-GameEngineTextureRenderer::~GameEngineTextureRenderer() 
+GameEngineTextureRenderer::~GameEngineTextureRenderer()
 {
 }
 
-void GameEngineTextureRenderer::Start() 
+void GameEngineTextureRenderer::Start()
 {
 	GameEngineDefaultRenderer::Start();
 	SetPipeLine("TextureAtlas");
@@ -180,7 +190,7 @@ void GameEngineTextureRenderer::AnimationBindFrame(const std::string& _Animation
 }
 
 // Update
-void GameEngineTextureRenderer::AnimationBindTime(const std::string& _AnimationName, std::function<void(const FrameAnimation_DESC& , float)> Function)
+void GameEngineTextureRenderer::AnimationBindTime(const std::string& _AnimationName, std::function<void(const FrameAnimation_DESC&, float)> Function)
 {
 	std::string Name = GameEngineString::ToUpperReturn(_AnimationName);
 
@@ -257,7 +267,7 @@ void GameEngineTextureRenderer::ChangeFrameAnimation(const std::string& _Animati
 
 void GameEngineTextureRenderer::FrameDataReset()
 {
-	FrameData = { 0.0f , 0.0f, 1.0f, 1.0f};
+	FrameData = { 0.0f , 0.0f, 1.0f, 1.0f };
 }
 
 

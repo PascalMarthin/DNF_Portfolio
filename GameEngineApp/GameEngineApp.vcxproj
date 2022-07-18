@@ -156,8 +156,17 @@
     <ClCompile Include="AppMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GameEngineBase\GameEngineBase.vcxproj">
+      <Project>{33315545-4554-4677-8527-7c61beda9cf4}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\GameEngineContents\GameEngineContents.vcxproj">
       <Project>{0d143cbd-f9fd-4345-acab-083421fc48de}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\GameEngineCorePlus\GameEngineCorePlus.vcxproj">
+      <Project>{73dff0ea-6c05-43a6-903e-16feed381250}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\GameEngineCore\GameEngineCore.vcxproj">
+      <Project>{056025fa-ee6b-4d5a-a2f0-ca4fc17c0c6e}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -91,6 +91,9 @@ public:
 	GameEngineTextureRenderer& operator=(const GameEngineTextureRenderer& _Other) = delete;
 	GameEngineTextureRenderer& operator=(GameEngineTextureRenderer&& _Other) noexcept = delete;
 
+	void SetSamplingModePoint();
+	void SetSamplingModeLiner();
+
 	void SetTexture(GameEngineTexture* _Texture);
 
 	void SetTexture(const std::string& _Name);
@@ -105,6 +108,9 @@ public:
 
 	void CreateFrameAnimation(const std::string& _AnimationName, const FrameAnimation_DESC& _Desc);
 	void ChangeFrameAnimation(const std::string& _AnimationName);
+
+
+
 
 	// 시작 프레임에 들어온다.
 	void AnimationBindStart(const std::string& _AnimationName, std::function<void(const FrameAnimation_DESC&)> Function);

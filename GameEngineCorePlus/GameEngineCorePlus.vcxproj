@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{0d143cbd-f9fd-4345-acab-083421fc48de}</ProjectGuid>
-    <RootNamespace>GameEngineContents</RootNamespace>
+    <ProjectGuid>{73dff0ea-6c05-43a6-903e-16feed381250}</ProjectGuid>
+    <RootNamespace>GameEngineCorePlus</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -44,7 +44,6 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
-    <EnableUnitySupport>false</EnableUnitySupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -52,7 +51,6 @@
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <EnableUnitySupport>false</EnableUnitySupport>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -124,10 +122,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>..\;</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>PreCompile.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
@@ -143,10 +141,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>..\;</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>PreCompile.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
@@ -157,183 +155,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AvatarInventory.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="CharacterFighter.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="CharacterStryker.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="CharacterUIKeyManager.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="CharacterSkillKeyManager.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="DebugLevel.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="DNF.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="GamePlayCharacter.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="GamePlayEnum.h" />
-    <ClInclude Include="GamePlayItem.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="GamePlayItemBag.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="GamePlayObject.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="GamePlayObjectNPC.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="ItemBagEquipmentWindow.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="ItemBagInventory.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="ItemBagQuickslot.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="ItemInventory.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="PetInventory.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="SeriaRoomBackground.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="TownLevel.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="PreCompile.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="SeriaRoom_Level.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="Seria_NPC.h">
+    <ClInclude Include="GameEnginePlusTextureRenderer.h">
       <SubType>
       </SubType>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AvatarInventory.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="CharacterFighter.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="CharacterStryker.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="CharacterStryker_Skill.cpp" />
-    <ClCompile Include="CharacterUIKeyManager.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="CharacterSkillKeyManager.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="DebugLevel.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="DNF.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="GamePlayCharacter.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="GamePlayItem.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="GamePlayItemBag.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="GamePlayObject.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="GamePlayObjectNPC.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="ItemBagEquipmentWindow.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="ItemBagInventory.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="ItemBagQuickslot.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="ItemInventory.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="PetInventory.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="SeriaRoomBackground.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="TownLevel.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="PreCompile.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="SeriaRoom_Level.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Seria_NPC.cpp">
+    <ClCompile Include="GameEnginePlusTextureRenderer.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -341,9 +169,6 @@
   <ItemGroup>
     <ProjectReference Include="..\GameEngineBase\GameEngineBase.vcxproj">
       <Project>{33315545-4554-4677-8527-7c61beda9cf4}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\GameEngineCorePlus\GameEngineCorePlus.vcxproj">
-      <Project>{73dff0ea-6c05-43a6-903e-16feed381250}</Project>
     </ProjectReference>
     <ProjectReference Include="..\GameEngineCore\GameEngineCore.vcxproj">
       <Project>{056025fa-ee6b-4d5a-a2f0-ca4fc17c0c6e}</Project>

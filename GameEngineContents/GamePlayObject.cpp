@@ -2,6 +2,7 @@
 #include "GamePlayObject.h"
 
 GamePlayObject::GamePlayObject() 
+	: Object_Body(nullptr)
 {
 }
 

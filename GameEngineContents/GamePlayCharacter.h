@@ -67,7 +67,19 @@ private:
 	CharacterSkillKeyManager* const PlayerSkillKeyManager;
 
 private:
-	//std::map<std::string, std::vector<>>
-	// 모션관련
+
+
+protected:
+	virtual void SettingCharactorAnimation(GameEngineTextureRenderer* _TextureRenderer) = 0;
+	// 아바타
+	GameEngineTextureRenderer* Avata_Belt;
+	GameEngineTextureRenderer* Avata_Skin;
+	GameEngineTextureRenderer* Avata_Cap;
+	GameEngineTextureRenderer* Avata_Coat;
+	GameEngineTextureRenderer* Avata_Face;
+	GameEngineTextureRenderer* Avata_Hair;
+	GameEngineTextureRenderer* Avata_Neck;
+	GameEngineTextureRenderer* Avata_Pants;
+	GameEngineTextureRenderer* Avata_Shoes;
 };
 
