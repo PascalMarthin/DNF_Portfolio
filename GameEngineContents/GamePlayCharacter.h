@@ -13,6 +13,9 @@ class CharacterSkillKeyManager;
 class CharacterUIKeyManager;
 class GamePlayCharacter : public GamePlayObject
 {
+
+public:
+	static int CharactorIndex;
 public:
 	// constrcuter destructer
 	GamePlayCharacter();
@@ -47,6 +50,8 @@ public:
 		return PlayerPetInventory;
 	}
 
+	//std::string ConverToString(AvataClass _Class);
+
 protected:
 	void Start() override;
 
@@ -63,17 +68,17 @@ private:
 	AvatarInventory* PlayerAvatarInventory;
 	PetInventory* PlayerPetInventory;
 
-	CharacterUIKeyManager* const PlayerUIKeyManager;
-	CharacterSkillKeyManager* const PlayerSkillKeyManager;
+	CharacterUIKeyManager* PlayerUIKeyManager;
+	CharacterSkillKeyManager* PlayerSkillKeyManager;
 
 private:
 
 
 protected:
-	virtual void SettingCharactorAnimation(GameEngineTextureRenderer* _TextureRenderer) = 0;
+	//virtual void SettingCharactorAnimation(GameEngineTextureRenderer* _TextureRenderer, const std::string& _AvataClass, unsigned int _AvataCode = -1) = 0;
+
 	// æ∆πŸ≈∏
 	GameEngineTextureRenderer* Avata_Belt;
-	GameEngineTextureRenderer* Avata_Skin;
 	GameEngineTextureRenderer* Avata_Cap;
 	GameEngineTextureRenderer* Avata_Coat;
 	GameEngineTextureRenderer* Avata_Face;
@@ -81,5 +86,18 @@ protected:
 	GameEngineTextureRenderer* Avata_Neck;
 	GameEngineTextureRenderer* Avata_Pants;
 	GameEngineTextureRenderer* Avata_Shoes;
+	GameEngineTextureRenderer* Avata_Skin;
 };
 
+//enum class AvataClass
+//{
+//	Belt,
+//	Cap,
+//	Coat,
+//	Face,
+//	Hair,
+//	Neck,
+//	Pants,
+//	Shoes,
+//	Skin
+//};

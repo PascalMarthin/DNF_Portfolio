@@ -29,12 +29,10 @@ protected:
 	// void OffEvent() {}
 
 private:
+	void SetAnimationForFrameAnimationDESC();
+	static std::map<std::string ,FrameAnimation_DESC> Fighter_F_Animation;
 
-
-	void SettingCharactorAnimation(GameEngineTextureRenderer* _TextureRenderer) override;
 private:
-
-	void SettingCharactorBaseAvata();
 
 };
 

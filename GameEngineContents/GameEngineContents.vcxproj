@@ -185,6 +185,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameEnginePlusTextureRenderer.h" />
     <ClInclude Include="GamePlayCharacter.h">
       <SubType>
       </SubType>
@@ -277,6 +278,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEnginePlusTextureRenderer.cpp" />
     <ClCompile Include="GamePlayCharacter.cpp">
       <SubType>
       </SubType>

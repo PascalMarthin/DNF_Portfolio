@@ -68,6 +68,9 @@
     <ClInclude Include="SeriaRoomBackground.h">
       <Filter>BackGround</Filter>
     </ClInclude>
+    <ClInclude Include="GameEnginePlusTextureRenderer.h">
+      <Filter>CorePlus</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -137,6 +140,9 @@
     <ClCompile Include="SeriaRoomBackground.cpp">
       <Filter>BackGround</Filter>
     </ClCompile>
+    <ClCompile Include="GameEnginePlusTextureRenderer.cpp">
+      <Filter>CorePlus</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -192,6 +198,9 @@
     </Filter>
     <Filter Include="BackGround">
       <UniqueIdentifier>{614b6c49-5105-4946-8a43-10276928e9ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CorePlus">
+      <UniqueIdentifier>{7937e3ba-3f4b-4792-82af-f4f07a937229}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

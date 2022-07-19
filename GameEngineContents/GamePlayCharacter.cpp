@@ -9,14 +9,15 @@
 #include "CharacterUIKeyManager.h"
 #include "CharacterSkillKeyManager.h"
 
+int GamePlayCharacter::CharactorIndex = 0;
 GamePlayCharacter::GamePlayCharacter()
 	: PlayerEquipment(nullptr)
 	, PlayerQuickslot(nullptr)
 	, PlayerItemInventory(nullptr)
 	, PlayerAvatarInventory(nullptr)
 	, PlayerPetInventory(nullptr)
-	, PlayerUIKeyManager(CreateComponent<CharacterUIKeyManager>())
-	, PlayerSkillKeyManager(CreateComponent<CharacterSkillKeyManager>())
+	, PlayerUIKeyManager(nullptr)
+	, PlayerSkillKeyManager(nullptr)
 	, PlayerCurrentState(0x0)
 
 	, Avata_Belt(nullptr)
@@ -30,8 +31,12 @@ GamePlayCharacter::GamePlayCharacter()
 	, Avata_Shoes(nullptr)
 
 {
-
-	
+	++GamePlayCharacter::CharactorIndex;
+	if (GamePlayCharacter::CharactorIndex <= 1)
+	{
+		PlayerUIKeyManager = CreateComponent<CharacterUIKeyManager>();
+		PlayerSkillKeyManager = CreateComponent<CharacterSkillKeyManager>();
+	}
 }
 
 GamePlayCharacter::~GamePlayCharacter() 
@@ -72,16 +77,5 @@ void GamePlayCharacter::Start()
 	Avata_Pants = CreateComponent<GameEngineTextureRenderer>();
 	Avata_Shoes = CreateComponent<GameEngineTextureRenderer>();
 
-	SettingCharactorAnimation(Avata_Belt);
-	SettingCharactorAnimation(Avata_Skin);
-	SettingCharactorAnimation(Avata_Cap);
-	SettingCharactorAnimation(Avata_Coat);
-	SettingCharactorAnimation(Avata_Face);
-	SettingCharactorAnimation(Avata_Hair);
-	SettingCharactorAnimation(Avata_Neck);
-	SettingCharactorAnimation(Avata_Pants);
-	SettingCharactorAnimation(Avata_Shoes);
-
 }
-
 

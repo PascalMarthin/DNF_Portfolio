@@ -5,6 +5,7 @@
 #include <GameEngineCore/GameEngineComponent.h>
 #include "SeriaRoom_Level.h"
 #include "SeriaRoomBackground.h"
+#include "CharacterFighter.h"
 
 SeriaRoom_Level::SeriaRoom_Level() 
 	: Camera(CreateActor<GameEngineCameraActor>())
@@ -23,7 +24,7 @@ SeriaRoom_Level::~SeriaRoom_Level()
 
 void SeriaRoom_Level::Start()
 {
-
+	CharacterFighter* Fighter = CreateActor<CharacterFighter>();
 }
 
 void SeriaRoom_Level::Update(float _DeltaTime)

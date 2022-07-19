@@ -1,10 +1,11 @@
 //#pragma once
-//#include <GameEngineCore/GameEngineDefaultRenderer.h>
 //#include <GameEngineCore/GameEngineTextureRenderer.h>
 //
 //// 설명 : 던파 아바타 시스템에 맞춘 텍스쳐렌더링클래스
+//// 폴더 텍스쳐 하나로만 이루어져 있으며 같은 주소값을 공유한다
 //enum class AvataClass;
 //enum class CharactorClass;
+//class FrameAnimationForAvata;
 //class GameEnginePlusTextureRenderer : public GameEngineTextureRenderer
 //{
 //	friend FrameAnimationForAvata;
@@ -19,21 +20,14 @@
 //	GameEnginePlusTextureRenderer& operator=(const GameEnginePlusTextureRenderer& _Other) = delete;
 //	GameEnginePlusTextureRenderer& operator=(GameEnginePlusTextureRenderer&& _Other) noexcept = delete;
 //
+//	void ChangeFolderTexturePlus(GameEngineFolderTexture* _Texture);
+//	void ChangeFolderTexturePlus(const std::string& _TextureName);
 //
-//	void SetTextureForAvata(GameEngineTexture* _Texture);
-//
-//	void SetTextureForAvata(const std::string& _Name);
-//
-//	void SetFrameForAvata(UINT _Index);
-//
-//	void SetTextureForAvata(const std::string& _Name, UINT _Index);
-//
-//	void SetTextureForAvata(GameEngineTexture* _Texture, UINT _Index);
-//
-//	void CreateFrameAnimationFolderForAvata(CharactorClass _CharactorClass,AvataClass _AvataClass, const FrameAnimation_DESC& _Desc);
+//	void CreateFrameAnimationFolderPlus(const std::string& _AnimationName, const FrameAnimation_DESC& _Desc);
 //	//void CreateFrameAnimation(const std::string& _AnimationName, const FrameAnimation_DESC& _Desc);
 //
-//	void ChangeFrameAnimationForAvata(CharactorClass _CharactorClass, AvataClass _AvataClass);
+//	void ChangeFrameAnimationPlus(const std::string& _AnimationName);
+//
 //	void ChangeTextureInFrameAnimationForAvata(CharactorClass _CharactorClass, AvataClass _AvataClass, const std::string& _FolderTexture);
 //
 //
@@ -43,13 +37,11 @@
 //
 //
 //private:
-//	GameEngineTexture* CurTex;
-//	float4 FrameData;
+//	GameEngineFolderTexture* CurrentAvata;
 //
-//	std::map<CharactorClass, std::map<AvataClass, FrameAnimationForAvata>> FrameAni;
-//	FrameAnimationForAvata* CurAni;
+//	std::map<std::string, FrameAnimationForAvata> FrameAniPlus;
+//	FrameAnimationForAvata* CurrentAniPlus;
 //
-//	void FrameDataResetForAvata();
 //};
 //
 //class FrameAnimationForAvata : public GameEngineNameObject
@@ -59,8 +51,7 @@
 //	FrameAnimation_DESC Info;
 //
 //	GameEnginePlusTextureRenderer* ParentRenderer;
-//	GameEngineTexture* Texture;
-//	GameEngineFolderTexture* FolderTexture;
+//	GameEngineFolderTexture** FolderTextureDouble;
 //
 //	bool bOnceStart;
 //	bool bOnceEnd;
@@ -69,9 +60,16 @@
 //	std::function<void(const FrameAnimation_DESC&)> Start;
 //	std::function<void(const FrameAnimation_DESC&, float)> Time;
 //
+//	inline FrameAnimation_DESC& GetInfo()
+//	{
+//		return Info;
+//	}
+//	// 레퍼런스로 반환함
+//
 //	void Reset();
 //
 //	void Update(float _DeltaTime);
+//
 //};
 //
 //enum class AvataClass
@@ -85,9 +83,4 @@
 //	Pants,
 //	Shoes,
 //	Skin
-//};
-//
-//enum class CharactorClass
-//{
-//	Fighter_F
 //};

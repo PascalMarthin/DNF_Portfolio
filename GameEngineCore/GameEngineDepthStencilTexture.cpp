@@ -19,5 +19,5 @@ GameEngineDepthStencilTexture* GameEngineDepthStencilTexture::Create(const float
 
 void GameEngineDepthStencilTexture::CreateDepthTexture(const float4 _Scale)
 {
-	Buffer->TextureCreate
+	//Buffer->TextureCreate
 }
