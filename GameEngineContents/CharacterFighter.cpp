@@ -25,6 +25,7 @@ void CharacterFighter::Start()
 
 void CharacterFighter::SettingCharactorAnimation(GameEngineTextureRenderer* _TextureRenderer)
 {
+/*	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
 	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
 	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
 	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
@@ -47,8 +48,7 @@ void CharacterFighter::SettingCharactorAnimation(GameEngineTextureRenderer* _Tex
 	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
 	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
 	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
-	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
-	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC());
+	_TextureRenderer->CreateFrameAnimationFolder("", FrameAnimation_DESC()*/
 
 }
 

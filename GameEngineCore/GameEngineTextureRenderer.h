@@ -24,6 +24,7 @@ public:
 		, CurFrame(-1)
 		, Start(-1)
 		, End(-1)
+		, FrameTime(0.0f)
 	{
 
 	}
@@ -35,6 +36,7 @@ public:
 		, CurFrame(_Start)
 		, Start(_Start)
 		, End(_End)
+		, FrameTime(0.0f)
 	{
 
 	}
@@ -46,6 +48,7 @@ public:
 		, CurFrame(0)
 		, Start(-1)
 		, End(-1)
+		, FrameTime(0.0f)
 	{
 
 	}
@@ -109,9 +112,6 @@ public:
 	void CreateFrameAnimation(const std::string& _AnimationName, const FrameAnimation_DESC& _Desc);
 	void ChangeFrameAnimation(const std::string& _AnimationName);
 
-
-
-
 	// 시작 프레임에 들어온다.
 	void AnimationBindStart(const std::string& _AnimationName, std::function<void(const FrameAnimation_DESC&)> Function);
 	// 끝나는 프레임에 들어온다
@@ -120,6 +120,8 @@ public:
 	void AnimationBindFrame(const std::string& _AnimationName, std::function<void(const FrameAnimation_DESC&)> Function);
 	// Update
 	void AnimationBindTime(const std::string& _AnimationName, std::function<void(const FrameAnimation_DESC&, float)> Function);
+
+	void ScaleToTexture();
 
 protected:
 	void Start() override;
