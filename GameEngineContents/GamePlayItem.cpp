@@ -3,8 +3,9 @@
 #include "GamePlayItemBag.h"
 #include "GamePlayCharacter.h"
 
+
 GamePlayItem::GamePlayItem()
-	: ItemBag(nullptr)
+	: CurrentItemBag(nullptr)
 	, ItemCode(GamePlayItemCode::Error)
 	, Stack(0)
 	, Field(false)
@@ -81,52 +82,6 @@ void GamePlayItem::End()
 // static
 
 // static
-
-GamePlayItemType GamePlayItem::CheckItemType()
-{
-	GamePlayItemType IndexType = GamePlayItemType::Unknown;
-
-	{
-		int IntType = static_cast<int>(ItemCode);
-		if (0 <= IntType && IntType < 100)
-		{
-			IndexType = GamePlayItemType::Debug;
-		}
-		else if (100 <= IntType && IntType < 5000)
-		{
-			if (100 <= IntType && IntType < 1000)
-			{
-				IndexType = GamePlayItemType::Equipment;
-			}
-			if (1000 <= IntType && IntType < 2000)
-			{
-				IndexType = GamePlayItemType::Stuff;
-			}
-			if (2000 <= IntType && IntType < 3000)
-			{
-				IndexType = GamePlayItemType::Consumable;
-			}
-			if (3000 <= IntType && IntType < 4000)
-			{
-				IndexType = GamePlayItemType::Avatar;
-			}
-			if (4000 <= IntType && IntType < 5000)
-			{
-				IndexType = GamePlayItemType::Pet;
-			}
-		
-		}
-	}
-	//    0 ~   99 디버그
-	//  100 ~  999 장비
-	// 1000 ~ 1999 재료
-	// 2000 ~ 2999 소비
-	// 3000 ~ 3999 아바타
-	// 4000 ~ 4999 펫
-	ItemType = IndexType;
-
-	return ItemType;
-}
 
 
 void GamePlayItem::DestroyItem()

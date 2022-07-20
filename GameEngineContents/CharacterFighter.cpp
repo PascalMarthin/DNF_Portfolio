@@ -7,6 +7,10 @@
 #include <GameEngineCore/GameEngineFolderTexture.h>
 
 #define FighterAnimationInter 0.15f
+
+std::map<std::string, FrameAnimation_DESC*> CharacterFighter::CharactorAnimation_DESCs;
+
+
 CharacterFighter::CharacterFighter() 
 {
 }
@@ -19,56 +23,75 @@ CharacterFighter::~CharacterFighter()
 void CharacterFighter::Start()
 {
 	GamePlayCharacter::Start();
-	if (GamePlayCharacter::CharactorIndex <= 1)
+	for (GameEnginePlusTextureRenderer* Avata : AllAvatas)
 	{
-		SetAnimationForFrameAnimationDESC();
+		for (auto& DESC : CharactorAnimation_DESCs)
+		{
+			Avata->CreateFrameAnimationFolderPlus(DESC.first, (*DESC.second));
+		}
+		Avata->ChangeFrameAnimationPlus("Move_Stand");
 	}
+	Avata_Skin->SetDefaultCharactorAvata("ft_body0011");
 
-}
 
-void CharacterFighter::SetAnimationForFrameAnimationDESC()
-{
-		Fighter_F_Animation["Att_Dash"			   ] = FrameAnimation_DESC("", 0, 2, FighterAnimationInter, false);
-		Fighter_F_Animation["Att_BasePunch1"	   ] = FrameAnimation_DESC("", 3, 4, FighterAnimationInter, false);
-		Fighter_F_Animation["Att_OneinchPunch"	   ] = FrameAnimation_DESC("", 5, 7, FighterAnimationInter, false);
-		Fighter_F_Animation["Att_Upper"			   ] = FrameAnimation_DESC("", 8, 14, FighterAnimationInter, false);
-		Fighter_F_Animation["Att_BasePunch2"	   ] = FrameAnimation_DESC("", 15, 18, FighterAnimationInter, false);
-		Fighter_F_Animation["Att_BasePunch3"	   ] = FrameAnimation_DESC("", 19, 26, FighterAnimationInter, false);
-		Fighter_F_Animation["Att_BaseKick1"		   ] = FrameAnimation_DESC("", 27, 33, FighterAnimationInter, false);
-		Fighter_F_Animation["Move_QuickStand"	   ] = FrameAnimation_DESC("", 34, 36, FighterAnimationInter, false);
-		Fighter_F_Animation["Move_Dash"			   ] = FrameAnimation_DESC("", 37, 44, FighterAnimationInter, true);  // 대쉬
-		Fighter_F_Animation["Move_Jump"			   ] = FrameAnimation_DESC("", 45, 51, FighterAnimationInter, false);
-		Fighter_F_Animation["Att_JumpKick"		   ] = FrameAnimation_DESC("", 52, 55, FighterAnimationInter, false);
-		Fighter_F_Animation["Att_Spire"			   ] = FrameAnimation_DESC("", 56, 63, FighterAnimationInter, false);
-		Fighter_F_Animation["Att_LowKick1"		   ] = FrameAnimation_DESC("", 64, 68, FighterAnimationInter, false);
-		Fighter_F_Animation["Att_LowKick2"		   ] = FrameAnimation_DESC("", 69, 73, FighterAnimationInter, false);
-		Fighter_F_Animation["Hit_Stand1"		   ] = FrameAnimation_DESC("", 74, 75, FighterAnimationInter, false);
-		Fighter_F_Animation["Hit_Stand2"]			 = FrameAnimation_DESC("", 76, 76, FighterAnimationInter, false);
-		Fighter_F_Animation["Hit_Falling"]			 = FrameAnimation_DESC("", 77, 77, FighterAnimationInter, false);
-		Fighter_F_Animation["Hit_FallUntilFloor"   ] = FrameAnimation_DESC("", 78, 79, FighterAnimationInter, false);
-		Fighter_F_Animation["Hit_Down"			   ] = FrameAnimation_DESC("", 79, 81, FighterAnimationInter, false);
-		Fighter_F_Animation["Hit_Stand3"		   ] = FrameAnimation_DESC("", 82, 83, FighterAnimationInter, false);
-		Fighter_F_Animation["Att_Mount"			   ] = FrameAnimation_DESC("", 84, 89, FighterAnimationInter, false);
-		Fighter_F_Animation["Att_Casting"		   ] = FrameAnimation_DESC("", 90, 93, FighterAnimationInter, false);
-		Fighter_F_Animation["Att_Suplex1"		   ] = FrameAnimation_DESC("", 94, 98, FighterAnimationInter, false);
-		Fighter_F_Animation["Att_Suplex2"		   ] = FrameAnimation_DESC("", 99, 105, FighterAnimationInter, false);
-		Fighter_F_Animation["Att_Grap"]				= FrameAnimation_DESC("", 106, 106, FighterAnimationInter, false);
-		Fighter_F_Animation["Att_JumpKick2"		   ] = FrameAnimation_DESC("", 107, 110, FighterAnimationInter, false);
-		Fighter_F_Animation["Move_Stand"		   ] = FrameAnimation_DESC("", 111, 114, FighterAnimationInter, true);
-		Fighter_F_Animation["Att_Changing"		   ] = FrameAnimation_DESC("", 115, 119, FighterAnimationInter, false);
-		Fighter_F_Animation["Att_Throwing"		   ] = FrameAnimation_DESC("", 120, 125, FighterAnimationInter, false);
-		Fighter_F_Animation["Att_Nen"			   ] = FrameAnimation_DESC("", 126, 129, FighterAnimationInter, false);
-		Fighter_F_Animation["Move_Stand_Battle"	   ] = FrameAnimation_DESC("", 130, 133, FighterAnimationInter, true);
-		Fighter_F_Animation["Move_Walk"			   ] = FrameAnimation_DESC("", 134, 141, FighterAnimationInter, false);
-		Fighter_F_Animation["Att_TakeDown"		   ] = FrameAnimation_DESC("", 142, 144, FighterAnimationInter, false);
-		Fighter_F_Animation["Att_MiddleKick"	   ] = FrameAnimation_DESC("", 145, 148, FighterAnimationInter, false);
-		Fighter_F_Animation["Att_RisingUpper"	   ] = FrameAnimation_DESC("", 149, 151, FighterAnimationInter, false);
-		Fighter_F_Animation["Att_Punch_Off"		   ] = FrameAnimation_DESC("", 152, 154, FighterAnimationInter, false);
-		Fighter_F_Animation["Att_Dash_Punch1"	   ] = FrameAnimation_DESC("", 155, 157, FighterAnimationInter, false);
-		Fighter_F_Animation["Att_Dash_Punch2"	   ] = FrameAnimation_DESC("", 158, 158, FighterAnimationInter, false);
 }
 
 void CharacterFighter::Update(float _DeltaTime)
 {
 
+}
+
+void CharacterFighter::SetAnimationForFrameAnimationDESC()
+{
+	CharactorAnimation_DESCs["Att_Dash"] = new FrameAnimation_DESC("", 0, 4, FighterAnimationInter);
+	CharactorAnimation_DESCs["Att_BasePunch1"] = new FrameAnimation_DESC("", 5, 6, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Att_OneinchPunch"] = new FrameAnimation_DESC("", 7, 9, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Att_Upper"] = new FrameAnimation_DESC("", 10, 16, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Att_BasePunch2"] = new FrameAnimation_DESC("", 17, 20, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Att_BasePunch3"] = new FrameAnimation_DESC("", 21, 28, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Att_BaseKick1"] = new FrameAnimation_DESC("", 29, 35, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Move_QuickStand"] = new FrameAnimation_DESC("", 36, 38, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Move_Dash"] = new FrameAnimation_DESC("", 39, 46, FighterAnimationInter, true);  // 대쉬
+	CharactorAnimation_DESCs["Move_Jump"] = new FrameAnimation_DESC("", 47, 53, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Att_JumpKick"] = new FrameAnimation_DESC("", 54, 57, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Att_Spire"] = new FrameAnimation_DESC("", 58, 65, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Att_LowKick1"] = new FrameAnimation_DESC("", 66, 70, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Att_LowKick2"] = new FrameAnimation_DESC("", 71, 75, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Hit_Stand1"] = new FrameAnimation_DESC("", 76, 77, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Hit_Stand2"] = new FrameAnimation_DESC("", 78, 78, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Hit_Falling"] = new FrameAnimation_DESC("", 79, 79, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Hit_FallUntilFloor"] = new FrameAnimation_DESC("", 80, 80, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Hit_Down"] = new FrameAnimation_DESC("", 81, 85, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Hit_Stand3"] = new FrameAnimation_DESC("", 84, 87, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Att_Mount"] = new FrameAnimation_DESC("", 86, 93, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Att_Casting"] = new FrameAnimation_DESC("", 92, 95, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Att_Suplex1"] = new FrameAnimation_DESC("", 96, 100, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Att_Suplex2"] = new FrameAnimation_DESC("", 101, 107, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Att_Grap"] = new FrameAnimation_DESC("", 108, 108, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Att_JumpKick2"] = new FrameAnimation_DESC("", 109, 112, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Move_Stand"] = new FrameAnimation_DESC("", 113, 116, FighterAnimationInter, true);
+	CharactorAnimation_DESCs["Att_Changing"] = new FrameAnimation_DESC("", 117, 121, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Att_Throwing"] = new FrameAnimation_DESC("", 122, 127, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Att_Nen"] = new FrameAnimation_DESC("", 128, 131, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Move_Stand_Battle"] = new FrameAnimation_DESC("", 132, 135, FighterAnimationInter, true);
+	CharactorAnimation_DESCs["Move_Walk"] = new FrameAnimation_DESC("", 136, 143, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Att_TakeDown"] = new FrameAnimation_DESC("", 144, 146, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Att_MiddleKick"] = new FrameAnimation_DESC("", 147, 150, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Att_RisingUpper"] = new FrameAnimation_DESC("", 151, 153, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Att_Punch_Off"] = new FrameAnimation_DESC("", 154, 156, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Att_Dash_Punch1"] = new FrameAnimation_DESC("", 157, 159, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Att_Dash_Punch2"] = new FrameAnimation_DESC("", 160, 160, FighterAnimationInter, false);
+}
+
+void CharacterFighter::DestroyFrameAnimationDESC()
+{
+	for (auto& Iter : CharacterFighter::CharactorAnimation_DESCs)
+	{
+		if (Iter.second != nullptr)
+		{
+			delete Iter.second;
+			Iter.second = nullptr;
+		}
+	}
+	CharactorAnimation_DESCs.clear();
 }

@@ -291,6 +291,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GamePlayItem_DESC_Res.cpp" />
     <ClCompile Include="GamePlayObject.cpp">
       <SubType>
       </SubType>

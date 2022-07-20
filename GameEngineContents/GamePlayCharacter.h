@@ -1,4 +1,5 @@
 #pragma once
+#include "GameEnginePlusTextureRenderer.h"
 #include "GamePlayObject.h"
 #include "GamePlayEnum.h"
 
@@ -78,15 +79,20 @@ protected:
 	//virtual void SettingCharactorAnimation(GameEngineTextureRenderer* _TextureRenderer, const std::string& _AvataClass, unsigned int _AvataCode = -1) = 0;
 
 	// æ∆πŸ≈∏
-	GameEngineTextureRenderer* Avata_Belt;
-	GameEngineTextureRenderer* Avata_Cap;
-	GameEngineTextureRenderer* Avata_Coat;
-	GameEngineTextureRenderer* Avata_Face;
-	GameEngineTextureRenderer* Avata_Hair;
-	GameEngineTextureRenderer* Avata_Neck;
-	GameEngineTextureRenderer* Avata_Pants;
-	GameEngineTextureRenderer* Avata_Shoes;
-	GameEngineTextureRenderer* Avata_Skin;
+	GameEnginePlusTextureRenderer* Avata_Belt;
+	GameEnginePlusTextureRenderer* Avata_Cap;
+	GameEnginePlusTextureRenderer* Avata_Coat;
+	GameEnginePlusTextureRenderer* Avata_Face;
+	GameEnginePlusTextureRenderer* Avata_Hair;
+	GameEnginePlusTextureRenderer* Avata_Neck;
+	GameEnginePlusTextureRenderer* Avata_Pants;
+	GameEnginePlusTextureRenderer* Avata_Shoes;
+	GameEnginePlusTextureRenderer* Avata_Skin;
+	std::vector<GameEnginePlusTextureRenderer*> AllAvatas;
+
+	std::map<GameEnginePlusTextureRenderer*, GamePlayItemCode> CurrentAvataCode;
+
+	//virtual void SetAvata(GamePlayItemCode _Code);
 };
 
 //enum class AvataClass

@@ -143,6 +143,9 @@
     <ClCompile Include="GameEnginePlusTextureRenderer.cpp">
       <Filter>CorePlus</Filter>
     </ClCompile>
+    <ClCompile Include="GamePlayItem_DESC_Res.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">

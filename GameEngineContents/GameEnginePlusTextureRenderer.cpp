@@ -9,6 +9,7 @@
 GameEnginePlusTextureRenderer::GameEnginePlusTextureRenderer()
 	: CurrentAvata(nullptr)
 	, CurrentAniPlus(nullptr)
+	, DefaultCharactorAvata(nullptr)
 {
 
 }
@@ -56,14 +57,21 @@ void FrameAnimationForAvata::Update(float _Delta)
 		{
 			Frame(Info);
 		}
-
-		if (nullptr != FolderTextureDouble)
+		if (nullptr == (*FolderTextureDouble))
 		{
-			ParentRenderer->SetTexture((*FolderTextureDouble)->GetTexture(Info.CurFrame));
+			if ((*DefaultCharactorAvataDouble) != nullptr)
+			{
+				ParentRenderer->SetTexture((*DefaultCharactorAvataDouble)->GetTexture(Info.CurFrame));
+			}
+			else
+			{
+				ParentRenderer->SetTexture(Texture);
+
+			}
 		}
 		else
 		{
-			MsgBoxAssert("텍스처가 세팅되지 않은 애니메이션 입니다.");
+			ParentRenderer->SetTexture((*FolderTextureDouble)->GetTexture(Info.CurFrame));
 		}
 
 		if (Info.CurFrame >= Info.End)
@@ -77,7 +85,7 @@ void FrameAnimationForAvata::Update(float _Delta)
 
 			if (true == Info.Loop)
 			{
-				Info.CurFrame = Info.Start;
+				Info.CurFrame = Info.Start - 1;
 			}
 			else 
 			{
@@ -123,17 +131,19 @@ void GameEnginePlusTextureRenderer::CreateFrameAnimationFolderPlus(const std::st
 	FrameAnimationForAvata& NewAni = FrameAniPlus[Name];
 	NewAni.Info = _Desc;
 	NewAni.ParentRenderer = this;
+	NewAni.Texture = GameEngineTexture::Find("Null.png");
 	NewAni.FolderTextureDouble = &CurrentAvata;
+	NewAni.DefaultCharactorAvataDouble = &DefaultCharactorAvata;
 }
 
 
 void GameEnginePlusTextureRenderer::ChangeFrameAnimationPlus(const std::string& _AnimationName)
 {
-	if (CurrentAvata == nullptr)
-	{
-		MsgBoxAssert("아직 폴더 텍스쳐가 세팅되지 않았습니다.");
-		return;
-	}
+	//if (CurrentAvata == nullptr)
+	//{
+	//	MsgBoxAssert("아직 폴더 텍스쳐가 세팅되지 않았습니다.");
+	//	return;
+	//}
 
 	std::string Name = GameEngineString::ToUpperReturn(_AnimationName);
 
@@ -147,8 +157,30 @@ void GameEnginePlusTextureRenderer::ChangeFrameAnimationPlus(const std::string& 
 	{
 		CurrentAniPlus = &FrameAniPlus[Name];
 		CurrentAniPlus->Reset();
-		SetTexture(CurrentAvata->GetTexture(CurrentAniPlus->Info.CurFrame));
+		if (CurrentAvata != nullptr)
+		{
+			SetTexture(CurrentAvata->GetTexture(CurrentAniPlus->Info.CurFrame));
+		}
+		else
+		{
+			SetTexture(CurrentAniPlus->Texture);
+		}
+		
 	}
+}
+void GameEnginePlusTextureRenderer::SetDefaultCharactorAvata(const std::string& _TextureName)
+{
+	SetDefaultCharactorAvata(GameEngineFolderTexture::Find(_TextureName));
+}
+
+
+void GameEnginePlusTextureRenderer::SetDefaultCharactorAvata(GameEngineFolderTexture* _FolderTexture)
+{
+	if (DefaultCharactorAvata != nullptr)
+	{
+		MsgBoxAssert("이미 디폴트 아바타가 설정되어 있습니다")
+	}
+	DefaultCharactorAvata = _FolderTexture;
 }
 
 //// 시작 프레임에 들어온다.

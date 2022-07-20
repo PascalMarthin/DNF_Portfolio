@@ -62,9 +62,10 @@ void FrameAnimation::Update(float _Delta)
 
 			if (true == Info.Loop)
 			{
-				Info.CurFrame = Info.Start;
+				Info.CurFrame = Info.Start - 1;
 			}
-			else {
+			else 
+			{
 				Info.CurFrame = Info.End;
 			}
 		}
@@ -253,15 +254,14 @@ void GameEngineTextureRenderer::ChangeFrameAnimation(const std::string& _Animati
 	{
 		CurAni = &FrameAni[Name];
 		CurAni->Reset();
-		if (CurAni->FolderTexture != nullptr)
-		{
-			SetTexture(CurAni->FolderTexture->GetTexture(CurAni->Info.CurFrame));
-		}
-		else
+		if (nullptr != CurAni->Texture)
 		{
 			SetTexture(CurAni->Texture, CurAni->Info.CurFrame);
 		}
-
+		else if(nullptr != CurAni->FolderTexture)
+		{
+			SetTexture(CurAni->FolderTexture->GetTexture(CurAni->Info.CurFrame));
+		}
 	}
 }
 

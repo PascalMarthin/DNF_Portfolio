@@ -20,8 +20,11 @@ public:
 	GameEnginePlusTextureRenderer& operator=(const GameEnginePlusTextureRenderer& _Other) = delete;
 	GameEnginePlusTextureRenderer& operator=(GameEnginePlusTextureRenderer&& _Other) noexcept = delete;
 
-	void ChangeFolderTexturePlus(GameEngineFolderTexture* _Texture);
+	void SetDefaultCharactorAvata(const std::string& _TextureName);
+	void SetDefaultCharactorAvata(GameEngineFolderTexture* _FolderTexture);
+
 	void ChangeFolderTexturePlus(const std::string& _TextureName);
+	void ChangeFolderTexturePlus(GameEngineFolderTexture* _Texture);
 
 	void CreateFrameAnimationFolderPlus(const std::string& _AnimationName, const FrameAnimation_DESC& _Desc);
 	//void CreateFrameAnimation(const std::string& _AnimationName, const FrameAnimation_DESC& _Desc);
@@ -37,6 +40,8 @@ protected:
 private:
 	GameEngineFolderTexture* CurrentAvata;
 
+	GameEngineFolderTexture* DefaultCharactorAvata;
+
 	std::map<std::string, FrameAnimationForAvata> FrameAniPlus;
 	FrameAnimationForAvata* CurrentAniPlus;
 
@@ -50,6 +55,8 @@ class FrameAnimationForAvata : public GameEngineNameObject
 
 	GameEnginePlusTextureRenderer* ParentRenderer;
 	GameEngineFolderTexture** FolderTextureDouble;
+	GameEngineFolderTexture** DefaultCharactorAvataDouble;
+	GameEngineTexture* Texture;
 
 	bool bOnceStart;
 	bool bOnceEnd;

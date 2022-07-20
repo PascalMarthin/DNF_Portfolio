@@ -12,12 +12,34 @@ enum class GamePlayItemType
 	Unknown
 };
 
+enum class GamePlayItemRate
+{
+	Error,
+	None,
+	Nomal,
+	Common,
+	UnCommon,
+	Rare,
+	Unique,
+	Legendary,
+	Epic
+};
+
 
 enum class GamePlayItemCode
 {
 	Error,
-	Empty
-	 
+	Empty,
+
+	Fighter_F_Default_Belt	 = 20,
+	Fighter_F_Default_Cap	 = 21,
+	Fighter_F_Default_Coat	 = 22,
+	Fighter_F_Default_Face	 = 23,
+	Fighter_F_Default_Hair	 = 24,
+	Fighter_F_Default_Neck	 = 25,
+	Fighter_F_Default_Pants	 = 26,
+	Fighter_F_Default_Shoes	 = 27,
+	Fighter_F_Default_Skin	 = 28,
 
 };
 //    0 ~   99 µð¹ö±×

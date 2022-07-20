@@ -9,6 +9,7 @@
 #include "DNF.h"
 #include "DebugLevel.h"
 #include "SeriaRoom_Level.h"
+#include "CharacterFighter.h"
 
 //#pragma comment(lib, "GameEngineBase.lib")
 
@@ -26,7 +27,7 @@ void DNF::Start()
 	// GameEngineDebug::ConsoleOpen();
 
 	AllResourceLoad();
-
+	CharacterFighter::SetAnimationForFrameAnimationDESC();
 
 
 	{
@@ -69,24 +70,28 @@ void DNF::BaseFolderTextureLoad()
 		Dir.MoveParentToExitsChildDirectory("Resource");
 		Dir.Move("Resource");
 		Dir.Move("Texture");
-		Dir.Move("Map");
-		Dir.Move("Seria_Room");
+		std::vector<GameEngineDirectory> AllTextureDir = Dir.GetRecursiveAllDirectory();
 
-		GameEngineFolderTexture::Load(Dir.GetFullPath());
-	}
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExitsChildDirectory("Resource");
-		Dir.Move("Resource");
-		Dir.Move("Texture");
-		Dir.Move("Object");
-		Dir.Move("Charactor");
-		Dir.Move("Fighter_F");
-		Dir.Move("Skin");
-		Dir.Move("ft_body0011");
+		for (GameEngineDirectory& DirIter : AllTextureDir)
+		{
 
-		GameEngineFolderTexture::Load(Dir.GetFullPath());
+			GameEngineFolderTexture::Load(DirIter.GetFullPath());
+		}
+
 	}
+	//{
+	//	GameEngineDirectory Dir;
+	//	Dir.MoveParentToExitsChildDirectory("Resource");
+	//	Dir.Move("Resource");
+	//	Dir.Move("Texture");
+	//	Dir.Move("Object");
+	//	Dir.Move("Charactor");
+	//	Dir.Move("Fighter_F");
+	//	Dir.Move("Skin");
+	//	Dir.Move("ft_body0011");
+
+	//	GameEngineFolderTexture::Load(Dir.GetFullPath());
+	//}
 }
 
 void DNF::Update(float _DeltaTime)
@@ -97,5 +102,5 @@ void DNF::Update(float _DeltaTime)
 
 void DNF::End()
 {
-	int a = 0;
+	CharacterFighter::DestroyFrameAnimationDESC();
 }

@@ -18,6 +18,9 @@ public:
 	CharacterFighter& operator=(const CharacterFighter& _Other) = delete;
 	CharacterFighter& operator=(CharacterFighter&& _Other) noexcept = delete;
 
+	static void SetAnimationForFrameAnimationDESC();
+	static void DestroyFrameAnimationDESC();
+
 protected:
 
 	void Start() override;
@@ -29,8 +32,8 @@ protected:
 	// void OffEvent() {}
 
 private:
-	void SetAnimationForFrameAnimationDESC();
-	static std::map<std::string ,FrameAnimation_DESC> Fighter_F_Animation;
+	static std::map<std::string ,FrameAnimation_DESC*> CharactorAnimation_DESCs;
+
 
 private:
 

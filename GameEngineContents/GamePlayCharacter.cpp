@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include <GameEngineCore/GameEngineLevel.h>
+#include "GameEnginePlusTextureRenderer.h"
 #include "GamePlayCharacter.h"
 #include "ItemBagEquipmentWindow.h"
 #include "ItemBagQuickslot.h"
@@ -41,8 +42,7 @@ GamePlayCharacter::GamePlayCharacter()
 
 GamePlayCharacter::~GamePlayCharacter() 
 {
-
-	
+	--GamePlayCharacter::CharactorIndex;
 }
 
 void GamePlayCharacter::Start()
@@ -67,15 +67,30 @@ void GamePlayCharacter::Start()
 	}
 
 
-	Avata_Belt = CreateComponent<GameEngineTextureRenderer>();
-	Avata_Skin = CreateComponent<GameEngineTextureRenderer>();
-	Avata_Cap = CreateComponent<GameEngineTextureRenderer>();
-	Avata_Coat = CreateComponent<GameEngineTextureRenderer>();
-	Avata_Face = CreateComponent<GameEngineTextureRenderer>();
-	Avata_Hair = CreateComponent<GameEngineTextureRenderer>();
-	Avata_Neck = CreateComponent<GameEngineTextureRenderer>();
-	Avata_Pants = CreateComponent<GameEngineTextureRenderer>();
-	Avata_Shoes = CreateComponent<GameEngineTextureRenderer>();
+	AllAvatas.push_back(Avata_Belt = CreateComponent<GameEnginePlusTextureRenderer>());
+	AllAvatas.push_back(Avata_Cap = CreateComponent<GameEnginePlusTextureRenderer>());
+	AllAvatas.push_back(Avata_Coat = CreateComponent<GameEnginePlusTextureRenderer>());
+	AllAvatas.push_back(Avata_Face = CreateComponent<GameEnginePlusTextureRenderer>());
+	AllAvatas.push_back(Avata_Hair = CreateComponent<GameEnginePlusTextureRenderer>());
+	AllAvatas.push_back(Avata_Neck = CreateComponent<GameEnginePlusTextureRenderer>());
+	AllAvatas.push_back(Avata_Pants = CreateComponent<GameEnginePlusTextureRenderer>());
+	AllAvatas.push_back(Avata_Shoes = CreateComponent<GameEnginePlusTextureRenderer>());
+	AllAvatas.push_back(Avata_Skin = CreateComponent<GameEnginePlusTextureRenderer>());
+
+	for (auto& Avata :AllAvatas)
+	{
+		Avata->GetTransform().SetLocalScale({ 500, 500 });
+	}
+	
+
+	CurrentAvataCode[Avata_Belt] = GamePlayItemCode::Empty;
+	CurrentAvataCode[Avata_Cap] = GamePlayItemCode::Empty;
+	CurrentAvataCode[Avata_Coat] = GamePlayItemCode::Empty;
+	CurrentAvataCode[Avata_Face] = GamePlayItemCode::Empty;
+	CurrentAvataCode[Avata_Hair] = GamePlayItemCode::Empty;
+	CurrentAvataCode[Avata_Neck] = GamePlayItemCode::Empty;
+	CurrentAvataCode[Avata_Pants] = GamePlayItemCode::Empty;
+	CurrentAvataCode[Avata_Shoes] = GamePlayItemCode::Empty;
+	CurrentAvataCode[Avata_Skin] = GamePlayItemCode::Empty;
 
 }
-
