@@ -31,7 +31,12 @@ void CharacterFighter::Start()
 		}
 		Avata->ChangeFrameAnimationPlus("Move_Stand");
 	}
+	Avata_Coat->SetDefaultCharactorAvata("ft_coat0000a");
+	Avata_Hair->SetDefaultCharactorAvata("ft_hair0000a");
+	Avata_Pants->SetDefaultCharactorAvata("ft_pants0000d");
+	Avata_Shoes->SetDefaultCharactorAvata("ft_shoes0000a");
 	Avata_Skin->SetDefaultCharactorAvata("ft_body0011");
+
 
 
 }

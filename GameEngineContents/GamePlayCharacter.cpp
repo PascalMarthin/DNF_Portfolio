@@ -81,7 +81,7 @@ void GamePlayCharacter::Start()
 	{
 		Avata->GetTransform().SetLocalScale({ 500, 500 });
 	}
-	
+	Avata_Skin->GetTransform().SetLocalPosition({ 0, 0, 100 });
 
 	CurrentAvataCode[Avata_Belt] = GamePlayItemCode::Empty;
 	CurrentAvataCode[Avata_Cap] = GamePlayItemCode::Empty;
