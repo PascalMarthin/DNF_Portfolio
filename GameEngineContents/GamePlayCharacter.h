@@ -133,7 +133,8 @@ private:
 	PetInventory* PlayerPetInventory;
 
 private:
-	GamePlayKeyManager* KeyManager;
+	GamePlayKeyManager* KeyInTown;
+	GamePlayKeyManager* KeyInDungeon;
 
 protected:
 	//virtual void SettingCharactorAnimation(GameEngineTextureRenderer* _TextureRenderer, const std::string& _AvataClass, unsigned int _AvataCode = -1) = 0;

@@ -19,19 +19,18 @@ public:
 protected:
 	void Start() override;
 
-	void Update(float _DeltaTime) override;
-
 	// void End() override {}
 	// void OnEvent() {}
 	// void OffEvent() {}
-private:
-	void CheckKeyByMove(float _DeltaTime, float _MoveSpeed);
-	void CheckKeyBySkill(float _DeltaTime, float _MoveSpeed);
-	void CheckKeyByInterface(float _DeltaTime, float _MoveSpeed);
+protected:
+	virtual void CheckKeyByMove(float _DeltaTime, float _MoveSpeed);
+	virtual void CheckKeyBySkill(float _DeltaTime, float _MoveSpeed) {}
+	virtual void CheckKeyByInterface(float _DeltaTime, float _MoveSpeed) {}
 
 
-private:
 	GamePlayCharacter* Player;
+
+private:
 
 
 };

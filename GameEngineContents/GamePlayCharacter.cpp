@@ -2,7 +2,8 @@
 #include <GameEngineCore/GameEngineLevel.h>
 #include "GameEnginePlusTextureRenderer.h"
 #include "GamePlayCharacter.h"
-#include "GamePlayKeyManager.h"
+#include "GamePlayKeyInTown.h"
+#include "GamePlayKeyInDungeon.h"
 #include "ItemBagEquipmentWindow.h"
 #include "ItemBagQuickslot.h"
 #include "AvatarInventory.h"
@@ -16,7 +17,8 @@ GamePlayCharacter::GamePlayCharacter()
 	, PlayerItemInventory(nullptr)
 	, PlayerAvatarInventory(nullptr)
 	, PlayerPetInventory(nullptr)
-	, KeyManager(nullptr)
+	, KeyInTown(nullptr)
+	, KeyInDungeon(nullptr)
 
 	, Avata_Belt(nullptr)
 	, Avata_Skin(nullptr)
@@ -89,8 +91,8 @@ void GamePlayCharacter::Start()
 	CurrentAvataCode[Avata_Skin] = GamePlayItemCode::Empty;
 
 
-	KeyManager = CreateComponent<GamePlayKeyManager>();
-	
+	KeyInTown = CreateComponent<GamePlayKeyInTown>();
+	KeyInDungeon = CreateComponent<GamePlayKeyInDungeon>();
 
 }
 
