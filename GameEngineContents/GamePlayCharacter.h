@@ -4,6 +4,71 @@
 #include "GamePlayEnum.h"
 
 // 설명 :
+
+class CharactorAbilityStat
+{
+public:
+	CharactorAbilityStat()
+		: MoveSpeed(1.f)
+		, AttSpeed(1.f)
+		, CastSpeed(1.f)
+		, MAXHP(1000)
+		, HP(0)
+		, MP(0)
+		, Physical_Armor(0.f)
+		, Magcial_Armor(0.f)
+		, STR(0)
+		, INT(0)
+		, Health(0)
+		, SPI(0)
+		, Physical_Damage(0)
+		, Magcial_Damage(0)
+		, Independent_Damage(0)
+		, Physical_Critical(0.f)
+		, Magcial_Critical(0.f)
+		, Accuracy(0.f)
+		, Evasion(0.f)
+		, Hit_Stun(0)
+		, Hit_Recovery(0)
+		, PlayerCurrentState(0)
+
+	{
+
+	}
+
+private:
+	unsigned int MAXHP;
+	int HP;
+	unsigned int MAXMP;
+	int MP;
+
+	float Physical_Armor; //              방어력
+	float Magcial_Armor; //               마법 방어력
+	unsigned int STR; // Strength         힘
+	unsigned int INT; // Intelligence     지능
+
+	unsigned int Health;   //             체력
+	unsigned int SPI;      // Spirit      정신력
+	unsigned int Physical_Damage;
+	unsigned int Magcial_Damage;
+
+	unsigned int Independent_Damage;
+	float Physical_Critical;
+	float Magcial_Critical;
+
+	float MoveSpeed;
+	float AttSpeed;
+	float CastSpeed;
+
+	float Accuracy;
+	float Evasion;
+	unsigned int Hit_Stun;
+	unsigned int Hit_Recovery;
+
+	unsigned int PlayerCurrentState;
+
+};
+
 class GamePlayKeyManager;
 class ItemBagEquipmentWindow;
 class ItemBagInventory;
@@ -58,7 +123,6 @@ protected:
 
 
 protected:
-	unsigned int PlayerCurrentState;
 	
 private:
 	// ItemBag 관련
@@ -92,28 +156,16 @@ protected:
 
 
 public:
-	inline float GetMoveSpeed()
+	CharactorAbilityStat& GetAbilityStat()
 	{
-		return MoveSpeed;
-	}
-
-	inline float GetAttSpeed()
-	{
-		return AttSpeed;
-	}
-
-	inline float GetCastSpeed()
-	{
-		return CastSpeed;
+		return PlayerStat;
 	}
 
 private:
-	float MoveSpeed;
-	float AttSpeed;
-	float CastSpeed;
-
-	float MAXHP;
+	CharactorAbilityStat PlayerStat;
 };
+
+
 
 //enum class AvataClass
 //{

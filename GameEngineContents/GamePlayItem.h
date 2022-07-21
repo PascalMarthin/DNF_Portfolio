@@ -150,7 +150,7 @@ private:
 	const GamePlayItemType  ItemType;
 	const GamePlayItemRate  ItemRate;
 	
-	const std::string const ItemName;
+	const std::string ItemName;
 
 	const GameEngineTexture* const ItemIcon;
 

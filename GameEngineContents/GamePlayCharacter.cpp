@@ -16,7 +16,6 @@ GamePlayCharacter::GamePlayCharacter()
 	, PlayerItemInventory(nullptr)
 	, PlayerAvatarInventory(nullptr)
 	, PlayerPetInventory(nullptr)
-	, PlayerCurrentState(0x0)
 	, KeyManager(nullptr)
 
 	, Avata_Belt(nullptr)

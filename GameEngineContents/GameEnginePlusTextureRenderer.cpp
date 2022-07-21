@@ -57,24 +57,8 @@ void FrameAnimationForAvata::Update(float _Delta)
 		{
 			Frame(Info);
 		}
-		if (nullptr == (*FolderTextureDouble))
-		{
-			if ((*DefaultCharactorAvataDouble) != nullptr)
-			{
-				ParentRenderer->SetTexture((*DefaultCharactorAvataDouble)->GetTexture(Info.CurFrame));
-			}
-			else
-			{
-				ParentRenderer->SetTexture(Texture);
 
-			}
-		}
-		else
-		{
-			ParentRenderer->SetTexture((*FolderTextureDouble)->GetTexture(Info.CurFrame));
-		}
-
-		if (Info.CurFrame >= Info.End)
+		if (Info.CurFrame > Info.End)
 		{
 			if (false == bOnceEnd && nullptr != End)
 			{
@@ -85,12 +69,28 @@ void FrameAnimationForAvata::Update(float _Delta)
 
 			if (true == Info.Loop)
 			{
-				Info.CurFrame = Info.Start - 1;
+				Info.CurFrame = Info.Start;
 			}
 			else 
 			{
 				Info.CurFrame = Info.End;
 			}
+		}
+
+		if (nullptr == (*FolderTextureDouble))
+		{
+			if ((*DefaultCharactorAvataDouble) != nullptr)
+			{
+				ParentRenderer->SetTexture((*DefaultCharactorAvataDouble)->GetTexture(Info.CurFrame));
+			}
+			else
+			{
+				ParentRenderer->SetTexture(Texture);
+			}
+		}
+		else
+		{
+			ParentRenderer->SetTexture((*FolderTextureDouble)->GetTexture(Info.CurFrame));
 		}
 
 		Info.FrameTime -= Info.Inter;
@@ -161,11 +161,14 @@ void GameEnginePlusTextureRenderer::ChangeFrameAnimationPlus(const std::string& 
 		{
 			SetTexture(CurrentAvata->GetTexture(CurrentAniPlus->Info.CurFrame));
 		}
+		else if (DefaultCharactorAvata != nullptr)
+		{
+			SetTexture(DefaultCharactorAvata->GetTexture(CurrentAniPlus->Info.CurFrame));
+		}
 		else
 		{
 			SetTexture(CurrentAniPlus->Texture);
 		}
-		
 	}
 }
 void GameEnginePlusTextureRenderer::SetDefaultCharactorAvata(const std::string& _TextureName)
