@@ -34,6 +34,7 @@ private:
 	void BaseSoundLoad();
 	void BaseTextureLoad();
 	void BaseFolderTextureLoad();
+	void BaseKeySetting();
 	
 
 };

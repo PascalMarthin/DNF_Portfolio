@@ -1,5 +1,5 @@
 #pragma once
-
+#define DefaultMove 100.f
 
 enum class GamePlayItemType
 {

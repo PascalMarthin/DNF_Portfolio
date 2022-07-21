@@ -53,12 +53,6 @@
     <ClInclude Include="TownLevel.h">
       <Filter>Level\Play</Filter>
     </ClInclude>
-    <ClInclude Include="CharacterSkillKeyManager.h">
-      <Filter>KeyManager</Filter>
-    </ClInclude>
-    <ClInclude Include="CharacterUIKeyManager.h">
-      <Filter>KeyManager</Filter>
-    </ClInclude>
     <ClInclude Include="Seria_NPC.h">
       <Filter>Object\NPC</Filter>
     </ClInclude>
@@ -70,6 +64,9 @@
     </ClInclude>
     <ClInclude Include="GameEnginePlusTextureRenderer.h">
       <Filter>CorePlus</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlayKeyManager.h">
+      <Filter>KeyManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -125,12 +122,6 @@
     <ClCompile Include="TownLevel.cpp">
       <Filter>Level\Play</Filter>
     </ClCompile>
-    <ClCompile Include="CharacterSkillKeyManager.cpp">
-      <Filter>KeyManager</Filter>
-    </ClCompile>
-    <ClCompile Include="CharacterUIKeyManager.cpp">
-      <Filter>KeyManager</Filter>
-    </ClCompile>
     <ClCompile Include="Seria_NPC.cpp">
       <Filter>Object\NPC</Filter>
     </ClCompile>
@@ -145,6 +136,9 @@
     </ClCompile>
     <ClCompile Include="GamePlayItem_DESC_Res.cpp">
       <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlayKeyManager.cpp">
+      <Filter>KeyManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

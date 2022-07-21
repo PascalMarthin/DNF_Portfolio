@@ -2,13 +2,12 @@
 #include <GameEngineCore/GameEngineLevel.h>
 #include "GameEnginePlusTextureRenderer.h"
 #include "GamePlayCharacter.h"
+#include "GamePlayKeyManager.h"
 #include "ItemBagEquipmentWindow.h"
 #include "ItemBagQuickslot.h"
 #include "AvatarInventory.h"
 #include "PetInventory.h"
 #include "ItemInventory.h"
-#include "CharacterUIKeyManager.h"
-#include "CharacterSkillKeyManager.h"
 
 int GamePlayCharacter::CharactorIndex = 0;
 GamePlayCharacter::GamePlayCharacter()
@@ -17,27 +16,22 @@ GamePlayCharacter::GamePlayCharacter()
 	, PlayerItemInventory(nullptr)
 	, PlayerAvatarInventory(nullptr)
 	, PlayerPetInventory(nullptr)
-	, PlayerUIKeyManager(nullptr)
-	, PlayerSkillKeyManager(nullptr)
 	, PlayerCurrentState(0x0)
+	, KeyManager(nullptr)
 
 	, Avata_Belt(nullptr)
 	, Avata_Skin(nullptr)
 	, Avata_Cap(nullptr)
 	, Avata_Coat(nullptr)
 	, Avata_Face(nullptr)
-	, Avata_Hair(nullptr)
+	, Avata_Hair_a(nullptr)
+	, Avata_Hair_b(nullptr)
 	, Avata_Neck(nullptr)
 	, Avata_Pants(nullptr)
 	, Avata_Shoes(nullptr)
 
 {
 	++GamePlayCharacter::CharactorIndex;
-	if (GamePlayCharacter::CharactorIndex <= 1)
-	{
-		PlayerUIKeyManager = CreateComponent<CharacterUIKeyManager>();
-		PlayerSkillKeyManager = CreateComponent<CharacterSkillKeyManager>();
-	}
 }
 
 GamePlayCharacter::~GamePlayCharacter() 
@@ -67,15 +61,16 @@ void GamePlayCharacter::Start()
 	}
 
 
+	AllAvatas.push_back(Avata_Skin = CreateComponent<GameEnginePlusTextureRenderer>());
 	AllAvatas.push_back(Avata_Belt = CreateComponent<GameEnginePlusTextureRenderer>());
 	AllAvatas.push_back(Avata_Cap = CreateComponent<GameEnginePlusTextureRenderer>());
 	AllAvatas.push_back(Avata_Coat = CreateComponent<GameEnginePlusTextureRenderer>());
 	AllAvatas.push_back(Avata_Face = CreateComponent<GameEnginePlusTextureRenderer>());
-	AllAvatas.push_back(Avata_Hair = CreateComponent<GameEnginePlusTextureRenderer>());
+	AllAvatas.push_back(Avata_Hair_a = CreateComponent<GameEnginePlusTextureRenderer>());
+	AllAvatas.push_back(Avata_Hair_b = CreateComponent<GameEnginePlusTextureRenderer>());
 	AllAvatas.push_back(Avata_Neck = CreateComponent<GameEnginePlusTextureRenderer>());
 	AllAvatas.push_back(Avata_Pants = CreateComponent<GameEnginePlusTextureRenderer>());
 	AllAvatas.push_back(Avata_Shoes = CreateComponent<GameEnginePlusTextureRenderer>());
-	AllAvatas.push_back(Avata_Skin = CreateComponent<GameEnginePlusTextureRenderer>());
 
 	for (auto& Avata :AllAvatas)
 	{
@@ -87,10 +82,23 @@ void GamePlayCharacter::Start()
 	CurrentAvataCode[Avata_Cap] = GamePlayItemCode::Empty;
 	CurrentAvataCode[Avata_Coat] = GamePlayItemCode::Empty;
 	CurrentAvataCode[Avata_Face] = GamePlayItemCode::Empty;
-	CurrentAvataCode[Avata_Hair] = GamePlayItemCode::Empty;
+	CurrentAvataCode[Avata_Hair_a] = GamePlayItemCode::Empty;
+	CurrentAvataCode[Avata_Hair_b] = GamePlayItemCode::Empty;
 	CurrentAvataCode[Avata_Neck] = GamePlayItemCode::Empty;
 	CurrentAvataCode[Avata_Pants] = GamePlayItemCode::Empty;
 	CurrentAvataCode[Avata_Shoes] = GamePlayItemCode::Empty;
 	CurrentAvataCode[Avata_Skin] = GamePlayItemCode::Empty;
 
+
+	KeyManager = CreateComponent<GamePlayKeyManager>();
+	
+
+}
+
+void GamePlayCharacter::ChangeAvataAnimation(const std::string& _AnimationName)
+{
+	for (GameEnginePlusTextureRenderer* Avata : AllAvatas)
+	{
+		Avata->ChangeFrameAnimationPlus(_AnimationName);
+	}
 }

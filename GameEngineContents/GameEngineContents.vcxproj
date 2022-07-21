@@ -169,14 +169,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="CharacterUIKeyManager.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="CharacterSkillKeyManager.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="DebugLevel.h">
       <SubType>
       </SubType>
@@ -196,6 +188,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="GamePlayItemBag.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GamePlayKeyManager.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -262,14 +258,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="CharacterStryker_Skill.cpp" />
-    <ClCompile Include="CharacterUIKeyManager.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="CharacterSkillKeyManager.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="DebugLevel.cpp">
       <SubType>
       </SubType>
@@ -292,6 +280,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="GamePlayItem_DESC_Res.cpp" />
+    <ClCompile Include="GamePlayKeyManager.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GamePlayObject.cpp">
       <SubType>
       </SubType>

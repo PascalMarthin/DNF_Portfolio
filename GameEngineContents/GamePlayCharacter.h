@@ -4,22 +4,20 @@
 #include "GamePlayEnum.h"
 
 // Ό³Έν :
+class GamePlayKeyManager;
 class ItemBagEquipmentWindow;
 class ItemBagInventory;
 class ItemBagQuickslot;
 class ItemInventory;
 class AvatarInventory;
 class PetInventory;
-class CharacterSkillKeyManager;
-class CharacterUIKeyManager;
 class GamePlayCharacter : public GamePlayObject
 {
-
 public:
 	static int CharactorIndex;
 public:
 	// constrcuter destructer
-	GamePlayCharacter();
+	GamePlayCharacter();	
 	~GamePlayCharacter();
 
 	// delete Function
@@ -51,7 +49,8 @@ public:
 		return PlayerPetInventory;
 	}
 
-	//std::string ConverToString(AvataClass _Class);
+
+	void ChangeAvataAnimation(const std::string& _AnimationName);
 
 protected:
 	void Start() override;
@@ -69,11 +68,8 @@ private:
 	AvatarInventory* PlayerAvatarInventory;
 	PetInventory* PlayerPetInventory;
 
-	CharacterUIKeyManager* PlayerUIKeyManager;
-	CharacterSkillKeyManager* PlayerSkillKeyManager;
-
 private:
-
+	GamePlayKeyManager* KeyManager;
 
 protected:
 	//virtual void SettingCharactorAnimation(GameEngineTextureRenderer* _TextureRenderer, const std::string& _AvataClass, unsigned int _AvataCode = -1) = 0;
@@ -83,7 +79,8 @@ protected:
 	GameEnginePlusTextureRenderer* Avata_Cap;
 	GameEnginePlusTextureRenderer* Avata_Coat;
 	GameEnginePlusTextureRenderer* Avata_Face;
-	GameEnginePlusTextureRenderer* Avata_Hair;
+	GameEnginePlusTextureRenderer* Avata_Hair_a;
+	GameEnginePlusTextureRenderer* Avata_Hair_b;
 	GameEnginePlusTextureRenderer* Avata_Neck;
 	GameEnginePlusTextureRenderer* Avata_Pants;
 	GameEnginePlusTextureRenderer* Avata_Shoes;
@@ -92,7 +89,30 @@ protected:
 
 	std::map<GameEnginePlusTextureRenderer*, GamePlayItemCode> CurrentAvataCode;
 
-	//virtual void SetAvata(GamePlayItemCode _Code);
+
+
+public:
+	inline float GetMoveSpeed()
+	{
+		return MoveSpeed;
+	}
+
+	inline float GetAttSpeed()
+	{
+		return AttSpeed;
+	}
+
+	inline float GetCastSpeed()
+	{
+		return CastSpeed;
+	}
+
+private:
+	float MoveSpeed;
+	float AttSpeed;
+	float CastSpeed;
+
+	float MAXHP;
 };
 
 //enum class AvataClass

@@ -3,7 +3,6 @@
 #include <GameEngineCore/GameEngineComponent.h>
 #include <GameEngineCore/GameEngineTextureRenderer.h>
 #include "CharacterFighter.h"
-#include "CharacterUIKeyManager.h"
 #include <GameEngineCore/GameEngineFolderTexture.h>
 
 #define FighterAnimationInter 0.15f
@@ -31,13 +30,14 @@ void CharacterFighter::Start()
 		}
 		Avata->ChangeFrameAnimationPlus("Move_Stand");
 	}
-	Avata_Coat->SetDefaultCharactorAvata("ft_coat0000a");
-	Avata_Hair->SetDefaultCharactorAvata("ft_hair0000a");
-	Avata_Pants->SetDefaultCharactorAvata("ft_pants0000d");
-	Avata_Shoes->SetDefaultCharactorAvata("ft_shoes0000a");
-	Avata_Skin->SetDefaultCharactorAvata("ft_body0011");
-
-
+	{
+		Avata_Coat->SetDefaultCharactorAvata("ft_coat0000a");
+		Avata_Hair_b->SetDefaultCharactorAvata("ft_hair0000a");
+		Avata_Hair_a->SetDefaultCharactorAvata("ft_hair0000b");
+		Avata_Pants->SetDefaultCharactorAvata("ft_pants0000d");
+		Avata_Shoes->SetDefaultCharactorAvata("ft_shoes0000a");
+		Avata_Skin->SetDefaultCharactorAvata("ft_body0011");
+	}
 
 }
 
@@ -79,7 +79,7 @@ void CharacterFighter::SetAnimationForFrameAnimationDESC()
 	CharactorAnimation_DESCs["Att_Throwing"] = new FrameAnimation_DESC("", 122, 127, FighterAnimationInter, false);
 	CharactorAnimation_DESCs["Att_Nen"] = new FrameAnimation_DESC("", 128, 131, FighterAnimationInter, false);
 	CharactorAnimation_DESCs["Move_Stand_Battle"] = new FrameAnimation_DESC("", 132, 135, FighterAnimationInter, true);
-	CharactorAnimation_DESCs["Move_Walk"] = new FrameAnimation_DESC("", 136, 143, FighterAnimationInter, false);
+	CharactorAnimation_DESCs["Move_Walk"] = new FrameAnimation_DESC("", 136, 143, FighterAnimationInter);
 	CharactorAnimation_DESCs["Att_TakeDown"] = new FrameAnimation_DESC("", 144, 146, FighterAnimationInter, false);
 	CharactorAnimation_DESCs["Att_MiddleKick"] = new FrameAnimation_DESC("", 147, 150, FighterAnimationInter, false);
 	CharactorAnimation_DESCs["Att_RisingUpper"] = new FrameAnimation_DESC("", 151, 153, FighterAnimationInter, false);
