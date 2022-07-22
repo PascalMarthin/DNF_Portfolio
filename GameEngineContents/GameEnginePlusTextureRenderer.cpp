@@ -9,7 +9,7 @@
 GameEnginePlusTextureRenderer::GameEnginePlusTextureRenderer()
 	: CurrentAvata(nullptr)
 	, CurrentAniPlus(nullptr)
-	, DefaultCharactorAvata(nullptr)
+	, DefaultCharacterAvata(nullptr)
 {
 
 }
@@ -79,9 +79,9 @@ void FrameAnimationForAvata::Update(float _Delta)
 
 		if (nullptr == (*FolderTextureDouble))
 		{
-			if ((*DefaultCharactorAvataDouble) != nullptr)
+			if ((*DefaultCharacterAvataDouble) != nullptr)
 			{
-				ParentRenderer->SetTexture((*DefaultCharactorAvataDouble)->GetTexture(Info.CurFrame));
+				ParentRenderer->SetTexture((*DefaultCharacterAvataDouble)->GetTexture(Info.CurFrame));
 			}
 			else
 			{
@@ -133,7 +133,7 @@ void GameEnginePlusTextureRenderer::CreateFrameAnimationFolderPlus(const std::st
 	NewAni.ParentRenderer = this;
 	NewAni.Texture = GameEngineTexture::Find("Null.png");
 	NewAni.FolderTextureDouble = &CurrentAvata;
-	NewAni.DefaultCharactorAvataDouble = &DefaultCharactorAvata;
+	NewAni.DefaultCharacterAvataDouble = &DefaultCharacterAvata;
 }
 
 
@@ -161,9 +161,9 @@ void GameEnginePlusTextureRenderer::ChangeFrameAnimationPlus(const std::string& 
 		{
 			SetTexture(CurrentAvata->GetTexture(CurrentAniPlus->Info.CurFrame));
 		}
-		else if (DefaultCharactorAvata != nullptr)
+		else if (DefaultCharacterAvata != nullptr)
 		{
-			SetTexture(DefaultCharactorAvata->GetTexture(CurrentAniPlus->Info.CurFrame));
+			SetTexture(DefaultCharacterAvata->GetTexture(CurrentAniPlus->Info.CurFrame));
 		}
 		else
 		{
@@ -171,19 +171,19 @@ void GameEnginePlusTextureRenderer::ChangeFrameAnimationPlus(const std::string& 
 		}
 	}
 }
-void GameEnginePlusTextureRenderer::SetDefaultCharactorAvata(const std::string& _TextureName)
+void GameEnginePlusTextureRenderer::SetDefaultCharacterAvata(const std::string& _TextureName)
 {
-	SetDefaultCharactorAvata(GameEngineFolderTexture::Find(_TextureName));
+	SetDefaultCharacterAvata(GameEngineFolderTexture::Find(_TextureName));
 }
 
 
-void GameEnginePlusTextureRenderer::SetDefaultCharactorAvata(GameEngineFolderTexture* _FolderTexture)
+void GameEnginePlusTextureRenderer::SetDefaultCharacterAvata(GameEngineFolderTexture* _FolderTexture)
 {
-	if (DefaultCharactorAvata != nullptr)
+	if (DefaultCharacterAvata != nullptr)
 	{
 		MsgBoxAssert("이미 디폴트 아바타가 설정되어 있습니다")
 	}
-	DefaultCharactorAvata = _FolderTexture;
+	DefaultCharacterAvata = _FolderTexture;
 }
 
 //// 시작 프레임에 들어온다.

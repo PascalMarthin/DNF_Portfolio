@@ -5,10 +5,10 @@
 
 // 설명 :
 
-class CharactorAbilityStat
+class CharacterAbilityStat
 {
 public:
-	CharactorAbilityStat()
+	CharacterAbilityStat()
 		: MoveSpeed(1.f)
 		, AttSpeed(1.f)
 		, CastSpeed(1.f)
@@ -79,7 +79,7 @@ class PetInventory;
 class GamePlayCharacter : public GamePlayObject
 {
 public:
-	static int CharactorIndex;
+	static int CharacterIndex;
 public:
 	// constrcuter destructer
 	GamePlayCharacter();	
@@ -137,7 +137,7 @@ private:
 	GamePlayKeyManager* KeyInDungeon;
 
 protected:
-	//virtual void SettingCharactorAnimation(GameEngineTextureRenderer* _TextureRenderer, const std::string& _AvataClass, unsigned int _AvataCode = -1) = 0;
+	//virtual void SettingCharacterAnimation(GameEngineTextureRenderer* _TextureRenderer, const std::string& _AvataClass, unsigned int _AvataCode = -1) = 0;
 
 	// 아바타
 	GameEnginePlusTextureRenderer* Avata_Belt;
@@ -157,13 +157,13 @@ protected:
 
 
 public:
-	CharactorAbilityStat& GetAbilityStat()
+	CharacterAbilityStat& GetAbilityStat()
 	{
 		return PlayerStat;
 	}
 
 private:
-	CharactorAbilityStat PlayerStat;
+	CharacterAbilityStat PlayerStat;
 };
 
 

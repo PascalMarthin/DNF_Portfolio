@@ -4,7 +4,7 @@
 // 설명 : 던파 아바타 시스템에 맞춘 텍스쳐렌더링클래스
 // 폴더 텍스쳐 하나로만 이루어져 있으며 같은 주소값을 공유한다
 enum class AvataClass;
-enum class CharactorClass;
+enum class CharacterClass;
 class FrameAnimationForAvata;
 class GameEnginePlusTextureRenderer : public GameEngineTextureRenderer
 {
@@ -20,8 +20,8 @@ public:
 	GameEnginePlusTextureRenderer& operator=(const GameEnginePlusTextureRenderer& _Other) = delete;
 	GameEnginePlusTextureRenderer& operator=(GameEnginePlusTextureRenderer&& _Other) noexcept = delete;
 
-	void SetDefaultCharactorAvata(const std::string& _TextureName);
-	void SetDefaultCharactorAvata(GameEngineFolderTexture* _FolderTexture);
+	void SetDefaultCharacterAvata(const std::string& _TextureName);
+	void SetDefaultCharacterAvata(GameEngineFolderTexture* _FolderTexture);
 
 	void ChangeFolderTexturePlus(const std::string& _TextureName);
 	void ChangeFolderTexturePlus(GameEngineFolderTexture* _Texture);
@@ -40,7 +40,7 @@ protected:
 private:
 	GameEngineFolderTexture* CurrentAvata;
 
-	GameEngineFolderTexture* DefaultCharactorAvata;
+	GameEngineFolderTexture* DefaultCharacterAvata;
 
 	std::map<std::string, FrameAnimationForAvata> FrameAniPlus;
 	FrameAnimationForAvata* CurrentAniPlus;
@@ -55,7 +55,7 @@ class FrameAnimationForAvata : public GameEngineNameObject
 
 	GameEnginePlusTextureRenderer* ParentRenderer;
 	GameEngineFolderTexture** FolderTextureDouble;
-	GameEngineFolderTexture** DefaultCharactorAvataDouble;
+	GameEngineFolderTexture** DefaultCharacterAvataDouble;
 	GameEngineTexture* Texture;
 
 	bool bOnceStart;

@@ -32,7 +32,7 @@ protected:
 	// void OffEvent() {}
 
 private:
-	static std::map<std::string ,FrameAnimation_DESC*> CharactorAnimation_DESCs;
+	static std::map<std::string ,FrameAnimation_DESC*> CharacterAnimation_DESCs;
 
 
 private:

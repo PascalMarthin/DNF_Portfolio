@@ -10,7 +10,7 @@
 #include "PetInventory.h"
 #include "ItemInventory.h"
 
-int GamePlayCharacter::CharactorIndex = 0;
+int GamePlayCharacter::CharacterIndex = 0;
 GamePlayCharacter::GamePlayCharacter()
 	: PlayerEquipment(nullptr)
 	, PlayerQuickslot(nullptr)
@@ -32,12 +32,12 @@ GamePlayCharacter::GamePlayCharacter()
 	, Avata_Shoes(nullptr)
 
 {
-	++GamePlayCharacter::CharactorIndex;
+	++GamePlayCharacter::CharacterIndex;
 }
 
 GamePlayCharacter::~GamePlayCharacter() 
 {
-	--GamePlayCharacter::CharactorIndex;
+	--GamePlayCharacter::CharacterIndex;
 }
 
 void GamePlayCharacter::Start()

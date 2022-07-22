@@ -85,7 +85,7 @@ void DNF::BaseFolderTextureLoad()
 	//	Dir.Move("Resource");
 	//	Dir.Move("Texture");
 	//	Dir.Move("Object");
-	//	Dir.Move("Charactor");
+	//	Dir.Move("Character");
 	//	Dir.Move("Fighter_F");
 	//	Dir.Move("Skin");
 	//	Dir.Move("ft_body0011");

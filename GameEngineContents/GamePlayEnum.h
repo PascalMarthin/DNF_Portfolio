@@ -49,7 +49,7 @@ enum class GamePlayItemCode
 // 3000 ~ 3999 아바타
 // 4000 ~ 4999 펫
 
-enum class CharactorStat
+enum class CharacterStat
 {
 	Player_Character_ALive			=	0x00 ,// 생존								
 	Player_Character_Action			=	0x01 ,// 행동가능							
