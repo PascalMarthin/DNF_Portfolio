@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include <GameEngineBase/GameEngineInput.h>
+#include "CharacterStatManager.h"
 #include "GamePlayCharacter.h"
 #include "GamePlayKeyInTown.h"
 
@@ -19,9 +20,11 @@ void GamePlayKeyInTown::Start()
 void GamePlayKeyInTown::Update(float _DeltaTime)
 {
 	float Speed = 2.f;//Player->GetMoveSpeed();
+
 	CheckKeyByMove(_DeltaTime, Speed);
 	CheckKeyBySkill(_DeltaTime, Speed);
 	CheckKeyByInterface(_DeltaTime, Speed);
+
 }
 
 void GamePlayKeyInTown::CheckKeyByMove(float _DeltaTime, float _MoveSpeed)
@@ -73,8 +76,20 @@ void GamePlayKeyInTown::CheckKeyByMove(float _DeltaTime, float _MoveSpeed)
 
 void GamePlayKeyInTown::CheckKeyBySkill(float _DeltaTime, float _MoveSpeed)
 {
+	bool IsAction = false;
+	if (GameEngineInput::GetInst()->IsPress("BaseAtt") == true)
+	{
+		IsAction = true;
+		Player->ChangeAvataAnimation("Att_BasePunch1");
+	}
+
+	if (GameEngineInput::GetInst()->IsPress("Jump") == true)
+	{
+		int a = 0;
+	}
 
 }
+// µð¹ö±×
 
 void GamePlayKeyInTown::CheckKeyByInterface(float _DeltaTime, float _MoveSpeed)
 {

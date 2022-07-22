@@ -2,6 +2,7 @@
 #include <GameEngineCore/GameEngineComponent.h>
 
 // Ό³Έν :
+class CharacterStatManager;
 class GamePlayCharacter;
 class GamePlayKeyManager : public GameEngineComponent
 {
@@ -29,7 +30,7 @@ protected:
 
 
 	GamePlayCharacter* Player;
-
+	CharacterStatManager* PlayerStatManager;
 private:
 
 

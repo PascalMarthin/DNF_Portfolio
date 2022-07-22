@@ -74,6 +74,9 @@
     <ClInclude Include="GamePlayKeyInTown.h">
       <Filter>KeyManager</Filter>
     </ClInclude>
+    <ClInclude Include="CharacterStatManager.h">
+      <Filter>Object\Character</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -151,6 +154,9 @@
     </ClCompile>
     <ClCompile Include="GamePlayKeyInTown.cpp">
       <Filter>KeyManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterStatManager.cpp">
+      <Filter>Object\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -19,6 +19,7 @@ GamePlayCharacter::GamePlayCharacter()
 	, PlayerPetInventory(nullptr)
 	, KeyInTown(nullptr)
 	, KeyInDungeon(nullptr)
+	, StatManager(nullptr)
 
 	, Avata_Belt(nullptr)
 	, Avata_Skin(nullptr)
@@ -42,6 +43,10 @@ GamePlayCharacter::~GamePlayCharacter()
 
 void GamePlayCharacter::Start()
 {
+	StatManager = CreateComponent<CharacterStatManager>();
+
+	KeyInTown = CreateComponent<GamePlayKeyInTown>();
+	KeyInDungeon = CreateComponent<GamePlayKeyInDungeon>();
 
 	{
 		PlayerEquipment = GetLevel()->CreateActor<ItemBagEquipmentWindow>();
@@ -91,8 +96,6 @@ void GamePlayCharacter::Start()
 	CurrentAvataCode[Avata_Skin] = GamePlayItemCode::Empty;
 
 
-	KeyInTown = CreateComponent<GamePlayKeyInTown>();
-	KeyInDungeon = CreateComponent<GamePlayKeyInDungeon>();
 
 }
 
