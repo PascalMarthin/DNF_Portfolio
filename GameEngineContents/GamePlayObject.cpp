@@ -2,7 +2,7 @@
 #include "GamePlayObject.h"
 
 GamePlayObject::GamePlayObject() 
-	: Object_Body(nullptr)
+	: ObjectPos(float4::ZERO)
 {
 }
 
@@ -10,3 +10,7 @@ GamePlayObject::~GamePlayObject()
 {
 }
 
+void GamePlayObject::Start()
+{
+	ObjectPos = GetTransform().GetLocalPosition();
+}

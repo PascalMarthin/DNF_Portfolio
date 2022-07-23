@@ -14,10 +14,12 @@ GameEngineCamera::GameEngineCamera()
 	Far = 1000.0f;
 	Fov = 60.0f;
 
-	ViewPortDesc.TopLeftX = 0;
-	ViewPortDesc.TopLeftY = 0;
-	ViewPortDesc.Width = Size.x;
-	ViewPortDesc.Height = Size.y;
+
+
+	ViewPortDesc.TopLeftX = -(Size.x * 0.1f);
+	ViewPortDesc.TopLeftY = -(Size.y * 0.1f);
+	ViewPortDesc.Width = Size.x * 1.2f;
+	ViewPortDesc.Height = Size.y * 1.2f;
 	ViewPortDesc.MinDepth = 0.0f;
 	ViewPortDesc.MaxDepth = 0.0f;
 

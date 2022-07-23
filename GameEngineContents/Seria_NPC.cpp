@@ -15,7 +15,7 @@ Seria_NPC::~Seria_NPC()
 
 void Seria_NPC::Start()
 {
-	GetTransform().SetLocalPosition({ 0, -50.f });
+	GetTransform().SetLocalPosition({ 0, -50.f, 30});
 	{
 		Seria_Renderer = CreateComponent<GameEngineTextureRenderer>();
 		Seria_Renderer->CreateFrameAnimationFolder("Seria_Town_Standing", FrameAnimation_DESC("Seria", 0, 11, 0.25f));
@@ -28,4 +28,4 @@ void Seria_NPC::Start()
 void Seria_NPC::Update(float _DeltaTime)
 {
 
-}
+} 

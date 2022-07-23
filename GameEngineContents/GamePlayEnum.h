@@ -1,5 +1,7 @@
 #pragma once
 #define DefaultMove 100.f
+#define WindowX 1280
+#define WindowY 720 
 
 enum class GamePlayItemType
 {

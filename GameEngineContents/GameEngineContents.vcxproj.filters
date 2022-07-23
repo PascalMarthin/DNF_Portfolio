@@ -60,7 +60,7 @@
       <Filter>Object\NPC</Filter>
     </ClInclude>
     <ClInclude Include="SeriaRoomBackground.h">
-      <Filter>BackGround</Filter>
+      <Filter>Level\BackGround</Filter>
     </ClInclude>
     <ClInclude Include="GameEnginePlusTextureRenderer.h">
       <Filter>CorePlus</Filter>
@@ -76,6 +76,15 @@
     </ClInclude>
     <ClInclude Include="CharacterStatManager.h">
       <Filter>Object\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterPosManager.h">
+      <Filter>Object\Character\Fighter</Filter>
+    </ClInclude>
+    <ClInclude Include="InterfaceHUD.h">
+      <Filter>UI\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerInterface.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -138,7 +147,7 @@
       <Filter>Object\NPC</Filter>
     </ClCompile>
     <ClCompile Include="SeriaRoomBackground.cpp">
-      <Filter>BackGround</Filter>
+      <Filter>Level\BackGround</Filter>
     </ClCompile>
     <ClCompile Include="GameEnginePlusTextureRenderer.cpp">
       <Filter>CorePlus</Filter>
@@ -157,6 +166,15 @@
     </ClCompile>
     <ClCompile Include="CharacterStatManager.cpp">
       <Filter>Object\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterPosManager.cpp">
+      <Filter>Object\Character\Fighter</Filter>
+    </ClCompile>
+    <ClCompile Include="InterfaceHUD.cpp">
+      <Filter>UI\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerInterface.cpp">
+      <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -211,11 +229,17 @@
     <Filter Include="Level\Battle">
       <UniqueIdentifier>{37192671-0765-45d3-bff8-2cb2c8abe9c6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BackGround">
-      <UniqueIdentifier>{614b6c49-5105-4946-8a43-10276928e9ae}</UniqueIdentifier>
-    </Filter>
     <Filter Include="CorePlus">
       <UniqueIdentifier>{7937e3ba-3f4b-4792-82af-f4f07a937229}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\BackGround">
+      <UniqueIdentifier>{614b6c49-5105-4946-8a43-10276928e9ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{131865d8-1084-4fe8-a438-9ae216fc8c14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\HUD">
+      <UniqueIdentifier>{ea82e88e-c80a-481b-9876-2ca3e7572f7e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

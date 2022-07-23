@@ -6,6 +6,8 @@
 
 // 설명 :
 
+class PlayerInterface;
+class InterfaceHUD;
 class GamePlayKeyManager;
 class ItemBagEquipmentWindow;
 class ItemBagInventory;
@@ -67,6 +69,7 @@ protected:
 protected:
 	
 private:
+	PlayerInterface* PlayerUserInterface;
 	// ItemBag 관련
 	ItemBagEquipmentWindow* PlayerEquipment;
 	ItemBagQuickslot* PlayerQuickslot;

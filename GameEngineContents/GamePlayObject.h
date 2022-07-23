@@ -16,14 +16,21 @@ public:
 	GamePlayObject& operator=(const GamePlayObject& _Other) = delete;
 	GamePlayObject& operator=(GamePlayObject&& _Other) noexcept = delete;
 
+	inline float4& GetPosToInGame()
+	{
+		return ObjectPos;
+	}
+
 protected:
-	GameEngineTextureRenderer* Object_Body;
+	void Start() override;
+	// GameEngineTextureRenderer* Object_Body;
 	// 오브젝트 렌더러
 
-	std::map<std::string, std::pair<int, int>> ObjectMotionIndex;
-	// 오브젝트 모션 번호를 저장
 
+	// 게임 내 위치 
 private:
+	
+	float4 ObjectPos;
 
 };
 

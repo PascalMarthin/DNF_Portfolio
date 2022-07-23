@@ -70,6 +70,7 @@ void DNF::BaseFolderTextureLoad()
 		Dir.MoveParentToExitsChildDirectory("Resource");
 		Dir.Move("Resource");
 		Dir.Move("Texture");
+		Dir.Move("Object");
 		std::vector<GameEngineDirectory> AllTextureDir = Dir.GetRecursiveAllDirectory();
 
 		for (GameEngineDirectory& DirIter : AllTextureDir)
@@ -77,7 +78,35 @@ void DNF::BaseFolderTextureLoad()
 
 			GameEngineFolderTexture::Load(DirIter.GetFullPath());
 		}
+	}
 
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resource");
+		Dir.Move("Resource");
+		Dir.Move("Texture");
+		Dir.Move("Map");
+		std::vector<GameEngineDirectory> AllTextureDir = Dir.GetRecursiveAllDirectory();
+
+		for (GameEngineDirectory& DirIter : AllTextureDir)
+		{
+			GameEngineFolderTexture::Load(DirIter.GetFullPath());
+		}
+	}
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resource");
+		Dir.Move("Resource");
+		Dir.Move("Texture");
+		Dir.Move("UI");
+		Dir.Move("HUD");
+
+		std::vector<GameEngineFile> Shaders = Dir.GetAllFile();
+
+		for (size_t i = 0; i < Shaders.size(); i++)
+		{
+			GameEngineTexture::Load(Shaders[i].GetFullPath());
+		}
 	}
 	//{
 	//	GameEngineDirectory Dir;
