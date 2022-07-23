@@ -4,6 +4,7 @@
 // Ό³Έν :
 class CharacterStatManager;
 class GamePlayCharacter;
+class PlayerInterface;
 class GamePlayKeyManager : public GameEngineComponent
 {
 public:
@@ -26,11 +27,13 @@ protected:
 protected:
 	virtual void CheckKeyByMove(float _DeltaTime, float _MoveSpeed);
 	virtual void CheckKeyBySkill(float _DeltaTime, float _MoveSpeed) {}
-	virtual void CheckKeyByInterface(float _DeltaTime, float _MoveSpeed) {}
+	virtual void CheckKeyByInterface(float _DeltaTime, float _MoveSpeed);
 
 
 	GamePlayCharacter* Player;
-	CharacterStatManager* PlayerStatManager;
+
+	CharacterStatManager** PlayerStatManager;
+	PlayerInterface** PlayerUserInterface;
 private:
 
 

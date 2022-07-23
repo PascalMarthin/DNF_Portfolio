@@ -1,4 +1,5 @@
 #pragma once
+#include <GameEngineCore/GameEngineTextureRenderer.h>
 #include "GamePlayItemBag.h"
 
 // Ό³Έν :
@@ -17,7 +18,10 @@ public:
 protected:
 	ItemBagInventory();
 
-private:
+	GameEngineTextureRenderer* Inventory_Window;
 
+
+	void Update(float _DeltaTime) override;
+private:
 };
 

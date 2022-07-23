@@ -26,7 +26,7 @@ protected:
 protected:
 	void CheckKeyByMove(float _DeltaTime, float _MoveSpeed) override;
 	void CheckKeyBySkill(float _DeltaTime, float _MoveSpeed) override;
-	void CheckKeyByInterface(float _DeltaTime, float _MoveSpeed) override;
+	//void CheckKeyByInterface(float _DeltaTime, float _MoveSpeed) override;
 
 private:
 

@@ -160,6 +160,10 @@ void DNF::BaseKeySetting()
 		GameEngineInput::GetInst()->CreateKey("Skill", 'K');
 		GameEngineInput::GetInst()->CreateKey("MyStat", 'P');
 	}
+	{
+		GameEngineInput::GetInst()->CreateKey("LMouseCLK", MK_LBUTTON);
+		GameEngineInput::GetInst()->CreateKey("RMouseCLK", MK_RBUTTON);
+	}
 }
 
 void DNF::Update(float _DeltaTime)

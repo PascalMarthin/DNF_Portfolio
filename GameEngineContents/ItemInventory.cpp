@@ -1,4 +1,6 @@
 #include "PreCompile.h"
+#include <GameEngineCore/GameEngineComponent.h>
+#include <GameEngineBase/GameEngineInput.h>
 #include "ItemInventory.h"
 #include "GamePlayItem.h"
 
@@ -13,15 +15,15 @@ ItemInventory::~ItemInventory()
 
 void ItemInventory::Start()
 {
-	ItemList.resize(48);
-	for (size_t i = 0; i < 48; i++)
-	{
-	}
+	Inventory_Window = CreateComponent<GameEngineTextureRenderer>();
+	Inventory_Window->SetTexture("Window_Iteminventory.png");
+	Inventory_Window->ScaleToTexture();
+	Off();
 }
 
 void ItemInventory::Update(float _DeltaTime)
 {
-
+	ItemBagInventory::Update(_DeltaTime);
 }
 
 

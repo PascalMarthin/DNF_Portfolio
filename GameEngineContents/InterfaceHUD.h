@@ -29,9 +29,16 @@ private:
 	GameEngineTextureRenderer* HPBar;
 	GameEngineTextureRenderer* HPBar_Hit;
 	GameEngineTextureRenderer* MPBar;
+	GameEngineTextureRenderer* EXPBar;
 
+	std::vector<GameEngineTextureRenderer*> SkillInterface;
+	GameEngineTextureRenderer* SkillPage;
+
+
+	float4 SkillInterfacePivot;
 	float4 HUDBasePivot;
 	float4 HPBarPivot;
 	float4 MPBarPivot;
+	float4 EXPBarPivot;
 };
 

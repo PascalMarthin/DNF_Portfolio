@@ -9,12 +9,7 @@
 class PlayerInterface;
 class InterfaceHUD;
 class GamePlayKeyManager;
-class ItemBagEquipmentWindow;
-class ItemBagInventory;
-class ItemBagQuickslot;
-class ItemInventory;
-class AvatarInventory;
-class PetInventory;
+
 class GamePlayCharacter : public GamePlayObject
 {
 public:
@@ -31,28 +26,6 @@ public:
 	GamePlayCharacter& operator=(GamePlayCharacter&& _Other) noexcept = delete;
 
 	
-	inline ItemBagEquipmentWindow* GetEquipment() const
-	{
-		return PlayerEquipment;
-	}
-	inline ItemBagQuickslot* GetQuickslot() const
-	{
-		return PlayerQuickslot;
-	}
-
-	inline ItemInventory* GetItemInventory() const
-	{
-		return PlayerItemInventory;
-	}
-	inline AvatarInventory* GetAvatarInventory() const
-	{
-		return PlayerAvatarInventory;
-	}
-	inline PetInventory* GetPetInventory() const
-	{
-		return PlayerPetInventory;
-	}
-
 
 	void ChangeAvataAnimation(const std::string& _AnimationName);
 
@@ -60,6 +33,21 @@ public:
 	{
 		return StatManager;
 	}
+	inline PlayerInterface* GetInterface() const
+	{
+		return PlayerUserInterface;
+	}
+
+	inline CharacterStatManager** GetStatManagerDoublePtr()
+	{
+		return &StatManager;
+	}
+	inline PlayerInterface** GetInterfaceDoublePtr()
+	{
+		return &PlayerUserInterface;
+	}
+
+
 
 protected:
 	void Start() override;
@@ -71,11 +59,7 @@ protected:
 private:
 	PlayerInterface* PlayerUserInterface;
 	// ItemBag ฐüทร
-	ItemBagEquipmentWindow* PlayerEquipment;
-	ItemBagQuickslot* PlayerQuickslot;
-	ItemInventory* PlayerItemInventory;
-	AvatarInventory* PlayerAvatarInventory;
-	PetInventory* PlayerPetInventory;
+
 
 private:
 	GamePlayKeyManager* KeyInTown;
@@ -98,7 +82,6 @@ protected:
 	std::vector<GameEnginePlusTextureRenderer*> AllAvatas;
 
 	std::map<GameEnginePlusTextureRenderer*, GamePlayItemCode> CurrentAvataCode;
-
 
 
 public:

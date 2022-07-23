@@ -5,21 +5,12 @@
 #include "GamePlayCharacter.h"
 #include "GamePlayKeyInTown.h"
 #include "GamePlayKeyInDungeon.h"
-#include "ItemBagEquipmentWindow.h"
-#include "ItemBagQuickslot.h"
-#include "AvatarInventory.h"
-#include "PetInventory.h"
-#include "ItemInventory.h"
+
 #include "InterfaceHUD.h"
 
 int GamePlayCharacter::CharacterIndex = 0;
 GamePlayCharacter::GamePlayCharacter()
-	: PlayerEquipment(nullptr)
-	, PlayerQuickslot(nullptr)
-	, PlayerItemInventory(nullptr)
-	, PlayerAvatarInventory(nullptr)
-	, PlayerPetInventory(nullptr)
-	, KeyInTown(nullptr)
+	: KeyInTown(nullptr)
 	, KeyInDungeon(nullptr)
 	, StatManager(nullptr)
 	, PlayerUserInterface(nullptr)
@@ -52,23 +43,6 @@ void GamePlayCharacter::Start()
 	KeyInTown = CreateComponent<GamePlayKeyInTown>();
 	KeyInDungeon = CreateComponent<GamePlayKeyInDungeon>();
 
-	{
-		PlayerEquipment = GetLevel()->CreateActor<ItemBagEquipmentWindow>();
-		PlayerEquipment->SetOwner(this);
-
-		PlayerQuickslot = GetLevel()->CreateActor<ItemBagQuickslot>();
-		PlayerQuickslot->SetOwner(this);
-
-		PlayerItemInventory = GetLevel()->CreateActor<ItemInventory>();
-		PlayerItemInventory->SetOwner(this);
-
-		PlayerAvatarInventory = GetLevel()->CreateActor<AvatarInventory>();
-		PlayerAvatarInventory->SetOwner(this);
-
-		PlayerPetInventory = GetLevel()->CreateActor<PetInventory>();
-		PlayerPetInventory->SetOwner(this);
-
-	}
 
 
 	AllAvatas.push_back(Avata_Skin = CreateComponent<GameEnginePlusTextureRenderer>());

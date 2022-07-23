@@ -2,7 +2,6 @@
 #include "GamePlayItemBag.h"
 
 GamePlayItemBag::GamePlayItemBag()
-	: Owner(nullptr)
 {
 }
 

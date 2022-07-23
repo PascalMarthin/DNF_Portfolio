@@ -3,6 +3,7 @@
 
 // Ό³Έν :
 class InterfaceHUD;
+class InterfaceItemBag;
 class PlayerInterface : public GameEngineActor
 {
 public:
@@ -16,6 +17,16 @@ public:
 	PlayerInterface& operator=(const PlayerInterface& _Other) = delete;
 	PlayerInterface& operator=(PlayerInterface&& _Other) noexcept = delete;
 
+	inline InterfaceHUD* GetUI_HUD() const
+	{
+		return PlayerHUD;
+	}
+
+	inline InterfaceItemBag* GetUI_ItemBag() const
+	{
+		return PlayerItemBag;
+	}
+
 protected:
 	void Start() override;
 
@@ -27,7 +38,7 @@ protected:
 
 private:
 	InterfaceHUD* PlayerHUD;
-
+	InterfaceItemBag* PlayerItemBag;
 
 };
 

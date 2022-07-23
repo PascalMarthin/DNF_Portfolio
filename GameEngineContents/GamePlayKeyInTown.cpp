@@ -90,8 +90,3 @@ void GamePlayKeyInTown::CheckKeyBySkill(float _DeltaTime, float _MoveSpeed)
 
 }
 // µð¹ö±×
-
-void GamePlayKeyInTown::CheckKeyByInterface(float _DeltaTime, float _MoveSpeed)
-{
-
-}

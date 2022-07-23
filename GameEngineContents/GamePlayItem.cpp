@@ -100,7 +100,7 @@ void GamePlayItem::PickupFieldItem(GamePlayCharacter* _Character)
 {
 	Field = false;
 	//AllFieldItemList.remove(this);
-	_Character->GetItemInventory();
+	//_Character->GetItemInventory();
 	//AllItemList.push_back(this);
 	// 필드 아이템 목록에서 삭제
 	// 모든(소유)아이템 목록으로 이동
