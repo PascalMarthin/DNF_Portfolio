@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include <list>
+#include <vector>
 #include <GameEngineCore/GameEngineTextureRenderer.h>
 #include "ItemBagInventory.h"
 
@@ -44,6 +45,7 @@ protected:
 private:
 	bool PushItembyDrag(GamePlayItem* _Item, GamePlayItemBag* _From) override;
 
+	std::list<std::vector<>>
 
 };
 

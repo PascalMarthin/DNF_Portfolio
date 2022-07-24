@@ -11,7 +11,10 @@ AvatarInventory::~AvatarInventory()
 
 void AvatarInventory::Start()
 {
-
+	Inventory_Window = CreateComponent<GameEngineTextureRenderer>();
+	Inventory_Window->SetTexture("Window_Avatainventory.png");
+	Inventory_Window->ScaleToTexture();
+	Off();
 }
 
 void AvatarInventory::Update(float _DeltaTime)
