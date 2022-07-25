@@ -51,7 +51,7 @@ bool GameEngineCore::ChangeLevel(const std::string& _Name)
 
 void GameEngineCore::CoreStart(GameEngineCore* _UserCore)
 {
-	//GameEngineGUI::Initialize();
+	GameEngineGUI::Initialize();
 
 	// 엔진 리소스는 완성되어야 합니다.
 	EngineResourcesInitialize();
@@ -122,7 +122,7 @@ void GameEngineCore::CoreEnd(GameEngineCore* _UserCore)
 
 	// 이유는 리소스를 사용할거 같아서
 	// gui에서 텍스처라던가 이런거 쓰다가
-	//GameEngineGUI::GUIDestroy();
+	GameEngineGUI::GUIDestroy();
 
 	EngineResourcesDestroy();
 

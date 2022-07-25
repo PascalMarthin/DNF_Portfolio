@@ -335,6 +335,9 @@
     <Filter Include="GUI\IMGUI">
       <UniqueIdentifier>{5d9990d3-68b8-450e-b5b8-9fbfd75b92da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GUI\EngineGUIWindow">
+      <UniqueIdentifier>{09480c4d-1007-4c4c-bffb-819bcf06a933}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="ThirdParty\bin\Release\DirectXTex.lib">

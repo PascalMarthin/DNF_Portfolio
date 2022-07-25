@@ -69,3 +69,14 @@ enum CharacterStat
 	Player_Character_BeDown	        =   0x0d ,// 다운중		
 	Player_Character_BeHold			=	0x0e  // 잡혀있는중															
 };
+
+
+enum ZSortOrder
+{
+	HUD_Bar        = 69,
+	HUD_Base       = 70,
+	Inventory_Item = 78,
+	Inventory_Blank = 79,
+	Inventory = 80,
+};
+// ~100 UI

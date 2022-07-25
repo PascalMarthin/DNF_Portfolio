@@ -19,13 +19,26 @@ void ItemInventory::Start()
 	Inventory_Window = CreateComponent<GameEngineTextureRenderer>();
 	Inventory_Window->SetTexture("Window_Iteminventory.png");
 	Inventory_Window->ScaleToTexture();
+	Inventory_Window->GetTransform().SetLocalPosition({ 0, 0, ZSortOrder::Inventory });
 	Off();
 
+	ItemBlankRenderer["Equipment"];
+	ItemBlankRenderer["Stuff"];
+	ItemBlankRenderer["Consumable"];
 
-
+	GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
+	Renderer->SetTexture("Inventory_Blank.png");
+	Renderer->ScaleToTexture();
+	Renderer->GetTransform().SetLocalPosition({ -120 * 0.9, -10, ZSortOrder::Inventory_Blank });
+	for (auto& Inventory : ItemBlankRenderer)
 	{
-		
-		//ItemBlankRenderer.push_back();
+		for (size_t i = 0; i < 6; i++)
+		{
+			for (size_t j = -3; j < 5; j++)
+			{
+
+			}
+		}
 	}
 
 }
