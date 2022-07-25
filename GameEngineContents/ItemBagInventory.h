@@ -20,8 +20,12 @@ protected:
 
 	GameEngineTextureRenderer* Inventory_Window;
 
+	std::vector<GameEngineTextureRenderer*> ItemBlankRenderer;
 
+	void Start() override;
 	void Update(float _DeltaTime) override;
 private:
+
+
 };
 

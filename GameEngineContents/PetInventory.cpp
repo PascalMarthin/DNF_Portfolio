@@ -11,6 +11,7 @@ PetInventory::~PetInventory()
 
 void PetInventory::Start()
 {
+	ItemBagInventory::Start();
 	Inventory_Window = CreateComponent<GameEngineTextureRenderer>();
 	Inventory_Window->SetTexture("Window_Petinventory.png");
 	Inventory_Window->ScaleToTexture();

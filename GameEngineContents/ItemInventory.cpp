@@ -15,10 +15,19 @@ ItemInventory::~ItemInventory()
 
 void ItemInventory::Start()
 {
+	ItemBagInventory::Start();
 	Inventory_Window = CreateComponent<GameEngineTextureRenderer>();
 	Inventory_Window->SetTexture("Window_Iteminventory.png");
 	Inventory_Window->ScaleToTexture();
 	Off();
+
+
+
+	{
+		
+		//ItemBlankRenderer.push_back();
+	}
+
 }
 
 void ItemInventory::Update(float _DeltaTime)

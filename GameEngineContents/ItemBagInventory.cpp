@@ -12,6 +12,11 @@ ItemBagInventory::~ItemBagInventory()
 {
 }
 
+void ItemBagInventory::Start()
+{
+
+}
+
 void ItemBagInventory::Update(float _DeltaTime)
 {
 	if (GameEngineInput::GetInst()->IsPress("LMouseCLK") == true)

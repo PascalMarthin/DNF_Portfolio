@@ -11,6 +11,7 @@ AvatarInventory::~AvatarInventory()
 
 void AvatarInventory::Start()
 {
+	ItemBagInventory::Start();
 	Inventory_Window = CreateComponent<GameEngineTextureRenderer>();
 	Inventory_Window->SetTexture("Window_Avatainventory.png");
 	Inventory_Window->ScaleToTexture();

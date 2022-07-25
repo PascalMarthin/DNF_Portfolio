@@ -247,5 +247,8 @@
     <Filter Include="UI\Item\Bag\BagEQ">
       <UniqueIdentifier>{935a4a46-d4a6-4e54-afb7-46508ac2399d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI\Item\Bag\ItemBag\NewFilter1">
+      <UniqueIdentifier>{9dac66ab-d5cb-47fd-9f9e-94b6b7cc15c6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

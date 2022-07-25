@@ -45,7 +45,5 @@ protected:
 private:
 	bool PushItembyDrag(GamePlayItem* _Item, GamePlayItemBag* _From) override;
 
-	std::list<std::vector<>>
-
 };
 
