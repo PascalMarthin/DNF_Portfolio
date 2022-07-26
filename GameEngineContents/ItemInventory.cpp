@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include <GameEngineCore/GameEngineComponent.h>
+#include <GameEngineCore/GameEngineTextureRenderer.h>
 #include <GameEngineBase/GameEngineInput.h>
 #include "ItemInventory.h"
 #include "GamePlayItem.h"
@@ -26,20 +27,26 @@ void ItemInventory::Start()
 	ItemBlankRenderer["Stuff"];
 	ItemBlankRenderer["Consumable"];
 
-	GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->SetTexture("Inventory_Blank.png");
-	Renderer->ScaleToTexture();
-	Renderer->GetTransform().SetLocalPosition({ -120 * 0.9, -10, ZSortOrder::Inventory_Blank });
 	for (auto& Inventory : ItemBlankRenderer)
 	{
-		for (size_t i = 0; i < 6; i++)
+		for (float i = 0.f; i < 6.f; i++)
 		{
-			for (size_t j = -3; j < 5; j++)
+			for (float j = -3.f; j < 5.f; j++)
 			{
-
+				GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
+				Renderer->SetTexture("Inventory_Blank.png");
+				Renderer->ScaleToTexture();
+				Renderer->GetTransform().SetLocalPosition({(-15 +( 30 * j)) * CameraZoomInvers, ( -15 + (-30 * i)) * CameraZoomInvers, ZSortOrder::Inventory_Blank});
+				Inventory.second.push_back(Renderer);
+				if (Inventory.first != "Equipment")
+				{
+					Renderer->Off();
+				}
 			}
 		}
 	}
+
+
 
 }
 

@@ -25,7 +25,7 @@ SeriaRoom_Level::~SeriaRoom_Level()
 void SeriaRoom_Level::Start()
 {
 	CharacterFighter* Fighter = CreateActor<CharacterFighter>();
-	CharacterFighter* Fighter1 = CreateActor<CharacterFighter>();
+
 }
 
 void SeriaRoom_Level::Update(float _DeltaTime)

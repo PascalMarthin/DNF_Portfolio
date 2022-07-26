@@ -3,6 +3,7 @@
 #include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngineCore/GameEngineComponent.h>
 #include <GameEngineCore/GameEngineTextureRenderer.h>
+#include "GamePlayEnum.h"
 #include "InterfaceHUD.h"
 
 InterfaceHUD::InterfaceHUD() 
@@ -12,11 +13,11 @@ InterfaceHUD::InterfaceHUD()
 	, HPBar_Hit(nullptr)
 	, EXPBar(nullptr)
 	, SkillPage(nullptr)
-	, HUDBasePivot({0, 0, 10})
-	, HPBarPivot({ -146, -6, 8 })
-	, MPBarPivot({  146, -6, 8 })
-	, SkillInterfacePivot({-92, -20})
-	, EXPBarPivot({0, -33})
+	, HUDBasePivot({0, 0, ZSortOrder::HUD_Base })
+	, HPBarPivot({ -146 * CameraZoomInvers, -6 * CameraZoomInvers, 8 })
+	, MPBarPivot({  146 * CameraZoomInvers, -6 * CameraZoomInvers, 8 })
+	, SkillInterfacePivot({-88 * CameraZoomInvers, -24 * CameraZoomInvers })
+	, EXPBarPivot({0, -33 * CameraZoomInvers })
 
 {
 }
@@ -28,7 +29,7 @@ InterfaceHUD::~InterfaceHUD()
 void InterfaceHUD::Start()
 {
 	{
-		GetTransform().SetLocalPosition({ 0, -258 });
+		GetTransform().SetLocalPosition({ 0, -720/*(-720 + 84) / 2 * CameraZoomInvers*/});
 		HUDBase        = CreateComponent<GameEngineTextureRenderer>();
 		HPBar		   = CreateComponent<GameEngineTextureRenderer>();
 		MPBar          = CreateComponent<GameEngineTextureRenderer>();
@@ -43,7 +44,7 @@ void InterfaceHUD::Start()
 				Skillicon->SetTexture("HUD_SkillIcon.png");
 				Skillicon->ScaleToTexture();
 				Skillicon->GetTransform().SetLocalPosition(SkillInterfacePivot);
-				Skillicon->GetTransform().SetLocalMove({ 32.f * j, 32.f * i });
+				Skillicon->GetTransform().SetLocalMove({ 32.f * j * CameraZoomInvers, 32.f * i * CameraZoomInvers });
 				SkillInterface.push_back(Skillicon);
 				// 컴포넌트화 예정
 			}

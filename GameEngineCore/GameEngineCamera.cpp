@@ -5,8 +5,6 @@
 #include "GameEngineLevel.h"
 #include <GameEngineBase/GameEngineWindow.h>
 
-#define CameraZoom 1.2f
-
 GameEngineCamera::GameEngineCamera() 
 {
 	// 윈도우가 여러분들 생각하기 가장 쉬운 비율이라서 여기서 하는거고.
@@ -16,13 +14,14 @@ GameEngineCamera::GameEngineCamera()
 	Far = 1000.0f;
 	Fov = 60.0f;
 
-	ViewPortDesc.TopLeftX = -Size.x * (CameraZoom - 1.0f) / 2.0f;
-	ViewPortDesc.TopLeftY = -Size.y * (CameraZoom - 1.0f) / 2.0f;
-	ViewPortDesc.Width = Size.x * CameraZoom;
-	ViewPortDesc.Height = Size.y * CameraZoom;
+	ViewPortDesc.TopLeftX = 0;
+	ViewPortDesc.TopLeftY = 0;
+	ViewPortDesc.Width = Size.x;
+	ViewPortDesc.Height = Size.y;
 	ViewPortDesc.MinDepth = 0.0f;
 	ViewPortDesc.MaxDepth = 1.0f;
 
+	
 }
 
 GameEngineCamera::~GameEngineCamera() 

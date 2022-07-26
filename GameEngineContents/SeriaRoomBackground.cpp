@@ -16,13 +16,13 @@ SeriaRoomBackground::~SeriaRoomBackground()
 void SeriaRoomBackground::Start()
 {
 	SeriaRoomBackGround_Texture = CreateComponent<GameEngineTextureRenderer>();
-	SeriaRoomBackGround_Texture->GetTransform().SetLocalScale(GameEngineWindow::GetScale());
-	SeriaRoomBackGround_Texture->GetTransform().SetLocalPosition({ 0, 0, 100 });
+	SeriaRoomBackGround_Texture->GetTransform().SetLocalPosition({ 0, 0, 800 });
 	SeriaRoomBackGround_Texture->CreateFrameAnimationFolder("Seria_BackGround", FrameAnimation_DESC("Seria_Room", 0.15f));
 	SeriaRoomBackGround_Texture->ChangeFrameAnimation("Seria_BackGround");
+	SeriaRoomBackGround_Texture->GetTransform().SetLocalScale({ 1280, 720 });
 }
 
 void SeriaRoomBackground::Update(float _DeltaTime)
 {
-
+\
 }

@@ -14,3 +14,4 @@ void GamePlayObject::Start()
 {
 	ObjectPos = GetTransform().GetLocalPosition();
 }
+

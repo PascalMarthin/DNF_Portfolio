@@ -3,6 +3,9 @@
 #define WindowX 1280
 #define WindowY 720 
 
+#define CameraZoom 1.0f
+#define CameraZoomInvers 1.f - ((CameraZoom - 1.0f) / 2.0f)
+
 enum class GamePlayItemType
 {
 	Equipment, // 장비
@@ -73,6 +76,8 @@ enum CharacterStat
 
 enum ZSortOrder
 {
+	HUD_SkillBlank = 67,
+	HUD_ExpBar     = 68,
 	HUD_Bar        = 69,
 	HUD_Base       = 70,
 	Inventory_Item = 78,
@@ -80,3 +85,4 @@ enum ZSortOrder
 	Inventory = 80,
 };
 // ~100 UI
+// ~500 캐릭터
