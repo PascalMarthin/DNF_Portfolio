@@ -4,6 +4,7 @@
 // Ό³Έν :
 class InterfaceHUD;
 class InterfaceItemBag;
+class GamePlayKeyManager;
 class PlayerInterface : public GameEngineActor
 {
 public:
@@ -26,6 +27,10 @@ public:
 	{
 		return PlayerItemBag;
 	}
+	inline GamePlayKeyManager* GetUI_KeyManager() const
+	{
+		return KeyManager;
+	}
 
 protected:
 	void Start() override;
@@ -39,6 +44,8 @@ protected:
 private:
 	InterfaceHUD* PlayerHUD;
 	InterfaceItemBag* PlayerItemBag;
+
+	GamePlayKeyManager* KeyManager;
 
 };
 

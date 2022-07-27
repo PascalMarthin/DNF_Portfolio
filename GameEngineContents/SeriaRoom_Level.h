@@ -34,7 +34,6 @@ private:
 	
 
 private:
-	GameEngineCameraActor* const Camera;
 
 	SeriaRoomBackground* Texture_SeriaRoom;
 	

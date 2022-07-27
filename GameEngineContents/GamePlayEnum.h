@@ -86,3 +86,30 @@ enum ZSortOrder
 };
 // ~100 UI
 // ~500 Ä³¸¯ÅÍ
+
+enum class EngineInput
+{
+	None,
+	A,
+	S,
+	D,
+	F,
+	G,
+	H,
+	Q,
+	W,
+	E,
+	R,
+	X,
+	C,
+	Z,
+	SPACE,
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT,
+	ESCAPE,
+	LBUTTON,
+	RBUTTON
+
+};

@@ -3,16 +3,12 @@
 #include "PlayerInterface.h"
 #include "GameEnginePlusTextureRenderer.h"
 #include "GamePlayCharacter.h"
-#include "GamePlayKeyInTown.h"
-#include "GamePlayKeyInDungeon.h"
 
 #include "InterfaceHUD.h"
 
 int GamePlayCharacter::CharacterIndex = 0;
 GamePlayCharacter::GamePlayCharacter()
-	: KeyInTown(nullptr)
-	, KeyInDungeon(nullptr)
-	, StatManager(nullptr)
+	: StatManager(nullptr)
 	, PlayerUserInterface(nullptr)
 
 	, Avata_Belt(nullptr)
@@ -39,11 +35,6 @@ void GamePlayCharacter::Start()
 {
 	GamePlayObject::Start();
 	StatManager = CreateComponent<CharacterStatManager>();
-
-	KeyInTown = CreateComponent<GamePlayKeyInTown>();
-	KeyInDungeon = CreateComponent<GamePlayKeyInDungeon>();
-
-
 
 	AllAvatas.push_back(Avata_Skin = CreateComponent<GameEnginePlusTextureRenderer>());
 	AllAvatas.push_back(Avata_Belt = CreateComponent<GameEnginePlusTextureRenderer>());
@@ -90,7 +81,7 @@ void GamePlayCharacter::Start()
 
 }
 
-void GamePlayCharacter::ChangeAvataAnimation(const std::string& _AnimationName)
+void GamePlayCharacter::ChangeAvataAnimation(const std::string& _AnimationName) const
 {
 	for (GameEnginePlusTextureRenderer* Avata : AllAvatas)
 	{

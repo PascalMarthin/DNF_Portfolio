@@ -199,14 +199,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="GamePlayKeyInDungeon.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="GamePlayKeyInTown.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="GamePlayKeyManager.h">
       <SubType>
       </SubType>
@@ -316,14 +308,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="GamePlayItem_DESC_Res.cpp" />
-    <ClCompile Include="GamePlayKeyInDungeon.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="GamePlayKeyInTown.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="GamePlayKeyManager.cpp">
       <SubType>
       </SubType>

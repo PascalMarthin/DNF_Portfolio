@@ -8,7 +8,6 @@
 
 class PlayerInterface;
 class InterfaceHUD;
-class GamePlayKeyManager;
 
 class GamePlayCharacter : public GamePlayObject
 {
@@ -27,7 +26,7 @@ public:
 
 	
 
-	void ChangeAvataAnimation(const std::string& _AnimationName);
+	void ChangeAvataAnimation(const std::string& _AnimationName) const;
 
 	inline CharacterStatManager* GetStatManager() const
 	{
@@ -38,15 +37,6 @@ public:
 		return PlayerUserInterface;
 	}
 
-	inline CharacterStatManager** GetStatManagerDoublePtr()
-	{
-		return &StatManager;
-	}
-	inline PlayerInterface** GetInterfaceDoublePtr()
-	{
-		return &PlayerUserInterface;
-	}
-
 
 
 protected:
@@ -55,18 +45,12 @@ protected:
 
 
 protected:
-	
-private:
 	PlayerInterface* PlayerUserInterface;
-	// ItemBag 관련
-
 
 private:
-	GamePlayKeyManager* KeyInTown;
-	GamePlayKeyManager* KeyInDungeon;
+
 
 protected:
-	//virtual void SettingCharacterAnimation(GameEngineTextureRenderer* _TextureRenderer, const std::string& _AvataClass, unsigned int _AvataCode = -1) = 0;
 
 	// 아바타
 	GameEnginePlusTextureRenderer* Avata_Belt;
@@ -83,11 +67,14 @@ protected:
 
 	std::map<GameEnginePlusTextureRenderer*, GamePlayItemCode> CurrentAvataCode;
 
+protected:
+	CharacterStatManager* StatManager;
 
-public:
+	virtual void Set_Default_FSMManager() {}
 
 private:
-	CharacterStatManager* StatManager;
+
+
 };
 
 

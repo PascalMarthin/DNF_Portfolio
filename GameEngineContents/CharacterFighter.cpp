@@ -2,8 +2,11 @@
 #include <GameEngineCore/GameEngineLevel.h>
 #include <GameEngineCore/GameEngineComponent.h>
 #include <GameEngineCore/GameEngineTextureRenderer.h>
-#include "CharacterFighter.h"
 #include <GameEngineCore/GameEngineFolderTexture.h>
+#include <GameEngineCore/GameEngineStateManager.h>
+#include "CharacterFighter.h"
+#include "GamePlayKeyManager.h"
+#include "PlayerInterface.h"
 
 #define FighterAnimationInter 0.15f
 
@@ -38,6 +41,7 @@ void CharacterFighter::Start()
 		Avata_Shoes->SetDefaultCharacterAvata("ft_shoes0000a");
 		Avata_Skin->SetDefaultCharacterAvata("ft_body0011");
 	}
+
 
 }
 
@@ -100,3 +104,141 @@ void CharacterFighter::DestroyFrameAnimationDESC()
 	}
 	CharacterAnimation_DESCs.clear();
 }
+
+void CharacterFighter::Set_Default_FSMManager()
+{
+	StatManager->GetFSMManager().CreateStateMember("Move_Walk", this, &CharacterFighter::FSM_Move_Walk_Update, &CharacterFighter::FSM_Move_Walk_Start, &CharacterFighter::FSM_Move_Walk_End);
+	StatManager->GetFSMManager().CreateStateMember("Move_Dash", this, &CharacterFighter::FSM_Move_Dash_Update, &CharacterFighter::FSM_Move_Dash_Start, &CharacterFighter::FSM_Move_Dash_End);
+	StatManager->GetFSMManager().CreateStateMember("Move_Stand", this, &CharacterFighter::FSM_Move_Stand_Update, &CharacterFighter::FSM_Move_Stand_Start, &CharacterFighter::FSM_Move_Stand_End);
+
+	StatManager->GetFSMManager().ChangeState("Move_Stand");
+}
+
+
+void CharacterFighter::FSM_Move_Walk_Start(const StateInfo& _Info)
+{
+	ChangeAvataAnimation("Move_Walk");
+}
+
+void CharacterFighter::FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _Info)
+{
+	bool IsMove = false;
+	float MoveSpeed = 2.0f;
+
+	if (PlayerUserInterface->GetUI_KeyManager()->GetDoubleMoveKeyInput() != EngineInput::None)
+	{
+		StatManager->GetFSMManager().ChangeState("Move_Dash");
+	}
+
+	if (GameEngineInput::GetInst()->IsPress("UP_Arrow") == true)
+	{
+		IsMove = true;
+		GetTransform().SetLocalMove(float4({ 0, DefaultMove }) * MoveSpeed * _DeltaTime);
+	}
+
+	if (GameEngineInput::GetInst()->IsPress("Down_Arrow") == true)
+	{
+		IsMove = true;
+		GetTransform().SetLocalMove(float4({ 0, -DefaultMove }) * MoveSpeed * _DeltaTime);
+	}
+
+	if (GameEngineInput::GetInst()->IsPress("Left_Arrow") == true)
+	{
+		IsMove = true;
+		GetTransform().SetLocalMove(float4({ -DefaultMove, 0 }) * MoveSpeed * _DeltaTime);
+		GetTransform().PixLocalNegativeX();
+	}
+	if (GameEngineInput::GetInst()->IsPress("Right_Arrow") == true)
+	{
+		IsMove = true;
+		GetTransform().SetLocalMove(float4({ DefaultMove, 0 }) * MoveSpeed * _DeltaTime);
+		GetTransform().PixLocalPositiveX();
+	}
+
+
+	if (IsMove == false)
+	{
+		StatManager->GetFSMManager().ChangeState("Move_Stand");
+	}
+}
+
+void CharacterFighter::FSM_Move_Walk_End(const StateInfo& _Info)
+{
+
+}
+
+
+void CharacterFighter::FSM_Move_Dash_Start(const StateInfo& _Info)
+{
+	ChangeAvataAnimation("Move_Dash");
+}
+
+void CharacterFighter::FSM_Move_Dash_Update(float _DeltaTime, const StateInfo& _Info)
+{
+	bool IsMove = false;
+	float MoveSpeed = 3.0f;
+
+
+	if (GameEngineInput::GetInst()->IsPress("UP_Arrow") == true)
+	{
+		IsMove = true;
+		GetTransform().SetLocalMove(float4({ 0, DefaultMove }) * MoveSpeed * _DeltaTime);
+	}
+
+	if (GameEngineInput::GetInst()->IsPress("Down_Arrow") == true)
+	{
+		IsMove = true;
+		GetTransform().SetLocalMove(float4({ 0, -DefaultMove }) * MoveSpeed * _DeltaTime);
+	}
+
+	if (GameEngineInput::GetInst()->IsPress("Left_Arrow") == true)
+	{
+
+		IsMove = true;
+		GetTransform().SetLocalMove(float4({ -DefaultMove, 0 }) * MoveSpeed * _DeltaTime);
+		GetTransform().PixLocalNegativeX();
+	}
+
+	if (GameEngineInput::GetInst()->IsPress("Right_Arrow") == true)
+	{
+		IsMove = true;
+		GetTransform().SetLocalMove(float4({ DefaultMove, 0 }) * MoveSpeed * _DeltaTime);
+		GetTransform().PixLocalPositiveX();
+	}
+
+	if (IsMove == false)
+	{
+		StatManager->GetFSMManager().ChangeState("Move_Stand");
+	}
+}
+
+void CharacterFighter::FSM_Move_Dash_End(const StateInfo& _Info)
+{
+
+}
+
+
+void CharacterFighter::FSM_Move_Stand_Start(const StateInfo& _Info)
+{
+	ChangeAvataAnimation("Move_Stand");
+}
+
+void CharacterFighter::FSM_Move_Stand_Update(float _DeltaTime, const StateInfo& _Info)
+{
+	if (GameEngineInput::GetInst()->IsDown("UP_Arrow") == true ||
+		GameEngineInput::GetInst()->IsDown("Down_Arrow") == true ||
+		GameEngineInput::GetInst()->IsDown("Left_Arrow") == true ||
+		GameEngineInput::GetInst()->IsDown("Right_Arrow") == true)
+	{
+		StatManager->GetFSMManager().ChangeState("Move_Walk");
+	}
+
+}
+
+
+void CharacterFighter::FSM_Move_Stand_End(const StateInfo& _Info)
+{
+
+}
+
+

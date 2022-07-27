@@ -2,6 +2,7 @@
 #include <GameEngineBase/GameEngineDebug.h>
 #include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngineCore/GameEngineComponent.h>
+#include <GameEngineCore/GameEngineUIRenderer.h>
 #include <GameEngineCore/GameEngineTextureRenderer.h>
 #include "GamePlayEnum.h"
 #include "InterfaceHUD.h"
@@ -30,17 +31,17 @@ void InterfaceHUD::Start()
 {
 	{
 		GetTransform().SetLocalPosition({ 0, (-720 + 84) / 2 * CameraZoomInvers});
-		HUDBase        = CreateComponent<GameEngineTextureRenderer>();
-		HPBar		   = CreateComponent<GameEngineTextureRenderer>();
-		MPBar          = CreateComponent<GameEngineTextureRenderer>();
-		HPBar_Hit      = CreateComponent<GameEngineTextureRenderer>();
-		EXPBar		   = CreateComponent<GameEngineTextureRenderer>();
+		HUDBase        = CreateComponent<GameEngineUIRenderer>();
+		HPBar		   = CreateComponent<GameEngineUIRenderer>();
+		MPBar          = CreateComponent<GameEngineUIRenderer>();
+		HPBar_Hit      = CreateComponent<GameEngineUIRenderer>();
+		EXPBar		   = CreateComponent<GameEngineUIRenderer>();
 
 		for (size_t i = 0; i < 2; i++)
 		{
 			for (size_t j = 0; j < 7; j++)
 			{
-				GameEngineTextureRenderer* Skillicon = CreateComponent<GameEngineTextureRenderer>();
+				GameEngineUIRenderer* Skillicon = CreateComponent<GameEngineUIRenderer>();
 				Skillicon->SetTexture("HUD_SkillIcon.png");
 				Skillicon->ScaleToTexture();
 				Skillicon->GetTransform().SetLocalPosition(SkillInterfacePivot);

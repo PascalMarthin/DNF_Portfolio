@@ -1,5 +1,7 @@
 #pragma once
+#include <queue>
 #include <GameEngineCore/GameEngineComponent.h>
+#include "GamePlayEnum.h"
 
 // Ό³Έν :
 class CharacterStatManager;
@@ -18,24 +20,32 @@ public:
 	GamePlayKeyManager& operator=(const GamePlayKeyManager& _Other) = delete;
 	GamePlayKeyManager& operator=(GamePlayKeyManager&& _Other) noexcept = delete;
 
+	inline EngineInput GetMoveKeyInput() const
+	{
+		return CurrentMoveInput;
+	}
+	inline EngineInput GetDoubleMoveKeyInput() const
+	{
+		return CurrentDoubleMoveInput;
+	}
+
+
 protected:
 	void Start() override;
+	void Update(float _DeltaTime) override;
 
 	// void End() override {}
-	// void OnEvent() {}
+	//void OnEvent();
 	// void OffEvent() {}
 protected:
-	virtual void CheckKeyByMove(float _DeltaTime, float _MoveSpeed);
+	virtual void CheckKeyByWalk(float _DeltaTime, float _MoveSpeed);
 	virtual void CheckKeyBySkill(float _DeltaTime, float _MoveSpeed) {}
 	virtual void CheckKeyByInterface(float _DeltaTime, float _MoveSpeed);
 
-
-	GamePlayCharacter* Player;
-
-	CharacterStatManager** PlayerStatManager;
-	PlayerInterface** PlayerUserInterface;
+	EngineInput CurrentMoveInput;
+	EngineInput CurrentDoubleMoveInput;
+	float InputDeltaTime;
 private:
-
 
 };
 

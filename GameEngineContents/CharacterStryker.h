@@ -1,4 +1,5 @@
 #pragma once
+#include <GameEngineCore/GameEngineStateManager.h>
 #include "CharacterFighter.h"
 
 // Ό³Έν :
@@ -26,6 +27,8 @@ protected:
 
 	void End() override;
 
+
+	void Set_Default_FSMManager() override;
 private:
 
 };

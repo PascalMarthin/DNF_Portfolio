@@ -31,11 +31,26 @@ protected:
 	// void OnEvent() {}
 	// void OffEvent() {}
 
+	void Set_Default_FSMManager() override;
+
 private:
 	static std::map<std::string ,FrameAnimation_DESC*> CharacterAnimation_DESCs;
 
 
 private:
+
+	void FSM_Move_Walk_Start(const StateInfo& _Info);
+	void FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Move_Walk_End(const StateInfo& _Info);
+
+
+	void FSM_Move_Dash_Start(const StateInfo& _Info);
+	void FSM_Move_Dash_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Move_Dash_End(const StateInfo& _Info);
+
+	void FSM_Move_Stand_Start(const StateInfo& _Info);
+	void FSM_Move_Stand_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Move_Stand_End(const StateInfo& _Info);
 
 };
 

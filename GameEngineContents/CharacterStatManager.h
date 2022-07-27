@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineCore/GameEngineComponent.h>
+#include <GameEngineCore/GameEngineStateManager.h>
 #include "GamePlayEnum.h"
 
 // 설명 :
@@ -65,6 +66,7 @@ private:
 	unsigned int Hit_Recovery;
 
 };
+// 설명 : 상태를 체크하고 업데이트마다 정리하는 클래스
 class CharacterStatManager : public GameEngineComponent
 {
 public:
@@ -81,6 +83,11 @@ public:
 	CharacterAbilityStat& GetAbilityStat()
 	{
 		return PlayerStat;
+	}
+
+	GameEngineStateManager& GetFSMManager()
+	{
+		return FSMManager;
 	}
 
 public:
@@ -126,12 +133,8 @@ public:
 		PlayerCurrentState |= CharacterStat::Player_Character_Action;
 		PlayerCurrentState &= ~CharacterStat::Player_Character_Move;
 	}
-	inline void SetStanding()
-	{
-		PlayerCurrentState &= ~(CharacterStat::Player_Character_Move | CharacterStat::Player_Character_Move);
-		CanAction = true;
-		CanMove = true;
-	}
+	
+
 
 protected:
 	void Start() override;
@@ -142,8 +145,8 @@ protected:
 	// void OnEvent() {}
 	// void OffEvent() {}
 
+
 private:
-	void SettingStand();
 
 
 	CharacterAbilityStat PlayerStat;
@@ -152,6 +155,9 @@ private:
 	bool CanAction;
 	bool CanMove;
 
+private:
+
+	GameEngineStateManager FSMManager;
 
 };
 

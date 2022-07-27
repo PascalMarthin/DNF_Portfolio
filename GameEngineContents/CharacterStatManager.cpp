@@ -1,4 +1,5 @@
 #include "PreCompile.h"
+#include <GameEngineCore/GameEngineStateManager.h>
 #include "CharacterStatManager.h"
 #include "GamePlayEnum.h"
 
@@ -15,25 +16,14 @@ CharacterStatManager::~CharacterStatManager()
 
 void CharacterStatManager::Start()
 {
-	SettingStand();
-	
 }
 
 void CharacterStatManager::Update(float _DeltaTime)
 {
-	if (true)
-	{
-
-	}
+	FSMManager.Update(_DeltaTime);
 }
 
-void CharacterStatManager::SettingStand()
-{
-	PlayerCurrentState |= CharacterStat::Player_Character_ALive;
 
-	CanAction = true;
-	CanMove = true;
-}
 //Player_Character_ALive = 0x00,// 생존								
 //Player_Character_Action = 0x01,// 행동가능							
 //Player_Character_Move = 0x02,// 이동가능							

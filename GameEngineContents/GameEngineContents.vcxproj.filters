@@ -68,12 +68,6 @@
     <ClInclude Include="GamePlayKeyManager.h">
       <Filter>KeyManager</Filter>
     </ClInclude>
-    <ClInclude Include="GamePlayKeyInDungeon.h">
-      <Filter>KeyManager</Filter>
-    </ClInclude>
-    <ClInclude Include="GamePlayKeyInTown.h">
-      <Filter>KeyManager</Filter>
-    </ClInclude>
     <ClInclude Include="CharacterStatManager.h">
       <Filter>Object\Character</Filter>
     </ClInclude>
@@ -159,12 +153,6 @@
       <Filter>UI\Item</Filter>
     </ClCompile>
     <ClCompile Include="GamePlayKeyManager.cpp">
-      <Filter>KeyManager</Filter>
-    </ClCompile>
-    <ClCompile Include="GamePlayKeyInDungeon.cpp">
-      <Filter>KeyManager</Filter>
-    </ClCompile>
-    <ClCompile Include="GamePlayKeyInTown.cpp">
       <Filter>KeyManager</Filter>
     </ClCompile>
     <ClCompile Include="CharacterStatManager.cpp">
