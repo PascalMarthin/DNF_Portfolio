@@ -29,7 +29,7 @@ InterfaceHUD::~InterfaceHUD()
 void InterfaceHUD::Start()
 {
 	{
-		GetTransform().SetLocalPosition({ 0, -720/*(-720 + 84) / 2 * CameraZoomInvers*/});
+		GetTransform().SetLocalPosition({ 0, (-720 + 84) / 2 * CameraZoomInvers});
 		HUDBase        = CreateComponent<GameEngineTextureRenderer>();
 		HPBar		   = CreateComponent<GameEngineTextureRenderer>();
 		MPBar          = CreateComponent<GameEngineTextureRenderer>();

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <GameEngineCore/GameEngineTextureRenderer.h>
-
 #include "GamePlayObjectNPC.h"
 
 class Seria_NPC : public GamePlayObjectNPC

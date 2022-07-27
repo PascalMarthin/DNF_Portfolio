@@ -4,6 +4,7 @@
 GamePlayObject::GamePlayObject() 
 	: ObjectPos(float4::ZERO)
 {
+	//GetTransform().SetLocalPosition();
 }
 
 GamePlayObject::~GamePlayObject() 
@@ -12,6 +13,6 @@ GamePlayObject::~GamePlayObject()
 
 void GamePlayObject::Start()
 {
-	ObjectPos = GetTransform().GetLocalPosition();
+	
 }
 
