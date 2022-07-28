@@ -110,6 +110,7 @@ void CharacterFighter::Set_Default_FSMManager()
 	StatManager->GetFSMManager().CreateStateMember("Move_Walk", this, &CharacterFighter::FSM_Move_Walk_Update, &CharacterFighter::FSM_Move_Walk_Start, &CharacterFighter::FSM_Move_Walk_End);
 	StatManager->GetFSMManager().CreateStateMember("Move_Dash", this, &CharacterFighter::FSM_Move_Dash_Update, &CharacterFighter::FSM_Move_Dash_Start, &CharacterFighter::FSM_Move_Dash_End);
 	StatManager->GetFSMManager().CreateStateMember("Move_Stand", this, &CharacterFighter::FSM_Move_Stand_Update, &CharacterFighter::FSM_Move_Stand_Start, &CharacterFighter::FSM_Move_Stand_End);
+	StatManager->GetFSMManager().CreateStateMember("Move_Jump", this, &CharacterFighter::FSM_Move_Jump_Update, &CharacterFighter::FSM_Move_Jump_Start, &CharacterFighter::FSM_Move_Jump_End);
 
 	StatManager->GetFSMManager().ChangeState("Move_Stand");
 }
@@ -233,10 +234,37 @@ void CharacterFighter::FSM_Move_Stand_Update(float _DeltaTime, const StateInfo& 
 		StatManager->GetFSMManager().ChangeState("Move_Walk");
 	}
 
+	if (GameEngineInput::GetInst()->IsDown("Jump"))
+	{
+		StatManager->GetFSMManager().ChangeState("Move_Jump");
+	}
 }
 
 
 void CharacterFighter::FSM_Move_Stand_End(const StateInfo& _Info)
+{
+
+}
+
+
+void CharacterFighter::FSM_Move_Jump_Start(const StateInfo& _Info)
+{
+	ChangeAvataAnimation("Move_Jump");
+	StatManager->SetJump();
+}
+
+void CharacterFighter::FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& _Info)
+{
+	GetTransform().SetLocalMove(float4({ DefaultMove, 0 }) * StatManager->CurrentJumpIndex * _DeltaTime);
+	
+	//if (StatManager->Get)
+	//{
+
+	//}
+}
+
+
+void CharacterFighter::FSM_Move_Jump_End(const StateInfo& _Info)
 {
 
 }

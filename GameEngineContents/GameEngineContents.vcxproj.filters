@@ -71,9 +71,6 @@
     <ClInclude Include="CharacterStatManager.h">
       <Filter>Object\Character</Filter>
     </ClInclude>
-    <ClInclude Include="CharacterPosManager.h">
-      <Filter>Object\Character\Fighter</Filter>
-    </ClInclude>
     <ClInclude Include="InterfaceHUD.h">
       <Filter>UI\HUD</Filter>
     </ClInclude>
@@ -157,9 +154,6 @@
     </ClCompile>
     <ClCompile Include="CharacterStatManager.cpp">
       <Filter>Object\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="CharacterPosManager.cpp">
-      <Filter>Object\Character\Fighter</Filter>
     </ClCompile>
     <ClCompile Include="InterfaceHUD.cpp">
       <Filter>UI\HUD</Filter>

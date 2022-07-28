@@ -52,6 +52,10 @@ private:
 	void FSM_Move_Stand_Update(float _DeltaTime, const StateInfo& _Info);
 	void FSM_Move_Stand_End(const StateInfo& _Info);
 
+	void FSM_Move_Jump_Start(const StateInfo& _Info);
+	void FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Move_Jump_End(const StateInfo& _Info);
+
 };
 
 enum class FighterMotionNumber

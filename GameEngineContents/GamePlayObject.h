@@ -29,7 +29,6 @@ protected:
 
 	// 게임 내 위치 
 private:
-	
 	float4 ObjectPos;
 
 };

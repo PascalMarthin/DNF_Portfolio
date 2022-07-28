@@ -3,6 +3,8 @@
 #include <GameEngineCore/GameEngineStateManager.h>
 #include "GamePlayEnum.h"
 
+
+
 // Ό³Έν :
 class CharacterAbilityStat
 {
@@ -103,14 +105,18 @@ public:
 	{
 		return PlayerCurrentState & CharacterStat::Player_Character_Move;
 	}
-	inline bool IsInAir() const
+	inline bool IsJump() const
 	{
-		return PlayerCurrentState & CharacterStat::Player_Character_InAir;
+		return PlayerCurrentState & CharacterStat::Player_Character_Jump;
 	}
 	inline bool IsInvincibility() const
 	{
 		return PlayerCurrentState & CharacterStat::Player_Character_Invincibility;
 	}
+
+	void SetMove();
+	void SetJump();
+
 
 
 	inline bool IsCanAction() const
@@ -123,19 +129,10 @@ public:
 	}
 
 
-	inline void SetMove()
-	{
-		PlayerCurrentState |= CharacterStat::Player_Character_Move;
-		PlayerCurrentState &= ~CharacterStat::Player_Character_Action;
-	}
-	inline void SetAction()
-	{
-		PlayerCurrentState |= CharacterStat::Player_Character_Action;
-		PlayerCurrentState &= ~CharacterStat::Player_Character_Move;
-	}
-	
 
-
+	float JumpPower;
+	float CurrentJumpIndex;
+	float CurrentGravitIndex;
 protected:
 	void Start() override;
 
@@ -154,6 +151,7 @@ private:
 
 	bool CanAction;
 	bool CanMove;
+
 
 private:
 

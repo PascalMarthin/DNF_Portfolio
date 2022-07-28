@@ -1,5 +1,5 @@
 #pragma once
-#define DefaultMove 100.f
+#define DefaultMove 100
 #define WindowX 1280
 #define WindowY 720 
 
@@ -59,7 +59,7 @@ enum CharacterStat
 	Player_Character_ALive			=	0x00 ,// 생존중							
 	Player_Character_Action			=	0x01 ,// 행동중						
 	Player_Character_Move			=	0x02 ,// 이동중						
-	Player_Character_InAir			=	0x03 ,// 공중							
+	Player_Character_Jump			=	0x03 ,// 공중							
 	Player_Character_BaseAtt		=	0x04 ,// 기본공격중							
 	Player_Character_DoSkill		=	0x05 ,// 스킬사용중						
 	Player_Character_Casting		=	0x06 ,// 캐스팅중						
