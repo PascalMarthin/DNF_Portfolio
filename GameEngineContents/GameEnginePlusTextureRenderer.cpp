@@ -10,6 +10,9 @@ GameEnginePlusTextureRenderer::GameEnginePlusTextureRenderer()
 	: CurrentAvata(nullptr)
 	, CurrentAniPlus(nullptr)
 	, DefaultCharacterAvata(nullptr)
+	, ManualControl(false)
+	, MC_CurFrame(0)
+	, EndFrame(false)
 {
 
 }
@@ -45,7 +48,10 @@ void FrameAnimationForAvata::Update(float _Delta)
 		&& Info.CurFrame == Info.Start
 		&& nullptr != Start)
 	{
-		Start(Info);
+		if (nullptr != Start)
+		{
+			Start(Info);
+		}
 		bOnceStart = true;
 		bOnceEnd = false;
 	}
@@ -74,6 +80,7 @@ void FrameAnimationForAvata::Update(float _Delta)
 			else 
 			{
 				Info.CurFrame = Info.End;
+				ParentRenderer->EndFrame = true;
 			}
 		}
 
@@ -99,7 +106,7 @@ void FrameAnimationForAvata::Update(float _Delta)
 
 void GameEnginePlusTextureRenderer::Update(float _Delta)
 {
-	if (nullptr != CurrentAniPlus)
+	if (nullptr != CurrentAniPlus && ManualControl == false)
 	{
 		CurrentAniPlus->Update(_Delta);
 	}
@@ -153,6 +160,8 @@ void GameEnginePlusTextureRenderer::ChangeFrameAnimationPlus(const std::string& 
 		return;
 	}
 
+	EndFrame = false;
+
 	if (CurrentAniPlus != &FrameAniPlus[Name])
 	{
 		CurrentAniPlus = &FrameAniPlus[Name];
@@ -186,42 +195,40 @@ void GameEnginePlusTextureRenderer::SetDefaultCharacterAvata(GameEngineFolderTex
 	DefaultCharacterAvata = _FolderTexture;
 }
 
-//// 시작 프레임에 들어온다.
-//void GameEngineTextureRenderer::AnimationBindStart(const std::string& _AnimationName, std::function<void(const FrameAnimation_DESC&)> Function)
-//{
-//	std::string Name = GameEngineString::ToUpperReturn(_AnimationName);
-//
-//	if (FrameAni.end() == FrameAni.find(Name))
-//	{
-//		MsgBoxAssert("존재하지 않는 애니메이션으로 체인지 하려고 했습니다.");
-//		return;
-//	}
-//
-//	FrameAni[Name].Start = Function;
-//}
-//// 끝나는 프레임에 들어온다
-//void GameEngineTextureRenderer::AnimationBindEnd(const std::string& _AnimationName, std::function<void(const FrameAnimation_DESC&)> Function)
-//{
-//	std::string Name = GameEngineString::ToUpperReturn(_AnimationName);
-//
-//	if (FrameAni.end() == FrameAni.find(Name))
-//	{
-//		MsgBoxAssert("존재하지 않는 애니메이션으로 체인지 하려고 했습니다.");
-//		return;
-//	}
-//
-//	FrameAni[Name].End = Function;
-//}
-//// 프레임이 바뀔때마다 들어온다
-//void GameEngineTextureRenderer::AnimationBindFrame(const std::string& _AnimationName, std::function<void(const FrameAnimation_DESC&)> Function)
-//{
-//	std::string Name = GameEngineString::ToUpperReturn(_AnimationName);
-//
-//	if (FrameAni.end() == FrameAni.find(Name))
-//	{
-//		MsgBoxAssert("존재하지 않는 애니메이션으로 체인지 하려고 했습니다.");
-//		return;
-//	}
-//
-//	FrameAni[Name].Frame = Function;
-//}
+void GameEnginePlusTextureRenderer::SetManualControl()
+{
+	ManualControl = true;
+	MC_CurFrame = CurrentAniPlus->Info.CurFrame;
+
+}
+
+void GameEnginePlusTextureRenderer::SetAutoControl()
+{
+	CurrentAniPlus->Reset();
+	if (CurrentAvata != nullptr)
+	{
+		SetTexture(CurrentAvata->GetTexture(CurrentAniPlus->Info.CurFrame));
+	}
+	else if (DefaultCharacterAvata != nullptr)
+	{
+		SetTexture(DefaultCharacterAvata->GetTexture(CurrentAniPlus->Info.CurFrame));
+	}
+	else
+	{
+		SetTexture(CurrentAniPlus->Texture);
+	}
+	ManualControl = false;
+}
+
+void GameEnginePlusTextureRenderer::SetFrame_Manual(int _Frame)
+{
+	if (_Frame == -1)
+	{
+		++MC_CurFrame;
+	}
+	else
+	{
+		MC_CurFrame = _Frame;
+	}
+	SetTexture(CurrentAvata->GetTexture(MC_CurFrame));
+}

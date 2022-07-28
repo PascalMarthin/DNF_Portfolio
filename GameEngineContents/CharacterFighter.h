@@ -54,7 +54,9 @@ private:
 
 	void FSM_Move_Jump_Start(const StateInfo& _Info);
 	void FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& _Info);
+	bool EndJump;
 	void FSM_Move_Jump_End(const StateInfo& _Info);
+
 
 };
 

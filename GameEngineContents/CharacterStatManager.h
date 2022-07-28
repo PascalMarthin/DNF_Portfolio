@@ -11,7 +11,7 @@ class CharacterAbilityStat
 	friend class CharacterStatManager;
 public:
 	CharacterAbilityStat()
-		: MoveSpeed(1.f)
+		: MoveSpeed(2.0f)
 		, AttSpeed(1.f)
 		, CastSpeed(1.f)
 		, MAXHP(1000)
@@ -105,6 +105,10 @@ public:
 	{
 		return PlayerCurrentState & CharacterStat::Player_Character_Move;
 	}
+	inline bool IsDash() const
+	{
+		return PlayerCurrentState & CharacterStat::Player_Character_Dash;
+	}
 	inline bool IsJump() const
 	{
 		return PlayerCurrentState & CharacterStat::Player_Character_Jump;
@@ -115,7 +119,17 @@ public:
 	}
 
 	void SetMove();
-	void SetJump();
+	void SetDash();
+	void SetStand();
+	void SetJump(const float4& _StartJumpPos);
+	inline void SetEngage()
+	{
+		CurrentEngageTime = 5.f;
+	}
+	inline float GetEngage() const
+	{
+		return CurrentEngageTime;
+	}
 
 
 
@@ -129,10 +143,17 @@ public:
 	}
 
 
+	float GetMoveSpeed() const;
 
+
+public:
+	// Jump
+	float JumpTime;
 	float JumpPower;
-	float CurrentJumpIndex;
+	float JumpHigh;
 	float CurrentGravitIndex;
+	float4 LandingPostion;
+	//
 protected:
 	void Start() override;
 
@@ -140,12 +161,10 @@ protected:
 
 	// void End() override {}
 	// void OnEvent() {}
-	// void OffEvent() {}
+	void OffEvent();
 
 
 private:
-
-
 	CharacterAbilityStat PlayerStat;
 	unsigned int PlayerCurrentState;
 
@@ -154,8 +173,10 @@ private:
 
 
 private:
-
 	GameEngineStateManager FSMManager;
 
+
+private:
+	float CurrentEngageTime;
 };
 

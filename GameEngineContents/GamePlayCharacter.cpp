@@ -20,7 +20,8 @@ GamePlayCharacter::GamePlayCharacter()
 	, Avata_Hair_b(nullptr)
 	, Avata_Neck(nullptr)
 	, Avata_Pants(nullptr)
-	, Avata_Shoes(nullptr)
+	, Avata_Shoes_a(nullptr)
+	, Avata_Shoes_b(nullptr)
 
 {
 	++GamePlayCharacter::CharacterIndex;
@@ -45,7 +46,8 @@ void GamePlayCharacter::Start()
 	AllAvatas.push_back(Avata_Hair_b = CreateComponent<GameEnginePlusTextureRenderer>());
 	AllAvatas.push_back(Avata_Neck = CreateComponent<GameEnginePlusTextureRenderer>());
 	AllAvatas.push_back(Avata_Pants = CreateComponent<GameEnginePlusTextureRenderer>());
-	AllAvatas.push_back(Avata_Shoes = CreateComponent<GameEnginePlusTextureRenderer>());
+	AllAvatas.push_back(Avata_Shoes_a = CreateComponent<GameEnginePlusTextureRenderer>());
+	AllAvatas.push_back(Avata_Shoes_b = CreateComponent<GameEnginePlusTextureRenderer>());
 
 	for (auto& Avata :AllAvatas)
 	{
@@ -62,7 +64,7 @@ void GamePlayCharacter::Start()
 	//Avata_Hair_b->GetTransform().SetLocalPosition({ 0, 0, 6 });
 	//Avata_Neck->GetTransform().SetLocalPosition({ 0, 0, 7 });
 	//Avata_Pants->GetTransform().SetLocalPosition({ 0, 0, 8 });
-	//Avata_Shoes->GetTransform().SetLocalPosition({ 0, 0, 9 });
+	//Avata_Shoes_a->GetTransform().SetLocalPosition({ 0, 0, 9 });
 	//Avata_Skin->GetTransform().SetLocalPosition({ 0, 0, 10 });
 
 
@@ -74,7 +76,7 @@ void GamePlayCharacter::Start()
 	CurrentAvataCode[Avata_Hair_b] = GamePlayItemCode::Empty;
 	CurrentAvataCode[Avata_Neck] =  GamePlayItemCode::Empty;
 	CurrentAvataCode[Avata_Pants] = GamePlayItemCode::Empty;
-	CurrentAvataCode[Avata_Shoes] = GamePlayItemCode::Empty;
+	CurrentAvataCode[Avata_Shoes_a] = GamePlayItemCode::Empty;
 	CurrentAvataCode[Avata_Skin] =  GamePlayItemCode::Empty;
 
 
@@ -86,5 +88,28 @@ void GamePlayCharacter::ChangeAvataAnimation(const std::string& _AnimationName) 
 	for (GameEnginePlusTextureRenderer* Avata : AllAvatas)
 	{
 		Avata->ChangeFrameAnimationPlus(_AnimationName);
+	}
+}
+
+void GamePlayCharacter::ChangeFrame_Manual(int _Frame) const
+{
+	for (GameEnginePlusTextureRenderer* Avata : AllAvatas)
+	{
+		Avata->SetFrame_Manual(_Frame);
+	}
+}
+
+void GamePlayCharacter::SetAllAvataManualControl()
+{
+	for (GameEnginePlusTextureRenderer* Avata : AllAvatas)
+	{
+		Avata->SetManualControl();
+	}
+}
+void GamePlayCharacter::SetAllAvataAutoControl()
+{
+	for (GameEnginePlusTextureRenderer* Avata : AllAvatas)
+	{
+		Avata->SetAutoControl();
 	}
 }

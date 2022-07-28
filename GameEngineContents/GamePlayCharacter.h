@@ -27,6 +27,9 @@ public:
 	
 
 	void ChangeAvataAnimation(const std::string& _AnimationName) const;
+	void SetAllAvataManualControl();
+	void SetAllAvataAutoControl();
+	void ChangeFrame_Manual(int _Frame = -1) const;
 
 	inline CharacterStatManager* GetStatManager() const
 	{
@@ -61,7 +64,8 @@ protected:
 	GameEnginePlusTextureRenderer* Avata_Hair_b;
 	GameEnginePlusTextureRenderer* Avata_Neck;
 	GameEnginePlusTextureRenderer* Avata_Pants;
-	GameEnginePlusTextureRenderer* Avata_Shoes;
+	GameEnginePlusTextureRenderer* Avata_Shoes_a;
+	GameEnginePlusTextureRenderer* Avata_Shoes_b;
 	GameEnginePlusTextureRenderer* Avata_Skin;
 	std::vector<GameEnginePlusTextureRenderer*> AllAvatas;
 
@@ -71,7 +75,6 @@ protected:
 	CharacterStatManager* StatManager;
 
 	virtual void Set_Default_FSMManager() {}
-
 private:
 
 

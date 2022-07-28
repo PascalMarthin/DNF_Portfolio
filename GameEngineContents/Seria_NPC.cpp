@@ -29,9 +29,5 @@ void Seria_NPC::Start()
 
 void Seria_NPC::Update(float _DeltaTime)
 {
-	GameEngineDebug::OutPutString(
-		std::to_string(Seria_Renderer->GetTransform().GetWorldPosition().x) + "  " +
-		std::to_string(Seria_Renderer->GetTransform().GetWorldPosition().y) + "  " +
-		std::to_string(Seria_Renderer->GetTransform().GetWorldPosition().x) + "  " +
-		std::to_string(Seria_Renderer->GetTransform().GetWorldPosition().y));
+
 } 

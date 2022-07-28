@@ -36,7 +36,7 @@ private:
 	GameEnginePlusTextureRenderer* Avata_Hair_b;
 	GameEnginePlusTextureRenderer* Avata_Neck;
 	GameEnginePlusTextureRenderer* Avata_Pants;
-	GameEnginePlusTextureRenderer* Avata_Shoes;
+	GameEnginePlusTextureRenderer* Avata_Shoes_a;
 	GameEnginePlusTextureRenderer* Avata_Skin;
 
 	std::vector<GameEnginePlusTextureRenderer*> AllAvatas;

@@ -9,9 +9,11 @@ CharacterStatManager::CharacterStatManager()
 	: PlayerCurrentState(0x0)
 	, CanAction(false)
 	, CanMove(false)
-	, JumpPower(500.f)
-	, CurrentJumpIndex(0.f)
+	, JumpPower(400.f)
+	, JumpHigh(0.f)
 	, CurrentGravitIndex(-1.f)
+	, JumpTime(0.f)
+	, CurrentEngageTime(0.f)
 {
 }
 
@@ -27,10 +29,19 @@ void CharacterStatManager::Start()
 
 void CharacterStatManager::Update(float _DeltaTime)
 {
+	CurrentEngageTime -= _DeltaTime;
+
 	if (IsJump())
 	{
-		CurrentGravitIndex *= (Gravitational_Constant * _DeltaTime);
-		CurrentJumpIndex += CurrentGravitIndex;
+		JumpTime += _DeltaTime;
+		if (JumpHigh > -650)
+		{
+			JumpHigh = ((-200.f * JumpTime * Gravitational_Constant) * JumpTime + JumpPower * 1.2f);
+		}
+		// Y = x(ax);
+		// y = 속력
+		// x = 점프 시간
+		// 
 	}
 	FSMManager.Update(_DeltaTime);
 }
@@ -55,11 +66,50 @@ void CharacterStatManager::Update(float _DeltaTime)
 void CharacterStatManager::SetMove()
 {
 	PlayerCurrentState |= CharacterStat::Player_Character_Move;
+	PlayerCurrentState &= ~(CharacterStat::Player_Character_Dash);
+
 }
-void CharacterStatManager::SetJump()
+
+void CharacterStatManager::SetDash()
+{
+	PlayerCurrentState |= CharacterStat::Player_Character_Dash;
+	PlayerCurrentState &= ~(CharacterStat::Player_Character_Move);
+}
+
+void CharacterStatManager::SetStand()
+{
+	PlayerCurrentState &= ~(CharacterStat::Player_Character_Dash | CharacterStat::Player_Character_Move);
+}
+
+void CharacterStatManager::SetJump(const float4& _StartJumpPos)
 {
 	PlayerCurrentState |= CharacterStat::Player_Character_Jump;
-	CurrentJumpIndex = JumpPower;
+	JumpHigh = 0.f;
 	CurrentGravitIndex = -1.f;
+	JumpTime = 0.f;
+	LandingPostion = _StartJumpPos;
+}
 
+float CharacterStatManager::GetMoveSpeed() const
+{
+	if (IsDash())
+	{
+		return PlayerStat.MoveSpeed * 1.5f;
+	}
+	else
+	{
+		return PlayerStat.MoveSpeed;
+	}
+}
+
+void CharacterStatManager::OffEvent() 
+{
+	PlayerCurrentState =0x0;
+	CanAction = false;
+	CanMove = false;
+	JumpPower = 0.f;
+	JumpHigh = 0.f;
+	CurrentGravitIndex = -1.f;
+	JumpTime = 0.f;
+	CurrentEngageTime = 0.f;
 }
