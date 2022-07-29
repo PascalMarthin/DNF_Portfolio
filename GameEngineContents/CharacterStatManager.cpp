@@ -9,11 +9,12 @@ CharacterStatManager::CharacterStatManager()
 	: PlayerCurrentState(0x0)
 	, CanAction(false)
 	, CanMove(false)
-	, JumpPower(400.f)
+	, JumpPower(550.f)
 	, JumpHigh(0.f)
 	, CurrentGravitIndex(-1.f)
 	, JumpTime(0.f)
 	, CurrentEngageTime(0.f)
+	, CharacterWeight(-200.f)
 {
 }
 
@@ -36,7 +37,7 @@ void CharacterStatManager::Update(float _DeltaTime)
 		JumpTime += _DeltaTime;
 		if (JumpHigh > -650)
 		{
-			JumpHigh = ((-200.f * JumpTime * Gravitational_Constant) * JumpTime + JumpPower * 1.2f);
+			JumpHigh = ((CharacterWeight * JumpTime * Gravitational_Constant) * JumpTime + JumpPower);
 		}
 		// Y = x(ax);
 		// y = ¼Ó·Â

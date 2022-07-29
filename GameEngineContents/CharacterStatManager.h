@@ -151,6 +151,7 @@ public:
 	float JumpTime;
 	float JumpPower;
 	float JumpHigh;
+	float CharacterWeight;
 	float CurrentGravitIndex;
 	float4 LandingPostion;
 	//

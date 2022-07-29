@@ -16,6 +16,10 @@ std::map<std::string, FrameAnimation_DESC*> CharacterFighter::CharacterAnimation
 
 CharacterFighter::CharacterFighter() 
 	: EndJump(false)
+	, StartJump(false)
+	, JumpGoingDown(false)
+	, Att_BaseAtt_Delay(0.f)
+	, DelayPunch(false)
 {
 }
 
@@ -56,16 +60,20 @@ void CharacterFighter::Update(float _DeltaTime)
 void CharacterFighter::SetAnimationForFrameAnimationDESC()
 {
 	CharacterAnimation_DESCs["Att_Dash"] = new FrameAnimation_DESC("", 0, 4, FighterAnimationInter);
-	CharacterAnimation_DESCs["Att_BasePunch1"] = new FrameAnimation_DESC("", 5, 6, FighterAnimationInter, false);
+	CharacterAnimation_DESCs["Att_BasePunch1"] = new FrameAnimation_DESC("", 5, 6, 0.1f, false);
 	CharacterAnimation_DESCs["Att_OneinchPunch"] = new FrameAnimation_DESC("", 7, 9, FighterAnimationInter, false);
 	CharacterAnimation_DESCs["Att_Upper"] = new FrameAnimation_DESC("", 10, 16, FighterAnimationInter, false);
-	CharacterAnimation_DESCs["Att_BasePunch2"] = new FrameAnimation_DESC("", 17, 20, FighterAnimationInter, false);
-	CharacterAnimation_DESCs["Att_BasePunch3"] = new FrameAnimation_DESC("", 21, 28, FighterAnimationInter, false);
-	CharacterAnimation_DESCs["Att_BaseKick1"] = new FrameAnimation_DESC("", 29, 35, FighterAnimationInter, false);
+	CharacterAnimation_DESCs["Att_BasePunch2"] = new FrameAnimation_DESC("", 17, 18, 0.1f, false);
+	CharacterAnimation_DESCs["Att_BasePunch2_Delay"] = new FrameAnimation_DESC("", 19, 20, 0.08f, false);
+	CharacterAnimation_DESCs["Att_BasePunch3"] = new FrameAnimation_DESC("", 21, 23, 0.1f, false);
+	CharacterAnimation_DESCs["Att_BasePunch3_Delay"] = new FrameAnimation_DESC("", 24, 28, 0.08f, false);
+	CharacterAnimation_DESCs["Att_BaseKick"] = new FrameAnimation_DESC("", 29, 35, 0.08f, false);
 	CharacterAnimation_DESCs["Move_QuickStand"] = new FrameAnimation_DESC("", 36, 38, FighterAnimationInter, false);
 	CharacterAnimation_DESCs["Move_Dash"] = new FrameAnimation_DESC("", 39, 46, FighterAnimationInter, true);  // ´ë½¬
-	CharacterAnimation_DESCs["Move_Jump"] = new FrameAnimation_DESC("", 47, 51, 0.05f, false);
-	CharacterAnimation_DESCs["Move_Landing"] = new FrameAnimation_DESC("", 52, 53, 0.02f, false);
+	CharacterAnimation_DESCs["Move_JumpReady"] = new FrameAnimation_DESC("", 47, 47, 0.08f, false);
+	CharacterAnimation_DESCs["Move_JumpUp"] = new FrameAnimation_DESC("", 48, 49, 0.15f, true);
+	CharacterAnimation_DESCs["Move_JumpDown"] = new FrameAnimation_DESC("", 50, 51, 0.15f, true);
+	CharacterAnimation_DESCs["Move_Landing"] = new FrameAnimation_DESC("", 52, 53, 0.03f, false);
 	CharacterAnimation_DESCs["Att_JumpKick"] = new FrameAnimation_DESC("", 54, 57, FighterAnimationInter, false);
 	CharacterAnimation_DESCs["Att_Spire"] = new FrameAnimation_DESC("", 58, 65, FighterAnimationInter, false);
 	CharacterAnimation_DESCs["Att_LowKick1"] = new FrameAnimation_DESC("", 66, 70, FighterAnimationInter, false);
@@ -116,6 +124,10 @@ void CharacterFighter::Set_Default_FSMManager()
 	StatManager->GetFSMManager().CreateStateMember("Move_Dash", this, &CharacterFighter::FSM_Move_Dash_Update, &CharacterFighter::FSM_Move_Dash_Start, &CharacterFighter::FSM_Move_Dash_End);
 	StatManager->GetFSMManager().CreateStateMember("Move_Stand", this, &CharacterFighter::FSM_Move_Stand_Update, &CharacterFighter::FSM_Move_Stand_Start, &CharacterFighter::FSM_Move_Stand_End);
 	StatManager->GetFSMManager().CreateStateMember("Move_Jump", this, &CharacterFighter::FSM_Move_Jump_Update, &CharacterFighter::FSM_Move_Jump_Start, &CharacterFighter::FSM_Move_Jump_End);
+	StatManager->GetFSMManager().CreateStateMember("Att_BasePunch1", this, &CharacterFighter::FSM_Att_BasePunch1_Update, &CharacterFighter::FSM_Att_BasePunch1_Start, &CharacterFighter::FSM_Att_BasePunch1_End);
+	StatManager->GetFSMManager().CreateStateMember("Att_BasePunch2", this, &CharacterFighter::FSM_Att_BasePunch2_Update, &CharacterFighter::FSM_Att_BasePunch2_Start, &CharacterFighter::FSM_Att_BasePunch2_End);
+	StatManager->GetFSMManager().CreateStateMember("Att_BasePunch3", this, &CharacterFighter::FSM_Att_BasePunch3_Update, &CharacterFighter::FSM_Att_BasePunch3_Start, &CharacterFighter::FSM_Att_BasePunch3_End);
+	StatManager->GetFSMManager().CreateStateMember("Att_BaseKick", this, &CharacterFighter::FSM_Att_BaseKick_Update, &CharacterFighter::FSM_Att_BaseKick_Start, &CharacterFighter::FSM_Att_BaseKick_End);
 
 	StatManager->GetFSMManager().ChangeState("Move_Stand");
 }
@@ -168,10 +180,8 @@ void CharacterFighter::FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _
 		StatManager->GetFSMManager().ChangeState("Move_Stand");
 	}
 
-	if (GameEngineInput::GetInst()->IsDown("Jump"))
-	{
-		StatManager->GetFSMManager().ChangeState("Move_Jump");
-	}
+	IsPushJumpKey();
+	IsPushBasePunch1Key();
 }
 
 void CharacterFighter::FSM_Move_Walk_End(const StateInfo& _Info)
@@ -224,10 +234,7 @@ void CharacterFighter::FSM_Move_Dash_Update(float _DeltaTime, const StateInfo& _
 		StatManager->GetFSMManager().ChangeState("Move_Stand");
 	}
 
-	if (GameEngineInput::GetInst()->IsDown("Jump"))
-	{
-		StatManager->GetFSMManager().ChangeState("Move_Jump");
-	}
+	IsPushJumpKey();
 }
 
 void CharacterFighter::FSM_Move_Dash_End(const StateInfo& _Info)
@@ -268,10 +275,8 @@ void CharacterFighter::FSM_Move_Stand_Update(float _DeltaTime, const StateInfo& 
 		StatManager->GetFSMManager().ChangeState("Move_Walk");
 	}
 
-	if (GameEngineInput::GetInst()->IsDown("Jump"))
-	{
-		StatManager->GetFSMManager().ChangeState("Move_Jump");
-	}
+	IsPushJumpKey();
+	IsPushBasePunch1Key();
 }
 
 
@@ -284,13 +289,15 @@ void CharacterFighter::FSM_Move_Stand_End(const StateInfo& _Info)
 void CharacterFighter::FSM_Move_Jump_Start(const StateInfo& _Info)
 {
 	EndJump = false;
-	ChangeAvataAnimation("Move_Jump");
+	StartJump = true;
+	JumpGoingDown = false;
+	ChangeAvataAnimation("Move_JumpReady");
 	StatManager->SetJump(GetTransform().GetLocalPosition());
 }
 
 void CharacterFighter::FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& _Info)
 {
-	if (EndJump == true)
+	if (EndJump == true && StartJump == false)
 	{
 		if (Avata_Skin->IsEndFrame())
 		{
@@ -298,9 +305,20 @@ void CharacterFighter::FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& _
 		}
 		return;
 	}
+
+	if (StartJump == true)
+	{
+		if (Avata_Skin->IsEndFrame())
+		{
+			ChangeAvataAnimation("Move_JumpUp");
+			StartJump = false;
+		}
+		return;
+	}
+
 	float4 LandingPos = StatManager->LandingPostion;
 	GetTransform().SetLocalMove(float4({ 0, 1 }) * StatManager->JumpHigh * _DeltaTime);
-	
+
 	if (LandingPos.y >= GetTransform().GetLocalPosition().y)
 	{
 		ChangeAvataAnimation("Move_Landing");
@@ -309,18 +327,25 @@ void CharacterFighter::FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& _
 		return;
 	}
 
+	if (StatManager->JumpHigh <= 0.f && JumpGoingDown == false)
+	{
+		ChangeAvataAnimation("Move_JumpDown");
+		JumpGoingDown = true;
+	}
+
 	float MoveSpeed = StatManager->GetMoveSpeed();
+	float MoveSpeedHalf = MoveSpeed * 0.5f;
 
 	if (GameEngineInput::GetInst()->IsPress("UP_Arrow") == true)
 	{
-		GetTransform().SetLocalMove(float4({ 0 , DefaultMove }) * _DeltaTime);
-		StatManager->LandingPostion.y += DefaultMove * MoveSpeed * _DeltaTime;
+		GetTransform().SetLocalMove(float4({ 0 , DefaultMove }) * MoveSpeedHalf * _DeltaTime);
+		StatManager->LandingPostion.y += DefaultMove * MoveSpeedHalf * _DeltaTime;
 	}
 
 	if (GameEngineInput::GetInst()->IsPress("Down_Arrow") == true)
 	{
-		GetTransform().SetLocalMove(float4({ 0 , -DefaultMove }) * _DeltaTime);
-		StatManager->LandingPostion.y += -DefaultMove * _DeltaTime;
+		GetTransform().SetLocalMove(float4({ 0 , -DefaultMove }) * MoveSpeedHalf * _DeltaTime);
+		StatManager->LandingPostion.y += -DefaultMove * MoveSpeedHalf * _DeltaTime;
 	}
 
 	if (GameEngineInput::GetInst()->IsPress("Left_Arrow") == true)
@@ -345,3 +370,148 @@ void CharacterFighter::FSM_Move_Jump_End(const StateInfo& _Info)
 	StatManager->SetEngage();
 }
 
+void CharacterFighter::IsPushJumpKey()
+{
+	if (GameEngineInput::GetInst()->IsDown("Jump"))
+	{
+		StatManager->GetFSMManager().ChangeState("Move_Jump");
+	}
+}
+
+
+void CharacterFighter::FSM_Att_BasePunch1_Start(const StateInfo& _Info)
+{
+	Att_BaseAtt_Delay = 0.f;
+	ChangeAvataAnimation("Att_BasePunch1");
+}
+
+void CharacterFighter::FSM_Att_BasePunch1_Update(float _DeltaTime, const StateInfo& _Info)
+{
+	if (Avata_Skin->IsEndFrame())
+	{
+		Att_BaseAtt_Delay += _DeltaTime;
+		if (Att_BaseAtt_Delay > 0.2f)
+		{
+			StatManager->GetFSMManager().ChangeState("Move_Stand");
+			return;
+		}
+
+		if (GameEngineInput::GetInst()->IsDown("BaseAtt") || 
+			GameEngineInput::GetInst()->IsPress("BaseAtt"))
+		{
+			StatManager->GetFSMManager().ChangeState("Att_BasePunch2");
+			return;
+		}
+
+	}
+
+
+
+
+
+}
+void CharacterFighter::FSM_Att_BasePunch1_End(const StateInfo& _Info)
+{
+	StatManager->SetEngage();
+}
+
+
+void CharacterFighter::IsPushBasePunch1Key()
+{
+	if (GameEngineInput::GetInst()->IsDown("BaseAtt"))
+	{
+		StatManager->GetFSMManager().ChangeState("Att_BasePunch1");
+	}
+}
+
+
+
+
+void CharacterFighter::FSM_Att_BasePunch2_Start(const StateInfo& _Info)
+{
+	DelayPunch = false;
+	ChangeAvataAnimation("Att_BasePunch2");
+}
+void CharacterFighter::FSM_Att_BasePunch2_Update(float _DeltaTime, const StateInfo& _Info)
+{
+	if (Avata_Skin->IsEndFrame() && DelayPunch == false)
+	{
+		ChangeAvataAnimation("Att_BasePunch2_Delay");
+		DelayPunch = true;
+	}
+	if (DelayPunch == true)
+	{
+		if (Avata_Skin->IsEndFrame())
+		{
+			StatManager->GetFSMManager().ChangeState("Move_Stand");
+			return;
+		}
+
+		if (GameEngineInput::GetInst()->IsDown("BaseAtt") ||
+			GameEngineInput::GetInst()->IsPress("BaseAtt"))
+		{
+			StatManager->GetFSMManager().ChangeState("Att_BasePunch3");
+			return;
+		}
+	}
+}
+void CharacterFighter::FSM_Att_BasePunch2_End(const StateInfo& _Info)
+{
+	StatManager->SetEngage();
+}
+
+void CharacterFighter::FSM_Att_BasePunch3_Start(const StateInfo& _Info)
+{
+	DelayPunch = false;
+	ChangeAvataAnimation("Att_BasePunch3");
+}
+
+void CharacterFighter::FSM_Att_BasePunch3_Update(float _DeltaTime, const StateInfo& _Info)
+{
+	if (Avata_Skin->IsEndFrame() && DelayPunch == false)
+	{
+		ChangeAvataAnimation("Att_BasePunch3_Delay");
+		DelayPunch = true;
+	}
+	if (DelayPunch == true)
+	{
+		if (Avata_Skin->IsEndFrame())
+		{
+			StatManager->GetFSMManager().ChangeState("Move_Stand");
+			return;
+		}
+
+		if (GameEngineInput::GetInst()->IsDown("BaseAtt") ||
+			GameEngineInput::GetInst()->IsPress("BaseAtt"))
+		{
+			StatManager->GetFSMManager().ChangeState("Att_BaseKick");
+			return;
+		}
+	}
+
+}
+
+void CharacterFighter::FSM_Att_BasePunch3_End(const StateInfo& _Info)
+{
+	StatManager->SetEngage();
+}
+
+
+void CharacterFighter::FSM_Att_BaseKick_Start(const StateInfo& _Info)
+{
+	ChangeAvataAnimation("Att_Basekick");
+}
+
+void CharacterFighter::FSM_Att_BaseKick_Update(float _DeltaTime, const StateInfo& _Info)
+{
+	if (Avata_Skin->IsEndFrame())
+	{
+		StatManager->GetFSMManager().ChangeState("Move_Stand");
+		return;
+	}
+}
+
+void CharacterFighter::FSM_Att_BaseKick_End(const StateInfo& _Info)
+{
+
+}
