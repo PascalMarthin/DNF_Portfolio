@@ -9,12 +9,13 @@ CharacterStatManager::CharacterStatManager()
 	: PlayerCurrentState(0x0)
 	, CanAction(false)
 	, CanMove(false)
-	, JumpPower(550.f)
+	, JumpPower(600.f)
 	, JumpHigh(0.f)
 	, CurrentGravitIndex(-1.f)
 	, JumpTime(0.f)
 	, CurrentEngageTime(0.f)
-	, CharacterWeight(-200.f)
+	, CharacterWeight(-180.f)
+	, RightSide(true)
 {
 }
 
@@ -45,6 +46,8 @@ void CharacterStatManager::Update(float _DeltaTime)
 		// 
 	}
 	FSMManager.Update(_DeltaTime);
+
+	//GameEngineDebug::OutPutString(std::to_string(PlayerCurrentState));
 }
 
 
@@ -64,17 +67,27 @@ void CharacterStatManager::Update(float _DeltaTime)
 //Player_Character_BeDown = 0x0d,// ´Ù¿î								
 //Player_Character_BeHold = 0x0e  // ÀâÈû		
 
-void CharacterStatManager::SetMove()
+void CharacterStatManager::SetWalk()
 {
 	PlayerCurrentState |= CharacterStat::Player_Character_Move;
 	PlayerCurrentState &= ~(CharacterStat::Player_Character_Dash);
 
 }
 
+void CharacterStatManager::SetWalkEnd()
+{
+	PlayerCurrentState &= ~(CharacterStat::Player_Character_Move);
+}
+
 void CharacterStatManager::SetDash()
 {
 	PlayerCurrentState |= CharacterStat::Player_Character_Dash;
 	PlayerCurrentState &= ~(CharacterStat::Player_Character_Move);
+}
+
+void CharacterStatManager::SetDashEnd()
+{
+	PlayerCurrentState &= ~(CharacterStat::Player_Character_Dash);
 }
 
 void CharacterStatManager::SetStand()
@@ -91,17 +104,35 @@ void CharacterStatManager::SetJump(const float4& _StartJumpPos)
 	LandingPostion = _StartJumpPos;
 }
 
+void CharacterStatManager::SetJumpEnd()
+{
+	PlayerCurrentState &= ~CharacterStat::Player_Character_Jump;
+}
+
+void CharacterStatManager::SetDoBaseAtt()
+{
+	PlayerCurrentState |= CharacterStat::Player_Character_BaseAtt;
+	PlayerCurrentState &= ~(CharacterStat::Player_Character_Dash);
+	PlayerCurrentState &= ~(CharacterStat::Player_Character_Move);
+}
+
+void CharacterStatManager::SetDoBaseAttEnd()
+{
+	PlayerCurrentState &= ~(CharacterStat::Player_Character_BaseAtt);
+}
+
 float CharacterStatManager::GetMoveSpeed() const
 {
 	if (IsDash())
 	{
-		return PlayerStat.MoveSpeed * 1.5f;
+		return PlayerStat.MoveSpeed * 1.8f;
 	}
 	else
 	{
 		return PlayerStat.MoveSpeed;
 	}
 }
+
 
 void CharacterStatManager::OffEvent() 
 {

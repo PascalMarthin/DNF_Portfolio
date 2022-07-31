@@ -5,6 +5,7 @@
 #include "GamePlayCharacter.h"
 
 // 설명 : 캐릭터 모션에 관련된 클래스
+class GamePlayKeyManager;
 class CharacterFighter : public GamePlayCharacter
 {
 public:
@@ -38,6 +39,10 @@ private:
 
 
 private:
+	void SetKeyManager();
+
+
+	GamePlayKeyManager* KeyManager;
 
 	void FSM_Move_Walk_Start(const StateInfo& _Info);
 	void FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _Info);
@@ -52,14 +57,16 @@ private:
 	void FSM_Move_Stand_Update(float _DeltaTime, const StateInfo& _Info);
 	void FSM_Move_Stand_End(const StateInfo& _Info);
 
+	// 점프
 	void FSM_Move_Jump_Start(const StateInfo& _Info);
 	bool StartJump;
 	bool JumpGoingDown;
 	void FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& _Info);
 	bool EndJump;
 	void FSM_Move_Jump_End(const StateInfo& _Info);
-
-	void IsPushJumpKey();
+	// 점프 킥
+	float JumpKick_DelayTime;
+	bool BaseJumpKick;
 
 
 	// 기본공격
@@ -67,8 +74,6 @@ private:
 	void FSM_Att_BasePunch1_Update(float _DeltaTime, const StateInfo& _Info);
 	void FSM_Att_BasePunch1_End(const StateInfo& _Info);
 	float Att_BaseAtt_Delay;
-
-	void IsPushBasePunch1Key();
 
 	void FSM_Att_BasePunch2_Start(const StateInfo& _Info);
 	void FSM_Att_BasePunch2_Update(float _DeltaTime, const StateInfo& _Info);
@@ -82,11 +87,19 @@ private:
 	void FSM_Att_BaseKick_Start(const StateInfo& _Info);
 	void FSM_Att_BaseKick_Update(float _DeltaTime, const StateInfo& _Info);
 	void FSM_Att_BaseKick_End(const StateInfo& _Info);
+
+	// 대쉬 공격
+	void FSM_Att_Dash_Start(const StateInfo& _Info);
+	void FSM_Att_Dash_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Att_Dash_End(const StateInfo& _Info);
+
+
 };
 
 enum class FighterMotionNumber
 {
 	Att_Dash,
+	Att_Dash_Delay,
 	Att_BasePunch1,
 	Att_OneinchPunch,
 	Att_Upper,

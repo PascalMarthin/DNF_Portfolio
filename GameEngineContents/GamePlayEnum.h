@@ -56,22 +56,22 @@ enum class GamePlayItemCode
 
 enum CharacterStat
 {
-	Player_Character_ALive			=	0x00 ,// 생존중							
-	Player_Character_Action			=	0x01 ,// 행동중						
-	Player_Character_Move			=	0x02 ,// 이동중						
-	Player_Character_Dash			=   0x03 ,// 대쉬중
-	Player_Character_Jump			=	0x04 ,// 공중	
-	Player_Character_BaseAtt		=	0x05 ,// 기본공격중							
-	Player_Character_DoSkill		=	0x06 ,// 스킬사용중						
-	Player_Character_Casting		=	0x07 ,// 캐스팅중						
-	Player_Character_Charging		=	0x08 ,// 차징중							
-	Player_Character_Invincibility	=	0x09 ,// 무적상태							
-	Player_Character_Evasion		=	0x0a ,// 절대회피(피격판정X)					
-	Player_Character_Superarmor		=	0x0b ,// 슈퍼아머상태							
-	Player_Character_BeHit			=	0x0c ,// 경직중						
-	Player_Character_BeAir	        =   0x0d ,// 타의로 공중에 뜨는중							
-	Player_Character_BeDown	        =   0x0e ,// 다운중		
-	Player_Character_BeHold			=	0x0f  // 잡혀있는중															
+	Player_Character_ALive			=	0b0000000000000001 ,// 생존중							
+	Player_Character_Action			=	0b0000000000000010 ,// 행동중						
+	Player_Character_Move			=	0b0000000000000100 ,// 이동중						
+	Player_Character_Dash			=   0b0000000000001000 ,// 대쉬중
+	Player_Character_Jump			=	0b0000000000010000 ,// 공중	
+	Player_Character_BaseAtt		=	0b0000000000100000 ,// 기본공격중							
+	Player_Character_DoSkill		=	0b0000000001000000 ,// 스킬사용중						
+	Player_Character_Casting		=	0b0000000010000000 ,// 캐스팅중						
+	Player_Character_Charging		=	0b0000000100000000 ,// 차징중							
+	Player_Character_Invincibility	=	0b0000001000000000 ,// 무적상태							
+	Player_Character_Evasion		=	0b0000010000000000 ,// 절대회피(피격판정X)					
+	Player_Character_Superarmor		=	0b0000100000000000 ,// 슈퍼아머상태							
+	Player_Character_BeHit			=	0b0001000000000000 ,// 경직중						
+	Player_Character_BeAir	        =   0b0010000000000000 ,// 타의로 공중에 뜨는중							
+	Player_Character_BeDown	        =   0b0100000000000000 ,// 다운중		
+	Player_Character_BeHold			=	0b1000000000000000  // 잡혀있는중															
 };
 
 

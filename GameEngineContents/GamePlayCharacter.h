@@ -75,6 +75,24 @@ protected:
 	CharacterStatManager* StatManager;
 
 	virtual void Set_Default_FSMManager() {}
+	void SetRightDir();
+	void SetLeftDir();
+
+	std::function<void()> Input_SkillSlot_01;
+	std::function<void()> Input_SkillSlot_02;
+	std::function<void()> Input_SkillSlot_03;
+	std::function<void()> Input_SkillSlot_04;
+	std::function<void()> Input_SkillSlot_05;
+	std::function<void()> Input_SkillSlot_06;
+	std::function<void()> Input_SkillSlot_07;
+	std::function<void()> Input_SkillSlot_08;
+	std::function<void()> Input_SkillSlot_09;
+	std::function<void()> Input_SkillSlot_10;
+	std::function<void()> Input_SkillSlot_11;
+	std::function<void()> Input_SkillSlot_12;
+	std::function<void()> Input_SkillSlot_13;
+	std::function<void()> Input_SkillSlot_14;
+
 private:
 
 

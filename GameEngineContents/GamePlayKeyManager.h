@@ -29,13 +29,28 @@ public:
 		return CurrentDoubleMoveInput;
 	}
 
+	inline EngineInput GetPushInput_UPDown() const
+	{
+		return CrrentPushInput_UPDown;
+	}
+	inline EngineInput GetPushInput_LeftRight() const
+	{
+		return CrrentPushInput_LeftRight;
+	}
 
+
+
+	bool Input_AllArrow_DownAndPress() const;
+	bool Input_JumpKey_Down() const;
+	bool Input_BaseAttKey_DownAndPress() const;
+
+	float4 Input_Move_Press();
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 
 	// void End() override {}
-	//void OnEvent();
+	void OnEvent();
 	// void OffEvent() {}
 protected:
 	virtual void CheckKeyByWalk(float _DeltaTime, float _MoveSpeed);
@@ -44,8 +59,14 @@ protected:
 
 	EngineInput CurrentMoveInput;
 	EngineInput CurrentDoubleMoveInput;
+	EngineInput CrrentPushInput_UPDown;
+	EngineInput CrrentPushInput_LeftRight;
 	float InputDeltaTime;
+
+
+
 private:
+
 
 };
 

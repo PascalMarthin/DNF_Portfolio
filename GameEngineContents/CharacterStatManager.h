@@ -117,11 +117,20 @@ public:
 	{
 		return PlayerCurrentState & CharacterStat::Player_Character_Invincibility;
 	}
+	inline bool IsDoBaseAtt() const
+	{
+		return PlayerCurrentState & CharacterStat::Player_Character_BaseAtt;
+	}
 
-	void SetMove();
+	void SetWalk();
+	void SetWalkEnd();
 	void SetDash();
+	void SetDashEnd();
 	void SetStand();
+	void SetDoBaseAtt();
+	void SetDoBaseAttEnd();
 	void SetJump(const float4& _StartJumpPos);
+	void SetJumpEnd();
 	inline void SetEngage()
 	{
 		CurrentEngageTime = 5.f;
@@ -144,6 +153,20 @@ public:
 
 
 	float GetMoveSpeed() const;
+
+
+	inline void SetRightSide()
+	{
+		RightSide = true;
+	}
+	inline void SetLeftSide()
+	{
+		RightSide = false;
+	}
+	inline bool GetDirSide()
+	{
+		return RightSide;
+	}
 
 
 public:
@@ -179,5 +202,6 @@ private:
 
 private:
 	float CurrentEngageTime;
+	bool RightSide;
 };
 
