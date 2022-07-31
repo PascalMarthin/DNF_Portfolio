@@ -92,6 +92,8 @@ public:
 		return FSMManager;
 	}
 
+
+
 public:
 	inline bool IsLive() const
 	{
@@ -184,13 +186,15 @@ protected:
 	void Update(float _DeltaTime) override;
 
 	// void End() override {}
-	// void OnEvent() {}
-	void OffEvent();
+	void OnEvent();
+	void OffEvent() {}
 
 
 private:
 	CharacterAbilityStat PlayerStat;
 	unsigned int PlayerCurrentState;
+	void SettingFirstTime();
+	void SetCharacter_Fighter_F();
 
 	bool CanAction;
 	bool CanMove;

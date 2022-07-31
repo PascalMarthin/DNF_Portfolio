@@ -1,7 +1,7 @@
 #pragma once
-#include <GameEngineCore/GameEngineLevel.h>
+#include <GameEngineCore/GameEngineComponent.h>
 // Ό³Έν :
-class CharacterSkillManager : public GameEngineLevel
+class CharacterSkillManager : public GameEngineComponent
 {
 public:
 	// constrcuter destructer
@@ -22,10 +22,23 @@ protected:
 
 	void End() override {}
 
-	// void OnEvent() {}
-	// void OffEvent() {}
+	void OnEvent();
+	void OffEvent();
 
 private:
-
+	std::function<void()> Input_SkillSlot_01;
+	std::function<void()> Input_SkillSlot_02;
+	std::function<void()> Input_SkillSlot_03;
+	std::function<void()> Input_SkillSlot_04;
+	std::function<void()> Input_SkillSlot_05;
+	std::function<void()> Input_SkillSlot_06;
+	std::function<void()> Input_SkillSlot_07;
+	std::function<void()> Input_SkillSlot_08;
+	std::function<void()> Input_SkillSlot_09;
+	std::function<void()> Input_SkillSlot_10;
+	std::function<void()> Input_SkillSlot_11;
+	std::function<void()> Input_SkillSlot_12;
+	std::function<void()> Input_SkillSlot_13;
+	std::function<void()> Input_SkillSlot_14;
 };
 

@@ -2,6 +2,7 @@
 #include <GameEngineCore/GameEngineStateManager.h>
 #include "CharacterStatManager.h"
 #include "GamePlayEnum.h"
+#include "GamePlayCharacter.h"
 
 const float Gravitational_Constant = 9.8f;
 
@@ -26,6 +27,38 @@ CharacterStatManager::~CharacterStatManager()
 
 void CharacterStatManager::Start()
 {
+	SettingFirstTime();
+}
+
+void CharacterStatManager::SettingFirstTime()
+{
+	CharacterClass Class = GetParent<GamePlayCharacter>()->GetPlayerClass();
+
+
+	switch (Class)
+	{
+		break;
+	case CharacterClass::Fighter_F_Stryker:
+		SetCharacter_Fighter_F();
+		break;
+	case CharacterClass::None:
+	default:
+		MsgBoxAssert("아직 구현되지 않았거나 Class 설정이 안되어있습니다")
+		break;
+	}
+}
+
+void CharacterStatManager::SetCharacter_Fighter_F()
+{
+	PlayerCurrentState = (0x0);
+	CanAction = false;
+	CanMove = false;
+	JumpPower = 600.f;
+	JumpHigh = 0.f;
+	CurrentGravitIndex = -1.f;
+	JumpTime = 0.f;
+	CurrentEngageTime = 0.f;
+	CharacterWeight = -180.f;
 
 }
 
@@ -134,7 +167,7 @@ float CharacterStatManager::GetMoveSpeed() const
 }
 
 
-void CharacterStatManager::OffEvent() 
+void CharacterStatManager::OnEvent() 
 {
 	PlayerCurrentState =0x0;
 	CanAction = false;

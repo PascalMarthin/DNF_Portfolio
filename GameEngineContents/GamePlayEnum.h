@@ -84,9 +84,14 @@ enum ZSortOrder
 	Inventory_Item = 78,
 	Inventory_Blank = 79,
 	Inventory = 80,
+
+
+
+	BackGround = 800,
 };
 // ~100 UI
 // ~500 Ä³¸¯ÅÍ
+// 
 
 enum class EngineInput
 {
@@ -113,4 +118,10 @@ enum class EngineInput
 	LBUTTON,
 	RBUTTON
 
+};
+
+enum class CharacterClass
+{
+	None,
+	Fighter_F_Stryker
 };

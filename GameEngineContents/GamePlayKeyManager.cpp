@@ -259,6 +259,9 @@ float4 GamePlayKeyManager::Input_Move_Press()
 
 void GamePlayKeyManager::OnEvent()
 {
+	InputDeltaTime = 0.f;
+	CurrentMoveInput = EngineInput::None;
+	CurrentDoubleMoveInput = EngineInput::None;
 	CrrentPushInput_UPDown = EngineInput::None;
 	CrrentPushInput_LeftRight = EngineInput::None;
 }

@@ -57,6 +57,18 @@ void CharacterFighter::Start()
 
 }
 
+void CharacterFighter::OnEvent()
+{
+	EndJump = false;
+	StartJump = false;
+	JumpGoingDown = false;
+	Att_BaseAtt_Delay = 0.f;
+	DelayPunch = false;
+	KeyManager = nullptr;
+	JumpKick_DelayTime = 0.f;
+	BaseJumpKick = 0.f;
+}
+
 void CharacterFighter::SetKeyManager()
 {
 	if (KeyManager == nullptr)

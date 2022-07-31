@@ -243,7 +243,19 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="SelectCharacterLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="SeriaRoomBackground.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TitleBackGroundAndUI.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TitleCharacterSlot.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -352,7 +364,19 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="SelectCharacterLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="SeriaRoomBackground.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TitleBackGroundAndUI.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TitleCharacterSlot.cpp">
       <SubType>
       </SubType>
     </ClCompile>

@@ -11,6 +11,7 @@ CharacterStryker::~CharacterStryker()
 
 void CharacterStryker::Start()
 {
+	GamePlayCharacter::SetPlayerClass(CharacterClass::Fighter_F_Stryker);
 	CharacterFighter::Start();
 	Set_Default_FSMManager();
 }

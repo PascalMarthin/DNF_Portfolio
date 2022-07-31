@@ -22,8 +22,7 @@ SeriaRoom_Level::~SeriaRoom_Level()
 void SeriaRoom_Level::Start()
 {
 	CharacterStryker* Fighter = CreateActor<CharacterStryker>();
-
-
+	//GamePlayCharacter::SetCurrentPlayer(Fighter);
 }
 
 void SeriaRoom_Level::Update(float _DeltaTime)

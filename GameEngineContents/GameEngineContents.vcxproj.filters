@@ -83,6 +83,15 @@
     <ClInclude Include="CharacterSkillManager.h">
       <Filter>Management\SkillManagerment</Filter>
     </ClInclude>
+    <ClInclude Include="SelectCharacterLevel.h">
+      <Filter>Level\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleBackGroundAndUI.h">
+      <Filter>Level\Title\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleCharacterSlot.h">
+      <Filter>Level\Title\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -170,6 +179,15 @@
     <ClCompile Include="CharacterSkillManager.cpp">
       <Filter>Management\SkillManagerment</Filter>
     </ClCompile>
+    <ClCompile Include="SelectCharacterLevel.cpp">
+      <Filter>Level\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleBackGroundAndUI.cpp">
+      <Filter>Level\Title\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleCharacterSlot.cpp">
+      <Filter>Level\Title\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -243,6 +261,9 @@
     </Filter>
     <Filter Include="Management\SkillManagerment">
       <UniqueIdentifier>{73971262-8327-4b0a-bb79-fc6c1a1f3f23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\Title\UI">
+      <UniqueIdentifier>{e9857ee4-5e53-4dd7-8576-3e79b8e30241}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

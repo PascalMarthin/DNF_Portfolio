@@ -10,6 +10,7 @@
 #include "DebugLevel.h"
 #include "SeriaRoom_Level.h"
 #include "CharacterFighter.h"
+#include "SelectCharacterLevel.h"
 
 //#pragma comment(lib, "GameEngineBase.lib")
 
@@ -40,7 +41,11 @@ void DNF::Start()
 	}
 	// TownLevel
 
-	ChangeLevel("SeriaRoom");
+	{
+		CreateLevel<SelectCharacterLevel>("SelectCharacter");
+	}
+
+	ChangeLevel("SelectCharacter");
 
 }
 
@@ -101,11 +106,31 @@ void DNF::BaseFolderTextureLoad()
 		Dir.Move("UI");
 		Dir.Move("HUD");
 
-		std::vector<GameEngineFile> Shaders = Dir.GetAllFile();
+		std::vector<GameEngineFile> Texture = Dir.GetAllFile();
 
-		for (size_t i = 0; i < Shaders.size(); i++)
+		for (size_t i = 0; i < Texture.size(); i++)
 		{
-			GameEngineTexture::Load(Shaders[i].GetFullPath());
+			GameEngineTexture::Load(Texture[i].GetFullPath());
+		}
+	}
+
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resource");
+		Dir.Move("Resource");
+		Dir.Move("Texture");
+		Dir.Move("UI");
+		Dir.Move("CharacterSelect");
+
+		std::vector<GameEngineDirectory> AllTextureDir = Dir.GetRecursiveAllDirectory();
+
+		for (GameEngineDirectory& DirIter : AllTextureDir)
+		{
+			std::vector<GameEngineFile> Texture = DirIter.GetAllFile();
+			for (size_t i = 0; i < Texture.size(); i++)
+			{
+				GameEngineTexture::Load(Texture[i].GetFullPath());
+			}
 		}
 	}
 	//{

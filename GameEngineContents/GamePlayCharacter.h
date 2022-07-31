@@ -41,6 +41,21 @@ public:
 	}
 
 
+	inline void SetPlayerClass(CharacterClass _Class)
+	{
+		if (PlayerClass != CharacterClass::None)
+		{
+			MsgBoxAssert("이미 설정된 플레이어 클래스입니다")
+		}
+		else
+		{
+			PlayerClass = _Class;
+		}
+	}
+	inline CharacterClass GetPlayerClass() const
+	{
+		return PlayerClass;
+	}
 
 protected:
 	void Start() override;
@@ -51,7 +66,7 @@ protected:
 	PlayerInterface* PlayerUserInterface;
 
 private:
-
+	CharacterClass PlayerClass;
 
 protected:
 
@@ -78,23 +93,10 @@ protected:
 	void SetRightDir();
 	void SetLeftDir();
 
-	std::function<void()> Input_SkillSlot_01;
-	std::function<void()> Input_SkillSlot_02;
-	std::function<void()> Input_SkillSlot_03;
-	std::function<void()> Input_SkillSlot_04;
-	std::function<void()> Input_SkillSlot_05;
-	std::function<void()> Input_SkillSlot_06;
-	std::function<void()> Input_SkillSlot_07;
-	std::function<void()> Input_SkillSlot_08;
-	std::function<void()> Input_SkillSlot_09;
-	std::function<void()> Input_SkillSlot_10;
-	std::function<void()> Input_SkillSlot_11;
-	std::function<void()> Input_SkillSlot_12;
-	std::function<void()> Input_SkillSlot_13;
-	std::function<void()> Input_SkillSlot_14;
 
 private:
 
+public:
 
 };
 

@@ -29,7 +29,7 @@ protected:
 	void Update(float _DeltaTime) override;
 
 	// void End() override {}
-	// void OnEvent() {}
+	void OnEvent() override;
 	// void OffEvent() {}
 
 	void Set_Default_FSMManager() override;

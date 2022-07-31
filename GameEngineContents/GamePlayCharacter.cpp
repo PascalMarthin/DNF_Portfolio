@@ -23,22 +23,7 @@ GamePlayCharacter::GamePlayCharacter()
 	, Avata_Shoes_a(nullptr)
 	, Avata_Shoes_b(nullptr)
 
-	, Input_SkillSlot_01(nullptr)
-	, Input_SkillSlot_02(nullptr)
-	, Input_SkillSlot_03(nullptr)
-	, Input_SkillSlot_04(nullptr)
-	, Input_SkillSlot_05(nullptr)
-	, Input_SkillSlot_06(nullptr)
-	, Input_SkillSlot_07(nullptr)
-	, Input_SkillSlot_08(nullptr)
-	, Input_SkillSlot_09(nullptr)
-	, Input_SkillSlot_10(nullptr)
-	, Input_SkillSlot_11(nullptr)
-	, Input_SkillSlot_12(nullptr)
-	, Input_SkillSlot_13(nullptr)
-	, Input_SkillSlot_14(nullptr)
-
-
+	, PlayerClass(CharacterClass::None)
 {
 	++GamePlayCharacter::CharacterIndex;
 }
