@@ -66,7 +66,7 @@
       <Filter>CorePlus</Filter>
     </ClInclude>
     <ClInclude Include="GamePlayKeyManager.h">
-      <Filter>KeyManager</Filter>
+      <Filter>Management\KeyManager</Filter>
     </ClInclude>
     <ClInclude Include="CharacterStatManager.h">
       <Filter>Object\Character</Filter>
@@ -79,6 +79,9 @@
     </ClInclude>
     <ClInclude Include="InterfaceItemBag.h">
       <Filter>UI\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterSkillManager.h">
+      <Filter>Management\SkillManagerment</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -150,7 +153,7 @@
       <Filter>UI\Item</Filter>
     </ClCompile>
     <ClCompile Include="GamePlayKeyManager.cpp">
-      <Filter>KeyManager</Filter>
+      <Filter>Management\KeyManager</Filter>
     </ClCompile>
     <ClCompile Include="CharacterStatManager.cpp">
       <Filter>Object\Character</Filter>
@@ -163,6 +166,9 @@
     </ClCompile>
     <ClCompile Include="InterfaceItemBag.cpp">
       <Filter>UI\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterSkillManager.cpp">
+      <Filter>Management\SkillManagerment</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -196,9 +202,6 @@
     <Filter Include="Level\Title">
       <UniqueIdentifier>{14bce10d-5d32-427e-b77a-3ff2c14cf78b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="KeyManager">
-      <UniqueIdentifier>{dc2d6d1b-4730-484a-a894-4289ebf38848}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Object\NPC">
       <UniqueIdentifier>{d99b5e75-8b7b-4c26-9385-c970db845620}</UniqueIdentifier>
     </Filter>
@@ -231,6 +234,15 @@
     </Filter>
     <Filter Include="UI\Item\Bag\ItemBag\NewFilter1">
       <UniqueIdentifier>{9dac66ab-d5cb-47fd-9f9e-94b6b7cc15c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Management">
+      <UniqueIdentifier>{c7c28bcc-de81-4aae-be6e-6736e1ee23ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Management\KeyManager">
+      <UniqueIdentifier>{dc2d6d1b-4730-484a-a894-4289ebf38848}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Management\SkillManagerment">
+      <UniqueIdentifier>{73971262-8327-4b0a-bb79-fc6c1a1f3f23}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
