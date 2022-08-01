@@ -6,6 +6,9 @@
 #define CameraZoom 1.0f
 #define CameraZoomInvers 1.f - ((CameraZoom - 1.0f) / 2.0f)
 
+
+#define MonitorX 1260.f / 1067.f
+#define MonitorY 720.f / 600.f
 enum class GamePlayItemType
 {
 	Equipment, // ¿Â∫Ò
@@ -123,5 +126,14 @@ enum class EngineInput
 enum class CharacterClass
 {
 	None,
-	Fighter_F_Stryker
+	Fighter_F,
+	Gunner_M,
+	CharacterClass_Max
 };
+enum class CollisionOrder
+{
+	None = 0,
+	InGame_Object = 1,
+	UI_ect = 3,
+};
+

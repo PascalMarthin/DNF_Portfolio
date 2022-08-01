@@ -4,6 +4,7 @@
 
 // Ό³Έν :
 class TitleCharacterSlot;
+class TitleButtonUI;
 class TitleBackGroundAndUI : public GameEngineActor
 {
 public:
@@ -19,7 +20,6 @@ public:
 
 protected:
 	void Start() override;
-
 	void Update(float _DeltaTime) override;
 
 	// void End() override {}
@@ -30,8 +30,8 @@ private:
 	GameEngineTextureRenderer* BackGround;
 	GameEngineTextureRenderer* GuideLine;
 
-
-	static std::vector<TitleCharacterSlot*> CharacterSlot;
+	TitleButtonUI* Actor_ButtonUI;
+	std::vector<TitleCharacterSlot*> CharacterSlot;
 
 };
 

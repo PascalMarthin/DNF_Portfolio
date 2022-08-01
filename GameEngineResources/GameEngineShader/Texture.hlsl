@@ -20,7 +20,7 @@ struct Output
     float4 PosLocal : POSITION;
     float4 Tex : TEXCOORD;
 };
- 
+
 // 1000
 // 0100
 // 2010
@@ -35,7 +35,7 @@ struct Output
 // 그래픽카드에서 이뤄지는것.
 Output Texture_VS(Input _Input)
 {
-    Output NewOutPut = (Output) 0;
+    Output NewOutPut = (Output)0;
     NewOutPut.Pos = mul(_Input.Pos, WorldViewProjection);
     NewOutPut.PosLocal = _Input.Pos;
     NewOutPut.Tex = _Input.Tex;
@@ -49,10 +49,10 @@ float4 Texture_PS(Output _Input) : SV_Target0
 {
     float4 Color = Tex.Sample(Smp, _Input.Tex.xy);
     
-    //if (Color.a <= 0.0f)
-    //{
-    //    clip(-1);
-    //}
+    if (Color.a <= 0.0f)
+    {
+        clip(-1);
+    }
     
     return Color;
 }

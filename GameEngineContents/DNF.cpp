@@ -11,6 +11,7 @@
 #include "SeriaRoom_Level.h"
 #include "CharacterFighter.h"
 #include "SelectCharacterLevel.h"
+#include "CharacterCreateLevel.h"
 
 //#pragma comment(lib, "GameEngineBase.lib")
 
@@ -25,7 +26,7 @@ DNF::~DNF()
 void DNF::Start()
 {
 	// GameEngineDebug::ConsoleOpen();
-
+	//ShowCursor(false);
 	AllResourceLoad();
 	CharacterFighter::SetAnimationForFrameAnimationDESC();
 
@@ -34,8 +35,6 @@ void DNF::Start()
 		CreateLevel<DebugLevel>("Debug");
 	}
 	// 디버그용 레벨
-
-
 	{
 		CreateLevel<SeriaRoom_Level>("SeriaRoom");
 	}
@@ -43,6 +42,7 @@ void DNF::Start()
 
 	{
 		CreateLevel<SelectCharacterLevel>("SelectCharacter");
+		CreateLevel<CharacterCreateLevel>("CharacterCreate");
 	}
 
 	ChangeLevel("SelectCharacter");
@@ -70,6 +70,7 @@ void DNF::BaseTextureLoad()
 
 void DNF::BaseFolderTextureLoad()
 {
+
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExitsChildDirectory("Resource");
@@ -131,6 +132,56 @@ void DNF::BaseFolderTextureLoad()
 			{
 				GameEngineTexture::Load(Texture[i].GetFullPath());
 			}
+		}
+	}
+
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resource");
+		Dir.Move("Resource");
+		Dir.Move("Texture");
+		Dir.Move("UI");
+		Dir.Move("Cursor");
+
+		std::vector<GameEngineFile> Texture = Dir.GetAllFile();
+
+		for (size_t i = 0; i < Texture.size(); i++)
+		{
+			GameEngineTexture::Load(Texture[i].GetFullPath());
+		}
+	}
+
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resource");
+		Dir.Move("Resource");
+		Dir.Move("Texture");
+		Dir.Move("UI");
+		Dir.Move("CharacterCreate");
+		Dir.Move("CharacterBackGround");
+		
+		std::vector<GameEngineFile> Texture = Dir.GetAllFile();
+
+		for (size_t i = 0; i < Texture.size(); i++)
+		{
+			GameEngineTexture::Load(Texture[i].GetFullPath());
+		}
+	}
+
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resource");
+		Dir.Move("Resource");
+		Dir.Move("Texture");
+		Dir.Move("UI");
+		Dir.Move("CharacterCreate");
+		Dir.Move("CharacterThumbnail");
+
+		std::vector<GameEngineFile> Texture = Dir.GetAllFile();
+
+		for (size_t i = 0; i < Texture.size(); i++)
+		{
+			GameEngineTexture::Load(Texture[i].GetFullPath());
 		}
 	}
 	//{

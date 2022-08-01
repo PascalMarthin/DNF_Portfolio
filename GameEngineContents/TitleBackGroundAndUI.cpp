@@ -1,13 +1,13 @@
 #include "PreCompile.h"
 #include "TitleBackGroundAndUI.h"
 #include "TitleCharacterSlot.h"
+#include "TitleButtonUI.h"
 #include <GameEngineBase/GameEngineInput.h>
-
-std::vector<TitleCharacterSlot*> TitleBackGroundAndUI::CharacterSlot;
 
 TitleBackGroundAndUI::TitleBackGroundAndUI() 
 	: BackGround(nullptr)
 	, GuideLine(nullptr)
+	, Actor_ButtonUI(nullptr)
 {
 }
 
@@ -30,6 +30,10 @@ void TitleBackGroundAndUI::Start()
 		GuideLine->GetTransform().SetLocalScale({ WinddowScale.x , 580 });
 		GuideLine->GetTransform().SetLocalPosition({ 0, -325, 98 });
 	}
+	{
+		Actor_ButtonUI = GetLevel()->CreateActor<TitleButtonUI>();
+		Actor_ButtonUI->GetTransform().SetLocalPosition({ 0, -WinddowScale.hy() + 33.f});
+	}
 
 	// Debug
 	{
@@ -37,22 +41,14 @@ void TitleBackGroundAndUI::Start()
 	}
 	//
 
-	if (TitleBackGroundAndUI::CharacterSlot.empty())
+	int Hif = WinddowScale.hix();
+	for (int x = 0; x < 7; x++)
 	{
-
-
-		int Hif = WinddowScale.hix();
-		for (int y = 0; y < 3; y++)
-		{
-			for (int x = 0; x < 7; x++)
-			{
-				TitleCharacterSlot* Slot = GetLevel()->CreateActor<TitleCharacterSlot>();
-				Slot->GetTransform().SetLocalPosition({ static_cast<float>(126 - Hif + ((152 + 18) * x)) ,  static_cast<float>(-168 - ((4 + 250) * y))});
-				TitleBackGroundAndUI::CharacterSlot.push_back(Slot);
-			}
-		}
-
+		TitleCharacterSlot* Slot = GetLevel()->CreateActor<TitleCharacterSlot>();
+		Slot->GetTransform().SetLocalPosition({ static_cast<float>(126 - Hif + ((152 + 18) * x)) ,  static_cast<float>(-168)});
+		TitleBackGroundAndUI::CharacterSlot.push_back(Slot);
 	}
+
 }
 
 void TitleBackGroundAndUI::Update(float _DeltaTime)

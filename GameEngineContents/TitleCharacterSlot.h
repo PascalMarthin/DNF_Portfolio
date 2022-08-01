@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
+#include <GameEngineCore/GameEngineCollision.h>
 
 // Ό³Έν :
 class TitleCharacterSlot : public GameEngineActor
@@ -24,8 +25,11 @@ protected:
 	// void OnEvent() {}
 	// void OffEvent() {}
 private:
-	GameEngineTextureRenderer* Slot_Border;
-	GameEngineTextureRenderer* Magic_Circle;
+	GameEngineTextureRenderer* Texture_SlotBorder;
+	GameEngineTextureRenderer* Texture_MagicCircle;
+
+	GameEngineCollision* Collision_SlotBorder;
+
 
 };
 

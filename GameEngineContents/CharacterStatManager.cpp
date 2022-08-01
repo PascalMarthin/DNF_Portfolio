@@ -33,19 +33,19 @@ void CharacterStatManager::Start()
 void CharacterStatManager::SettingFirstTime()
 {
 	CharacterClass Class = GetParent<GamePlayCharacter>()->GetPlayerClass();
+	SetCharacter_Fighter_F();
 
-
-	switch (Class)
+	/*switch (Class)
 	{
 		break;
-	case CharacterClass::Fighter_F_Stryker:
-		SetCharacter_Fighter_F();
+	case CharacterClass::Fighter_F:
+
 		break;
 	case CharacterClass::None:
 	default:
 		MsgBoxAssert("아직 구현되지 않았거나 Class 설정이 안되어있습니다")
 		break;
-	}
+	}*/
 }
 
 void CharacterStatManager::SetCharacter_Fighter_F()

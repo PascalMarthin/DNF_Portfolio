@@ -41,17 +41,6 @@ public:
 	}
 
 
-	inline void SetPlayerClass(CharacterClass _Class)
-	{
-		if (PlayerClass != CharacterClass::None)
-		{
-			MsgBoxAssert("이미 설정된 플레이어 클래스입니다")
-		}
-		else
-		{
-			PlayerClass = _Class;
-		}
-	}
 	inline CharacterClass GetPlayerClass() const
 	{
 		return PlayerClass;

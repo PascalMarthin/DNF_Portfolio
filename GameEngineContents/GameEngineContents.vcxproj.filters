@@ -41,7 +41,7 @@
     <ClInclude Include="GamePlayCharacter.h">
       <Filter>Object\Character</Filter>
     </ClInclude>
-    <ClInclude Include="CharacterStryker.h">
+    <ClInclude Include="CharacterStriker.h">
       <Filter>Object\Character\Fighter\Skill</Filter>
     </ClInclude>
     <ClInclude Include="DebugLevel.h">
@@ -86,11 +86,29 @@
     <ClInclude Include="SelectCharacterLevel.h">
       <Filter>Level\Title</Filter>
     </ClInclude>
+    <ClInclude Include="MouseCursorComponent.h">
+      <Filter>Gobal</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterCreateLevel.h">
+      <Filter>Level\Title</Filter>
+    </ClInclude>
     <ClInclude Include="TitleBackGroundAndUI.h">
-      <Filter>Level\Title\UI</Filter>
+      <Filter>Level\Title\UI\NewFilter1</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleButtonUI.h">
+      <Filter>Level\Title\UI\NewFilter1</Filter>
     </ClInclude>
     <ClInclude Include="TitleCharacterSlot.h">
-      <Filter>Level\Title\UI</Filter>
+      <Filter>Level\Title\UI\NewFilter1</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleCreateCharacterBackGround.h">
+      <Filter>Level\Title\UI\CreateCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleCreateCharacter_ThumbnailManager.h">
+      <Filter>Level\Title\UI\CreateCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleCreateCharacterThumbnail.h">
+      <Filter>Level\Title\UI\CreateCharacter</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -131,10 +149,10 @@
     <ClCompile Include="GamePlayCharacter.cpp">
       <Filter>Object\Character</Filter>
     </ClCompile>
-    <ClCompile Include="CharacterStryker.cpp">
+    <ClCompile Include="CharacterStriker.cpp">
       <Filter>Object\Character\Fighter\Skill</Filter>
     </ClCompile>
-    <ClCompile Include="CharacterStryker_Skill.cpp">
+    <ClCompile Include="CharacterStriker_Skill.cpp">
       <Filter>Object\Character\Fighter\Skill</Filter>
     </ClCompile>
     <ClCompile Include="DebugLevel.cpp">
@@ -182,11 +200,29 @@
     <ClCompile Include="SelectCharacterLevel.cpp">
       <Filter>Level\Title</Filter>
     </ClCompile>
+    <ClCompile Include="MouseCursorComponent.cpp">
+      <Filter>Gobal</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterCreateLevel.cpp">
+      <Filter>Level\Title</Filter>
+    </ClCompile>
     <ClCompile Include="TitleBackGroundAndUI.cpp">
-      <Filter>Level\Title\UI</Filter>
+      <Filter>Level\Title\UI\NewFilter1</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleButtonUI.cpp">
+      <Filter>Level\Title\UI\NewFilter1</Filter>
     </ClCompile>
     <ClCompile Include="TitleCharacterSlot.cpp">
-      <Filter>Level\Title\UI</Filter>
+      <Filter>Level\Title\UI\NewFilter1</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleCreateCharacterBackGround.cpp">
+      <Filter>Level\Title\UI\CreateCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleCreateCharacter_ThumbnailManager.cpp">
+      <Filter>Level\Title\UI\CreateCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleCreateCharacterThumbnail.cpp">
+      <Filter>Level\Title\UI\CreateCharacter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -264,6 +300,12 @@
     </Filter>
     <Filter Include="Level\Title\UI">
       <UniqueIdentifier>{e9857ee4-5e53-4dd7-8576-3e79b8e30241}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\Title\UI\NewFilter1">
+      <UniqueIdentifier>{58e67fb2-f7ff-42ab-9161-f3df00f27c04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\Title\UI\CreateCharacter">
+      <UniqueIdentifier>{8f30d40e-5596-4973-a387-4476941f5119}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
