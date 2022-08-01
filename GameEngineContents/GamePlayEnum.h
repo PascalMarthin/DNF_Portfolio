@@ -130,6 +130,29 @@ enum class CharacterClass
 	Gunner_M,
 	CharacterClass_Max
 };
+
+enum class AllCharacterClass
+{
+	 None
+	, Swordman_M
+	, Swordman_F
+	, Fighter_M
+	, Fighter_F
+	, Gunner_M
+	, Gunner_F
+	, Mage_M
+	, Mage_F
+	, Priest_M
+	, Priest_F
+	, Thief
+	, Knight
+	, Demoniclancer
+	, Gunblader
+	, Darknight
+	, Creator
+	, AllCharacterClass_Max
+};
+
 enum class CollisionOrder
 {
 	None = 0,

@@ -1,6 +1,8 @@
 #pragma once
-#include <GameEngineCore/GameEngineActor.h>
 #include <vector>
+#include <map>
+#include <GameEngineCore/GameEngineActor.h>
+#include "GamePlayEnum.h"
 
 // Ό³Έν :
 class TitleCreateCharacterThumbnail;
@@ -25,6 +27,6 @@ protected:
 	// void OnEvent() {}
 	// void OffEvent() {}
 private:
-	std::vector<TitleCreateCharacterThumbnail*> Actor_AllThumbnails;
+	std::map<AllCharacterClass , TitleCreateCharacterThumbnail*> Actor_AllThumbnails;
 };
 
