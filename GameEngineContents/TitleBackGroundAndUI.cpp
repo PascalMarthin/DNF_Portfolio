@@ -32,7 +32,6 @@ void TitleBackGroundAndUI::Start()
 	}
 	{
 		Actor_ButtonUI = GetLevel()->CreateActor<TitleButtonUI>();
-		Actor_ButtonUI->GetTransform().SetLocalPosition({ 0, -WinddowScale.hy() + 33.f});
 	}
 
 	// Debug

@@ -3,6 +3,7 @@
 #include <GameEngineCore/GameEngineTextureRenderer.h>
 #include <GameEngineCore/GameEngineCollision.h>
 // Ό³Έν :
+class ButtonComponent;
 class TitleButtonUI : public GameEngineActor
 {
 public:
@@ -25,12 +26,15 @@ protected:
 	// void OffEvent() {}
 
 private:
-	GameEngineTextureRenderer* Texture_Button_GameStart;
-	GameEngineTextureRenderer* Texture_Button_CreateCharacter;
-	GameEngineCollision* Collision_Button_GameStart;
-	GameEngineCollision* Collision_Button_CreateCharacter;
+	//GameEngineTextureRenderer* Texture_Button_GameStart;
+	//GameEngineTextureRenderer* Texture_Button_CreateCharacter;
+	//GameEngineCollision* Collision_Button_GameStart;
+	//GameEngineCollision* Collision_Button_CreateCharacter;
 
-	bool Check_Collision_Button_GameStart();
-	bool Check_Collision_Button_CreateCharacter();
+	ButtonComponent* Actor_GameStart;
+	ButtonComponent* Actor_CreateCharactor;
+
+	//bool Check_Collision_Button_GameStart();
+	//bool Check_Collision_Button_CreateCharacter();
 };
 

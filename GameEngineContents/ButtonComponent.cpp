@@ -21,6 +21,17 @@ void ButtonComponent::Start()
 	GetTransform().SetLocalScale({ MonitorX, MonitorY });
 	Texture_CreateCharacterButton = CreateComponent<GameEngineTextureRenderer>();
 	Collision_CreateCharacterButton = CreateComponent<GameEngineCollision>();
+	Collision_CreateCharacterButton->ChangeOrder(CollisionOrder::UI_ect);
+}
+
+void ButtonComponent::Update(float _DeltaTime)
+{
+	// 디버그용
+	if (Enum_ButtonCondition == ButtonCondition::None)
+	{
+		MsgBoxAssert("버튼 엑터를 생성하고 설정하지 않았습니다");
+	}
+	// 디버그용 
 }
 
 void ButtonComponent::SetOption(ButtonSize _Button , const float4& _Size)
