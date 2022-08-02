@@ -1,5 +1,6 @@
 #pragma once
 #include <queue>
+#include <GameEngineBase/GameEngineMath.h>
 #include <GameEngineCore/GameEngineComponent.h>
 #include "GamePlayEnum.h"
 

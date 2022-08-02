@@ -17,7 +17,7 @@ public:
 	TitleCreateCharacterBackGround& operator=(const TitleCreateCharacterBackGround& _Other) = delete;
 	TitleCreateCharacterBackGround& operator=(TitleCreateCharacterBackGround&& _Other) noexcept = delete;
 
-	void ChangeClass(CharacterClass _Class);
+	void SetChangeClass(GameEngineTexture* _Texture);
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -27,6 +27,5 @@ protected:
 	// void OffEvent() {}
 private:
 	GameEngineTextureRenderer* Texture_BackGround;
-	CharacterClass Enum_CurrentClass;
 };
 

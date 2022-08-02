@@ -93,13 +93,13 @@
       <Filter>Level\Title</Filter>
     </ClInclude>
     <ClInclude Include="TitleBackGroundAndUI.h">
-      <Filter>Level\Title\UI\NewFilter1</Filter>
+      <Filter>Level\Title\UI\SelectCharacter</Filter>
     </ClInclude>
     <ClInclude Include="TitleButtonUI.h">
-      <Filter>Level\Title\UI\NewFilter1</Filter>
+      <Filter>Level\Title\UI\SelectCharacter</Filter>
     </ClInclude>
     <ClInclude Include="TitleCharacterSlot.h">
-      <Filter>Level\Title\UI\NewFilter1</Filter>
+      <Filter>Level\Title\UI\SelectCharacter</Filter>
     </ClInclude>
     <ClInclude Include="TitleCreateCharacterBackGround.h">
       <Filter>Level\Title\UI\CreateCharacter</Filter>
@@ -109,6 +109,15 @@
     </ClInclude>
     <ClInclude Include="TitleCreateCharacterThumbnail.h">
       <Filter>Level\Title\UI\CreateCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleCreateCharacter_ClassIllustGIF.h">
+      <Filter>Level\Title\UI\CreateCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleCreateCharacterButtonUI.h">
+      <Filter>Level\Title\UI\CreateCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonComponent.h">
+      <Filter>Gobal</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -207,13 +216,13 @@
       <Filter>Level\Title</Filter>
     </ClCompile>
     <ClCompile Include="TitleBackGroundAndUI.cpp">
-      <Filter>Level\Title\UI\NewFilter1</Filter>
+      <Filter>Level\Title\UI\SelectCharacter</Filter>
     </ClCompile>
     <ClCompile Include="TitleButtonUI.cpp">
-      <Filter>Level\Title\UI\NewFilter1</Filter>
+      <Filter>Level\Title\UI\SelectCharacter</Filter>
     </ClCompile>
     <ClCompile Include="TitleCharacterSlot.cpp">
-      <Filter>Level\Title\UI\NewFilter1</Filter>
+      <Filter>Level\Title\UI\SelectCharacter</Filter>
     </ClCompile>
     <ClCompile Include="TitleCreateCharacterBackGround.cpp">
       <Filter>Level\Title\UI\CreateCharacter</Filter>
@@ -223,6 +232,15 @@
     </ClCompile>
     <ClCompile Include="TitleCreateCharacterThumbnail.cpp">
       <Filter>Level\Title\UI\CreateCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleCreateCharacter_ClassIllustGIF.cpp">
+      <Filter>Level\Title\UI\CreateCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleCreateCharacterButtonUI.cpp">
+      <Filter>Level\Title\UI\CreateCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonComponent.cpp">
+      <Filter>Gobal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -301,11 +319,11 @@
     <Filter Include="Level\Title\UI">
       <UniqueIdentifier>{e9857ee4-5e53-4dd7-8576-3e79b8e30241}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Level\Title\UI\NewFilter1">
-      <UniqueIdentifier>{58e67fb2-f7ff-42ab-9161-f3df00f27c04}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Level\Title\UI\CreateCharacter">
       <UniqueIdentifier>{8f30d40e-5596-4973-a387-4476941f5119}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\Title\UI\SelectCharacter">
+      <UniqueIdentifier>{58e67fb2-f7ff-42ab-9161-f3df00f27c04}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

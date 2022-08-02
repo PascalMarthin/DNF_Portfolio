@@ -19,6 +19,8 @@ public:
 	TitleCreateCharacter_ThumbnailManager& operator=(const TitleCreateCharacter_ThumbnailManager& _Other) = delete;
 	TitleCreateCharacter_ThumbnailManager& operator=(TitleCreateCharacter_ThumbnailManager&& _Other) noexcept = delete;
 
+	void SetSelectCharacter(AllCharacterClass _Class);
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -27,6 +29,6 @@ protected:
 	// void OnEvent() {}
 	// void OffEvent() {}
 private:
-	std::map<AllCharacterClass , TitleCreateCharacterThumbnail*> Actor_AllThumbnails;
+	std::vector<TitleCreateCharacterThumbnail*> Actor_AllThumbnails;
 };
 

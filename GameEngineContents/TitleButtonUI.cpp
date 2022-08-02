@@ -85,8 +85,7 @@ bool TitleButtonUI::Check_Collision_Button_CreateCharacter()
 		{
 			return true;
 		}
-	
-	}
 
-	
+	}
+	return false;
 }

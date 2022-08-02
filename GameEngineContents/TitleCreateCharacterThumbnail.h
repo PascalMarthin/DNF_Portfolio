@@ -2,12 +2,11 @@
 #include <GameEngineCore/GameEngineActor.h>
 #include <GameEngineCore/GameEngineTextureRenderer.h>
 #include <GameEngineCore/GameEngineCollision.h>
+#include "GamePlayEnum.h"
 
 // Ό³Έν :
-class TitleCreateCharacter_ThumbnailManager;
 class TitleCreateCharacterThumbnail : public GameEngineActor
 {
-	friend TitleCreateCharacter_ThumbnailManager;
 public:
 	// constrcuter destructer
 	TitleCreateCharacterThumbnail();
@@ -19,6 +18,20 @@ public:
 	TitleCreateCharacterThumbnail& operator=(const TitleCreateCharacterThumbnail& _Other) = delete;
 	TitleCreateCharacterThumbnail& operator=(TitleCreateCharacterThumbnail&& _Other) noexcept = delete;
 
+	void SetCharacterThumbnail(AllCharacterClass _Class);
+	inline void SetCursorSelectOff()
+	{
+		Texture_CursorSelect->Off();
+	}
+	inline void SetCursorSelectOn()
+	{
+		Texture_CursorSelect->On();
+	}
+	inline AllCharacterClass GetAllCharacterClass()
+	{
+		return Enum_Class;
+	}
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -26,11 +39,14 @@ protected:
 	// void End() override {}
 	// void OnEvent() {}
 	// void OffEvent() {}
+	void SetThumbnailClass();
+
 private:
 	GameEngineTextureRenderer* Texture_CursorLocate;
 	GameEngineTextureRenderer* Texture_CursorSelect;
 	GameEngineTextureRenderer* Texture_Thumbnails;
 
 	GameEngineCollision* Collision_Thumbnails;
+	AllCharacterClass Enum_Class;
 };
 
