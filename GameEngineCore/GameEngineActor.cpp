@@ -24,7 +24,7 @@ void GameEngineActor::AllUpdate(float _ScaleDeltaTime, float _DeltaTime)
 	AddAccTime(_DeltaTime);
 	ReleaseUpdate(_DeltaTime);
 	Update(_ScaleDeltaTime);
-	
+
 	for (GameEngineUpdateObject* Com : Childs)
 	{
 		Com->AddAccTime(_DeltaTime);

@@ -82,7 +82,7 @@ void ButtonComponent::SetOption(ButtonSize _Button , const float4& _Size)
 	Enum_ButtonCondition = ButtonCondition::Off;
 }
 
-void ButtonComponent::SetOption(const std::vector<GameEngineTexture*>& _VectorTexture, const float4& _Size = float4::ZERO)
+void ButtonComponent::SetOption(const std::vector<GameEngineTexture*>& _VectorTexture, const float4& _Size)
 {
 	if (Enum_ButtonSize != ButtonSize::None )
 	{

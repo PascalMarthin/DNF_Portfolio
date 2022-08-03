@@ -28,6 +28,7 @@ protected:
 private:
 	GameEngineTextureRenderer* FolderTexture_CurrentGIF;
 	GameEngineTextureRenderer* FolderTexture_BackBufferGIF;
+	float Float_TextureBackDelay;
 	bool ChangeGIF;
 	std::string CurrentAnimationName;
 };
