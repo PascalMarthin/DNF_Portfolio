@@ -23,14 +23,13 @@ void MouseCursorComponent::Start()
 
 	Collision_MouseCursor = CreateComponent<GameEngineCollision>("Collision_MouseCursor");
 	Collision_MouseCursor->GetTransform().SetLocalScale({8, 8});
-	Collision_MouseCursor->GetTransform().SetLocalPosition({ -12 , 12 });
 	Collision_MouseCursor->ChangeOrder(CollisionOrder::UI_ect);
 }
 
 void MouseCursorComponent::Update(float _DeltaTime)
 {
 	const float4& MousePos = GetLevel()->GetMainCamera()->GetMouseWorldPosition();
-	Texture_Cursor->GetTransform().SetLocalPosition({ MousePos.x , MousePos.y , 0 });
-	Collision_MouseCursor->GetTransform().SetLocalPosition({ MousePos.x , MousePos.y , 0 });
+	Texture_Cursor->GetTransform().SetLocalPosition({ MousePos.x + 8.f , MousePos.y - 8.f, 0 });
+	Collision_MouseCursor->GetTransform().SetLocalPosition({ MousePos.x - 8 , MousePos.y + 8 , 0 });
 	//GameEngineDebug::OutPutString(std::to_string(Texture_Cursor->GetTransform().GetLocalPosition().x) + " / " + std::to_string(Texture_Cursor->GetTransform().GetLocalPosition().y) + " / " + std::to_string(Texture_Cursor->GetTransform().GetLocalPosition().z));
 }

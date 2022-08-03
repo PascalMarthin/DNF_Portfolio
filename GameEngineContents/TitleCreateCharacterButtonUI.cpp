@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include <GameEngineCore/GameEngineLevel.h>
+#include <GameEngineCore/GEngine.h>
 #include "TitleCreateCharacterButtonUI.h"
 #include "ButtonComponent.h"
 
@@ -23,6 +24,15 @@ void TitleCreateCharacterButtonUI::Start()
 	}
 
 	{
+		Actor_GoBackButton = GetLevel()->CreateActor<ButtonComponent>();
+		std::vector<GameEngineTexture*> Texture;
+		Texture.push_back(GameEngineTexture::Find("CharacterCreate_Ninepatch_GoBack_Off.png"));
+		Texture.push_back(GameEngineTexture::Find("CharacterCreate_Ninepatch_GoBack_On.png"));
+		Texture.push_back(GameEngineTexture::Find("CharacterCreate_Ninepatch_GoBack_Push.png"));
+		Actor_GoBackButton->SetOption(Texture);
+		Actor_GoBackButton->GetTransform().SetLocalPosition({ 600, 320 });
+	}
+	{
 		//Texture_BackButton = CreateComponent<GameEngineTextureRenderer>();
 		//Collision_BackButton = CreateComponent<GameEngineCollision>();
 		//Texture_BackButton->SetTexture("Ninepatch_BlueButton_LongLong_Off.png");
@@ -30,10 +40,12 @@ void TitleCreateCharacterButtonUI::Start()
 		//Collision_BackButton->GetTransform().SetLocalScale(Texture_BackButton->GetTransform().GetLocalScale());
 	}
 
-
-
 }
 void TitleCreateCharacterButtonUI::Update(float _DeltaTime)
 {
-	Actor_CreateCharacterButton->UpdateButtonPush();
+	if (Actor_GoBackButton->UpdateButtonPush())
+	{
+		GEngine::ChangeLevel("SelectCharacter");
+		return;
+	}
 }

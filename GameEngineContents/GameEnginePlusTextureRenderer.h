@@ -4,7 +4,7 @@
 // 설명 : 던파 아바타 시스템에 맞춘 텍스쳐렌더링클래스
 // 폴더 텍스쳐 하나로만 이루어져 있으며 같은 주소값을 공유한다
 enum class AvataClass;
-enum class CharacterClass;
+enum class AllCharacterClass;
 class GameEnginePlusTextureRenderer;
 class FrameAnimationForAvata : public GameEngineNameObject
 {

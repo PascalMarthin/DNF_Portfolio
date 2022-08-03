@@ -5,14 +5,94 @@
 #include "GamePlayEnum.h"
 
 // 설명 :
+class CharacterAbilityStat
+{
+public:
+	CharacterAbilityStat()
+		: Level(0)
+		, MaxEXP(1000)
+		, EXP(0)
+		, MoveSpeed(2.0f)
+		, AttSpeed(1.f)
+		, CastSpeed(1.f)
+		, MAXHP(1000)
+		, MAXMP(1000)
+		, HP(0)
+		, MP(0)
+		, Physical_Armor(0.f)
+		, Magcial_Armor(0.f)
+		, STR(0)
+		, INT(0)
+		, Health(0)
+		, SPI(0)
+		, Physical_Damage(0)
+		, Magcial_Damage(0)
+		, Independent_Damage(0)
+		, Physical_Critical(0.f)
+		, Magcial_Critical(0.f)
+		, Accuracy(0.f)
+		, Evasion(0.f)
+		, Hit_Stun(0)
+		, Hit_Recovery(0)
+
+	{
+
+	}
+
+private:
+	unsigned int Level;
+	unsigned int MaxEXP;
+	int EXP;
+
+	unsigned int MAXHP;
+	int HP;
+	unsigned int MAXMP;
+	int MP;
+
+	float Physical_Armor; //              방어력
+	float Magcial_Armor; //               마법 방어력
+	unsigned int STR; // Strength         힘
+	unsigned int INT; // Intelligence     지능
+
+	unsigned int Health;   //             체력
+	unsigned int SPI;      // Spirit      정신력
+	unsigned int Physical_Damage;
+	unsigned int Magcial_Damage;
+
+	unsigned int Independent_Damage;
+	float Physical_Critical;
+	float Magcial_Critical;
+
+	float MoveSpeed;
+	float AttSpeed;
+	float CastSpeed;
+
+	float Accuracy;
+	float Evasion;
+	unsigned int Hit_Stun;
+	unsigned int Hit_Recovery;
+
+};
+class GamePlayDataBase
+{
+	GamePlayDataBase()
+		: FormerClass(CharacterFormerClass::None)
+	{
+
+	}
+	CharacterFormerClass FormerClass;
+	std::string NickName;
+
+	CharacterAbilityStat CharacterAbilityStat;
+	// 인벤토리
+	// 스킬
+};
 
 class PlayerInterface;
 class InterfaceHUD;
-
 class GamePlayCharacter : public GamePlayObject
 {
-public:
-	static int CharacterIndex;
+
 public:
 	// constrcuter destructer
 	GamePlayCharacter();	
@@ -41,7 +121,7 @@ public:
 	}
 
 
-	inline CharacterClass GetPlayerClass() const
+	inline AllCharacterClass GetPlayerClass() const
 	{
 		return PlayerClass;
 	}
@@ -55,7 +135,7 @@ protected:
 	PlayerInterface* PlayerUserInterface;
 
 private:
-	CharacterClass PlayerClass;
+	AllCharacterClass PlayerClass;
 
 protected:
 
@@ -82,9 +162,8 @@ protected:
 	void SetRightDir();
 	void SetLeftDir();
 
-
 private:
-
+	static std::list<GamePlayDataBase*> AllCharacterData;
 public:
 
 };

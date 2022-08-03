@@ -17,15 +17,20 @@ public:
 	TitleCreateCharacterButtonUI& operator=(const TitleCreateCharacterButtonUI& _Other) = delete;
 	TitleCreateCharacterButtonUI& operator=(TitleCreateCharacterButtonUI&& _Other) noexcept = delete;
 
+	inline ButtonComponent* GetCreateCharacterButton()
+	{
+		return Actor_CreateCharacterButton;
+	}
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 
 	// void End() override {}
-	// void OnEvent() {}
+	//void OnEvent() override;
 	// void OffEvent() {}
 private:
 	ButtonComponent* Actor_CreateCharacterButton;
+	ButtonComponent* Actor_GoBackButton;
 
 	GameEngineTextureRenderer* Texture_BackButton;
 	GameEngineCollision* Collision_BackButton;

@@ -29,7 +29,7 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override {}
 
-	// void OnEvent() {}
+	void OnEvent() override;
 	// void OffEvent() {}
 private:
 	TitleCreateCharacterBackGround* Actor_BackGround;
@@ -37,7 +37,8 @@ private:
 	TitleCreateCharacter_ClassIllustGIF* Actor_ClassIllustGIF;
 	TitleCreateCharacterButtonUI* Actor_ButtonManager;
 
-	CharacterClass Enum_CurrentClass;
+	AllCharacterClass Enum_CurrentClass;
 	void FirstSetting();
+	void CreateCharacter();
 };
 

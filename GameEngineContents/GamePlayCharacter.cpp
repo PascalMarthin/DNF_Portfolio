@@ -6,7 +6,8 @@
 
 #include "InterfaceHUD.h"
 
-int GamePlayCharacter::CharacterIndex = 0;
+std::list<GamePlayDataBase*> GamePlayCharacter::AllCharacterData;
+
 GamePlayCharacter::GamePlayCharacter()
 	: StatManager(nullptr)
 	, PlayerUserInterface(nullptr)
@@ -23,14 +24,19 @@ GamePlayCharacter::GamePlayCharacter()
 	, Avata_Shoes_a(nullptr)
 	, Avata_Shoes_b(nullptr)
 
-	, PlayerClass(CharacterClass::None)
 {
-	++GamePlayCharacter::CharacterIndex;
 }
 
 GamePlayCharacter::~GamePlayCharacter() 
 {
-	--GamePlayCharacter::CharacterIndex;
+	if (!AllCharacterData.empty())
+	{
+		for (GamePlayDataBase* Character : AllCharacterData)
+		{
+			delete Character;
+		}
+		AllCharacterData.clear();
+	}
 }
 
 void GamePlayCharacter::Start()

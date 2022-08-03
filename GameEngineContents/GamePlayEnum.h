@@ -123,11 +123,11 @@ enum class EngineInput
 
 };
 
-enum class CharacterClass
+enum class CharacterFormerClass
 {
 	None,
-	Fighter_F,
-	Gunner_M,
+	Striker,
+	Lucher,
 	CharacterClass_Max
 };
 

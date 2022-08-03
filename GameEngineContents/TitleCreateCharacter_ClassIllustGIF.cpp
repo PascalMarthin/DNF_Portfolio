@@ -43,6 +43,11 @@ void TitleCreateCharacter_ClassIllustGIF::Update(float _DeltaTime)
 	}
 }
 
+void TitleCreateCharacter_ClassIllustGIF::OnEvent()
+{
+	FolderTexture_BackBufferGIF->SetTexture("Null.png");
+}
+
 void TitleCreateCharacter_ClassIllustGIF::CreateClassIllustGIF(const std::string& _AnimationName, const std::string& _Name)
 {
 	FolderTexture_CurrentGIF->CreateFrameAnimationFolder(_AnimationName, FrameAnimation_DESC(_Name , 0.04f));

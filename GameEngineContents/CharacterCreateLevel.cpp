@@ -7,10 +7,11 @@
 #include "TitleCreateCharacter_ThumbnailManager.h"
 #include "TitleCreateCharacter_ClassIllustGIF.h"
 #include "TitleCreateCharacterButtonUI.h"
+#include "ButtonComponent.h"
 
 CharacterCreateLevel::CharacterCreateLevel() 
 	: Actor_BackGround(nullptr)
-	, Enum_CurrentClass(CharacterClass::None)
+	, Enum_CurrentClass(AllCharacterClass::None)
 	, Actor_ThumbnailManager(nullptr)
 	, Actor_ClassIllustGIF(nullptr)
 	, Actor_ButtonManager(nullptr)
@@ -31,10 +32,6 @@ void CharacterCreateLevel::Start()
 	Actor_ClassIllustGIF->GetTransform().SetLocalScale({ MonitorX, MonitorY });
 
 	FirstSetting();
-	{
-		
-		ChangeCurrentClass(AllCharacterClass::Fighter_F);
-	}// 순회해서 제일 가까운 클래스를 초기로 지정
 	
 }
 
@@ -46,9 +43,47 @@ void CharacterCreateLevel::FirstSetting()
 
 void CharacterCreateLevel::Update(float _DeltaTime)
 {
+	if (Actor_ButtonManager->GetCreateCharacterButton()->UpdateButtonPush())
+	{
+		CreateCharacter();
+	}
+}
+
+void CharacterCreateLevel::CreateCharacter()
+{
+	switch (Enum_CurrentClass)
+	{
+	case AllCharacterClass::Fighter_F:
+		
+		break;
+	case AllCharacterClass::Gunner_M:
+	case AllCharacterClass::Swordman_M:
+	case AllCharacterClass::Swordman_F:
+	case AllCharacterClass::Fighter_M:
+	case AllCharacterClass::Gunner_F:
+	case AllCharacterClass::Mage_M:
+	case AllCharacterClass::Mage_F:
+	case AllCharacterClass::Priest_M:
+	case AllCharacterClass::Priest_F:
+	case AllCharacterClass::Thief:
+	case AllCharacterClass::Knight:
+	case AllCharacterClass::Demoniclancer:
+	case AllCharacterClass::Gunblader:
+	case AllCharacterClass::Darknight:
+	case AllCharacterClass::Creator:
+	case AllCharacterClass::None:
+	case AllCharacterClass::AllCharacterClass_Max:
+		MsgBoxAssert("존재하지 않는 클래스들입니다")
+	default:
+		break;
+	}
 
 }
 
+void CharacterCreateLevel::OnEvent()
+{
+	ChangeCurrentClass(AllCharacterClass::Fighter_F);
+}
 
 void CharacterCreateLevel::ChangeCurrentClass(AllCharacterClass _Class)
 {
@@ -90,8 +125,8 @@ void CharacterCreateLevel::ChangeCurrentClass(AllCharacterClass _Class)
 	{
 		return;
 	}
+	Enum_CurrentClass = _Class;
 	Actor_ThumbnailManager->SetSelectCharacter(_Class);
 	Actor_BackGround->SetChangeClass(BackGroundTexture);
 	Actor_ClassIllustGIF->SetClassIllustGIF(ClassIllustGIF);
 }
-
