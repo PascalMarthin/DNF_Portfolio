@@ -1,8 +1,6 @@
 #include "PreCompile.h"
 #include <GameEngineBase/GameEngineInput.h>
 #include "PlayerInterface.h"
-#include "ItemInventory.h"
-#include "InterfaceItemBag.h"
 #include "GamePlayCharacter.h"
 #include "GamePlayKeyManager.h"
 

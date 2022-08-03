@@ -170,7 +170,7 @@ void CharacterFighter::FSM_Move_Walk_Start(const StateInfo& _Info)
 void CharacterFighter::FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _Info)
 {
 	bool IsMove = false;
-	float MoveSpeed = StatManager->GetMoveSpeed();
+	float MoveSpeed = 1.5f;
 
 	if (KeyManager->GetDoubleMoveKeyInput() != EngineInput::None)
 	{
@@ -194,7 +194,7 @@ void CharacterFighter::FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _
 		{
 			SetLeftDir();
 		}
-		GetTransform().SetLocalMove(Dir * StatManager->GetMoveSpeed() * DefaultMove * _DeltaTime);
+		GetTransform().SetLocalMove(Dir * MoveSpeed * DefaultMove * _DeltaTime);
 	}
 
 	if (KeyManager->Input_JumpKey_Down())
@@ -226,7 +226,7 @@ void CharacterFighter::FSM_Move_Dash_Update(float _DeltaTime, const StateInfo& _
 	//StatManager->GetFSMManager().ChangeState("Att_Dash");
 
 	bool IsMove = false;
-	float MoveSpeed = StatManager->GetMoveSpeed();
+	float MoveSpeed = 1.5f ;//StatManager->GetMoveSpeed();
 
 	if (KeyManager->Input_BaseAttKey_DownAndPress())
 	{
@@ -263,7 +263,7 @@ void CharacterFighter::FSM_Move_Dash_Update(float _DeltaTime, const StateInfo& _
 			//}
 			// 방향 바뀌면 걷는 액션 보류
 		}
-		GetTransform().SetLocalMove(Dir * StatManager->GetMoveSpeed() * DefaultMove * _DeltaTime);
+		GetTransform().SetLocalMove(Dir * MoveSpeed * DefaultMove * _DeltaTime);
 	}
 
 	if (KeyManager->Input_JumpKey_Down())
@@ -373,7 +373,7 @@ void CharacterFighter::FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& _
 	float4 LandingPos = StatManager->LandingPostion;
 	GetTransform().SetLocalMove(float4({ 0, 1 }) * StatManager->JumpHigh * _DeltaTime);
 
-	float MoveSpeed = StatManager->GetMoveSpeed();
+	float MoveSpeed = 1.5f;
 
 	float4 Dir = KeyManager->Input_Move_Press();
 	{

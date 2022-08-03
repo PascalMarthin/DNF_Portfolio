@@ -2,12 +2,10 @@
 #include <GameEngineCore/GameEngineActor.h>
 #include "PlayerInterface.h"
 #include "InterfaceHUD.h"
-#include "InterfaceItemBag.h"
 #include "GamePlayKeyManager.h"
 
 PlayerInterface::PlayerInterface() 
 	: PlayerHUD(nullptr)
-	, PlayerItemBag(nullptr)
 	, KeyManager(nullptr)
 {
 }
@@ -23,7 +21,7 @@ void PlayerInterface::Start()
 
 
 	PlayerHUD = GetLevel()->CreateActor<InterfaceHUD>();
-	PlayerItemBag = GetLevel()->CreateActor<InterfaceItemBag>();
+	//PlayerItemBag = GetLevel()->CreateActor<InterfaceItemBag>();
 
 
 }

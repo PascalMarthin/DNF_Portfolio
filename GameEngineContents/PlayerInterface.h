@@ -3,7 +3,7 @@
 
 // Ό³Έν :
 class InterfaceHUD;
-class InterfaceItemBag;
+
 class GamePlayKeyManager;
 class PlayerInterface : public GameEngineActor
 {
@@ -23,10 +23,6 @@ public:
 		return PlayerHUD;
 	}
 
-	inline InterfaceItemBag* GetUI_ItemBag() const
-	{
-		return PlayerItemBag;
-	}
 	inline GamePlayKeyManager* GetUI_KeyManager() const
 	{
 		return KeyManager;
@@ -43,7 +39,6 @@ protected:
 
 private:
 	InterfaceHUD* PlayerHUD;
-	InterfaceItemBag* PlayerItemBag;
 
 	GamePlayKeyManager* KeyManager;
 

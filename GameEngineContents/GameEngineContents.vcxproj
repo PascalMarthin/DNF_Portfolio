@@ -157,10 +157,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AvatarInventory.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="ButtonComponent.h">
       <SubType>
       </SubType>
@@ -203,10 +199,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="GamePlayItemBag.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="GamePlayKeyManager.h">
       <SubType>
       </SubType>
@@ -223,31 +215,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="InterfaceItemBag.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="ItemBagEquipmentWindow.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="ItemBagInventory.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="ItemBagQuickslot.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="ItemInventory.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="MouseCursorComponent.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="PetInventory.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -313,10 +281,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AvatarInventory.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="ButtonComponent.cpp">
       <SubType>
       </SubType>
@@ -359,10 +323,6 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="GamePlayItemBag.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="GamePlayItem_DESC_Res.cpp" />
     <ClCompile Include="GamePlayKeyManager.cpp">
       <SubType>
@@ -380,31 +340,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="InterfaceItemBag.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="ItemBagEquipmentWindow.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="ItemBagInventory.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="ItemBagQuickslot.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="ItemInventory.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="MouseCursorComponent.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="PetInventory.cpp">
       <SubType>
       </SubType>
     </ClCompile>

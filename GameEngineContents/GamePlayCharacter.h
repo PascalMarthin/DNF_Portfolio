@@ -73,17 +73,24 @@ private:
 	unsigned int Hit_Recovery;
 
 };
+class GamePlayItem;
+class InventoryData
+{
+	std::vector<GamePlayItem*> AllItem;
+};
+
 class GamePlayDataBase
 {
 	GamePlayDataBase()
-		: FormerClass(CharacterFormerClass::None)
+		: Enum_FormerClass(CharacterFormerClass::None)
 	{
 
 	}
-	CharacterFormerClass FormerClass;
+	CharacterFormerClass Enum_FormerClass;
 	std::string NickName;
 
-	CharacterAbilityStat CharacterAbilityStat;
+	CharacterAbilityStat Class_CharacterAbilityStat;
+	InventoryData Class_InventoryData;
 	// 인벤토리
 	// 스킬
 };

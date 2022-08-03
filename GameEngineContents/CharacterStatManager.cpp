@@ -32,7 +32,7 @@ void CharacterStatManager::Start()
 
 void CharacterStatManager::SettingFirstTime()
 {
-	CharacterClass Class = GetParent<GamePlayCharacter>()->GetPlayerClass();
+	//CharacterClass Class = GetParent<GamePlayCharacter>()->GetPlayerClass();
 	SetCharacter_Fighter_F();
 
 	/*switch (Class)
@@ -154,17 +154,6 @@ void CharacterStatManager::SetDoBaseAttEnd()
 	PlayerCurrentState &= ~(CharacterStat::Player_Character_BaseAtt);
 }
 
-float CharacterStatManager::GetMoveSpeed() const
-{
-	if (IsDash())
-	{
-		return PlayerStat.MoveSpeed * 1.8f;
-	}
-	else
-	{
-		return PlayerStat.MoveSpeed;
-	}
-}
 
 
 void CharacterStatManager::OnEvent() 
