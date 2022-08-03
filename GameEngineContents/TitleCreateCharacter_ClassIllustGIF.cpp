@@ -19,13 +19,15 @@ void TitleCreateCharacter_ClassIllustGIF::Start()
 	FolderTexture_BackBufferGIF = CreateComponent<GameEngineTextureRenderer>();
 	FolderTexture_CurrentGIF->GetTransform().SetLocalScale({ 1067, 600 });
 	FolderTexture_BackBufferGIF->GetTransform().SetLocalScale({ 1067, 600 });
+	FolderTexture_BackBufferGIF->SetTexture("Null.png");
+
 }
 void TitleCreateCharacter_ClassIllustGIF::Update(float _DeltaTime)
 {
 	if (ChangeGIF)
 	{
 		FolderTexture_CurrentGIF->GetTransform().SetLocalMove({ -1200.f * _DeltaTime, 0 });
-		FolderTexture_BackBufferGIF->GetTransform().SetLocalMove({ -1200.f * _DeltaTime, 0 });;
+		FolderTexture_BackBufferGIF->GetTransform().SetLocalMove({ -1200.f * _DeltaTime, 0 });
 		if (FolderTexture_CurrentGIF->GetTransform().GetLocalPosition().x < 0.f )
 		{
 			FolderTexture_CurrentGIF->GetTransform().SetLocalPosition({0, 0, 5});

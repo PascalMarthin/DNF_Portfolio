@@ -36,7 +36,7 @@ void ButtonComponent::Update(float _DeltaTime)
 
 void ButtonComponent::SetOption(ButtonSize _Button , const float4& _Size)
 {
-	if (Enum_ButtonSize != ButtonSize::None)
+	if (Enum_ButtonSize != ButtonSize::None )
 	{
 		MsgBoxAssert("이미 세팅이 완료된 버튼입니다")
 	}
@@ -79,6 +79,29 @@ void ButtonComponent::SetOption(ButtonSize _Button , const float4& _Size)
 	Collision_CreateCharacterButton->GetTransform().SetLocalScale(Texture_CreateCharacterButton->GetTransform().GetLocalScale());
 
 	Enum_ButtonSize = _Button;
+	Enum_ButtonCondition = ButtonCondition::Off;
+}
+
+void ButtonComponent::SetOption(const std::vector<GameEngineTexture*>& _VectorTexture, const float4& _Size = float4::ZERO)
+{
+	if (Enum_ButtonSize != ButtonSize::None )
+	{
+		MsgBoxAssert("이미 세팅이 완료된 버튼입니다")
+	}
+
+	Texture_AllButton = _VectorTexture;
+	Texture_CreateCharacterButton->SetTexture(Texture_AllButton[0]);
+	if (_Size.CompareInt2D(float4::ZERO))
+	{
+		Texture_CreateCharacterButton->ScaleToTexture();
+	}
+	else
+	{
+		Texture_CreateCharacterButton->GetTransform().SetLocalScale(_Size);
+	}
+	Collision_CreateCharacterButton->GetTransform().SetLocalScale(Texture_CreateCharacterButton->GetTransform().GetLocalScale());
+
+	Enum_ButtonSize = ButtonSize::CustomButton;
 	Enum_ButtonCondition = ButtonCondition::Off;
 }
 

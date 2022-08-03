@@ -9,7 +9,8 @@ enum class ButtonSize
 	Short,
 	Long,
 	LongLong,
-	VeryLongLong
+	VeryLongLong,
+	CustomButton,
 };
 
 enum class ButtonCondition
@@ -35,6 +36,7 @@ public:
 	ButtonComponent& operator=(ButtonComponent&& _Other) noexcept = delete;
 
 	void SetOption(ButtonSize _Button , const float4& _Size = float4::ZERO);
+	void SetOption(const std::vector<GameEngineTexture*>& _VectorTexture, const float4& _Size = float4::ZERO);
 	bool UpdateButtonPush();
 protected:
 	void Start() override;
