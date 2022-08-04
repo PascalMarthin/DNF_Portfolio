@@ -1,13 +1,17 @@
 #include "PreCompile.h"
 #include <GameEngineCore/GameEngineFolderTexture.h>
 #include <GameEngineCore/GameEngineTexture.h>
+#include <GameEngineCore/GEngine.h>
 #include "CharacterCreateLevel.h"
 #include "TitleCreateCharacterBackGround.h"
 #include "MouseCursorComponent.h"
 #include "TitleCreateCharacter_ThumbnailManager.h"
 #include "TitleCreateCharacter_ClassIllustGIF.h"
 #include "TitleCreateCharacterButtonUI.h"
+#include "GamePlayCharacter.h"
 #include "ButtonComponent.h"
+#include "SelectCharacterLevel.h"
+#include "GamePlayDataBase.h"
 
 CharacterCreateLevel::CharacterCreateLevel() 
 	: Actor_BackGround(nullptr)
@@ -51,10 +55,11 @@ void CharacterCreateLevel::Update(float _DeltaTime)
 
 void CharacterCreateLevel::CreateCharacter()
 {
+	GamePlayDataBase* CharacterData = nullptr;
 	switch (Enum_CurrentClass)
 	{
 	case AllCharacterClass::Fighter_F:
-		
+		CharacterData = GamePlayCharacter::CreateCharacterBase(CharacterFormerClass::Striker);
 		break;
 	case AllCharacterClass::Gunner_M:
 	case AllCharacterClass::Swordman_M:
@@ -77,7 +82,8 @@ void CharacterCreateLevel::CreateCharacter()
 	default:
 		break;
 	}
-
+	SelectCharacterLevel::PushCharacterData(CharacterData);
+	GEngine::ChangeLevel("SelectCharacter");
 }
 
 void CharacterCreateLevel::OnEvent()

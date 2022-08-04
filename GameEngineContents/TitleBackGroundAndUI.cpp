@@ -34,28 +34,9 @@ void TitleBackGroundAndUI::Start()
 		Actor_ButtonUI = GetLevel()->CreateActor<TitleButtonUI>();
 	}
 
-	// Debug
-	{
-		GameEngineInput::GetInst()->CreateKey("CreateCharacterButton", 'c');
-	}
-	//
-
-	int Hif = WinddowScale.hix();
-	for (int x = 0; x < 7; x++)
-	{
-		TitleCharacterSlot* Slot = GetLevel()->CreateActor<TitleCharacterSlot>();
-		Slot->GetTransform().SetLocalPosition({ static_cast<float>(126 - Hif + ((152 + 18) * x)) ,  static_cast<float>(-168)});
-		TitleBackGroundAndUI::CharacterSlot.push_back(Slot);
-	}
 
 }
 
 void TitleBackGroundAndUI::Update(float _DeltaTime)
 {
-	// Debug
-	if (GameEngineInput::GetInst()->IsDown("CreateCharacterButton"))
-	{
-
-	}
-	// 
 }

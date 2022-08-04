@@ -5,12 +5,12 @@
 #include <GameEngineCore/GameEngineFolderTexture.h>
 #include <GameEngineCore/GameEngineStateManager.h>
 #include "CharacterFighter.h"
+#include "AvataManager.h"
 #include "GamePlayKeyManager.h"
 #include "PlayerInterface.h"
 #include "GameEnginePlusTextureRenderer.h"
 #include "PlayerInterface.h"
 
-#define FighterAnimationInter 0.08f
 
 std::map<std::string, FrameAnimation_DESC*> CharacterFighter::CharacterAnimation_DESCs;
 
@@ -35,6 +35,8 @@ CharacterFighter::~CharacterFighter()
 void CharacterFighter::Start()
 {
 	GamePlayCharacter::Start();
+	Manager_AvataManager->SetCharacterDefaultAvata(AllCharacterClass::Fighter_F);
+	std::vector<GameEnginePlusTextureRenderer*>& AllAvatas =  Manager_AvataManager->GetAllAvatas();
 	for (GameEnginePlusTextureRenderer* Avata : AllAvatas)
 	{
 		for (auto& DESC : CharacterAnimation_DESCs)
@@ -44,13 +46,7 @@ void CharacterFighter::Start()
 		Avata->ChangeFrameAnimationPlus("Move_Stand");
 	}
 	{
-		Avata_Coat->SetDefaultCharacterAvata("ft_coat0000a");
-		Avata_Hair_b->SetDefaultCharacterAvata("ft_hair0000a");
-		Avata_Hair_a->SetDefaultCharacterAvata("ft_hair0000b");
-		Avata_Pants->SetDefaultCharacterAvata("ft_pants0000d");
-		Avata_Shoes_a->SetDefaultCharacterAvata("ft_shoes0000a");
-		Avata_Shoes_b->SetDefaultCharacterAvata("ft_shoes0000b");
-		Avata_Skin->SetDefaultCharacterAvata("ft_body0011");
+
 	}
 
 	SetKeyManager();
@@ -146,25 +142,25 @@ void CharacterFighter::DestroyFrameAnimationDESC()
 
 void CharacterFighter::Set_Default_FSMManager()
 {
-	StatManager->GetFSMManager().CreateStateMember("Move_Walk", this, &CharacterFighter::FSM_Move_Walk_Update, &CharacterFighter::FSM_Move_Walk_Start, &CharacterFighter::FSM_Move_Walk_End);
-	StatManager->GetFSMManager().CreateStateMember("Move_Dash", this, &CharacterFighter::FSM_Move_Dash_Update, &CharacterFighter::FSM_Move_Dash_Start, &CharacterFighter::FSM_Move_Dash_End);
-	StatManager->GetFSMManager().CreateStateMember("Move_Stand", this, &CharacterFighter::FSM_Move_Stand_Update, &CharacterFighter::FSM_Move_Stand_Start, &CharacterFighter::FSM_Move_Stand_End);
-	StatManager->GetFSMManager().CreateStateMember("Move_Jump", this, &CharacterFighter::FSM_Move_Jump_Update, &CharacterFighter::FSM_Move_Jump_Start, &CharacterFighter::FSM_Move_Jump_End);
-	StatManager->GetFSMManager().CreateStateMember("Att_BasePunch1", this, &CharacterFighter::FSM_Att_BasePunch1_Update, &CharacterFighter::FSM_Att_BasePunch1_Start, &CharacterFighter::FSM_Att_BasePunch1_End);
-	StatManager->GetFSMManager().CreateStateMember("Att_BasePunch2", this, &CharacterFighter::FSM_Att_BasePunch2_Update, &CharacterFighter::FSM_Att_BasePunch2_Start, &CharacterFighter::FSM_Att_BasePunch2_End);
-	StatManager->GetFSMManager().CreateStateMember("Att_BasePunch3", this, &CharacterFighter::FSM_Att_BasePunch3_Update, &CharacterFighter::FSM_Att_BasePunch3_Start, &CharacterFighter::FSM_Att_BasePunch3_End);
-	StatManager->GetFSMManager().CreateStateMember("Att_BaseKick", this, &CharacterFighter::FSM_Att_BaseKick_Update, &CharacterFighter::FSM_Att_BaseKick_Start, &CharacterFighter::FSM_Att_BaseKick_End);
-	StatManager->GetFSMManager().CreateStateMember("Att_Dash", this, &CharacterFighter::FSM_Att_Dash_Update, &CharacterFighter::FSM_Att_Dash_Start, &CharacterFighter::FSM_Att_Dash_End);
+	Manager_StatManager->GetFSMManager().CreateStateMember("Move_Walk", this, &CharacterFighter::FSM_Move_Walk_Update, &CharacterFighter::FSM_Move_Walk_Start, &CharacterFighter::FSM_Move_Walk_End);
+	Manager_StatManager->GetFSMManager().CreateStateMember("Move_Dash", this, &CharacterFighter::FSM_Move_Dash_Update, &CharacterFighter::FSM_Move_Dash_Start, &CharacterFighter::FSM_Move_Dash_End);
+	Manager_StatManager->GetFSMManager().CreateStateMember("Move_Stand", this, &CharacterFighter::FSM_Move_Stand_Update, &CharacterFighter::FSM_Move_Stand_Start, &CharacterFighter::FSM_Move_Stand_End);
+	Manager_StatManager->GetFSMManager().CreateStateMember("Move_Jump", this, &CharacterFighter::FSM_Move_Jump_Update, &CharacterFighter::FSM_Move_Jump_Start, &CharacterFighter::FSM_Move_Jump_End);
+	Manager_StatManager->GetFSMManager().CreateStateMember("Att_BasePunch1", this, &CharacterFighter::FSM_Att_BasePunch1_Update, &CharacterFighter::FSM_Att_BasePunch1_Start, &CharacterFighter::FSM_Att_BasePunch1_End);
+	Manager_StatManager->GetFSMManager().CreateStateMember("Att_BasePunch2", this, &CharacterFighter::FSM_Att_BasePunch2_Update, &CharacterFighter::FSM_Att_BasePunch2_Start, &CharacterFighter::FSM_Att_BasePunch2_End);
+	Manager_StatManager->GetFSMManager().CreateStateMember("Att_BasePunch3", this, &CharacterFighter::FSM_Att_BasePunch3_Update, &CharacterFighter::FSM_Att_BasePunch3_Start, &CharacterFighter::FSM_Att_BasePunch3_End);
+	Manager_StatManager->GetFSMManager().CreateStateMember("Att_BaseKick", this, &CharacterFighter::FSM_Att_BaseKick_Update, &CharacterFighter::FSM_Att_BaseKick_Start, &CharacterFighter::FSM_Att_BaseKick_End);
+	Manager_StatManager->GetFSMManager().CreateStateMember("Att_Dash", this, &CharacterFighter::FSM_Att_Dash_Update, &CharacterFighter::FSM_Att_Dash_Start, &CharacterFighter::FSM_Att_Dash_End);
 
 	
-	StatManager->GetFSMManager().ChangeState("Move_Stand");
+	Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
 }
 
 
 void CharacterFighter::FSM_Move_Walk_Start(const StateInfo& _Info)
 {
-	ChangeAvataAnimation("Move_Walk");
-	StatManager->SetWalk();
+	Manager_AvataManager->ChangeAvataAnimation("Move_Walk");
+	Manager_StatManager->SetWalk();
 }
 
 void CharacterFighter::FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _Info)
@@ -174,14 +170,14 @@ void CharacterFighter::FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _
 
 	if (KeyManager->GetDoubleMoveKeyInput() != EngineInput::None)
 	{
-		StatManager->GetFSMManager().ChangeState("Move_Dash");
+		Manager_StatManager->GetFSMManager().ChangeState("Move_Dash");
 		return;
 	}
 
 	float4 Dir = KeyManager->Input_Move_Press();
 	if (Dir.CompareInt2D(float4::ZERO))
 	{
-		StatManager->GetFSMManager().ChangeState("Move_Stand");
+		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
 		return;
 	}
 	else
@@ -199,13 +195,13 @@ void CharacterFighter::FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _
 
 	if (KeyManager->Input_JumpKey_Down())
 	{
-		StatManager->GetFSMManager().ChangeState("Move_Jump");
+		Manager_StatManager->GetFSMManager().ChangeState("Move_Jump");
 		return;
 	}
 
 	if (KeyManager->Input_BaseAttKey_DownAndPress())
 	{
-		StatManager->GetFSMManager().ChangeState("Att_BasePunch1");
+		Manager_StatManager->GetFSMManager().ChangeState("Att_BasePunch1");
 		return;
 	}
 }
@@ -217,8 +213,8 @@ void CharacterFighter::FSM_Move_Walk_End(const StateInfo& _Info)
 
 void CharacterFighter::FSM_Move_Dash_Start(const StateInfo& _Info)
 {
-	ChangeAvataAnimation("Move_Dash");
-	StatManager->SetDash();
+	Manager_AvataManager->ChangeAvataAnimation("Move_Dash");
+	Manager_StatManager->SetDash();
 }
 
 void CharacterFighter::FSM_Move_Dash_Update(float _DeltaTime, const StateInfo& _Info)
@@ -230,14 +226,14 @@ void CharacterFighter::FSM_Move_Dash_Update(float _DeltaTime, const StateInfo& _
 
 	if (KeyManager->Input_BaseAttKey_DownAndPress())
 	{
-		StatManager->GetFSMManager().ChangeState("Att_Dash");
+		Manager_StatManager->GetFSMManager().ChangeState("Att_Dash");
 		return;
 	}
 
 	float4 Dir = KeyManager->Input_Move_Press();
 	if (Dir.CompareInt2D(float4::ZERO))
 	{
-		StatManager->GetFSMManager().ChangeState("Move_Stand");
+		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
 		return;
 	}
 	else
@@ -268,7 +264,7 @@ void CharacterFighter::FSM_Move_Dash_Update(float _DeltaTime, const StateInfo& _
 
 	if (KeyManager->Input_JumpKey_Down())
 	{
-		StatManager->GetFSMManager().ChangeState("Move_Jump");
+		Manager_StatManager->GetFSMManager().ChangeState("Move_Jump");
 		return;
 	}
 }
@@ -280,40 +276,40 @@ void CharacterFighter::FSM_Move_Dash_End(const StateInfo& _Info)
 
 void CharacterFighter::FSM_Move_Stand_Start(const StateInfo& _Info)
 {
-	if (StatManager->GetEngage() < 0.f)
+	if (Manager_StatManager->GetEngage() < 0.f)
 	{
-		ChangeAvataAnimation("Move_Stand");
+		Manager_AvataManager->ChangeAvataAnimation("Move_Stand");
 	}
 	else
 	{
-		ChangeAvataAnimation("Move_Stand_Battle");
+		Manager_AvataManager->ChangeAvataAnimation("Move_Stand_Battle");
 	}
-	StatManager->SetStand();
+	Manager_StatManager->SetStand();
 }
 
 void CharacterFighter::FSM_Move_Stand_Update(float _DeltaTime, const StateInfo& _Info)
 {
 
-	if (StatManager->GetEngage() < 0.f)
+	if (Manager_StatManager->GetEngage() < 0.f)
 	{
-		ChangeAvataAnimation("Move_Stand");
+		Manager_AvataManager->ChangeAvataAnimation("Move_Stand");
 	}
 
 	if (KeyManager->Input_AllArrow_DownAndPress())
 	{
-		StatManager->GetFSMManager().ChangeState("Move_Walk");
+		Manager_StatManager->GetFSMManager().ChangeState("Move_Walk");
 		return;
 	}
 
 	if (KeyManager->Input_JumpKey_Down())
 	{
-		StatManager->GetFSMManager().ChangeState("Move_Jump");
+		Manager_StatManager->GetFSMManager().ChangeState("Move_Jump");
 		return;
 	}
 
 	if (KeyManager->Input_BaseAttKey_DownAndPress())
 	{
-		StatManager->GetFSMManager().ChangeState("Att_BasePunch1");
+		Manager_StatManager->GetFSMManager().ChangeState("Att_BasePunch1");
 		return;
 	}
 }
@@ -333,8 +329,8 @@ void CharacterFighter::FSM_Move_Jump_Start(const StateInfo& _Info)
 	EndJump = false;
 	StartJump = true;
 	JumpGoingDown = false;
-	ChangeAvataAnimation("Move_JumpReady");
-	StatManager->SetJump(GetTransform().GetLocalPosition());
+	Manager_AvataManager->ChangeAvataAnimation("Move_JumpReady");
+	Manager_StatManager->SetJump(GetTransform().GetLocalPosition());
 }
 
 void CharacterFighter::FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& _Info)
@@ -342,18 +338,18 @@ void CharacterFighter::FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& _
 	
 	if (EndJump == true && StartJump == false)
 	{
-		if (Avata_Skin->IsEndFrame())
+		if (Manager_AvataManager->Avata_Skin->IsEndFrame())
 		{
-			StatManager->GetFSMManager().ChangeState("Move_Stand");
+			Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
 		}
 		return;
 	}
 
 	if (StartJump == true)
 	{
-		if (Avata_Skin->IsEndFrame())
+		if (Manager_AvataManager->Avata_Skin->IsEndFrame())
 		{
-			ChangeAvataAnimation("Move_JumpUp");
+			Manager_AvataManager->ChangeAvataAnimation("Move_JumpUp");
 			StartJump = false;
 		}
 		return;
@@ -366,12 +362,12 @@ void CharacterFighter::FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& _
 	else if (KeyManager->Input_BaseAttKey_DownAndPress() &&
 			 BaseJumpKick == false)
 	{
-		ChangeAvataAnimation("Att_JumpKick");
+		Manager_AvataManager->ChangeAvataAnimation("Att_JumpKick");
 		BaseJumpKick = true;
 	}
 
-	float4 LandingPos = StatManager->LandingPostion;
-	GetTransform().SetLocalMove(float4({ 0, 1 }) * StatManager->JumpHigh * _DeltaTime);
+	float4 LandingPos = Manager_StatManager->LandingPostion;
+	GetTransform().SetLocalMove(float4({ 0, 1 }) * Manager_StatManager->JumpHigh * _DeltaTime);
 
 	float MoveSpeed = 1.5f;
 
@@ -379,7 +375,7 @@ void CharacterFighter::FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& _
 	{
 		if (Dir.y != 0.f)
 		{
-			StatManager->LandingPostion.y += Dir.y * DefaultMove * MoveSpeed * 0.5f * _DeltaTime;
+			Manager_StatManager->LandingPostion.y += Dir.y * DefaultMove * MoveSpeed * 0.5f * _DeltaTime;
 			Dir.y *= DefaultMove * MoveSpeed * 0.5f * _DeltaTime * 0.02f;
 		}
 		if (Dir.x != 0.f)
@@ -392,7 +388,7 @@ void CharacterFighter::FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& _
 			{
 				SetLeftDir();
 			}
-			StatManager->LandingPostion.x += Dir.x * DefaultMove * MoveSpeed * _DeltaTime;
+			Manager_StatManager->LandingPostion.x += Dir.x * DefaultMove * MoveSpeed * _DeltaTime;
 			Dir.x *= DefaultMove * MoveSpeed * _DeltaTime;
 		}
 		GetTransform().SetLocalMove(Dir);
@@ -401,17 +397,17 @@ void CharacterFighter::FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& _
 
 	if (LandingPos.y >= GetTransform().GetLocalPosition().y)
 	{
-		ChangeAvataAnimation("Move_Landing");
+		Manager_AvataManager->ChangeAvataAnimation("Move_Landing");
 		GetTransform().SetLocalPosition(LandingPos);
 		EndJump = true;
 		return;
 	}
 
-	if (StatManager->JumpHigh <= 0.f && 
+	if (Manager_StatManager->JumpHigh <= 0.f && 
 		JumpGoingDown == false &&
 		BaseJumpKick == false)
 	{
-		ChangeAvataAnimation("Move_JumpDown");
+		Manager_AvataManager->ChangeAvataAnimation("Move_JumpDown");
 		JumpGoingDown = true;
 	}
 
@@ -420,32 +416,32 @@ void CharacterFighter::FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& _
 
 void CharacterFighter::FSM_Move_Jump_End(const StateInfo& _Info)
 {
-	StatManager->SetEngage();
-	StatManager->SetJumpEnd();
+	Manager_StatManager->SetEngage();
+	Manager_StatManager->SetJumpEnd();
 }
 
 
 void CharacterFighter::FSM_Att_BasePunch1_Start(const StateInfo& _Info)
 {
-	StatManager->SetDoBaseAtt();
+	Manager_StatManager->SetDoBaseAtt();
 	Att_BaseAtt_Delay = 0.f;
-	ChangeAvataAnimation("Att_BasePunch1");
+	Manager_AvataManager->ChangeAvataAnimation("Att_BasePunch1");
 }
 
 void CharacterFighter::FSM_Att_BasePunch1_Update(float _DeltaTime, const StateInfo& _Info)
 {
-	if (Avata_Skin->IsEndFrame())
+	if (Manager_AvataManager->Avata_Skin->IsEndFrame())
 	{
 		Att_BaseAtt_Delay += _DeltaTime;
 		if (Att_BaseAtt_Delay > 0.2f)
 		{
-			StatManager->GetFSMManager().ChangeState("Move_Stand");
+			Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
 			return;
 		}
 
 		if (KeyManager->Input_BaseAttKey_DownAndPress())
 		{
-			StatManager->GetFSMManager().ChangeState("Att_BasePunch2");
+			Manager_StatManager->GetFSMManager().ChangeState("Att_BasePunch2");
 			return;
 		}
 
@@ -453,73 +449,72 @@ void CharacterFighter::FSM_Att_BasePunch1_Update(float _DeltaTime, const StateIn
 }
 void CharacterFighter::FSM_Att_BasePunch1_End(const StateInfo& _Info)
 {
-	StatManager->SetEngage();
-	StatManager->SetDoBaseAttEnd();
+	Manager_StatManager->SetEngage();
+	Manager_StatManager->SetDoBaseAttEnd();
 }
 
 
 
 void CharacterFighter::FSM_Att_BasePunch2_Start(const StateInfo& _Info)
 {
-	StatManager->SetDoBaseAtt();
+	Manager_StatManager->SetDoBaseAtt();
 	DelayPunch = false;
-	ChangeAvataAnimation("Att_BasePunch2");
-
+	Manager_AvataManager->ChangeAvataAnimation("Att_BasePunch2");
 }
 void CharacterFighter::FSM_Att_BasePunch2_Update(float _DeltaTime, const StateInfo& _Info)
 {
-	if (Avata_Skin->IsEndFrame() && DelayPunch == false)
+	if (Manager_AvataManager->Avata_Skin->IsEndFrame() && DelayPunch == false)
 	{
-		ChangeAvataAnimation("Att_BasePunch2_Delay");
+		Manager_AvataManager->ChangeAvataAnimation("Att_BasePunch2_Delay");
 		DelayPunch = true;
 	}
 	if (DelayPunch == true)
 	{
-		if (Avata_Skin->IsEndFrame())
+		if (Manager_AvataManager->Avata_Skin->IsEndFrame())
 		{
-			StatManager->GetFSMManager().ChangeState("Move_Stand");
+			Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
 			return;
 		}
 
 		if (KeyManager->Input_BaseAttKey_DownAndPress())
 		{
-			StatManager->GetFSMManager().ChangeState("Att_BasePunch3");
+			Manager_StatManager->GetFSMManager().ChangeState("Att_BasePunch3");
 			return;
 		}
 	}
 }
 void CharacterFighter::FSM_Att_BasePunch2_End(const StateInfo& _Info)
 {
-	StatManager->SetEngage();
-	StatManager->SetDoBaseAttEnd();
+	Manager_StatManager->SetEngage();
+	Manager_StatManager->SetDoBaseAttEnd();
 }
 
 void CharacterFighter::FSM_Att_BasePunch3_Start(const StateInfo& _Info)
 {
-	StatManager->SetDoBaseAtt();
+	Manager_StatManager->SetDoBaseAtt();
 	DelayPunch = false;
-	ChangeAvataAnimation("Att_BasePunch3");
+	Manager_AvataManager->ChangeAvataAnimation("Att_BasePunch3");
 
 }
 
 void CharacterFighter::FSM_Att_BasePunch3_Update(float _DeltaTime, const StateInfo& _Info)
 {
-	if (Avata_Skin->IsEndFrame() && DelayPunch == false)
+	if (Manager_AvataManager->Avata_Skin->IsEndFrame() && DelayPunch == false)
 	{
-		ChangeAvataAnimation("Att_BasePunch3_Delay");
+		Manager_AvataManager->ChangeAvataAnimation("Att_BasePunch3_Delay");
 		DelayPunch = true;
 	}
 	if (DelayPunch == true)
 	{
-		if (Avata_Skin->IsEndFrame())
+		if (Manager_AvataManager->Avata_Skin->IsEndFrame())
 		{
-			StatManager->GetFSMManager().ChangeState("Move_Stand");
+			Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
 			return;
 		}
 
 		if (KeyManager->Input_BaseAttKey_DownAndPress())
 		{
-			StatManager->GetFSMManager().ChangeState("Att_BaseKick");
+			Manager_StatManager->GetFSMManager().ChangeState("Att_BaseKick");
 			return;
 		}
 	}
@@ -528,53 +523,53 @@ void CharacterFighter::FSM_Att_BasePunch3_Update(float _DeltaTime, const StateIn
 
 void CharacterFighter::FSM_Att_BasePunch3_End(const StateInfo& _Info)
 {
-	StatManager->SetEngage();
-	StatManager->SetDoBaseAttEnd();
+	Manager_StatManager->SetEngage();
+	Manager_StatManager->SetDoBaseAttEnd();
 }
 
 
 void CharacterFighter::FSM_Att_BaseKick_Start(const StateInfo& _Info)
 {
-	StatManager->SetDoBaseAtt();
-	ChangeAvataAnimation("Att_Basekick");
+	Manager_StatManager->SetDoBaseAtt();
+	Manager_AvataManager->ChangeAvataAnimation("Att_Basekick");
 }
 
 void CharacterFighter::FSM_Att_BaseKick_Update(float _DeltaTime, const StateInfo& _Info)
 {
-	if (Avata_Skin->IsEndFrame())
+	if (Manager_AvataManager->Avata_Skin->IsEndFrame())
 	{
-		StatManager->GetFSMManager().ChangeState("Move_Stand");
+		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
 		return;
 	}
 }
 
 void CharacterFighter::FSM_Att_BaseKick_End(const StateInfo& _Info)
 {
-	StatManager->SetEngage();
-	StatManager->SetDoBaseAttEnd();
+	Manager_StatManager->SetEngage();
+	Manager_StatManager->SetDoBaseAttEnd();
 }
 
 
 void CharacterFighter::FSM_Att_Dash_Start(const StateInfo& _Info)
 {
 	DelayPunch = false;
-	StatManager->SetDash();
-	StatManager->SetDoBaseAtt();
-	ChangeAvataAnimation("Att_Dash");
+	Manager_StatManager->SetDash();
+	Manager_StatManager->SetDoBaseAtt();
+	Manager_AvataManager->ChangeAvataAnimation("Att_Dash");
 }
 
 void CharacterFighter::FSM_Att_Dash_Update(float _DeltaTime, const StateInfo& _Info)
 {
-	if (Avata_Skin->IsEndFrame() && DelayPunch == false)
+	if (Manager_AvataManager->Avata_Skin->IsEndFrame() && DelayPunch == false)
 	{
-		ChangeAvataAnimation("Att_Dash_Delay");
+		Manager_AvataManager->ChangeAvataAnimation("Att_Dash_Delay");
 		DelayPunch = true;
 	}
 	if (DelayPunch == true)
 	{
-		if (Avata_Skin->IsEndFrame())
+		if (Manager_AvataManager->Avata_Skin->IsEndFrame())
 		{
-			StatManager->GetFSMManager().ChangeState("Move_Stand");
+			Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
 			return;
 		}
 
@@ -589,6 +584,6 @@ void CharacterFighter::FSM_Att_Dash_Update(float _DeltaTime, const StateInfo& _I
 
 void CharacterFighter::FSM_Att_Dash_End(const StateInfo& _Info)
 {
-	StatManager->SetDashEnd();
-	StatManager->SetDoBaseAttEnd();
+	Manager_StatManager->SetDashEnd();
+	Manager_StatManager->SetDoBaseAttEnd();
 }

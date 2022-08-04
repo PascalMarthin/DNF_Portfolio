@@ -47,9 +47,6 @@
     <ClInclude Include="GamePlayKeyManager.h">
       <Filter>Management\KeyManager</Filter>
     </ClInclude>
-    <ClInclude Include="CharacterStatManager.h">
-      <Filter>Object\Character</Filter>
-    </ClInclude>
     <ClInclude Include="InterfaceHUD.h">
       <Filter>UI\HUD</Filter>
     </ClInclude>
@@ -95,6 +92,19 @@
     <ClInclude Include="ButtonComponent.h">
       <Filter>Gobal</Filter>
     </ClInclude>
+    <ClInclude Include="GamePlayItem_DESC.h">
+      <Filter>UI\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlayDataBase.h">
+      <Filter>Object\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterStatManager.h">
+      <Filter>Management</Filter>
+    </ClInclude>
+    <ClInclude Include="AvataManager.h">
+      <Filter>Management</Filter>
+    </ClInclude>
+    <ClInclude Include="TestActor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -140,14 +150,8 @@
     <ClCompile Include="GameEnginePlusTextureRenderer.cpp">
       <Filter>CorePlus</Filter>
     </ClCompile>
-    <ClCompile Include="GamePlayItem_DESC_Res.cpp">
-      <Filter>UI\Item</Filter>
-    </ClCompile>
     <ClCompile Include="GamePlayKeyManager.cpp">
       <Filter>Management\KeyManager</Filter>
-    </ClCompile>
-    <ClCompile Include="CharacterStatManager.cpp">
-      <Filter>Object\Character</Filter>
     </ClCompile>
     <ClCompile Include="InterfaceHUD.cpp">
       <Filter>UI\HUD</Filter>
@@ -194,6 +198,19 @@
     <ClCompile Include="ButtonComponent.cpp">
       <Filter>Gobal</Filter>
     </ClCompile>
+    <ClCompile Include="GamePlayItem_DESC.cpp">
+      <Filter>UI\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlayDataBase.cpp">
+      <Filter>Object\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterStatManager.cpp">
+      <Filter>Management</Filter>
+    </ClCompile>
+    <ClCompile Include="AvataManager.cpp">
+      <Filter>Management</Filter>
+    </ClCompile>
+    <ClCompile Include="TestActor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">

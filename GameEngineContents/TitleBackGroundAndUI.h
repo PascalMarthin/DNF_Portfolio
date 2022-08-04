@@ -3,7 +3,7 @@
 #include <GameEngineCore/GameEngineActor.h>
 
 // Ό³Έν :
-class TitleCharacterSlot;
+
 class TitleButtonUI;
 class TitleBackGroundAndUI : public GameEngineActor
 {
@@ -18,6 +18,10 @@ public:
 	TitleBackGroundAndUI& operator=(const TitleBackGroundAndUI& _Other) = delete;
 	TitleBackGroundAndUI& operator=(TitleBackGroundAndUI&& _Other) noexcept = delete;
 
+	inline TitleButtonUI* GetButtonActor() const
+	{
+		return Actor_ButtonUI;
+	}
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -31,7 +35,5 @@ private:
 	GameEngineTextureRenderer* GuideLine;
 
 	TitleButtonUI* Actor_ButtonUI;
-	std::vector<TitleCharacterSlot*> CharacterSlot;
-
 };
 

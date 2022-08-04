@@ -3,8 +3,11 @@
 #include <GameEngineCore/GameEngineCollision.h>
 
 // 설명 :
+class GamePlayDataBase;
+class AvataManager;
 class TitleCharacterSlot : public GameEngineActor
 {
+	friend class SelectCharacterLevel;
 public:
 	// constrcuter destructer
 	TitleCharacterSlot();
@@ -15,6 +18,9 @@ public:
 	TitleCharacterSlot(TitleCharacterSlot&& _Other) noexcept = delete;
 	TitleCharacterSlot& operator=(const TitleCharacterSlot& _Other) = delete;
 	TitleCharacterSlot& operator=(TitleCharacterSlot&& _Other) noexcept = delete;
+
+	void CreateAvataData(GamePlayDataBase* _Data);
+	void SetCharacterAvataData();
 
 protected:
 	void Start() override;
@@ -28,8 +34,11 @@ private:
 	GameEngineTextureRenderer* Texture_SlotBorder;
 	GameEngineTextureRenderer* Texture_MagicCircle;
 
-	GameEngineCollision* Collision_SlotBorder;
+	// 아바타 매니저
+	AvataManager* Manager_Avata;
+	GamePlayDataBase* Data_Character;
 
+	GameEngineCollision* Collision_SlotBorder;
 
 };
 

@@ -1,13 +1,19 @@
 #include "PreCompile.h"
 #include <GameEngineCore/GameEngineTextureRenderer.h>
 #include "TitleCharacterSlot.h"
+#include "CharacterFighter.h"
+#include "GameEnginePlusTextureRenderer.h"
 #include "SelectCharacterLevel.h"
+#include "GamePlayDataBase.h"
 #include "GamePlayEnum.h"
+#include "AvataManager.h"
 
 TitleCharacterSlot::TitleCharacterSlot() 
 	: Texture_SlotBorder(nullptr)
 	, Texture_MagicCircle(nullptr)
 	, Collision_SlotBorder(nullptr)
+	, Manager_Avata(nullptr)
+	, Data_Character(nullptr)
 
 {
 }
@@ -15,7 +21,7 @@ TitleCharacterSlot::TitleCharacterSlot()
 TitleCharacterSlot::~TitleCharacterSlot() 
 {
 }
-
+// ------------------Start------------------
 void TitleCharacterSlot::Start()
 {
 	Texture_SlotBorder = CreateComponent<GameEngineTextureRenderer>();
@@ -39,10 +45,61 @@ void TitleCharacterSlot::Start()
 		Collision_SlotBorder->ChangeOrder(CollisionOrder::UI_ect);
 	}
 
+
+}
+void TitleCharacterSlot::CreateAvataData(GamePlayDataBase* _Data)
+{
+	if (Data_Character != nullptr)
+	{
+		Manager_Avata->Death();
+		Manager_Avata = nullptr;
+	}
+	Data_Character = _Data;
+	{
+		Manager_Avata = GetLevel()->CreateActor<AvataManager>();
+		Manager_Avata->SetParent(this);
+		Manager_Avata->GetTransform().SetLocalPosition({ 0, 62.f });
+		Manager_Avata->SetAvataSetup(ObjectType::Character);
+		Manager_Avata->SetCharacterDefaultAvata(Data_Character->GetCharacterClass());
+		std::vector<GameEnginePlusTextureRenderer*>& AllAvatas = Manager_Avata->GetAllAvatas();
+		switch (Data_Character->GetCharacterClass())
+		{
+		case AllCharacterClass::Fighter_F:
+		{
+			for (GameEnginePlusTextureRenderer* Avata : AllAvatas)
+			{
+				Avata->CreateFrameAnimationFolderPlus("Move_Stand", FrameAnimation_DESC("", 113, 116, FighterAnimationInter, true));
+				Avata->ChangeFrameAnimationPlus("Move_Stand");
+			}
+		}
+		break;
+		default:
+			break;
+		}
+	}
+	SetCharacterAvataData();
 }
 
+void TitleCharacterSlot::SetCharacterAvataData()
+{
+	Data_Character;
+	if (true)
+	{
+	
+
+	}
+}
+
+
+
+
+// ----------Update--------------
 void TitleCharacterSlot::Update(float _DeltaTime)
 {
+	if (Data_Character == nullptr)
+	{
+		return;
+	}
 	if (Collision_SlotBorder->IsCollision(CollisionType::CT_AABB2D, CollisionOrder::UI_ect, CollisionType::CT_AABB2D,
 		[](GameEngineCollision* _This, GameEngineCollision* _Other)
 		{
@@ -54,10 +111,23 @@ void TitleCharacterSlot::Update(float _DeltaTime)
 		}))
 	{
 		Texture_SlotBorder->On();
+		if (GameEngineInput::GetInst()->IsUp("LMouseCLK") && Data_Character != nullptr)
+		{
+			SelectCharacterLevel::SetCurrentSelectCharacter(Data_Character);
+		}
 	}
 	else
 	{
-		Texture_SlotBorder->Off();
+		if (SelectCharacterLevel::GetCurrentCharacterData() != Data_Character)
+		{
+			Texture_SlotBorder->Off();
+		}
+		else
+		{
+			Texture_SlotBorder->On();
+		}
 	}
-	
+
+
+
 }

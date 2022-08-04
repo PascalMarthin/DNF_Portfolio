@@ -2,6 +2,7 @@
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngineCore/GEngine.h>
 #include "TitleButtonUI.h"
+#include "SelectCharacterLevel.h"
 #include "GamePlayEnum.h"
 #include "ButtonComponent.h"
 
@@ -45,6 +46,10 @@ void TitleButtonUI::Update(float _DeltaTime)
 {
 	if (Actor_GameStart->UpdateButtonPush())
 	{
+		if (SelectCharacterLevel::GetCurrentCharacterData() != nullptr)
+		{
+			GEngine::ChangeLevel("SeriaRoom");
+		}
 		// 게임 스타트
 		return;
 	}

@@ -157,6 +157,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AvataManager.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ButtonComponent.h">
       <SubType>
       </SubType>
@@ -194,8 +198,16 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GamePlayDataBase.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="GamePlayEnum.h" />
     <ClInclude Include="GamePlayItem.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GamePlayItem_DESC.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -228,6 +240,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="SeriaRoomBackground.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TestActor.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -281,6 +297,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AvataManager.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ButtonComponent.cpp">
       <SubType>
       </SubType>
@@ -319,11 +339,18 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GamePlayDataBase.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GamePlayItem.cpp">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="GamePlayItem_DESC_Res.cpp" />
+    <ClCompile Include="GamePlayItem_DESC.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GamePlayKeyManager.cpp">
       <SubType>
       </SubType>
@@ -353,6 +380,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="SeriaRoomBackground.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TestActor.cpp">
       <SubType>
       </SubType>
     </ClCompile>

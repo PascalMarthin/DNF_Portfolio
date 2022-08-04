@@ -4,6 +4,9 @@
 
 #include "GamePlayCharacter.h"
 
+
+#define FighterAnimationInter 0.08f
+
 // 설명 : 캐릭터 모션에 관련된 클래스
 class GamePlayKeyManager;
 class CharacterFighter : public GamePlayCharacter

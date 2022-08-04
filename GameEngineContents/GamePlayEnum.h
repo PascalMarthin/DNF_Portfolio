@@ -9,14 +9,15 @@
 
 #define MonitorX 1260.f / 1067.f
 #define MonitorY 720.f / 600.f
+
 enum class GamePlayItemType
 {
 	Equipment, // 장비
 	Stuff,     // 재료
 	Consumable,// 소비
 	Avatar,    // 아바타
-	Pet   ,    // 펫
-	Debug ,
+	Pet,    // 펫
+	Debug,
 	Unknown
 };
 
@@ -32,7 +33,19 @@ enum class GamePlayItemRate
 	Legendary,
 	Epic
 };
-
+enum class AllAvataClass
+{
+	None,
+	Belt,
+	Cap,
+	Coat,
+	Face,
+	Hair,
+	Neck,
+	Pants,
+	Shoes,
+	Skin,
+};
 
 enum class GamePlayItemCode
 {

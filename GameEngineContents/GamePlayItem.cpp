@@ -1,13 +1,10 @@
 #include "PreCompile.h"
 #include "GamePlayItem.h"
-#include "GamePlayItemBag.h"
 #include "GamePlayCharacter.h"
 
 
 GamePlayItem::GamePlayItem()
-	: CurrentItemBag(nullptr)
-	, ItemCode(GamePlayItemCode::Error)
-	, Stack(0)
+	: Stack(0)
 	, Field(false)
 {
 	
