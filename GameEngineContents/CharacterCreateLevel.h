@@ -37,8 +37,10 @@ private:
 	TitleCreateCharacter_ClassIllustGIF* Actor_ClassIllustGIF;
 	TitleCreateCharacterButtonUI* Actor_ButtonManager;
 
-	AllCharacterClass Enum_CurrentClass;
 	void FirstSetting();
-	void CreateCharacter();
+public:
+	//debug
+	static AllCharacterClass Enum_CurrentClass;
+	static void CreateCharacter();
 };
 

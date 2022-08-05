@@ -13,9 +13,10 @@
 #include "SelectCharacterLevel.h"
 #include "GamePlayDataBase.h"
 
+AllCharacterClass CharacterCreateLevel::Enum_CurrentClass = AllCharacterClass::None;
+
 CharacterCreateLevel::CharacterCreateLevel() 
 	: Actor_BackGround(nullptr)
-	, Enum_CurrentClass(AllCharacterClass::None)
 	, Actor_ThumbnailManager(nullptr)
 	, Actor_ClassIllustGIF(nullptr)
 	, Actor_ButtonManager(nullptr)
@@ -56,7 +57,7 @@ void CharacterCreateLevel::Update(float _DeltaTime)
 void CharacterCreateLevel::CreateCharacter()
 {
 	GamePlayDataBase* CharacterData = nullptr;
-	switch (Enum_CurrentClass)
+	switch (CharacterCreateLevel::Enum_CurrentClass)
 	{
 	case AllCharacterClass::Fighter_F:
 		CharacterData = GamePlayCharacter::CreateCharacterBase(CharacterFormerClass::Striker);
@@ -131,7 +132,7 @@ void CharacterCreateLevel::ChangeCurrentClass(AllCharacterClass _Class)
 	{
 		return;
 	}
-	Enum_CurrentClass = _Class;
+	CharacterCreateLevel::Enum_CurrentClass = _Class;
 	Actor_ThumbnailManager->SetSelectCharacter(_Class);
 	Actor_BackGround->SetChangeClass(BackGroundTexture);
 	Actor_ClassIllustGIF->SetClassIllustGIF(ClassIllustGIF);

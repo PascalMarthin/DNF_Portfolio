@@ -35,8 +35,8 @@ void GameEngineGUI::Initialize()
 
     GameEngineDirectory Dir;
 
-    Dir.MoveParentToExitsChildDirectory("Resource");
-    Dir.Move("Resource");
+    Dir.MoveParentToExitsChildDirectory("GameEngineResources");
+    Dir.Move("GameEngineResources");
     Dir.Move("Font");
 
 

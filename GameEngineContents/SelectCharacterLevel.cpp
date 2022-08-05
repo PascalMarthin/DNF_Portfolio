@@ -4,6 +4,8 @@
 #include "TitleCharacterSlot.h"
 #include "GamePlayDataBase.h"
 #include "AvataManager.h"
+#include <GameEngineCore/GEngine.h>
+#include "CharacterCreateLevel.h"
 #include "MouseCursorComponent.h"
 
 GamePlayDataBase* SelectCharacterLevel::CurrentCharacterSlot = nullptr;
@@ -34,6 +36,10 @@ void SelectCharacterLevel::Start()
 		Slot->GetTransform().SetLocalPosition({ static_cast<float>(126 - Hif + ((152 + 18) * x)) ,  static_cast<float>(-168) });
 		SelectCharacterLevel::CharacterSlot.push_back(Slot);
 	}
+	//// Debug
+	//CharacterCreateLevel::Enum_CurrentClass = AllCharacterClass::Fighter_F;
+	//CharacterCreateLevel::CreateCharacter();
+	//// Debug
 }
 
 void SelectCharacterLevel::Update(float _DeltaTime)
@@ -57,4 +63,10 @@ void SelectCharacterLevel::PushCharacterData(GamePlayDataBase* _Data)
 		}
 	}
 	MsgBoxAssert("캐릭터 생성 갯수 초과")
+}
+
+void SelectCharacterLevel::StartPlayLevel()
+{
+
+	GEngine::ChangeLevel("SeriaRoom");
 }

@@ -48,7 +48,8 @@ void TitleButtonUI::Update(float _DeltaTime)
 	{
 		if (SelectCharacterLevel::GetCurrentCharacterData() != nullptr)
 		{
-			GEngine::ChangeLevel("SeriaRoom");
+			SelectCharacterLevel::StartPlayLevel();
+			
 		}
 		// 게임 스타트
 		return;

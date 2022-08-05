@@ -40,12 +40,12 @@ private:
 	static GamePlayDataBase* CurrentCharacterSlot;
 public:
 	static void PushCharacterData(GamePlayDataBase* _Data);
-	
-	static void SetCurrentSelectCharacter(GamePlayDataBase* _Data)
+	static void StartPlayLevel();
+
+	inline static void SetCurrentSelectCharacter(GamePlayDataBase* _Data)
 	{
 		CurrentCharacterSlot = _Data;
 	}
-
 	inline static GamePlayDataBase* GetCurrentCharacterData()
 	{
 		return CurrentCharacterSlot;
