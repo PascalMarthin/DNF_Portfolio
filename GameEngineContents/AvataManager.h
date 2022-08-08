@@ -3,13 +3,6 @@
 #include "GamePlayEnum.h"
 
 // Ό³Έν :
-enum class ObjectType
-{
-	None,
-	Character,
-	NPC,
-	Custom
-};
 class GamePlayItem_DESC;
 class GameEnginePlusTextureRenderer;
 class GamePlayDataBase;

@@ -193,42 +193,42 @@ void AvataManager::SetAllAvataAutoControl()
 
 void AvataManager::OnEvent()
 {
-	SetCharacterDefaultAvata(GamePlayCharacter::GetCurrentCharacterData()->GetCharacterClass());
-	switch (Enum_Type)
+	if (GamePlayCharacter::GetCurrentCharacterData() != nullptr)
 	{
-	case ObjectType::Character:
-	{
-		std::map<std::string, FrameAnimation_DESC*>&  DESC = GamePlayDataBase::GetClassAnimation_DESC(GamePlayDataBase::GetCurrentCharacterData()->GetCharacterClass());
-		for (GameEnginePlusTextureRenderer* Avata : AllAvatas)
+		SetCharacterDefaultAvata(GamePlayCharacter::GetCurrentCharacterData()->GetCharacterClass());
+		switch (Enum_Type)
 		{
-			for (auto& Iter : DESC)
+		case ObjectType::Character:
+		{
+			std::map<std::string, FrameAnimation_DESC*>& DESC = GamePlayDataBase::GetClassAnimation_DESC(GamePlayDataBase::GetCurrentCharacterData()->GetCharacterClass());
+			for (GameEnginePlusTextureRenderer* Avata : AllAvatas)
 			{
-				Avata->CreateFrameAnimationFolderPlus(Iter.first, (*Iter.second));
+				for (auto& Iter : DESC)
+				{
+					Avata->CreateFrameAnimationFolderPlus(Iter.first, (*Iter.second));
+				}
+				Avata->ChangeFrameAnimationPlus("Move_Stand");
 			}
-			Avata->ChangeFrameAnimationPlus("Move_Stand");
+			Avata_Belt->GetTransform().SetLocalPosition({ 0, 0 , 6 });
+			Avata_Cap->GetTransform().SetLocalPosition({ 0, 0 , 5 });
+			Avata_Coat->GetTransform().SetLocalPosition({ 0, 0 , 5 });
+			Avata_Face->GetTransform().SetLocalPosition({ 0, 0 , 7 });
+			Avata_Hair_a->GetTransform().SetLocalPosition({ 0, 0 , 6 });
+			Avata_Hair_b->GetTransform().SetLocalPosition({ 0, 0 , 6 });
+			Avata_Neck->GetTransform().SetLocalPosition({ 0, 0 , 5 });
+			Avata_Pants->GetTransform().SetLocalPosition({ 0, 0 , 7 });
+			Avata_Shoes_a->GetTransform().SetLocalPosition({ 0, 0 , 5 });
+			Avata_Shoes_b->GetTransform().SetLocalPosition({ 0, 0 , 5 });
+			Avata_Skin->GetTransform().SetLocalPosition({ 0, 0 , 8 });
 		}
-		Avata_Belt->GetTransform().SetLocalPosition({0, 0 , 6});
-		Avata_Cap->GetTransform().SetLocalPosition({ 0, 0 , 5 });
-		Avata_Coat->GetTransform().SetLocalPosition({ 0, 0 , 5 });
-		Avata_Face->GetTransform().SetLocalPosition({ 0, 0 , 7 });
-		Avata_Hair_a->GetTransform().SetLocalPosition({ 0, 0 , 6 });
-		Avata_Hair_b->GetTransform().SetLocalPosition({ 0, 0 , 6 });
-		Avata_Neck->GetTransform().SetLocalPosition({ 0, 0 , 5 });
-		Avata_Pants->GetTransform().SetLocalPosition({ 0, 0 , 7 });
-		Avata_Shoes_a->GetTransform().SetLocalPosition({ 0, 0 , 5 });
-		Avata_Shoes_b->GetTransform().SetLocalPosition({ 0, 0 , 5 });
-		Avata_Skin->GetTransform().SetLocalPosition({ 0, 0 , 8 });
-
+		break;
+		case ObjectType::NPC:
+			break;
+		case ObjectType::Custom:
+		case ObjectType::None:
+		default:
+			break;
+		}
 	}
-		break;
-	case ObjectType::NPC:
-		break;
-	case ObjectType::Custom:
-	case ObjectType::None:
-	default:
-		break;
-	}
-
-
 	 
 }

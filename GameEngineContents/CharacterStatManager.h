@@ -65,7 +65,7 @@ public:
 	void SetStand();
 	void SetDoBaseAtt();
 	void SetDoBaseAttEnd();
-	void SetJump(const float4& _StartJumpPos);
+	void SetJump();
 	void SetJumpEnd();
 	inline void SetEngage()
 	{
@@ -94,29 +94,7 @@ public:
 	}
 
 
-	inline void SetRightSide()
-	{
-		RightSide = true;
-	}
-	inline void SetLeftSide()
-	{
-		RightSide = false;
-	}
-	inline bool GetDirSide()
-	{
-		return RightSide;
-	}
 
-
-public:
-	// Jump
-	float JumpTime;
-	float JumpPower;
-	float JumpHigh;
-	float CharacterWeight;
-	float CurrentGravitIndex;
-	float4 LandingPostion;
-	//
 protected:
 	void Start() override;
 
@@ -142,6 +120,5 @@ private:
 
 private:
 	float CurrentEngageTime;
-	bool RightSide;
 };
 

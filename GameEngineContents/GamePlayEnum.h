@@ -171,6 +171,16 @@ enum class CollisionOrder
 {
 	None = 0,
 	InGame_Object = 1,
-	UI_ect = 3,
+	Player = 2,
+	Monster = 3,
+	UI_ect = 4,
 };
 
+enum class ObjectType
+{
+	None,
+	Character,
+	NPC,
+	Monster,
+	Custom
+};

@@ -177,11 +177,19 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="DebugLevel.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="DNF.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GameEnginePlusCharacterStatWindow.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -223,6 +231,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="MoveManager.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="PlayerInterface.h">
       <SubType>
       </SubType>
@@ -232,10 +244,6 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="SeriaRoomBackground.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="TestActor.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -309,11 +317,19 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="DebugLevel.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="DNF.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GameEnginePlusCharacterStatWindow.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -354,6 +370,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="MoveManager.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="PlayerInterface.cpp">
       <SubType>
       </SubType>
@@ -363,10 +383,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="SeriaRoomBackground.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="TestActor.cpp">
       <SubType>
       </SubType>
     </ClCompile>

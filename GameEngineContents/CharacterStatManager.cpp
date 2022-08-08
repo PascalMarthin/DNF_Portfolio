@@ -5,19 +5,13 @@
 #include "GamePlayEnum.h"
 #include "GamePlayCharacter.h"
 
-const float Gravitational_Constant = 9.8f;
+
 
 CharacterStatManager::CharacterStatManager() 
 	: PlayerCurrentState(0x0)
 	, CanAction(false)
 	, CanMove(false)
-	, JumpPower(600.f)
-	, JumpHigh(0.f)
-	, CurrentGravitIndex(-1.f)
-	, JumpTime(0.f)
 	, CurrentEngageTime(0.f)
-	, CharacterWeight(-180.f)
-	, RightSide(true)
 	, CurrentAbilityStat(nullptr)
 {
 }
@@ -55,12 +49,7 @@ void CharacterStatManager::SetCharacter_Fighter_F()
 	PlayerCurrentState = (0x0);
 	CanAction = false;
 	CanMove = false;
-	JumpPower = 600.f;
-	JumpHigh = 0.f;
-	CurrentGravitIndex = -1.f;
-	JumpTime = 0.f;
 	CurrentEngageTime = 0.f;
-	CharacterWeight = -180.f;
 
 }
 
@@ -68,18 +57,6 @@ void CharacterStatManager::Update(float _DeltaTime)
 {
 	CurrentEngageTime -= _DeltaTime;
 
-	if (IsJump())
-	{
-		JumpTime += _DeltaTime;
-		if (JumpHigh > -650)
-		{
-			JumpHigh = ((CharacterWeight * JumpTime * Gravitational_Constant) * JumpTime + JumpPower);
-		}
-		// Y = x(ax);
-		// y = 속력
-		// x = 점프 시간
-		// 
-	}
 	FSMManager.Update(_DeltaTime);
 
 	//GameEngineDebug::OutPutString(std::to_string(PlayerCurrentState));
@@ -130,13 +107,9 @@ void CharacterStatManager::SetStand()
 	PlayerCurrentState &= ~(CharacterStat::Player_Character_Dash | CharacterStat::Player_Character_Move);
 }
 
-void CharacterStatManager::SetJump(const float4& _StartJumpPos)
+void CharacterStatManager::SetJump()
 {
 	PlayerCurrentState |= CharacterStat::Player_Character_Jump;
-	JumpHigh = 0.f;
-	CurrentGravitIndex = -1.f;
-	JumpTime = 0.f;
-	LandingPostion = _StartJumpPos;
 }
 
 void CharacterStatManager::SetJumpEnd()
@@ -172,9 +145,5 @@ void CharacterStatManager::OffEvent()
 	PlayerCurrentState = 0x0;
 	CanAction = false;
 	CanMove = false;
-	JumpPower = 0.f;
-	JumpHigh = 0.f;
-	CurrentGravitIndex = -1.f;
-	JumpTime = 0.f;
 	CurrentEngageTime = 0.f;
 }

@@ -38,6 +38,10 @@ public:
 	FrameAnimationForAvata()
 		: bOnceStart(true)
 		, bOnceEnd(false)
+		, FolderTextureDouble(nullptr)
+		, ParentRenderer(nullptr)
+		, DefaultCharacterAvataDouble(nullptr)
+		, Texture(nullptr)
 	{
 
 	}
@@ -60,6 +64,10 @@ public:
 	inline bool IsEndFrame() const
 	{
 		return EndFrame;
+	}
+	inline int GetCurrentFrameStuck() const
+	{
+		return CurrentAniPlus->Info.CurFrame;
 	}
 	void SetDefaultCharacterAvata(const std::string& _TextureName);
 	void SetDefaultCharacterAvata(GameEngineFolderTexture* _FolderTexture);

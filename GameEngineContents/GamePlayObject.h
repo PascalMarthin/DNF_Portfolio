@@ -1,8 +1,11 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
 #include <GameEngineCore/GameEngineTextureRenderer.h>
+#include "GamePlayEnum.h"
 
 // 설명 :
+class CollisionManager;
+class MoveManager;
 class GamePlayObject : public GameEngineActor
 {
 public:
@@ -16,20 +19,48 @@ public:
 	GamePlayObject& operator=(const GamePlayObject& _Other) = delete;
 	GamePlayObject& operator=(GamePlayObject&& _Other) noexcept = delete;
 
-	inline float4& GetPosToInGame()
+	//inline float4& GetPosToInGame()
+	//{
+	//	return ObjectPos;
+	//}
+	inline void SetRightDir()
 	{
-		return ObjectPos;
+		GetTransform().PixLocalPositiveX();
+		Dir_RightSide = true;
+	}
+	inline void SetLeftDir()
+	{
+		GetTransform().PixLocalNegativeX();
+		Dir_RightSide = false;
+	}
+
+	inline bool GetObjectDir() const
+	{
+		return Dir_RightSide;
+	}
+
+	inline float GetCharacterWeight() const
+	{
+		return CharacterWeight;
+	}
+	inline ObjectType GetObjectType() const
+	{
+		return Enum_ObjectType;
 	}
 
 protected:
 	void Start() override;
-	// GameEngineTextureRenderer* Object_Body;
-	// 오브젝트 렌더러
 
 
-	// 게임 내 위치 
+protected:
+	MoveManager* Manager_MoveManager;
+	CollisionManager* Manager_CollisionManager;
+
 private:
-	float4 ObjectPos;
+	//float4 ObjectPos;
+	ObjectType Enum_ObjectType;
 
+	bool Dir_RightSide;
+	float CharacterWeight;
 };
 

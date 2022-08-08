@@ -2,17 +2,25 @@
 #include "GamePlayCharacter.h"
 #include "GamePlayKeyManager.h"
 #include "PlayerInterface.h"
+#include "MoveManager.h"
 #include "AvataManager.h"
 
 void GamePlayCharacter::Create_Fighter_F_Default_FSManager()
 {
-	Manager_StatManager->GetFSMManager().CreateStateMember("Move_Walk", std::bind(&GamePlayCharacter::FSM_Move_Walk_Update, this, std::placeholders::_1, std::placeholders::_2)
+
+	Manager_StatManager->GetFSMManager().CreateStateMember
+	("None", [=](float _DeltaTime, const StateInfo & _Info)
+	{
+		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
+	});
+	Manager_StatManager->GetFSMManager().CreateStateMember
+	("Move_Walk", std::bind(&GamePlayCharacter::FSM_Move_Walk_Update, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&GamePlayCharacter::FSM_Move_Walk_Start, this, std::placeholders::_1)
 		, std::bind(&GamePlayCharacter::FSM_Move_Walk_End, this, std::placeholders::_1));
-	Manager_StatManager->GetFSMManager().CreateStateMember("Move_Dash", std::bind(&GamePlayCharacter::FSM_Move_Dash_Update, this, std::placeholders::_1, std::placeholders::_2)
+	Manager_StatManager->GetFSMManager().CreateStateMember
+	("Move_Dash", std::bind(&GamePlayCharacter::FSM_Move_Dash_Update, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&GamePlayCharacter::FSM_Move_Dash_Start, this, std::placeholders::_1)
 		, std::bind(&GamePlayCharacter::FSM_Move_Dash_End, this, std::placeholders::_1));
-
 	Manager_StatManager->GetFSMManager().CreateStateMember
 	("Move_Stand", std::bind(&GamePlayCharacter::FSM_Move_Stand_Update, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&GamePlayCharacter::FSM_Move_Stand_Start, this, std::placeholders::_1)
@@ -42,8 +50,7 @@ void GamePlayCharacter::Create_Fighter_F_Default_FSManager()
 		, std::bind(&GamePlayCharacter::FSM_Att_Dash_Start, this, std::placeholders::_1)
 		, std::bind(&GamePlayCharacter::FSM_Att_Dash_End, this, std::placeholders::_1));
 
-
-	Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
+	Manager_StatManager->GetFSMManager().ChangeState("None");
 }
 
 
@@ -72,15 +79,7 @@ void GamePlayCharacter::FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& 
 	}
 	else
 	{
-		if (Dir.x > 0.f)
-		{
-			SetRightDir();
-		}
-		else if (Dir.x < 0.f)
-		{
-			SetLeftDir();
-		}
-		GetTransform().SetLocalMove(Dir * MoveSpeed * DefaultMove * _DeltaTime);
+		Manager_MoveManager->SetCharacterMove(Dir * MoveSpeed * DefaultMove * _DeltaTime);
 	}
 
 	if (PlayerUserInterface->GetUI_KeyManager()->Input_JumpKey_Down())
@@ -112,7 +111,7 @@ void GamePlayCharacter::FSM_Move_Dash_Update(float _DeltaTime, const StateInfo& 
 	//StatManager->GetFSMManager().ChangeState("Att_Dash");
 
 	bool IsMove = false;
-	float MoveSpeed = 1.5f;//StatManager->GetMoveSpeed();
+	float MoveSpeed = Manager_StatManager->GetMoveSpeed() * 1.8f;
 
 	if (PlayerUserInterface->GetUI_KeyManager()->Input_BaseAttKey_DownAndPress())
 	{
@@ -128,28 +127,7 @@ void GamePlayCharacter::FSM_Move_Dash_Update(float _DeltaTime, const StateInfo& 
 	}
 	else
 	{
-		if (Dir.x > 0.f)
-		{
-			SetRightDir();
-			//if (KeyManager->GetPushInput_LeftRight() == EngineInput::LEFT)
-			//{
-			//	StatManager->GetFSMManager().ChangeState("Move_Walk");
-			//	return;
-			//}
-			// 방향 바뀌면 걷는 액션 보류
-		}
-		else if (Dir.x < 0.f)
-		{
-			SetLeftDir();
-			//if (KeyManager->GetPushInput_LeftRight() == EngineInput::RIGHT)
-			//{
-			//	StatManager->GetFSMManager().ChangeState("Move_Walk");
-
-			//	return;
-			//}
-			// 방향 바뀌면 걷는 액션 보류
-		}
-		GetTransform().SetLocalMove(Dir * MoveSpeed * DefaultMove * _DeltaTime);
+		Manager_MoveManager->SetCharacterMove(Dir * MoveSpeed * DefaultMove * _DeltaTime);
 	}
 
 	if (PlayerUserInterface->GetUI_KeyManager()->Input_JumpKey_Down())
@@ -161,6 +139,7 @@ void GamePlayCharacter::FSM_Move_Dash_Update(float _DeltaTime, const StateInfo& 
 
 void GamePlayCharacter::FSM_Move_Dash_End(const StateInfo& _Info)
 {
+
 }
 
 
@@ -213,14 +192,14 @@ void GamePlayCharacter::FSM_Move_Stand_End(const StateInfo& _Info)
 
 void GamePlayCharacter::FSM_Move_Jump_Start(const StateInfo& _Info)
 {
-
 	JumpKick_DelayTime = 0.15f;
 	BaseJumpKick = false;
 	EndJump = false;
 	StartJump = true;
 	JumpGoingDown = false;
 	Manager_AvataManager->ChangeAvataAnimation("Move_JumpReady");
-	Manager_StatManager->SetJump(GetTransform().GetLocalPosition());
+	Manager_StatManager->SetJump();
+	Manager_MoveManager->SetJump(GetTransform().GetLocalPosition());
 }
 
 void GamePlayCharacter::FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& _Info)
@@ -256,44 +235,34 @@ void GamePlayCharacter::FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& 
 		BaseJumpKick = true;
 	}
 
-	float4 LandingPos = Manager_StatManager->LandingPostion;
-	GetTransform().SetLocalMove(float4({ 0, 1 }) * Manager_StatManager->JumpHigh * _DeltaTime);
-
-	float MoveSpeed = 1.5f;
+	float MoveSpeed = Manager_StatManager->GetMoveSpeed();
+	float4& LandingPos = Manager_MoveManager->LandingPostion;
 
 	float4 Dir = PlayerUserInterface->GetUI_KeyManager()->Input_Move_Press();
 	{
 		if (Dir.y != 0.f)
 		{
-			Manager_StatManager->LandingPostion.y += Dir.y * DefaultMove * MoveSpeed * 0.5f * _DeltaTime;
+			LandingPos.y += Dir.y * DefaultMove * MoveSpeed * 0.5f * _DeltaTime;
 			Dir.y *= DefaultMove * MoveSpeed * 0.5f * _DeltaTime * 0.02f;
 		}
 		if (Dir.x != 0.f)
 		{
-			if (Dir.x > 0.f)
-			{
-				SetRightDir();
-			}
-			else if (Dir.x < 0.f)
-			{
-				SetLeftDir();
-			}
-			Manager_StatManager->LandingPostion.x += Dir.x * DefaultMove * MoveSpeed * _DeltaTime;
+			LandingPos.x += Dir.x * DefaultMove * MoveSpeed * _DeltaTime;
 			Dir.x *= DefaultMove * MoveSpeed * _DeltaTime;
 		}
-		GetTransform().SetLocalMove(Dir);
+		Manager_MoveManager->SetCharacterMove(Dir);
 	}
 
 
 	if (LandingPos.y >= GetTransform().GetLocalPosition().y)
 	{
 		Manager_AvataManager->ChangeAvataAnimation("Move_Landing");
-		GetTransform().SetLocalPosition(LandingPos);
+		Manager_MoveManager->SetCharacterLocation(LandingPos);
 		EndJump = true;
 		return;
 	}
 
-	if (Manager_StatManager->JumpHigh <= 0.f &&
+	if (Manager_MoveManager->JumpHigh <= 0.f &&
 		JumpGoingDown == false &&
 		BaseJumpKick == false)
 	{
@@ -350,6 +319,8 @@ void GamePlayCharacter::FSM_Att_BasePunch2_Start(const StateInfo& _Info)
 	Manager_StatManager->SetDoBaseAtt();
 	DelayPunch = false;
 	Manager_AvataManager->ChangeAvataAnimation("Att_BasePunch2");
+	FSM_Move_Helper();
+	
 }
 void GamePlayCharacter::FSM_Att_BasePunch2_Update(float _DeltaTime, const StateInfo& _Info)
 {
@@ -358,7 +329,7 @@ void GamePlayCharacter::FSM_Att_BasePunch2_Update(float _DeltaTime, const StateI
 		Manager_AvataManager->ChangeAvataAnimation("Att_BasePunch2_Delay");
 		DelayPunch = true;
 	}
-	if (DelayPunch == true)
+	else if (DelayPunch == true)
 	{
 		if (Manager_AvataManager->Avata_Skin->IsEndFrame())
 		{
@@ -372,11 +343,17 @@ void GamePlayCharacter::FSM_Att_BasePunch2_Update(float _DeltaTime, const StateI
 			return;
 		}
 	}
+	else if (Manager_AvataManager->Avata_Skin->GetCurrentFrameStuck() < 2)
+	{
+		Manager_MoveManager->SetCharacterMove({ MoveIndex * DefaultMove * 0.5f * Manager_StatManager->GetMoveSpeed() * _DeltaTime, 0});
+	}
+
 }
 void GamePlayCharacter::FSM_Att_BasePunch2_End(const StateInfo& _Info)
 {
 	Manager_StatManager->SetEngage();
 	Manager_StatManager->SetDoBaseAttEnd();
+	MoveIndex = 0.f;
 }
 
 void GamePlayCharacter::FSM_Att_BasePunch3_Start(const StateInfo& _Info)
@@ -384,6 +361,7 @@ void GamePlayCharacter::FSM_Att_BasePunch3_Start(const StateInfo& _Info)
 	Manager_StatManager->SetDoBaseAtt();
 	DelayPunch = false;
 	Manager_AvataManager->ChangeAvataAnimation("Att_BasePunch3");
+	FSM_Move_Helper();
 
 }
 
@@ -408,6 +386,10 @@ void GamePlayCharacter::FSM_Att_BasePunch3_Update(float _DeltaTime, const StateI
 			return;
 		}
 	}
+	else if (Manager_AvataManager->Avata_Skin->GetCurrentFrameStuck() < 3)
+	{
+		Manager_MoveManager->SetCharacterMove({ MoveIndex * 0.33f * DefaultMove * Manager_StatManager->GetMoveSpeed() * _DeltaTime, 0 });
+	}
 
 }
 
@@ -415,6 +397,7 @@ void GamePlayCharacter::FSM_Att_BasePunch3_End(const StateInfo& _Info)
 {
 	Manager_StatManager->SetEngage();
 	Manager_StatManager->SetDoBaseAttEnd();
+	MoveIndex = 0.f;
 }
 
 
@@ -422,6 +405,7 @@ void GamePlayCharacter::FSM_Att_BaseKick_Start(const StateInfo& _Info)
 {
 	Manager_StatManager->SetDoBaseAtt();
 	Manager_AvataManager->ChangeAvataAnimation("Att_Basekick");
+	FSM_Move_Helper();
 }
 
 void GamePlayCharacter::FSM_Att_BaseKick_Update(float _DeltaTime, const StateInfo& _Info)
@@ -431,14 +415,65 @@ void GamePlayCharacter::FSM_Att_BaseKick_Update(float _DeltaTime, const StateInf
 		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
 		return;
 	}
+	else if (Manager_AvataManager->Avata_Skin->GetCurrentFrameStuck() < 2)
+	{
+		Manager_MoveManager->SetCharacterMove({ MoveIndex * 0.7f * DefaultMove * Manager_StatManager->GetMoveSpeed() * _DeltaTime, 0 });
+	}
 }
 
 void GamePlayCharacter::FSM_Att_BaseKick_End(const StateInfo& _Info)
 {
 	Manager_StatManager->SetEngage();
 	Manager_StatManager->SetDoBaseAttEnd();
+	MoveIndex = 0.f;
 }
 
+void GamePlayCharacter::FSM_Move_Helper()
+{
+	bool Left = false;
+	bool Right = false;
+	if (GameEngineInput::GetInst()->IsDown("Right_Arrow") || GameEngineInput::GetInst()->IsPress("Right_Arrow"))
+	{
+		if (GetObjectDir())
+		{
+			MoveIndex = 4.f;
+		}
+		else
+		{
+			MoveIndex = 0.f;
+		}
+		Right = true;
+	}
+
+	if ((GameEngineInput::GetInst()->IsDown("Left_Arrow")) || GameEngineInput::GetInst()->IsPress("Left_Arrow"))
+	{
+		if (GetObjectDir())
+		{
+			MoveIndex = 0.f;
+		}
+		else
+		{
+			MoveIndex = -4.f;
+		}
+		Left = true;
+	}
+
+	if (Left == true && Right == true)
+	{
+		MoveIndex = 0.f;
+	}
+	else if (Left == false && Right == false)
+	{
+		if (GetObjectDir())
+		{
+			MoveIndex = 0.5f;
+		}
+		else
+		{
+			MoveIndex = -0.5f;
+		}
+	}
+}
 
 void GamePlayCharacter::FSM_Att_Dash_Start(const StateInfo& _Info)
 {

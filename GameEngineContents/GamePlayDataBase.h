@@ -49,6 +49,7 @@ public:
 		, Evasion(0.f)
 		, Hit_Stun(0)
 		, Hit_Recovery(0)
+		, JumpPower(600.f)
 
 	{
 
@@ -87,6 +88,8 @@ private:
 	unsigned int Hit_Stun;
 	unsigned int Hit_Recovery;
 
+
+	float JumpPower;
 };
 struct InventoryData
 {

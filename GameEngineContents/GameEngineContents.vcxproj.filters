@@ -98,7 +98,15 @@
     <ClInclude Include="AvataManager.h">
       <Filter>Management</Filter>
     </ClInclude>
-    <ClInclude Include="TestActor.h" />
+    <ClInclude Include="MoveManager.h">
+      <Filter>Management</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEnginePlusCharacterStatWindow.h">
+      <Filter>CorePlus</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>Management</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -195,9 +203,17 @@
     <ClCompile Include="AvataManager.cpp">
       <Filter>Management</Filter>
     </ClCompile>
-    <ClCompile Include="TestActor.cpp" />
     <ClCompile Include="Fighter_F_FSMData.cpp">
       <Filter>Object\Character\Fighter</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveManager.cpp">
+      <Filter>Management</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEnginePlusCharacterStatWindow.cpp">
+      <Filter>CorePlus</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>Management</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -218,9 +234,6 @@
     </Filter>
     <Filter Include="Object\Character\Fighter">
       <UniqueIdentifier>{b24f830f-d346-4a51-b2d6-49dfc1f5e225}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\Character\Fighter\Skill">
-      <UniqueIdentifier>{0c6ca484-5771-4eab-8684-2a4b5cc6f4ae}</UniqueIdentifier>
     </Filter>
     <Filter Include="Level\Debug">
       <UniqueIdentifier>{1decfd01-ac37-4ed5-8437-104f6329b914}</UniqueIdentifier>
@@ -269,9 +282,6 @@
     </Filter>
     <Filter Include="Level\Title\UI\SelectCharacter">
       <UniqueIdentifier>{58e67fb2-f7ff-42ab-9161-f3df00f27c04}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\Character\FSM">
-      <UniqueIdentifier>{8c0d06dd-5958-4ce5-8f5a-a9935ec3cb05}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

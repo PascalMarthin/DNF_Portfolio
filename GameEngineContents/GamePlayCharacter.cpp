@@ -4,6 +4,7 @@
 #include "GameEnginePlusTextureRenderer.h"
 #include "GamePlayCharacter.h"
 #include "GamePlayDataBase.h"
+#include "CollisionManager.h"
 #include "AvataManager.h"
 #include "InterfaceHUD.h"
 
@@ -15,6 +16,10 @@ GamePlayCharacter::GamePlayCharacter()
 	, Manager_AvataManager(nullptr)
 	, PlayerUserInterface(nullptr)
 	, PlayerFormerClass(CharacterFormerClass::None)
+	, StartJump(false)
+	, EndJump(false)
+	, JumpGoingDown(false)
+	, MoveIndex(0.f)
 
 {
 }
@@ -34,9 +39,10 @@ GamePlayCharacter::~GamePlayCharacter()
 void GamePlayCharacter::Start()
 {
 	GamePlayObject::Start();
-	Manager_StatManager = CreateComponent<CharacterStatManager>();
 	Manager_AvataManager = GetLevel()->CreateActor<AvataManager>();
+	Manager_AvataManager->SetParent(this);
 	Manager_AvataManager->SetAvataSetup(ObjectType::Character);
+	Manager_StatManager = CreateComponent<CharacterStatManager>();
 
 	PlayerUserInterface = GetLevel()->CreateActor<PlayerInterface>();
 
@@ -101,16 +107,7 @@ void GamePlayCharacter::SetPlayerCharacter()
 
 }
 
-void GamePlayCharacter::SetRightDir()
-{
-	GetTransform().PixLocalPositiveX();
-	Manager_StatManager->SetRightSide();
-}
-void GamePlayCharacter::SetLeftDir()
-{
-	GetTransform().PixLocalNegativeX();
-	Manager_StatManager->SetLeftSide();
-}
+
 
 void GamePlayCharacter::SetFSManager()
 {
@@ -153,7 +150,16 @@ void GamePlayCharacter::OnEvent()
 		MsgBoxAssert("데이터가 지정이 안되어 있습니다")
 	}
 	SetFSManager();
+	SetCollisionManager();
 
+	MoveIndex = 0.f;
+
+}
+
+void GamePlayCharacter::SetCollisionManager()
+{
+	GameEngineCollision* Collision = Manager_CollisionManager->CreateCollision("Hit_Collision", CollisionOrder::Player, {48, 110}, {0, -80});
+	Collision->SetDebugSetting(CollisionType::CT_AABB2D, float4::BLUE);
 }
 
 void GamePlayCharacter::OffEvent()

@@ -67,8 +67,6 @@ protected:
 	AvataManager* Manager_AvataManager;
 
 	void Create_Fighter_F_Default_FSManager();
-	void SetRightDir();
-	void SetLeftDir();
 
 private:
 	static GamePlayDataBase* CurrentCharacterData;
@@ -79,10 +77,13 @@ public:
 
 
 	void SetFSManager();
+	void SetCollisionManager();
 
 	void FSM_Move_Walk_Start(const StateInfo& _Info);
 	void FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _Info);
 	void FSM_Move_Walk_End(const StateInfo& _Info);
+
+	float MoveIndex;
 
 
 	void FSM_Move_Dash_Start(const StateInfo& _Info);
@@ -123,6 +124,7 @@ public:
 	void FSM_Att_BaseKick_Start(const StateInfo& _Info);
 	void FSM_Att_BaseKick_Update(float _DeltaTime, const StateInfo& _Info);
 	void FSM_Att_BaseKick_End(const StateInfo& _Info);
+	void FSM_Move_Helper();
 
 	// 대쉬 공격
 	void FSM_Att_Dash_Start(const StateInfo& _Info);

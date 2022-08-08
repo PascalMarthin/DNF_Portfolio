@@ -3,6 +3,7 @@
 #include <GameEngineBase/GameEngineDirectory.h>
 
 #include <GameEngineCore/GameEngineTexture.h>
+#include <GameEngineCore/GameEngineStatusWindow.h>
 #include <GameEngineCore/GameEngineFolderTexture.h>
 
 
@@ -12,6 +13,7 @@
 #include "SelectCharacterLevel.h"
 #include "CharacterCreateLevel.h"
 #include "GamePlayDataBase.h"
+#include "GameEnginePlusCharacterStatWindow.h"
 
 //#pragma comment(lib, "GameEngineBase.lib")
 
@@ -46,6 +48,7 @@ void DNF::Start()
 
 	ChangeLevel("SelectCharacter");
 
+	GameEngineGUI::CreateGUIWindow<GameEngineStatusWindow>("EngineStatus", nullptr);
 }
 
 

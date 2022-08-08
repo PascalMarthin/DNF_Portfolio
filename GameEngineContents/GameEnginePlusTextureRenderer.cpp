@@ -66,6 +66,7 @@ void FrameAnimationForAvata::Update(float _Delta)
 
 		if (Info.CurFrame >= Info.Frames.size())
 		{
+			ParentRenderer->EndFrame = true;
 			if (false == bOnceEnd && nullptr != End)
 			{
 				End(Info);
@@ -76,6 +77,7 @@ void FrameAnimationForAvata::Update(float _Delta)
 			if (true == Info.Loop)
 			{
 				Info.CurFrame = 0;
+				ParentRenderer->EndFrame = false;
 			}
 			else
 			{
