@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "GameEnginePlusTextureRenderer.h"
 #include "GamePlayDataBase.h"
+#include "GamePlayCharacter.h"
 #include "AvataManager.h"
 
 std::map<GamePlayItem_DESC*, std::map<char, GameEngineTexture*>> AvataManager::Static_AllAvataItemData;
@@ -17,6 +18,8 @@ AvataManager::AvataManager()
 	, Avata_Pants(nullptr)
 	, Avata_Shoes_a(nullptr)
 	, Avata_Shoes_b(nullptr)
+
+	, Enum_Type(ObjectType::None)
 
 {
 }
@@ -38,6 +41,7 @@ void AvataManager::CreateAvataData()
 
 void AvataManager::SetAvataSetup(ObjectType _Type)
 {
+	Enum_Type = _Type;
 	switch (_Type)
 	{
 		break;
@@ -129,7 +133,8 @@ void AvataManager::DeleteCharacterAvata()
 }
 void AvataManager::CreateNPCAvata()
 {
-	AllAvatas.push_back(Avata_Skin = CreateComponent<GameEnginePlusTextureRenderer>());
+	MsgBoxAssert("아직 NPC 기능을 만들어지지 않았습니다");
+	//AllAvatas.push_back(Avata_Skin = CreateComponent<GameEnginePlusTextureRenderer>());
 }
 void AvataManager::CreateCustomAvata()
 {
@@ -182,4 +187,48 @@ void AvataManager::SetAllAvataAutoControl()
 	{
 		Avata->SetAutoControl();
 	}
+}
+
+//----------------- On/ Off-------------------
+
+void AvataManager::OnEvent()
+{
+	SetCharacterDefaultAvata(GamePlayCharacter::GetCurrentCharacterData()->GetCharacterClass());
+	switch (Enum_Type)
+	{
+	case ObjectType::Character:
+	{
+		std::map<std::string, FrameAnimation_DESC*>&  DESC = GamePlayDataBase::GetClassAnimation_DESC(GamePlayDataBase::GetCurrentCharacterData()->GetCharacterClass());
+		for (GameEnginePlusTextureRenderer* Avata : AllAvatas)
+		{
+			for (auto& Iter : DESC)
+			{
+				Avata->CreateFrameAnimationFolderPlus(Iter.first, (*Iter.second));
+			}
+			Avata->ChangeFrameAnimationPlus("Move_Stand");
+		}
+		Avata_Belt->GetTransform().SetLocalPosition({0, 0 , 6});
+		Avata_Cap->GetTransform().SetLocalPosition({ 0, 0 , 5 });
+		Avata_Coat->GetTransform().SetLocalPosition({ 0, 0 , 5 });
+		Avata_Face->GetTransform().SetLocalPosition({ 0, 0 , 7 });
+		Avata_Hair_a->GetTransform().SetLocalPosition({ 0, 0 , 6 });
+		Avata_Hair_b->GetTransform().SetLocalPosition({ 0, 0 , 6 });
+		Avata_Neck->GetTransform().SetLocalPosition({ 0, 0 , 5 });
+		Avata_Pants->GetTransform().SetLocalPosition({ 0, 0 , 7 });
+		Avata_Shoes_a->GetTransform().SetLocalPosition({ 0, 0 , 5 });
+		Avata_Shoes_b->GetTransform().SetLocalPosition({ 0, 0 , 5 });
+		Avata_Skin->GetTransform().SetLocalPosition({ 0, 0 , 8 });
+
+	}
+		break;
+	case ObjectType::NPC:
+		break;
+	case ObjectType::Custom:
+	case ObjectType::None:
+	default:
+		break;
+	}
+
+
+	 
 }

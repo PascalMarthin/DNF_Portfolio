@@ -5,7 +5,7 @@
 #include <GameEngineCore/GameEngineComponent.h>
 #include "SeriaRoom_Level.h"
 #include "SeriaRoomBackground.h"
-#include "CharacterStriker.h"
+#include "GamePlayCharacter.h"
 
 SeriaRoom_Level::SeriaRoom_Level() 
 	: NPCSeria(CreateActor<Seria_NPC>())
@@ -21,7 +21,7 @@ SeriaRoom_Level::~SeriaRoom_Level()
 
 void SeriaRoom_Level::Start()
 {
-	CharacterStriker* Fighter = CreateActor<CharacterStriker>();
+	GamePlayCharacter* Fighter = CreateActor<GamePlayCharacter>();
 	//GamePlayCharacter::SetCurrentPlayer(Fighter);
 }
 

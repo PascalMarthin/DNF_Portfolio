@@ -14,14 +14,8 @@
     <ClInclude Include="GamePlayEnum.h">
       <Filter>Gobal</Filter>
     </ClInclude>
-    <ClInclude Include="CharacterFighter.h">
-      <Filter>Object\Character\Fighter</Filter>
-    </ClInclude>
     <ClInclude Include="GamePlayCharacter.h">
       <Filter>Object\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="CharacterStriker.h">
-      <Filter>Object\Character\Fighter\Skill</Filter>
     </ClInclude>
     <ClInclude Include="DebugLevel.h">
       <Filter>Level\Debug</Filter>
@@ -117,17 +111,8 @@
     <ClCompile Include="GamePlayObject.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="CharacterFighter.cpp">
-      <Filter>Object\Character\Fighter</Filter>
-    </ClCompile>
     <ClCompile Include="GamePlayCharacter.cpp">
       <Filter>Object\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="CharacterStriker.cpp">
-      <Filter>Object\Character\Fighter\Skill</Filter>
-    </ClCompile>
-    <ClCompile Include="CharacterStriker_Skill.cpp">
-      <Filter>Object\Character\Fighter\Skill</Filter>
     </ClCompile>
     <ClCompile Include="DebugLevel.cpp">
       <Filter>Level\Debug</Filter>
@@ -211,6 +196,9 @@
       <Filter>Management</Filter>
     </ClCompile>
     <ClCompile Include="TestActor.cpp" />
+    <ClCompile Include="Fighter_F_FSMData.cpp">
+      <Filter>Object\Character\Fighter</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -281,6 +269,9 @@
     </Filter>
     <Filter Include="Level\Title\UI\SelectCharacter">
       <UniqueIdentifier>{58e67fb2-f7ff-42ab-9161-f3df00f27c04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Character\FSM">
+      <UniqueIdentifier>{8c0d06dd-5958-4ce5-8f5a-a9935ec3cb05}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

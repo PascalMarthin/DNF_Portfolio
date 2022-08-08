@@ -93,6 +93,8 @@ enum CharacterStat
 
 enum ZSortOrder
 {
+
+
 	HUD_SkillBlank = 67,
 	HUD_ExpBar     = 68,
 	HUD_Bar        = 69,
@@ -103,7 +105,7 @@ enum ZSortOrder
 
 
 
-	BackGround = 800,
+	BackGround = 1200,
 };
 // ~100 UI
 // ~500 Ä³¸¯ÅÍ
@@ -133,7 +135,6 @@ enum class EngineInput
 	ESCAPE,
 	LBUTTON,
 	RBUTTON
-
 };
 
 enum class CharacterFormerClass

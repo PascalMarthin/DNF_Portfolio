@@ -37,18 +37,18 @@ private:
 private:
 	static std::vector<GamePlayDataBase*> DataBase_SelectCharacter;
 
-	static GamePlayDataBase* CurrentCharacterSlot;
+	static GamePlayDataBase* CurrentCharacterSlotData;
 public:
 	static void PushCharacterData(GamePlayDataBase* _Data);
 	static void StartPlayLevel();
 
 	inline static void SetCurrentSelectCharacter(GamePlayDataBase* _Data)
 	{
-		CurrentCharacterSlot = _Data;
+		CurrentCharacterSlotData = _Data;
 	}
 	inline static GamePlayDataBase* GetCurrentCharacterData()
 	{
-		return CurrentCharacterSlot;
+		return CurrentCharacterSlotData;
 	}
 
 };

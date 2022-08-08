@@ -9,9 +9,9 @@
 #include "DNF.h"
 #include "DebugLevel.h"
 #include "SeriaRoom_Level.h"
-#include "CharacterFighter.h"
 #include "SelectCharacterLevel.h"
 #include "CharacterCreateLevel.h"
+#include "GamePlayDataBase.h"
 
 //#pragma comment(lib, "GameEngineBase.lib")
 
@@ -28,7 +28,6 @@ void DNF::Start()
 	// GameEngineDebug::ConsoleOpen();
 	//ShowCursor(false);
 	AllResourceLoad();
-	CharacterFighter::SetAnimationForFrameAnimationDESC();
 
 
 	{
@@ -299,5 +298,5 @@ void DNF::Update(float _DeltaTime)
 
 void DNF::End()
 {
-	CharacterFighter::DestroyFrameAnimationDESC();
+	GamePlayDataBase::DestroyFrameAnimationDESC();
 }

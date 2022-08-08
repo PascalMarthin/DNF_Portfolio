@@ -2,6 +2,8 @@
 #include <GameEngineBase/GameEngineMath.h>
 #include "GamePlayEnum.h"
 
+#define FighterAnimationInter 0.08f
+
 // 설명 :
 class GamePlayItem_DESC;
 enum class GamePlayItemType;
@@ -19,6 +21,7 @@ enum class InventoryBag
 };
 class CharacterAbilityStat
 {
+	friend class CharacterStatManager;
 public:
 	CharacterAbilityStat()
 		: Level(0)
@@ -130,6 +133,24 @@ public:
 		return DataBase_InventoryData[_BagType];
 	}
 
+
+	static void SetCurrentCharacterData(GamePlayDataBase* _Data)
+	{
+		CurrentCharacterData = _Data;
+	}
+	inline static GamePlayDataBase* GetCurrentCharacterData()
+	{
+		return CurrentCharacterData;
+	}
+
+
+
+public:
+	inline CharacterAbilityStat* GetAbilityStat()
+	{
+		return &Class_CharacterAbilityStat;
+	}
+
 protected:
 
 private:
@@ -139,5 +160,29 @@ private:
 	CharacterAbilityStat Class_CharacterAbilityStat;
 	std::map<InventoryBag, std::vector<InventoryData*>> DataBase_InventoryData;
 	// 스킬
+
+
+
+
+
+
+
+
+	// Static
+public:
+	static void SetAnimationForFrameAnimationDESC(AllCharacterClass _Class);
+	static void DestroyFrameAnimationDESC();
+
+	inline static std::map<std::string, FrameAnimation_DESC*>& GetClassAnimation_DESC(AllCharacterClass _Class)
+	{
+		return CharacterAnimation_DESCs[_Class];
+	}
+
+private:
+	static GamePlayDataBase* CurrentCharacterData;
+	static std::map<AllCharacterClass, std::map<std::string, FrameAnimation_DESC*>> CharacterAnimation_DESCs;
+	static void CreateFighter_F_Animation();
+
+
 };
 

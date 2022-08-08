@@ -15,7 +15,7 @@ class GameEnginePlusTextureRenderer;
 class GamePlayDataBase;
 class AvataManager : public GameEngineActor
 {
-	friend class CharacterFighter;
+	friend class GamePlayCharacter;
 public:
 	// constrcuter destructer
 	AvataManager();
@@ -93,7 +93,7 @@ protected:
 	void Update(float _DeltaTime) override;
 
 	// void End() override {}
-	// void OnEvent() {}
+	void OnEvent() override;
 	// void OffEvent() {}
 private:
 	GameEnginePlusTextureRenderer* Avata_Belt;
@@ -108,6 +108,8 @@ private:
 	GameEnginePlusTextureRenderer* Avata_Shoes_b;
 	GameEnginePlusTextureRenderer* Avata_Skin;
 	std::vector<GameEnginePlusTextureRenderer*> AllAvatas;
+
+	ObjectType Enum_Type;
 
 
 private:

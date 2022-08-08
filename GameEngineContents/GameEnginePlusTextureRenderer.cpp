@@ -32,7 +32,7 @@ void GameEnginePlusTextureRenderer::Start()
 void FrameAnimationForAvata::Reset()
 {
 	Info.FrameTime = 0.0f;
-	Info.CurFrame = Info.Start;
+	Info.CurFrame = 0;
 }
 
 void FrameAnimationForAvata::Update(float _Delta)
@@ -44,9 +44,9 @@ void FrameAnimationForAvata::Update(float _Delta)
 		Time(Info, _Delta);
 	}
 
+
 	if (false == bOnceStart
-		&& Info.CurFrame == Info.Start
-		&& nullptr != Start)
+		&& Info.CurFrame == 0)
 	{
 		if (nullptr != Start)
 		{
@@ -64,7 +64,7 @@ void FrameAnimationForAvata::Update(float _Delta)
 			Frame(Info);
 		}
 
-		if (Info.CurFrame > Info.End)
+		if (Info.CurFrame >= Info.Frames.size())
 		{
 			if (false == bOnceEnd && nullptr != End)
 			{
@@ -75,12 +75,11 @@ void FrameAnimationForAvata::Update(float _Delta)
 
 			if (true == Info.Loop)
 			{
-				Info.CurFrame = Info.Start;
+				Info.CurFrame = 0;
 			}
-			else 
+			else
 			{
-				Info.CurFrame = Info.End;
-				ParentRenderer->EndFrame = true;
+				Info.CurFrame = static_cast<unsigned int>(Info.Frames.size()) - 1;
 			}
 		}
 
@@ -88,7 +87,7 @@ void FrameAnimationForAvata::Update(float _Delta)
 		{
 			if ((*DefaultCharacterAvataDouble) != nullptr)
 			{
-				ParentRenderer->SetTexture((*DefaultCharacterAvataDouble)->GetTexture(Info.CurFrame));
+				ParentRenderer->SetTexture((*DefaultCharacterAvataDouble)->GetTexture(Info.Frames[Info.CurFrame]));
 			}
 			else
 			{
@@ -97,7 +96,7 @@ void FrameAnimationForAvata::Update(float _Delta)
 		}
 		else
 		{
-			ParentRenderer->SetTexture((*FolderTextureDouble)->GetTexture(Info.CurFrame));
+			ParentRenderer->SetTexture((*FolderTextureDouble)->GetTexture(Info.Frames[Info.CurFrame]));
 		}
 
 		Info.FrameTime -= Info.Inter;
@@ -168,11 +167,11 @@ void GameEnginePlusTextureRenderer::ChangeFrameAnimationPlus(const std::string& 
 		CurrentAniPlus->Reset();
 		if (CurrentAvata != nullptr)
 		{
-			SetTexture(CurrentAvata->GetTexture(CurrentAniPlus->Info.CurFrame));
+			SetTexture(CurrentAvata->GetTexture(CurrentAniPlus->Info.Frames[0]));
 		}
 		else if (DefaultCharacterAvata != nullptr)
 		{
-			SetTexture(DefaultCharacterAvata->GetTexture(CurrentAniPlus->Info.CurFrame));
+			SetTexture(DefaultCharacterAvata->GetTexture(CurrentAniPlus->Info.Frames[0]));
 		}
 		else
 		{

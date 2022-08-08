@@ -169,19 +169,11 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="CharacterFighter.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="CharacterSkillManager.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="CharacterStatManager.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="CharacterStriker.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -309,10 +301,6 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="CharacterFighter.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="CharacterSkillManager.cpp">
       <SubType>
       </SubType>
@@ -321,11 +309,6 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="CharacterStriker.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="CharacterStriker_Skill.cpp" />
     <ClCompile Include="DebugLevel.cpp">
       <SubType>
       </SubType>
@@ -435,6 +418,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Fighter_F_FSMData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameEngineBase\GameEngineBase.vcxproj">

@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include <GameEngineCore/GameEngineStateManager.h>
 #include "CharacterStatManager.h"
+#include "GamePlayDataBase.h"
 #include "GamePlayEnum.h"
 #include "GamePlayCharacter.h"
 
@@ -17,6 +18,7 @@ CharacterStatManager::CharacterStatManager()
 	, CurrentEngageTime(0.f)
 	, CharacterWeight(-180.f)
 	, RightSide(true)
+	, CurrentAbilityStat(nullptr)
 {
 }
 
@@ -158,7 +160,16 @@ void CharacterStatManager::SetDoBaseAttEnd()
 
 void CharacterStatManager::OnEvent() 
 {
-	PlayerCurrentState =0x0;
+	SetCharacter_Fighter_F();
+	CurrentAbilityStat = GamePlayCharacter::GetCurrentCharacterData()->GetAbilityStat();
+
+}
+
+void CharacterStatManager::OffEvent()
+{
+	CurrentAbilityStat = nullptr;
+
+	PlayerCurrentState = 0x0;
 	CanAction = false;
 	CanMove = false;
 	JumpPower = 0.f;

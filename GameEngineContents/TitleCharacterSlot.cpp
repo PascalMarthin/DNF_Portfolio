@@ -1,7 +1,6 @@
 #include "PreCompile.h"
 #include <GameEngineCore/GameEngineTextureRenderer.h>
 #include "TitleCharacterSlot.h"
-#include "CharacterFighter.h"
 #include "GameEnginePlusTextureRenderer.h"
 #include "SelectCharacterLevel.h"
 #include "GamePlayDataBase.h"
@@ -68,7 +67,7 @@ void TitleCharacterSlot::CreateAvataData(GamePlayDataBase* _Data)
 		{
 			for (GameEnginePlusTextureRenderer* Avata : AllAvatas)
 			{
-				Avata->CreateFrameAnimationFolderPlus("Move_Stand", FrameAnimation_DESC("", 113, 116, FighterAnimationInter, true));
+				Avata->CreateFrameAnimationFolderPlus("Move_Stand", FrameAnimation_DESC("", 113, 116, 0.15f, true));
 				Avata->ChangeFrameAnimationPlus("Move_Stand");
 			}
 		}

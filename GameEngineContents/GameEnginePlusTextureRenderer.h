@@ -34,6 +34,13 @@ class FrameAnimationForAvata : public GameEngineNameObject
 
 	void Update(float _DeltaTime);
 
+public:
+	FrameAnimationForAvata()
+		: bOnceStart(true)
+		, bOnceEnd(false)
+	{
+
+	}
 };
 class GameEnginePlusTextureRenderer : public GameEngineTextureRenderer
 {
@@ -79,116 +86,59 @@ private:
 	int MC_CurFrame;
 
 public:
-	// 시작 프레임에 들어온다.
-	template<typename ObjectType>
-	void AnimationBindStart(const std::string& _AnimationName, void(ObjectType::* _Ptr)(const FrameAnimation_DESC&), ObjectType* _This)
+	// 애니메이션 바인드
+// 시작 프레임에 들어온다.
+	void AnimationBindStart(const std::string& _AnimationName, std::function<void(const FrameAnimation_DESC&)> _Function)
 	{
 		std::string Name = GameEngineString::ToUpperReturn(_AnimationName);
 
 		if (FrameAniPlus.end() == FrameAniPlus.find(Name))
 		{
-			MsgBoxAssert("존재하지 않는 애니메이션으로 할당 하려고 했습니다.");
+			MsgBoxAssert("존재하지 않는 애니메이션으로 체인지 하려고 했습니다.");
 			return;
 		}
 
-		FrameAniPlus[Name].Start = std::bind(_Ptr, _This, FrameAniPlus[Name].Info);
+		FrameAniPlus[Name].Start = _Function;
 	}
 	// 끝나는 프레임에 들어온다
-	template<typename ObjectType>
-	void AnimationBindEnd(const std::string& _AnimationName, void(ObjectType::* _Ptr)(const FrameAnimation_DESC&), ObjectType* _This)
+	void AnimationBindEnd(const std::string& _AnimationName, std::function<void(const FrameAnimation_DESC&)> _Function)
 	{
 		std::string Name = GameEngineString::ToUpperReturn(_AnimationName);
 
 		if (FrameAniPlus.end() == FrameAniPlus.find(Name))
 		{
-			MsgBoxAssert("존재하지 않는 애니메이션으로 할당 하려고 했습니다.");
+			MsgBoxAssert("존재하지 않는 애니메이션으로 체인지 하려고 했습니다.");
 			return;
 		}
 
-		FrameAniPlus[Name].End = std::bind(_Ptr, _This, FrameAniPlus[Name].Info);
+		FrameAniPlus[Name].End = _Function;
 	}
 	// 프레임이 바뀔때마다 들어온다
-	template<typename ObjectType>
-	void AnimationBindFrame(const std::string& _AnimationName, void(ObjectType::* _Ptr)(const FrameAnimation_DESC&), ObjectType* _This)
+	void AnimationBindFrame(const std::string& _AnimationName, std::function<void(const FrameAnimation_DESC&)> _Function)
 	{
 		std::string Name = GameEngineString::ToUpperReturn(_AnimationName);
 
 		if (FrameAniPlus.end() == FrameAniPlus.find(Name))
 		{
-			MsgBoxAssert("존재하지 않는 애니메이션으로 할당 하려고 했습니다.");
+			MsgBoxAssert("존재하지 않는 애니메이션으로 체인지 하려고 했습니다.");
 			return;
 		}
 
-		FrameAniPlus[Name].Frame = std::bind(_Ptr, _This, FrameAniPlus[Name].Info);
+		FrameAniPlus[Name].Frame = _Function;
 	}
 	// Update
-	template<typename ObjectType>
-	void AnimationBindTime(const std::string& _AnimationName, void(ObjectType::* _Ptr)(const FrameAnimation_DESC&), ObjectType* _This)
+	void AnimationBindTime(const std::string& _AnimationName, std::function<void(const FrameAnimation_DESC&, float)> _Function)
 	{
 		std::string Name = GameEngineString::ToUpperReturn(_AnimationName);
 
 		if (FrameAniPlus.end() == FrameAniPlus.find(Name))
 		{
-			MsgBoxAssert("존재하지 않는 애니메이션으로 할당 하려고 했습니다.");
+			MsgBoxAssert("존재하지 않는 애니메이션으로 체인지 하려고 했습니다.");
 			return;
 		}
 
-		FrameAniPlus[Name].Time = std::bind(_Ptr, _This, FrameAniPlus[Name].Info);
+		FrameAniPlus[Name].Time = _Function;
 	}
-
-	//// 전역
-	//void AnimationBindStart(const std::string& _AnimationName, void(*_Ptr)(const FrameAnimation_DESC&))
-	//{
-	//	std::string Name = GameEngineString::ToUpperReturn(_AnimationName);
-
-	//	if (FrameAniPlus.end() == FrameAniPlus.find(Name))
-	//	{
-	//		MsgBoxAssert("존재하지 않는 애니메이션으로 할당 하려고 했습니다.");
-	//		return;
-	//	}
-
-	//	FrameAniPlus[Name].Start = std::bind(_Ptr, FrameAniPlus[Name].Info);
-	//}
-
-	//// 끝나는 프레임에 들어온다
-	//void AnimationBindEnd(const std::string& _AnimationName, void(*_Ptr)(const FrameAnimation_DESC&))
-	//{
-	//	std::string Name = GameEngineString::ToUpperReturn(_AnimationName);
-
-	//	if (FrameAniPlus.end() == FrameAniPlus.find(Name))
-	//	{
-	//		MsgBoxAssert("존재하지 않는 애니메이션으로 할당 하려고 했습니다.");
-	//		return;
-	//	}
-
-	//	FrameAniPlus[Name].End = std::bind(_Ptr, FrameAniPlus[Name].Info);
-	//}
-	//// 프레임이 바뀔때마다 들어온다
-	//void AnimationBindFrame(const std::string& _AnimationName, void(*_Ptr)(const FrameAnimation_DESC&))
-	//{
-	//	std::string Name = GameEngineString::ToUpperReturn(_AnimationName);
-
-	//	if (FrameAniPlus.end() == FrameAniPlus.find(Name))
-	//	{
-	//		MsgBoxAssert("존재하지 않는 애니메이션으로 할당 하려고 했습니다.");
-	//		return;
-	//	}
-
-	//	FrameAniPlus[Name].Frame = std::bind(_Ptr, FrameAniPlus[Name].Info);
-	//}
-	//// Update
-	//void AnimationBindTime(const std::string& _AnimationName, void(*_Ptr)(const FrameAnimation_DESC&))
-	//{
-	//	std::string Name = GameEngineString::ToUpperReturn(_AnimationName);
-
-	//	if (FrameAniPlus.end() == FrameAniPlus.find(Name))
-	//	{
-	//		MsgBoxAssert("존재하지 않는 애니메이션으로 할당 하려고 했습니다.");
-	//		return;
-	//	}
-
-	//	FrameAniPlus[Name].Time = std::bind(_Ptr, FrameAniPlus[Name].Info);
-	//}
 
 protected:
 	void Start() override;

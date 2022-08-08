@@ -2,9 +2,11 @@
 #include <GameEngineCore/GameEngineComponent.h>
 #include <GameEngineCore/GameEngineStateManager.h>
 #include "GamePlayEnum.h"
+#include "GamePlayDataBase.h"
 
 
 // 설명 : 상태를 체크하고 업데이트마다 정리하는 클래스
+class CharacterAbilityStat;
 class CharacterStatManager : public GameEngineComponent
 {
 public:
@@ -86,7 +88,10 @@ public:
 	}
 
 
-	float GetMoveSpeed() const;
+	inline float GetMoveSpeed() const
+	{
+		return CurrentAbilityStat->MoveSpeed;
+	}
 
 
 	inline void SetRightSide()
@@ -118,8 +123,8 @@ protected:
 	void Update(float _DeltaTime) override;
 
 	// void End() override {}
-	void OnEvent();
-	void OffEvent() {}
+	void OnEvent() override;
+	void OffEvent();
 
 
 private:
@@ -133,7 +138,7 @@ private:
 
 private:
 	GameEngineStateManager FSMManager;
-
+	CharacterAbilityStat* CurrentAbilityStat;
 
 private:
 	float CurrentEngageTime;

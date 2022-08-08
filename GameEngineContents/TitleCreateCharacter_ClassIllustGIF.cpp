@@ -36,14 +36,14 @@ void TitleCreateCharacter_ClassIllustGIF::Update(float _DeltaTime)
 			FolderTexture_CurrentGIF->GetTransform().SetLocalPosition({0, 0, 5});
 			FolderTexture_BackBufferGIF->GetTransform().SetLocalPosition({ 0 , 0 , 10});
 			FolderTexture_BackBufferGIF->GetTransform().SetLocalPosition({ 0 , 0 , ZSortOrder::BackGround + 10 });
-			FolderTexture_BackBufferGIF->ChangeFrameAnimation(CurrentAnimationName);
+			//FolderTexture_BackBufferGIF->ChangeFrameAnimation(CurrentAnimationName);
 			FolderTexture_BackBufferGIF->GetColorData().PlusColor = { float4::ZERO };
 			ChangeGIF = false;
 		}
 	}
 }
 
-void TitleCreateCharacter_ClassIllustGIF::OnEvent()
+void TitleCreateCharacter_ClassIllustGIF::OffEvent()
 {
 	FolderTexture_BackBufferGIF->SetTexture("Null.png");
 }

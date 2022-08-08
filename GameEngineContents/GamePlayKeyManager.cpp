@@ -237,10 +237,12 @@ float4 GamePlayKeyManager::Input_Move_Press()
 	if (CrrentPushInput_UPDown == EngineInput::UP)
 	{
 		Dir.y = 1;
+		//Dir.z = 1;
 	}
 	else if (CrrentPushInput_UPDown == EngineInput::DOWN)
 	{
 		Dir.y = -1;
+		//Dir.z = -1;
 	}
 
 	if (CrrentPushInput_LeftRight == EngineInput::LEFT)

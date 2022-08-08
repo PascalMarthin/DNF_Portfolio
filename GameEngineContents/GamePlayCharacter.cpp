@@ -7,13 +7,14 @@
 #include "AvataManager.h"
 #include "InterfaceHUD.h"
 
+GamePlayDataBase* GamePlayCharacter::CurrentCharacterData = nullptr;
 std::list<GamePlayDataBase*> GamePlayCharacter::AllCharacterData;
 
 GamePlayCharacter::GamePlayCharacter()
 	: Manager_StatManager(nullptr)
 	, Manager_AvataManager(nullptr)
 	, PlayerUserInterface(nullptr)
-	, PlayerClass(AllCharacterClass::None)
+	, PlayerFormerClass(CharacterFormerClass::None)
 
 {
 }
@@ -89,6 +90,16 @@ GamePlayDataBase* GamePlayCharacter::CreateCharacterBase(CharacterFormerClass _C
 }
 
 
+void GamePlayCharacter::SetPlayerCharacter()
+{
+	if ((CurrentCharacterData = GamePlayDataBase::GetCurrentCharacterData()) == nullptr)
+	{
+		MsgBoxAssert("데이터가 지정이 안되어 있습니다")
+	}
+
+
+
+}
 
 void GamePlayCharacter::SetRightDir()
 {
@@ -99,4 +110,53 @@ void GamePlayCharacter::SetLeftDir()
 {
 	GetTransform().PixLocalNegativeX();
 	Manager_StatManager->SetLeftSide();
+}
+
+void GamePlayCharacter::SetFSManager()
+{
+	if (PlayerFormerClass == CurrentCharacterData->GetFormerClass())
+	{
+		return;
+	}
+	else if (PlayerFormerClass != CharacterFormerClass::None)
+	{
+		Manager_StatManager->Death();
+		Manager_StatManager = CreateComponent<CharacterStatManager>();
+	}
+
+	switch (CurrentCharacterData->GetCharacterClass())
+	{
+	case AllCharacterClass::Fighter_F:
+		Create_Fighter_F_Default_FSManager();
+		break;
+	default:
+		MsgBoxAssert("아직 만들어지지 않은 클래스입니다")
+			break;
+	}
+
+	switch (CurrentCharacterData->GetFormerClass())
+	{
+	case CharacterFormerClass::Striker:
+
+		break;
+	default:
+		MsgBoxAssert("아직 만들어지지 않은 클래스입니다")
+			break;
+	}
+
+}
+
+void GamePlayCharacter::OnEvent()
+{
+	if (CurrentCharacterData == nullptr)
+	{
+		MsgBoxAssert("데이터가 지정이 안되어 있습니다")
+	}
+	SetFSManager();
+
+}
+
+void GamePlayCharacter::OffEvent()
+{
+
 }

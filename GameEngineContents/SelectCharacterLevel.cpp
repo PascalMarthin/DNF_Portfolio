@@ -1,14 +1,15 @@
 #include "PreCompile.h"
-#include "SelectCharacterLevel.h"
+#include <GameEngineCore/GEngine.h>
+#include "AvataManager.h"
 #include "TitleBackGroundAndUI.h"
 #include "TitleCharacterSlot.h"
+#include "SelectCharacterLevel.h"
 #include "GamePlayDataBase.h"
-#include "AvataManager.h"
-#include <GameEngineCore/GEngine.h>
+#include "GamePlayCharacter.h"
 #include "CharacterCreateLevel.h"
 #include "MouseCursorComponent.h"
 
-GamePlayDataBase* SelectCharacterLevel::CurrentCharacterSlot = nullptr;
+GamePlayDataBase* SelectCharacterLevel::CurrentCharacterSlotData = nullptr;
 std::vector<TitleCharacterSlot*> SelectCharacterLevel::CharacterSlot;
 std::vector<GamePlayDataBase*> SelectCharacterLevel::DataBase_SelectCharacter;
 
@@ -67,6 +68,9 @@ void SelectCharacterLevel::PushCharacterData(GamePlayDataBase* _Data)
 
 void SelectCharacterLevel::StartPlayLevel()
 {
+	GamePlayDataBase::SetAnimationForFrameAnimationDESC(CurrentCharacterSlotData->GetCharacterClass());
+	GamePlayDataBase::SetCurrentCharacterData(CurrentCharacterSlotData);
+	GamePlayCharacter::SetPlayerCharacter();
 
 	GEngine::ChangeLevel("SeriaRoom");
 }
