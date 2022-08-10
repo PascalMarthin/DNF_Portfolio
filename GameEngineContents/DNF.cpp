@@ -256,18 +256,18 @@ void DNF::BaseFolderTextureLoad()
 	}
 
 	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExitsChildDirectory("Resource");
-		Dir.Move("Resource");
-		Dir.Move("Texture");
-		Dir.Move("Map");
-		Dir.Move("Jelva");
-		std::vector<GameEngineDirectory> AllTextureDir = Dir.GetRecursiveAllDirectory();
+		//GameEngineDirectory Dir;
+		//Dir.MoveParentToExitsChildDirectory("Resource");
+		//Dir.Move("Resource");
+		//Dir.Move("Texture");
+		//Dir.Move("Map");
+		//Dir.Move("Jelva");
+		//std::vector<GameEngineDirectory> AllTextureDir = Dir.GetRecursiveAllDirectory();
 
-		for (GameEngineDirectory& DirIter : AllTextureDir)
-		{
-			GameEngineFolderTexture::Load(DirIter.GetFullPath());
-		}
+		//for (GameEngineDirectory& DirIter : AllTextureDir)
+		//{
+		//	GameEngineFolderTexture::Load(DirIter.GetFullPath());
+		//}
 	}
 	//{
 	//	GameEngineDirectory Dir;

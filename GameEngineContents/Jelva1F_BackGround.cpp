@@ -14,7 +14,6 @@ Jelva1F_BackGround::~Jelva1F_BackGround()
 
 void Jelva1F_BackGround::Start()
 {
-	//GetTransform().SetLocalScale({ MonitorX , MonitorY });
 	Texture_BackGround = CreateComponent<GameEngineTextureRenderer>();
 	Texture_BackGround->CreateFrameAnimationFolder("Jelva01", FrameAnimation_DESC("Jelva_1F", 0.15f));
 	Texture_BackGround->ChangeFrameAnimation("Jelva01");
@@ -24,7 +23,7 @@ void Jelva1F_BackGround::Start()
 	Texture_BackGround->SetPivot(PIVOTMODE::LEFTTOP);
 
 
-	Texture_MapCollision = GameEngineTexture::Find("Jelva01.png");
+	Texture_MapCollision = GameEngineTexture::Find("Jelva01F_Collision.png");
 	
 
 	Collision_Jelva1F_Door = CreateComponent<GameEngineCollision>();

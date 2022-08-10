@@ -17,6 +17,15 @@ public:
 	{
 		return "Dungeon And Fighter";
 	}
+	float4 StartWindowSize() override
+	{ 
+		return { 1280.0f, 720.0f }; 
+	};
+
+	float4 StartWindowPosition() override
+	{ 
+		return { 0,0 }; 
+	};
 
 protected:
 	void Start() override;

@@ -21,7 +21,7 @@ void Jelva2F_BackGround::Start()
 	Texture_BackGround->SetPivot(PIVOTMODE::LEFTTOP);
 
 
-	Texture_MapCollision = GameEngineTexture::Find("Jelva01.png");
+	Texture_MapCollision = GameEngineTexture::Find("Jelva02F_Collision.png");
 
 }
 void Jelva2F_BackGround::Update(float _DeltaTime)
