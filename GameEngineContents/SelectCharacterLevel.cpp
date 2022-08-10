@@ -37,10 +37,7 @@ void SelectCharacterLevel::Start()
 		Slot->GetTransform().SetLocalPosition({ static_cast<float>(126 - Hif + ((152 + 18) * x)) ,  static_cast<float>(-168) });
 		SelectCharacterLevel::CharacterSlot.push_back(Slot);
 	}
-	//// Debug
-	//CharacterCreateLevel::Enum_CurrentClass = AllCharacterClass::Fighter_F;
-	//CharacterCreateLevel::CreateCharacter();
-	//// Debug
+
 }
 
 void SelectCharacterLevel::Update(float _DeltaTime)

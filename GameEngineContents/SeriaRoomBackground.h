@@ -1,9 +1,9 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
-#include <GameEngineCore/GameEngineTextureRenderer.h>
+#include "BackGroundParent.h"
 
 // Ό³Έν :
-class SeriaRoomBackground : public GameEngineActor
+class SeriaRoomBackground : public GameEngineActor, public BackGroundParent
 {
 public:
 	// constrcuter destructer
@@ -16,6 +16,7 @@ public:
 	SeriaRoomBackground& operator=(const SeriaRoomBackground& _Other) = delete;
 	SeriaRoomBackground& operator=(SeriaRoomBackground&& _Other) noexcept = delete;
 
+
 protected:
 	void Start() override;
 
@@ -26,7 +27,6 @@ protected:
 	// void OffEvent() {}
 
 private:
-
-	GameEngineTextureRenderer* SeriaRoomBackGround_Texture;
+	GameEngineCollision* Collision_SeriaRoom_OutDoor;
 };
 

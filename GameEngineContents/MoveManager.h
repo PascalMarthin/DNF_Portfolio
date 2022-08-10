@@ -3,6 +3,7 @@
 
 // Ό³Έν :
 class GamePlayObject;
+class GameEngineCollision;
 class GamePlayCharacter;
 class CharacterStatManager;
 class MoveManager : public GameEngineComponent
@@ -19,10 +20,14 @@ public:
 	MoveManager& operator=(const MoveManager& _Other) = delete;
 	MoveManager& operator=(MoveManager&& _Other) noexcept = delete;
 
+	inline GameEngineCollision* GetMoveCollision() const
+	{
+		return Collision_Move;
+	}
 
-	void SetCharacterMove(const float4& _Move);
+	float4 SetCharacterMove(const float4& _Move);
 	void SetCharacterLocation(const float4& _Pos);
-	void SetJump(const float4& _StartJumpPos);
+	void SetJump();
 
 
 protected:
@@ -31,19 +36,25 @@ protected:
 
 	// void End() override {}
 	void OnEvent() override;
-	// void OffEvent() override {}
+	void OffEvent() override;
 
 private:
 	GamePlayObject* ParentCharacter;
 
-	// Jump
+	// -------------Jump----------------
 	float JumpTime;
 	float JumpPower;
 	float JumpHigh;
 	float CurrentGravitIndex;
 	float4 LandingPostion;
-	// Jump
+	void SetCharacterJump(const float4& _Move);
+	// -------------Jump----------------
 
 	CharacterStatManager* ManagerStat;
+
+private:
+	// ----------Collision---------------
+	GameEngineCollision* Collision_Move;
+	GameEngineTexture* Texture_CollisionMap;
 };
 

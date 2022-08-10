@@ -225,6 +225,22 @@ void DNF::BaseFolderTextureLoad()
 		Dir.MoveParentToExitsChildDirectory("Resource");
 		Dir.Move("Resource");
 		Dir.Move("Texture");
+		Dir.Move("Map");
+		Dir.Move("Collision");
+
+		std::vector<GameEngineFile> Texture = Dir.GetAllFile();
+
+		for (size_t i = 0; i < Texture.size(); i++)
+		{
+			GameEngineTexture::Load(Texture[i].GetFullPath());
+		}
+	}
+
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resource");
+		Dir.Move("Resource");
+		Dir.Move("Texture");
 		Dir.Move("UI");
 		Dir.Move("CharacterCreate");
 		Dir.Move("CharacterillustGIF");

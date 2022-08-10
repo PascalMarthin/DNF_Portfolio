@@ -96,16 +96,18 @@ enum ZSortOrder
 
 
 	HUD_SkillBlank = 67,
-	HUD_ExpBar     = 68,
-	HUD_Bar        = 69,
-	HUD_Base       = 70,
+	HUD_ExpBar = 68,
+	HUD_Bar = 69,
+	HUD_Base = 70,
 	Inventory_Item = 78,
 	Inventory_Blank = 79,
 	Inventory = 80,
 
+	NPC_Object = 50, // -Y
+	Character_Fighter_F = 130, // -Y,
 
 
-	BackGround = 1200,
+	BackGround = 200,
 };
 // ~100 UI
 // ~500 Ä³¸¯ÅÍ
@@ -172,8 +174,11 @@ enum class CollisionOrder
 	None = 0,
 	InGame_Object = 1,
 	Player = 2,
-	Monster = 3,
-	UI_ect = 4,
+	Player_Att = 3,
+	Monster = 10,
+	Monster_Att = 11,
+	UI_ect = 20,
+	ChangeMap = 21,
 };
 
 enum class ObjectType

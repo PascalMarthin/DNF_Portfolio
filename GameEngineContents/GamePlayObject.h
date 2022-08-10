@@ -1,10 +1,10 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
+#include <GameEngineCore/GameEngineCollision.h>
 #include <GameEngineCore/GameEngineTextureRenderer.h>
 #include "GamePlayEnum.h"
 
 // Ό³Έν :
-class CollisionManager;
 class MoveManager;
 class GamePlayObject : public GameEngineActor
 {
@@ -48,13 +48,22 @@ public:
 		return Enum_ObjectType;
 	}
 
+	inline GameEngineCollision* GetBodyCollision() const
+	{
+		return Collision_HitBody;
+	}
+
+
 protected:
 	void Start() override;
 
 
 protected:
 	MoveManager* Manager_MoveManager;
-	CollisionManager* Manager_CollisionManager;
+
+	//--------------------Collision---------------
+	GameEngineCollision* Collision_HitBody;
+	//CollisionManager* Manager_CollisionManager;
 
 private:
 	//float4 ObjectPos;

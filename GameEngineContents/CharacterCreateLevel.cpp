@@ -37,6 +37,13 @@ void CharacterCreateLevel::Start()
 	Actor_ClassIllustGIF->GetTransform().SetLocalScale({ MonitorX, MonitorY });
 
 	FirstSetting();
+
+
+	// Debug
+	CharacterCreateLevel::Enum_CurrentClass = AllCharacterClass::Fighter_F;
+	CharacterCreateLevel::CreateCharacter();
+	// Debug
+
 	
 }
 

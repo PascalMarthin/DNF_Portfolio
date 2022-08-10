@@ -1,8 +1,8 @@
 #pragma once
-#include "GamePlayObject.h"
+#include <GameEngineCore/GameEngineActor.h>
 
 // Ό³Έν :
-class GamePlayObjectNPC : public GamePlayObject
+class GamePlayObjectNPC : public GameEngineActor
 {
 public:
 	// constrcuter destructer
@@ -16,6 +16,12 @@ public:
 	GamePlayObjectNPC& operator=(GamePlayObjectNPC&& _Other) noexcept = delete;
 
 protected:
+	void Start() override;
+	//void Update(float _DeltaTime) override;
+
+	// void End() override {}
+	// void OnEvent() override {}
+	// void OffEvent() override {}
 
 private:
 

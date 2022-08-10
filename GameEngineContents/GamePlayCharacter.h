@@ -5,7 +5,14 @@
 #include "GamePlayEnum.h"
 
 // Ό³Έν :
-
+enum class Collision_AllSkill
+{
+	BasePunch1,
+	BasePunch3,
+	Hammer_Kick,
+	Jump_Kick,
+	Att_Dash,
+};
 class PlayerInterface;
 class AvataManager;
 class InterfaceHUD;
@@ -44,6 +51,7 @@ public:
 	}
 
 
+
 	static void SetPlayerCharacter();
 
 protected:
@@ -67,18 +75,25 @@ protected:
 	AvataManager* Manager_AvataManager;
 
 	void Create_Fighter_F_Default_FSManager();
+	// ---------------Collision------------------
+	std::map<Collision_AllSkill , std::vector<GameEngineCollision*> > Collision_HitCollision;
+	void On_EnumCollision(Collision_AllSkill _Collsion);
+	void Off_EnumCollision(Collision_AllSkill _Collsion);
+
 
 private:
+	// ----------GameCharacterData---------------
 	static GamePlayDataBase* CurrentCharacterData;
 	static std::list<GamePlayDataBase*> AllCharacterData;
 
 public:
 	static GamePlayDataBase* CreateCharacterBase(CharacterFormerClass _Class, const std::string& _NickName = "Debug");
-
+	//-------------------------------------------
 
 	void SetFSManager();
-	void SetCollisionManager();
+	//void SetCollisionManager();
 
+	//------FSM--------------
 	void FSM_Move_Walk_Start(const StateInfo& _Info);
 	void FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _Info);
 	void FSM_Move_Walk_End(const StateInfo& _Info);

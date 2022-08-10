@@ -20,7 +20,10 @@ GamePlayCharacter::GamePlayCharacter()
 	, EndJump(false)
 	, JumpGoingDown(false)
 	, MoveIndex(0.f)
-
+	, JumpKick_DelayTime(0.f)
+	, BaseJumpKick(false)
+	, Att_BaseAtt_Delay(0.f)
+	, DelayPunch(false)
 {
 }
 
@@ -46,46 +49,28 @@ void GamePlayCharacter::Start()
 
 	PlayerUserInterface = GetLevel()->CreateActor<PlayerInterface>();
 
-	//AllAvatas.push_back(Avata_Skin = CreateComponent<GameEnginePlusTextureRenderer>());
-	//AllAvatas.push_back(Avata_Belt = CreateComponent<GameEnginePlusTextureRenderer>());
-	//AllAvatas.push_back(Avata_Cap = CreateComponent<GameEnginePlusTextureRenderer>());
-	//AllAvatas.push_back(Avata_Coat = CreateComponent<GameEnginePlusTextureRenderer>());
-	//AllAvatas.push_back(Avata_Face = CreateComponent<GameEnginePlusTextureRenderer>());
-	//AllAvatas.push_back(Avata_Hair_a = CreateComponent<GameEnginePlusTextureRenderer>());
-	//AllAvatas.push_back(Avata_Hair_b = CreateComponent<GameEnginePlusTextureRenderer>());
-	//AllAvatas.push_back(Avata_Neck = CreateComponent<GameEnginePlusTextureRenderer>());
-	//AllAvatas.push_back(Avata_Pants = CreateComponent<GameEnginePlusTextureRenderer>());
-	//AllAvatas.push_back(Avata_Shoes_a = CreateComponent<GameEnginePlusTextureRenderer>());
-	//AllAvatas.push_back(Avata_Shoes_b = CreateComponent<GameEnginePlusTextureRenderer>());
+	Collision_HitBody = CreateComponent<GameEngineCollision>("Hit_Collision");
+	Collision_HitBody->ChangeOrder(CollisionOrder::Player);
+	Collision_HitBody->GetTransform().SetLocalPosition({ 0, -80 });
+	Collision_HitBody->GetTransform().SetLocalScale({ 48, 110 });
+	Collision_HitBody->SetDebugSetting(CollisionType::CT_AABB2D, {0, 0, 255, 100});
+	Collision_HitBody->Off();
+}
 
-	//for (auto& Avata :AllAvatas)
-	//{
-	//	Avata->GetTransform().SetLocalScale({ 500, 500 });
-	//}
+void GamePlayCharacter::On_EnumCollision(Collision_AllSkill _Collsion)
+{
+	for (GameEngineCollision* Collision : Collision_HitCollision[_Collsion])
+	{
+		Collision->On();
+	}
+}
 
-
-	//Avata_Belt->GetTransform().SetLocalPosition({ 0, 0, 4 });
-	//Avata_Cap->GetTransform().SetLocalPosition({ 0, 0,  3 });
-	//Avata_Coat->GetTransform().SetLocalPosition({ 0, 0, 5 });
-	//Avata_Face->GetTransform().SetLocalPosition({ 0, 0, 4 });
-	//Avata_Hair_a->GetTransform().SetLocalPosition({ 0, 0, 3 });
-	//Avata_Hair_b->GetTransform().SetLocalPosition({ 0, 0, 3 });
-	//Avata_Neck->GetTransform().SetLocalPosition({ 0, 0, 7 });
-	//Avata_Pants->GetTransform().SetLocalPosition({ 0, 0, 8 });
-	//Avata_Shoes_a->GetTransform().SetLocalPosition({ 0, 0, 7 });
-	//Avata_Skin->GetTransform().SetLocalPosition({ 0, 0, 10 });
-
-
-	//CurrentAvataCode[Avata_Belt] =  GamePlayItemCode::Empty;
-	//CurrentAvataCode[Avata_Cap] =   GamePlayItemCode::Empty;
-	//CurrentAvataCode[Avata_Coat] =  GamePlayItemCode::Empty;
-	//CurrentAvataCode[Avata_Face] =  GamePlayItemCode::Empty;
-	//CurrentAvataCode[Avata_Hair_a] = GamePlayItemCode::Empty;
-	//CurrentAvataCode[Avata_Hair_b] = GamePlayItemCode::Empty;
-	//CurrentAvataCode[Avata_Neck] =  GamePlayItemCode::Empty;
-	//CurrentAvataCode[Avata_Pants] = GamePlayItemCode::Empty;
-	//CurrentAvataCode[Avata_Shoes_a] = GamePlayItemCode::Empty;
-	//CurrentAvataCode[Avata_Skin] =  GamePlayItemCode::Empty;
+void GamePlayCharacter::Off_EnumCollision(Collision_AllSkill _Collsion)
+{
+	for (GameEngineCollision* Collision : Collision_HitCollision[_Collsion])
+	{
+		Collision->Off();
+	}
 }
 
 GamePlayDataBase* GamePlayCharacter::CreateCharacterBase(CharacterFormerClass _Class, const std::string& _NickName)
@@ -140,7 +125,6 @@ void GamePlayCharacter::SetFSManager()
 		MsgBoxAssert("아직 만들어지지 않은 클래스입니다")
 			break;
 	}
-
 }
 
 void GamePlayCharacter::OnEvent()
@@ -150,16 +134,10 @@ void GamePlayCharacter::OnEvent()
 		MsgBoxAssert("데이터가 지정이 안되어 있습니다")
 	}
 	SetFSManager();
-	SetCollisionManager();
+
 
 	MoveIndex = 0.f;
 
-}
-
-void GamePlayCharacter::SetCollisionManager()
-{
-	GameEngineCollision* Collision = Manager_CollisionManager->CreateCollision("Hit_Collision", CollisionOrder::Player, {48, 110}, {0, -80});
-	Collision->SetDebugSetting(CollisionType::CT_AABB2D, float4::BLUE);
 }
 
 void GamePlayCharacter::OffEvent()

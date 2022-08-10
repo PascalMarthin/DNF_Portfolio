@@ -7,6 +7,7 @@
 
 void GamePlayCharacter::Create_Fighter_F_Default_FSManager()
 {
+	GameEngineCollision* Collision = nullptr;
 
 	Manager_StatManager->GetFSMManager().CreateStateMember
 	("None", [=](float _DeltaTime, const StateInfo & _Info)
@@ -29,10 +30,26 @@ void GamePlayCharacter::Create_Fighter_F_Default_FSManager()
 	("Move_Jump", std::bind(&GamePlayCharacter::FSM_Move_Jump_Update, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&GamePlayCharacter::FSM_Move_Jump_Start, this, std::placeholders::_1)
 		, std::bind(&GamePlayCharacter::FSM_Move_Jump_End, this, std::placeholders::_1));
+	{
+		Collision_HitCollision[Collision_AllSkill::Jump_Kick].push_back(Collision = CreateComponent<GameEngineCollision>("Jump_Kick"));
+		Collision->GetTransform().SetLocalScale({ 110, 90, 20 });
+		Collision->GetTransform().SetLocalPosition({ 30, -100 });
+		Collision->ChangeOrder(CollisionOrder::Player_Att);
+		//Collision->SetDebugSetting(CollisionType::CT_AABB, float4({ 0, 255, 0, 50 }));
+		Collision->Off();
+	}
 	Manager_StatManager->GetFSMManager().CreateStateMember
 	("Att_BasePunch1", std::bind(&GamePlayCharacter::FSM_Att_BasePunch1_Update, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&GamePlayCharacter::FSM_Att_BasePunch1_Start, this, std::placeholders::_1)
 		, std::bind(&GamePlayCharacter::FSM_Att_BasePunch1_End, this, std::placeholders::_1));
+	{
+		Collision_HitCollision[Collision_AllSkill::BasePunch1].push_back(Collision = CreateComponent<GameEngineCollision>("BasePunch1"));
+		Collision->GetTransform().SetLocalScale({32, 48, 10});
+		Collision->GetTransform().SetLocalPosition({ 40, -62 });
+		Collision->ChangeOrder(CollisionOrder::Player_Att);
+		Collision->Off();
+	}
+
 	Manager_StatManager->GetFSMManager().CreateStateMember
 	("Att_BasePunch2", std::bind(&GamePlayCharacter::FSM_Att_BasePunch2_Update, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&GamePlayCharacter::FSM_Att_BasePunch2_Start, this, std::placeholders::_1)
@@ -41,14 +58,40 @@ void GamePlayCharacter::Create_Fighter_F_Default_FSManager()
 	("Att_BasePunch3", std::bind(&GamePlayCharacter::FSM_Att_BasePunch3_Update, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&GamePlayCharacter::FSM_Att_BasePunch3_Start, this, std::placeholders::_1)
 		, std::bind(&GamePlayCharacter::FSM_Att_BasePunch3_End, this, std::placeholders::_1));
+	{
+		Collision_HitCollision[Collision_AllSkill::BasePunch3].push_back(Collision = CreateComponent<GameEngineCollision>("BasePunch3"));
+		Collision->GetTransform().SetLocalScale({ 48, 48, 20 });
+		Collision->GetTransform().SetLocalPosition({ 40, -62 });
+		Collision->ChangeOrder(CollisionOrder::Player_Att);
+		//Collision->SetDebugSetting(CollisionType::CT_AABB, float4({0, 255, 0, 100}));
+		Collision->Off();
+	}
+
 	Manager_StatManager->GetFSMManager().CreateStateMember
 	("Att_BaseKick", std::bind(&GamePlayCharacter::FSM_Att_BaseKick_Update, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&GamePlayCharacter::FSM_Att_BaseKick_Start, this, std::placeholders::_1)
 		, std::bind(&GamePlayCharacter::FSM_Att_BaseKick_End, this, std::placeholders::_1));
+	{
+		Collision_HitCollision[Collision_AllSkill::Hammer_Kick].push_back(Collision = CreateComponent<GameEngineCollision>("Hammer_Kick"));
+		Collision->GetTransform().SetLocalScale({ 90, 90, 20 });
+		Collision->GetTransform().SetLocalPosition({ 30, -80 });
+		Collision->ChangeOrder(CollisionOrder::Player_Att);
+		//Collision->SetDebugSetting(CollisionType::CT_AABB, float4({ 0, 255, 0, 50 }));
+		Collision->Off();
+	}
+
 	Manager_StatManager->GetFSMManager().CreateStateMember
 	("Att_Dash", std::bind(&GamePlayCharacter::FSM_Att_Dash_Update, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&GamePlayCharacter::FSM_Att_Dash_Start, this, std::placeholders::_1)
 		, std::bind(&GamePlayCharacter::FSM_Att_Dash_End, this, std::placeholders::_1));
+	{
+		Collision_HitCollision[Collision_AllSkill::Att_Dash].push_back(Collision = CreateComponent<GameEngineCollision>("Att_Dash"));
+		Collision->GetTransform().SetLocalScale({ 60, 90, 20 });
+		Collision->GetTransform().SetLocalPosition({ 40, -60 });
+		Collision->ChangeOrder(CollisionOrder::Player_Att);
+		//Collision->SetDebugSetting(CollisionType::CT_AABB, float4({ 0, 50, 0, 0.5f }));
+		Collision->Off();
+	}
 
 	Manager_StatManager->GetFSMManager().ChangeState("None");
 }
@@ -154,6 +197,7 @@ void GamePlayCharacter::FSM_Move_Stand_Start(const StateInfo& _Info)
 		Manager_AvataManager->ChangeAvataAnimation("Move_Stand_Battle");
 	}
 	Manager_StatManager->SetStand();
+	GameEngineDebug::OutPutString(std::to_string(GetTransform().GetLocalPosition().y));
 }
 
 void GamePlayCharacter::FSM_Move_Stand_Update(float _DeltaTime, const StateInfo& _Info)
@@ -199,12 +243,15 @@ void GamePlayCharacter::FSM_Move_Jump_Start(const StateInfo& _Info)
 	JumpGoingDown = false;
 	Manager_AvataManager->ChangeAvataAnimation("Move_JumpReady");
 	Manager_StatManager->SetJump();
-	Manager_MoveManager->SetJump(GetTransform().GetLocalPosition());
+	Manager_MoveManager->SetJump();
+
+	On_EnumCollision(Collision_AllSkill::Jump_Kick);
+	
 }
 
 void GamePlayCharacter::FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& _Info)
 {
-
+	GameEngineDebug::OutPutString(std::to_string(GetTransform().GetWorldPosition().y));
 	if (EndJump == true && StartJump == false)
 	{
 		if (Manager_AvataManager->Avata_Skin->IsEndFrame())
@@ -223,6 +270,7 @@ void GamePlayCharacter::FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& 
 		}
 		return;
 	}
+	Manager_MoveManager->SetCharacterJump(float4({ 0, 1 }) * Manager_MoveManager->JumpHigh * _DeltaTime);
 
 	if (JumpKick_DelayTime > 0.f)
 	{
@@ -235,26 +283,36 @@ void GamePlayCharacter::FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& 
 		BaseJumpKick = true;
 	}
 
+
 	float MoveSpeed = Manager_StatManager->GetMoveSpeed();
 	float4& LandingPos = Manager_MoveManager->LandingPostion;
+
 
 	float4 Dir = PlayerUserInterface->GetUI_KeyManager()->Input_Move_Press();
 	{
 		if (Dir.y != 0.f)
 		{
-			LandingPos.y += Dir.y * DefaultMove * MoveSpeed * 0.5f * _DeltaTime;
-			Dir.y *= DefaultMove * MoveSpeed * 0.5f * _DeltaTime * 0.02f;
+			//LandingPos.y += Dir.y * DefaultMove * MoveSpeed * 0.8f * _DeltaTime;
+			Dir.y *= DefaultMove * MoveSpeed * _DeltaTime;
 		}
 		if (Dir.x != 0.f)
 		{
-			LandingPos.x += Dir.x * DefaultMove * MoveSpeed * _DeltaTime;
+			//LandingPos.x += Dir.x * DefaultMove * MoveSpeed * _DeltaTime;
 			Dir.x *= DefaultMove * MoveSpeed * _DeltaTime;
 		}
-		Manager_MoveManager->SetCharacterMove(Dir);
+		LandingPos += Manager_MoveManager->SetCharacterMove(Dir);
 	}
 
 
-	if (LandingPos.y >= GetTransform().GetLocalPosition().y)
+	if (BaseJumpKick == true)
+	{
+		if (Collision_HitCollision[Collision_AllSkill::Jump_Kick][0]->IsCollision(CollisionType::CT_AABB, CollisionOrder::Monster, CollisionType::CT_AABB))
+		{
+			int a = 0;
+		}
+	}
+
+	if (LandingPos.y  >= GetTransform().GetWorldPosition().y )
 	{
 		Manager_AvataManager->ChangeAvataAnimation("Move_Landing");
 		Manager_MoveManager->SetCharacterLocation(LandingPos);
@@ -277,6 +335,7 @@ void GamePlayCharacter::FSM_Move_Jump_End(const StateInfo& _Info)
 {
 	Manager_StatManager->SetEngage();
 	Manager_StatManager->SetJumpEnd();
+	Off_EnumCollision(Collision_AllSkill::Jump_Kick);
 }
 
 

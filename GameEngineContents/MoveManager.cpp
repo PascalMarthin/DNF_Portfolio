@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "MoveManager.h"
 #include "GamePlayObject.h"
+#include "TownLevel.h"
 #include "GamePlayCharacter.h"
 #include "CharacterStatManager.h"
 #include "GamePlayEnum.h"
@@ -13,6 +14,8 @@ MoveManager::MoveManager()
 	, JumpHigh(0.f)
 	, CurrentGravitIndex(-1.f)
 	, JumpTime(0.f)
+	, Collision_Move(nullptr)
+	, Texture_CollisionMap(nullptr)
 {
 }
 
@@ -25,10 +28,19 @@ MoveManager::~MoveManager()
 void MoveManager::Start()
 {
 	ParentCharacter = GetParent<GamePlayObject>();
+
 	if (ParentCharacter == nullptr)
 	{
 		MsgBoxAssert("생성 순서가 다릅니다")
 	}
+
+
+	Collision_Move = ParentCharacter->CreateComponent<GameEngineCollision>("Character_Map_Collision");
+	Collision_Move->DetachObject();
+	Collision_Move->GetTransform().SetLocalScale({50 , 20});
+	Collision_Move->ChangeOrder(CollisionOrder::ChangeMap);
+	Collision_Move->SetDebugSetting(CollisionType::CT_AABB2D, {0, 1, 0, 0.5f});
+	Collision_Move->GetTransform().SetLocalPosition({ 0, -56 });
 }
 
 
@@ -46,7 +58,7 @@ void MoveManager::Update(float _DeltaTime)
 			{
 				JumpHigh = (-(ParentCharacter->GetCharacterWeight()  * JumpTime * Gravitational_Constant) * JumpTime + JumpPower);
 			}
-			SetCharacterMove(float4({ 0, 1 }) * JumpHigh * _DeltaTime);
+		
 		}
 		// Y = x(ax);
 		// y = 속력
@@ -56,10 +68,8 @@ void MoveManager::Update(float _DeltaTime)
 }
 
 
-void MoveManager::SetCharacterMove(const float4& _Move)
+float4 MoveManager::SetCharacterMove(const float4& _Move)
 {
-	// 이동 가능 여부 확인
-
 	if (_Move.x > 0.f)
 	{
 		ParentCharacter->SetRightDir();
@@ -68,9 +78,48 @@ void MoveManager::SetCharacterMove(const float4& _Move)
 	{
 		ParentCharacter->SetLeftDir();
 	}
+	// 이동 가능 여부 확인
+	const float4& Pos = Collision_Move->GetTransform().GetWorldPosition();
+	const float4& Scale = Collision_Move->GetTransform().GetLocalScale();
+
+
 	float4 Move = _Move;
-	Move.y *= 0.8f;
-	ParentCharacter->GetTransform().SetLocalMove(Move);
+
+	//float4 IndexL = { Pos.x - Scale.hx(), -Pos.y};
+	//float4 IndexR = { Pos.x + Scale.hx(), -Pos.y };
+	//float4 IndexU = { Pos.x , -(Pos.y + Scale.hx()) };
+	//float4 IndexD = { Pos.x , -(Pos.y - Scale.hx()) };
+
+	// Left 	// Right
+	if ((Move.x < 0 && Texture_CollisionMap->GetPixelToFloat4(Pos.ix() - Scale.hix(), -Pos.iy()).CompareInt4D(float4::RED)) ||
+		(Move.x > 0 && Texture_CollisionMap->GetPixelToFloat4(Pos.ix() + Scale.hix(), -Pos.iy()).CompareInt4D(float4::RED)))
+	{
+		Move.x = 0;
+	}
+
+	//float4 Index = { Pos.x - Scale.hx(), -(Pos.y )};
+	//float4 Index1 = { Pos.x, -(Pos.y + Scale.hx()) };
+	// UP	  // Down
+	if ((Move.y > 0 && Texture_CollisionMap->GetPixelToFloat4(Pos.ix() , -(Pos.iy() + Scale.hix())).CompareInt4D(float4::RED)) ||
+		(Move.y < 0 && Texture_CollisionMap->GetPixelToFloat4(Pos.ix() , -(Pos.iy() - Scale.hix())).CompareInt4D(float4::RED)))
+	{
+		Move.y = 0;
+	}
+	Move.y *= 0.73f;
+	Move.z = Move.y;
+	if (!Move.CompareInt2D(float4::ZERO))
+	{
+		ParentCharacter->GetTransform().SetLocalMove(Move);
+		Collision_Move->GetTransform().SetLocalMove(Move);
+	}
+
+	//
+	return Move;
+}
+
+void MoveManager::SetCharacterJump(const float4& _Move)
+{
+	ParentCharacter->GetTransform().SetWorldMove(_Move);
 }
 
 void MoveManager::SetCharacterLocation(const float4& _Pos)
@@ -78,12 +127,13 @@ void MoveManager::SetCharacterLocation(const float4& _Pos)
 	ParentCharacter->GetTransform().SetLocalPosition(_Pos);
 }
 
-void MoveManager::SetJump(const float4& _StartJumpPos)
+void MoveManager::SetJump()
 {
 	JumpHigh = 0.f;
 	CurrentGravitIndex = -1.f;
 	JumpTime = 0.f;
-	LandingPostion = _StartJumpPos;
+	LandingPostion = ParentCharacter->GetTransform().GetLocalPosition();
+	GameEngineDebug::OutPutString(std::to_string(LandingPostion.y));
 }
 
 void MoveManager::OnEvent()
@@ -92,9 +142,25 @@ void MoveManager::OnEvent()
 	CurrentGravitIndex = -1.f;
 	JumpTime = 0.f;
 
-	if (ParentCharacter->GetObjectType() == ObjectType::Character)
+	GamePlayCharacter* Character = dynamic_cast<GamePlayCharacter*>(ParentCharacter);
+
+	if (Character->GetObjectType() == ObjectType::Character)
 	{
-		GamePlayCharacter* Character = dynamic_cast<GamePlayCharacter*>(ParentCharacter);
 		ManagerStat = Character->GetStatManager();
 	}
+	TownLevel* Level = dynamic_cast<TownLevel*>(Character->GetLevel());
+	if (Level != nullptr)
+	{
+		Texture_CollisionMap = Level->GetCollisionMapTexture();
+	}
+
+	Collision_Move->GetTransform().SetLocalMove({ ParentCharacter->GetTransform().GetLocalPosition().x, 
+		ParentCharacter->GetTransform().GetLocalPosition().y, 
+		ParentCharacter->GetTransform().GetLocalPosition().z });
+
+}
+
+void MoveManager::OffEvent()
+{
+	Texture_CollisionMap = nullptr;
 }

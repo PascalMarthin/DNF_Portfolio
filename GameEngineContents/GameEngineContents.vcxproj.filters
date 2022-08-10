@@ -20,9 +20,6 @@
     <ClInclude Include="DebugLevel.h">
       <Filter>Level\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="SeriaRoom_Level.h">
-      <Filter>Level\Play</Filter>
-    </ClInclude>
     <ClInclude Include="TownLevel.h">
       <Filter>Level\Play</Filter>
     </ClInclude>
@@ -107,6 +104,18 @@
     <ClInclude Include="CollisionManager.h">
       <Filter>Management</Filter>
     </ClInclude>
+    <ClInclude Include="SeriaRoom_Level.h">
+      <Filter>Level\Play\SeriaRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="Jelva_1F.h">
+      <Filter>Level\Play\Jelva</Filter>
+    </ClInclude>
+    <ClInclude Include="Jelva1F_BackGround.h">
+      <Filter>Level\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="BackGroundParent.h">
+      <Filter>Level\BackGround</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -124,9 +133,6 @@
     </ClCompile>
     <ClCompile Include="DebugLevel.cpp">
       <Filter>Level\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="SeriaRoom_Level.cpp">
-      <Filter>Level\Play</Filter>
     </ClCompile>
     <ClCompile Include="TownLevel.cpp">
       <Filter>Level\Play</Filter>
@@ -215,6 +221,18 @@
     <ClCompile Include="CollisionManager.cpp">
       <Filter>Management</Filter>
     </ClCompile>
+    <ClCompile Include="SeriaRoom_Level.cpp">
+      <Filter>Level\Play\SeriaRoom</Filter>
+    </ClCompile>
+    <ClCompile Include="Jelva_1F.cpp">
+      <Filter>Level\Play\Jelva</Filter>
+    </ClCompile>
+    <ClCompile Include="Jelva1F_BackGround.cpp">
+      <Filter>Level\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="BackGroundParent.cpp">
+      <Filter>Level\BackGround</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -282,6 +300,12 @@
     </Filter>
     <Filter Include="Level\Title\UI\SelectCharacter">
       <UniqueIdentifier>{58e67fb2-f7ff-42ab-9161-f3df00f27c04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\Play\SeriaRoom">
+      <UniqueIdentifier>{1970895a-c42e-4e13-b679-1afeb54c7590}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\Play\Jelva">
+      <UniqueIdentifier>{b42dce4b-d84d-4526-abb0-1b443c375411}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

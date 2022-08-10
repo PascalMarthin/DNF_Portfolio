@@ -3,13 +3,13 @@
 #include "GamePlayCharacter.h"
 #include "GamePlayObjectNPC.h"
 #include "MoveManager.h"
-#include "CollisionManager.h"
 
 GamePlayObject::GamePlayObject() 
 	: Dir_RightSide(false)
 	, Manager_MoveManager(nullptr)
 	, Enum_ObjectType(ObjectType::None)
 	, CharacterWeight(0.f)
+	, Collision_HitBody(nullptr)
 {
 	//GetTransform().SetLocalPosition();
 }
@@ -22,8 +22,8 @@ void GamePlayObject::Start()
 {
 	GetTransform().SetLocalScale({ MonitorX, MonitorY });
 	Manager_MoveManager = CreateComponent<MoveManager>();
-	Manager_CollisionManager = GetLevel()->CreateActor<CollisionManager>();
-	Manager_CollisionManager->SetParent(this);
+	//Manager_CollisionManager = GetLevel()->CreateActor<CollisionManager>();
+	//Manager_CollisionManager->SetParent(this);
 	CharacterWeight = 170.f;
 	if (dynamic_cast<GamePlayCharacter*>(this))
 	{

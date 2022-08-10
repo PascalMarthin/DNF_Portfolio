@@ -2,10 +2,9 @@
 #include <GameEngineCore/GameEngineLevel.h>
 #include "TownLevel.h"
 #include "Seria_NPC.h"
+#include "SeriaRoomBackground.h"
 
-
-//class GameEngineFolderTexture;
-class SeriaRoomBackground;
+class GamePlayCharacter;
 class SeriaRoom_Level : public GameEngineLevel, public TownLevel
 {
 public:
@@ -18,6 +17,11 @@ public:
 	SeriaRoom_Level(SeriaRoom_Level&& _Other) noexcept = delete;
 	SeriaRoom_Level& operator=(const SeriaRoom_Level& _Other) = delete;
 	SeriaRoom_Level& operator=(SeriaRoom_Level&& _Other) noexcept = delete;
+
+	inline GameEngineTexture* GetCollisionMapTexture() override
+	{
+		return Texture_SeriaRoom->GetCollisionTexture();
+	}
 
 protected:
 
@@ -37,8 +41,8 @@ private:
 
 	SeriaRoomBackground* Texture_SeriaRoom;
 	
-	
-	Seria_NPC* const NPCSeria;
+	Seria_NPC* NPCSeria;
+	GamePlayCharacter* Fighter;
 
 };
 
