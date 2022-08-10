@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
+#include <GameEngineCore/GameEngineCollision.h>
 #include "BackGroundParent.h"
 
 // Ό³Έν :
@@ -25,6 +26,7 @@ protected:
 	// void OffEvent() override
 
 private:
-
+	GameEngineCollision* Collision_Jelva1F_Door;
+	GameEngineCollision* Collision_Jelva2F_01_Door;
 };
 

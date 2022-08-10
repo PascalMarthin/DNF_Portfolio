@@ -1,9 +1,10 @@
 #pragma once
+#include <GameEngineCore/GameEngineLevel.h>
+#include "GamePlayCharacter.h"
 #include "TownLevel.h"
 #include "Jelva1F_BackGround.h"
-#include <GameEngineCore/GameEngineLevel.h>
 // Ό³Έν :
-class Jelva_1F : public GameEngineLevel, TownLevel
+class Jelva_1F : public GameEngineLevel, public TownLevel
 {
 public:
 	// constrcuter destructer
@@ -16,23 +17,22 @@ public:
 	Jelva_1F& operator=(const Jelva_1F& _Other) = delete;
 	Jelva_1F& operator=(Jelva_1F&& _Other) noexcept = delete;
 
-
 	inline GameEngineTexture* GetCollisionMapTexture() override
 	{
-		return nullptr;
+		return Texture_Jelva1F->GetCollisionTexture();
 	}
 protected:
 
 	void Start() override;
 	void Update(float _DeltaTime) override;
 
-	//void End() override {}
+	void End() override {}
 	// void OnEvent() override
 	// void OffEvent() override
 
 private:
 	Jelva1F_BackGround* Texture_Jelva1F;
 
-
+	GamePlayCharacter* Player_Fighter;
 };
 

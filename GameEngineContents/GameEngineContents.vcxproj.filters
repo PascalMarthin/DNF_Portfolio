@@ -116,6 +116,12 @@
     <ClInclude Include="BackGroundParent.h">
       <Filter>Level\BackGround</Filter>
     </ClInclude>
+    <ClInclude Include="Jelva_2F.h">
+      <Filter>Level\Play\Jelva</Filter>
+    </ClInclude>
+    <ClInclude Include="Jelva2F_BackGround.h">
+      <Filter>Level\BackGround</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -231,6 +237,12 @@
       <Filter>Level\BackGround</Filter>
     </ClCompile>
     <ClCompile Include="BackGroundParent.cpp">
+      <Filter>Level\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="Jelva_2F.cpp">
+      <Filter>Level\Play\Jelva</Filter>
+    </ClCompile>
+    <ClCompile Include="Jelva2F_BackGround.cpp">
       <Filter>Level\BackGround</Filter>
     </ClCompile>
   </ItemGroup>

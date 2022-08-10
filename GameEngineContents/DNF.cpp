@@ -14,6 +14,7 @@
 #include "CharacterCreateLevel.h"
 #include "GamePlayDataBase.h"
 #include "GameEnginePlusCharacterStatWindow.h"
+#include "Jelva_1F.h"
 
 //#pragma comment(lib, "GameEngineBase.lib")
 
@@ -36,10 +37,12 @@ void DNF::Start()
 		CreateLevel<DebugLevel>("Debug");
 	}
 	// 디버그용 레벨
+	// TownLevel
 	{
 		CreateLevel<SeriaRoom_Level>("SeriaRoom");
+		CreateLevel<Jelva_1F>("Jelva_1F");
+		
 	}
-	// TownLevel
 
 	{
 		CreateLevel<SelectCharacterLevel>("SelectCharacter");
@@ -244,6 +247,21 @@ void DNF::BaseFolderTextureLoad()
 		Dir.Move("UI");
 		Dir.Move("CharacterCreate");
 		Dir.Move("CharacterillustGIF");
+		std::vector<GameEngineDirectory> AllTextureDir = Dir.GetRecursiveAllDirectory();
+
+		for (GameEngineDirectory& DirIter : AllTextureDir)
+		{
+			GameEngineFolderTexture::Load(DirIter.GetFullPath());
+		}
+	}
+
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resource");
+		Dir.Move("Resource");
+		Dir.Move("Texture");
+		Dir.Move("Map");
+		Dir.Move("Jelva");
 		std::vector<GameEngineDirectory> AllTextureDir = Dir.GetRecursiveAllDirectory();
 
 		for (GameEngineDirectory& DirIter : AllTextureDir)

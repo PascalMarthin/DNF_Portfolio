@@ -2,6 +2,7 @@
 #include <GameEngineBase/GameEngineWindow.h>
 #include "GamePlayEnum.h"
 #include "SeriaRoomBackground.h"
+#include <GameEngineCore/GEngine.h>
 
 
 SeriaRoomBackground::SeriaRoomBackground() 
@@ -20,8 +21,8 @@ void SeriaRoomBackground::Start()
 	Texture_BackGround->CreateFrameAnimationFolder("Seria_BackGround", FrameAnimation_DESC("Seria_Room", 0.15f));
 	Texture_BackGround->ChangeFrameAnimation("Seria_BackGround");
 	Texture_BackGround->GetTransform().SetLocalScale({ 1280, 720 });
-	//Texture_BackGround->ScaleToTexture();
 	Texture_BackGround->SetPivot(PIVOTMODE::LEFTTOP);
+	//Texture_BackGround->ScaleToTexture();
 
 
 
@@ -29,8 +30,9 @@ void SeriaRoomBackground::Start()
 
 
 	Collision_SeriaRoom_OutDoor = CreateComponent<GameEngineCollision>();
-	Collision_SeriaRoom_OutDoor->GetTransform().SetLocalScale({ 700, 200 });
-	Collision_SeriaRoom_OutDoor->GetTransform().SetLocalPosition({ 640, -720 });
+	Collision_SeriaRoom_OutDoor->DetachObject();
+	Collision_SeriaRoom_OutDoor->GetTransform().SetLocalScale({ 700.f, 100.f , 50.f });
+	Collision_SeriaRoom_OutDoor->GetTransform().SetWorldPosition({ 640, -720, 0 });
 	Collision_SeriaRoom_OutDoor->ChangeOrder(CollisionOrder::ChangeMap);
 	Collision_SeriaRoom_OutDoor->SetDebugSetting(CollisionType::CT_AABB, float4::GREEN);
 
@@ -51,6 +53,6 @@ void SeriaRoomBackground::Update(float _DeltaTime)
 			}
 		}))
 	{
-		// ChangeMap
+		GEngine::ChangeLevel("Jelva_1F");
 	}
 }

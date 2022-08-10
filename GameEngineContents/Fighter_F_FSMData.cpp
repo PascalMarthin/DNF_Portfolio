@@ -251,7 +251,6 @@ void GamePlayCharacter::FSM_Move_Jump_Start(const StateInfo& _Info)
 
 void GamePlayCharacter::FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& _Info)
 {
-	GameEngineDebug::OutPutString(std::to_string(GetTransform().GetWorldPosition().y));
 	if (EndJump == true && StartJump == false)
 	{
 		if (Manager_AvataManager->Avata_Skin->IsEndFrame())
@@ -270,7 +269,7 @@ void GamePlayCharacter::FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& 
 		}
 		return;
 	}
-	Manager_MoveManager->SetCharacterJump(float4({ 0, 1 }) * Manager_MoveManager->JumpHigh * _DeltaTime);
+	Manager_MoveManager->SetCharacterJump(float4({ 0, 1, 0 }) * Manager_MoveManager->JumpHigh * _DeltaTime);
 
 	if (JumpKick_DelayTime > 0.f)
 	{
@@ -285,6 +284,7 @@ void GamePlayCharacter::FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& 
 
 
 	float MoveSpeed = Manager_StatManager->GetMoveSpeed();
+	MoveSpeed *= _Info.PrevState == "Move_Dash" ? 1.8f : 1.f;
 	float4& LandingPos = Manager_MoveManager->LandingPostion;
 
 
@@ -293,7 +293,7 @@ void GamePlayCharacter::FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& 
 		if (Dir.y != 0.f)
 		{
 			//LandingPos.y += Dir.y * DefaultMove * MoveSpeed * 0.8f * _DeltaTime;
-			Dir.y *= DefaultMove * MoveSpeed * _DeltaTime;
+			Dir.y *= DefaultMove * MoveSpeed * _DeltaTime * 0.8f;
 		}
 		if (Dir.x != 0.f)
 		{

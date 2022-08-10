@@ -14,7 +14,7 @@ public:
 	TownLevel& operator=(const TownLevel& _Other) = delete;
 	TownLevel& operator=(TownLevel&& _Other) noexcept = delete;
 
-	virtual GameEngineTexture* GetCollisionMapTexture() = 0;
+	virtual GameEngineTexture* GetCollisionMapTexture() { return nullptr;  };
 protected:
 
 

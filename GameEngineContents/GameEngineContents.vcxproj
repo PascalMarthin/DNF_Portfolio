@@ -235,7 +235,15 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Jelva2F_BackGround.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Jelva_1F.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Jelva_2F.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -386,7 +394,15 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Jelva2F_BackGround.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Jelva_1F.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Jelva_2F.cpp">
       <SubType>
       </SubType>
     </ClCompile>

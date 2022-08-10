@@ -20,7 +20,7 @@ public:
 	{
 		return Texture_MapCollision;
 	}
-	inline const float4& GetBackGroundTextureScale()
+	inline float4 GetBackGroundTextureScale()
 	{
 		return Texture_BackGround->GetTransform().GetWorldScale();
 	}

@@ -23,17 +23,18 @@ SeriaRoom_Level::~SeriaRoom_Level()
 void SeriaRoom_Level::Start()
 {
 	Texture_SeriaRoom = CreateActor<SeriaRoomBackground>();
-	Texture_SeriaRoom->GetTransform().SetLocalScale({MonitorX, MonitorY});
+	//Texture_SeriaRoom->GetTransform().SetLocalScale({MonitorX, MonitorY});
 	float Hight = Texture_SeriaRoom->GetBackGroundTextureScale().y;
-	Texture_SeriaRoom->GetTransform().SetLocalPosition({ 0, 0, Hight + ZSortOrder::BackGround });
+	float Width = Texture_SeriaRoom->GetBackGroundTextureScale().x;
+	Texture_SeriaRoom->GetTransform().SetLocalPosition({ 0, 0, Hight + static_cast<float>(ZSortOrder::BackGround) });
 
 
 
 	NPCSeria = CreateActor<Seria_NPC>();
 	Fighter = CreateActor<GamePlayCharacter>();
-	NPCSeria->GetTransform().SetLocalPosition({ GameEngineWindow::GetScale().hx(), -GameEngineWindow::GetScale().hy() , Hight / 2 - ZSortOrder::NPC_Object});
-	Fighter->GetTransform().SetLocalPosition({ GameEngineWindow::GetScale().hx(), -GameEngineWindow::GetScale().hy(), Hight / 2 - ZSortOrder::Character_Fighter_F });
-	GetMainCameraActor()->GetTransform().SetWorldPosition(Fighter->GetTransform().GetWorldPosition());
+	NPCSeria->GetTransform().SetLocalPosition({ GameEngineWindow::GetScale().hx(), -GameEngineWindow::GetScale().hy() - 200.f , Hight  -GameEngineWindow::GetScale().hy() - 200.f - static_cast<float>(ZSortOrder::NPC_Object)});
+	Fighter->GetTransform().SetLocalPosition({ GameEngineWindow::GetScale().hx(), -GameEngineWindow::GetScale().hy() - 200.f, Hight  -GameEngineWindow::GetScale().hy() - 200.f + static_cast<float>(ZSortOrder::Character_Avata) - static_cast<float>(ZSortOrder::Character_Fighter_F) });
+	GetMainCameraActor()->GetTransform().SetWorldMove({ Width / 2, -Hight / 2 });
 
 
 

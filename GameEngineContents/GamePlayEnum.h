@@ -104,6 +104,7 @@ enum ZSortOrder
 	Inventory = 80,
 
 	NPC_Object = 50, // -Y
+	Character_Avata = 74,
 	Character_Fighter_F = 130, // -Y,
 
 
