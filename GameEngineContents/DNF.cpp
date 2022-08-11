@@ -15,6 +15,8 @@
 #include "GamePlayDataBase.h"
 #include "GameEnginePlusCharacterStatWindow.h"
 #include "Jelva_1F.h"
+#include "Jelva_2F.h"
+#include "Jelva_2F01.h"
 
 //#pragma comment(lib, "GameEngineBase.lib")
 
@@ -41,6 +43,9 @@ void DNF::Start()
 	{
 		CreateLevel<SeriaRoom_Level>("SeriaRoom");
 		CreateLevel<Jelva_1F>("Jelva_1F");
+		CreateLevel<Jelva_2F>("Jelva_2F");
+		CreateLevel<Jelva_2F01>("Jelva_2F01");
+		
 		
 	}
 

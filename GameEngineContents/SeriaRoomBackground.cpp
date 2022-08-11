@@ -1,8 +1,9 @@
 #include "PreCompile.h"
 #include <GameEngineBase/GameEngineWindow.h>
-#include "GamePlayEnum.h"
-#include "SeriaRoomBackground.h"
 #include <GameEngineCore/GEngine.h>
+#include "GamePlayEnum.h"
+#include "DummyActor.h"
+#include "SeriaRoomBackground.h"
 
 
 SeriaRoomBackground::SeriaRoomBackground() 
@@ -29,8 +30,7 @@ void SeriaRoomBackground::Start()
 	Texture_MapCollision = GameEngineTexture::Find("Seria_Room_Pixel.png");
 
 
-	Collision_SeriaRoom_OutDoor = CreateComponent<GameEngineCollision>();
-	Collision_SeriaRoom_OutDoor->DetachObject();
+	Collision_SeriaRoom_OutDoor = GetLevel()->CreateActor<DummyActor>()->CreateComponent<GameEngineCollision>();
 	Collision_SeriaRoom_OutDoor->GetTransform().SetLocalScale({ 700.f, 100.f , 50.f });
 	Collision_SeriaRoom_OutDoor->GetTransform().SetWorldPosition({ 640, -720, 0 });
 	Collision_SeriaRoom_OutDoor->ChangeOrder(CollisionOrder::ChangeMap);
@@ -40,7 +40,7 @@ void SeriaRoomBackground::Start()
 
 void SeriaRoomBackground::Update(float _DeltaTime)
 {
-	if (Collision_SeriaRoom_OutDoor->IsCollision(CollisionType::CT_AABB, CollisionOrder::ChangeMap, CollisionType::CT_AABB,
+	if (Collision_SeriaRoom_OutDoor->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player_Floor, CollisionType::CT_AABB,
 		[](GameEngineCollision* _This, GameEngineCollision* _Other)
 		{
 			if (_Other->GetNameConstRef() == "Character_Map_Collision")

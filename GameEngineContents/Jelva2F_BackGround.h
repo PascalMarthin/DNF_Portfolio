@@ -26,5 +26,8 @@ protected:
 
 private:
 
+	GameEngineCollision* Collision_Jelva1F_Door;
+	GameEngineCollision* Collision_Jelva2F_01_Door;
+
 };
 

@@ -191,7 +191,8 @@ void GameEnginePlusTextureRenderer::SetDefaultCharacterAvata(GameEngineFolderTex
 {
 	if (DefaultCharacterAvata != nullptr)
 	{
-		MsgBoxAssert("이미 디폴트 아바타가 설정되어 있습니다")
+		return;
+		//MsgBoxAssert("이미 디폴트 아바타가 설정되어 있습니다")
 	}
 	DefaultCharacterAvata = _FolderTexture;
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include <GameEngineBase/GameEngineDebug.h>
 
 // 설명 : Town에 해당되는 레벨의 템플릿
 class TownLevel
@@ -14,7 +15,7 @@ public:
 	TownLevel& operator=(const TownLevel& _Other) = delete;
 	TownLevel& operator=(TownLevel&& _Other) noexcept = delete;
 
-	virtual GameEngineTexture* GetCollisionMapTexture() { return nullptr;  };
+	virtual GameEngineTexture* GetCollisionMapTexture() { MsgBoxAssert("반드시 필요한 오버라이드입니다") return nullptr; };
 protected:
 
 

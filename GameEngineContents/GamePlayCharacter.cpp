@@ -110,6 +110,7 @@ void GamePlayCharacter::SetFSManager()
 	{
 	case AllCharacterClass::Fighter_F:
 		Create_Fighter_F_Default_FSManager();
+		PlayerFormerClass = CurrentCharacterData->GetFormerClass();
 		break;
 	default:
 		MsgBoxAssert("아직 만들어지지 않은 클래스입니다")

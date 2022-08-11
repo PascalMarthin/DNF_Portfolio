@@ -17,6 +17,10 @@ public:
 	Jelva_2F& operator=(const Jelva_2F& _Other) = delete;
 	Jelva_2F& operator=(Jelva_2F&& _Other) noexcept = delete;
 
+	inline GameEngineTexture* GetCollisionMapTexture() override
+	{
+		return Texture_Jelva2F->GetCollisionTexture();
+	}
 protected:
 
 	void Start() override;
@@ -25,7 +29,7 @@ protected:
 
 	void End() override {}
 
-	// void OnEvent() {}
+	void OnEvent() override;
 	// void OffEvent() {}
 private:
 	Jelva2F_BackGround* Texture_Jelva2F;

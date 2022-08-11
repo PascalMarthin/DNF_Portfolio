@@ -1,10 +1,12 @@
 #include "PreCompile.h"
 #include "Jelva1F_BackGround.h"
+#include "DummyActor.h"
+#include <GameEngineCore/GEngine.h>
 #include "GamePlayEnum.h"
 
 Jelva1F_BackGround::Jelva1F_BackGround() 
-	: Collision_Jelva1F_Door(nullptr)
-	, Collision_Jelva2F_01_Door(nullptr)
+	: Collision_SeriaRoom_Door(nullptr)
+	, Collision_Jelva2F_Door(nullptr)
 {
 }
 
@@ -25,15 +27,52 @@ void Jelva1F_BackGround::Start()
 
 	Texture_MapCollision = GameEngineTexture::Find("Jelva01F_Collision.png");
 	
+	float Hight = GetBackGroundTextureScale().y;
 
-	Collision_Jelva1F_Door = CreateComponent<GameEngineCollision>();
-	Collision_Jelva1F_Door->DetachObject();
-	Collision_Jelva1F_Door->GetTransform().SetLocalScale({ 700.f, 100.f , 50.f });
-	Collision_Jelva1F_Door->GetTransform().SetWorldPosition({ 640, -720, 0 });
-	Collision_Jelva1F_Door->ChangeOrder(CollisionOrder::ChangeMap);
-	Collision_Jelva1F_Door->SetDebugSetting(CollisionType::CT_AABB, float4::GREEN);
+
+	Collision_SeriaRoom_Door = GetLevel()->CreateActor<DummyActor>()->CreateComponent<GameEngineCollision>();
+	Collision_SeriaRoom_Door->GetTransform().SetLocalScale({ 300.f, 80.f , 50.f });
+	Collision_SeriaRoom_Door->GetTransform().SetWorldPosition({ 1440.f, -450.f, Hight - 450.f });
+	Collision_SeriaRoom_Door->ChangeOrder(CollisionOrder::ChangeMap);
+	Collision_SeriaRoom_Door->SetDebugSetting(CollisionType::CT_AABB, float4::GREEN);
+
+	Collision_Jelva2F_Door = GetLevel()->CreateActor<DummyActor>()->CreateComponent<GameEngineCollision>();
+	Collision_Jelva2F_Door->GetTransform().SetLocalScale({ 200.f, 80.f , 50.f });
+	Collision_Jelva2F_Door->GetTransform().SetWorldPosition({ 2050, -375, Hight - 375 });
+	Collision_Jelva2F_Door->ChangeOrder(CollisionOrder::ChangeMap);
+	Collision_Jelva2F_Door->SetDebugSetting(CollisionType::CT_AABB, float4::GREEN);
 }
 void Jelva1F_BackGround::Update(float _DeltaTime)
 {
+	if (Collision_SeriaRoom_Door->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player_Floor, CollisionType::CT_AABB,
+		[](GameEngineCollision* _This, GameEngineCollision* _Other)
+		{
+			if (_Other->GetNameConstRef() == "Character_Map_Collision")
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}))
+	{
+		GEngine::ChangeLevel("SeriaRoom");
+	}
 
+		if (Collision_Jelva2F_Door->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player_Floor, CollisionType::CT_AABB,
+			[](GameEngineCollision* _This, GameEngineCollision* _Other)
+			{
+				if (_Other->GetNameConstRef() == "Character_Map_Collision")
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}))
+		{
+			GEngine::ChangeLevel("Jelva_2F");
+		}
 }

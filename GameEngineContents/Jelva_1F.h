@@ -27,7 +27,7 @@ protected:
 	void Update(float _DeltaTime) override;
 
 	void End() override {}
-	// void OnEvent() override
+	void OnEvent() override;
 	// void OffEvent() override
 
 private:

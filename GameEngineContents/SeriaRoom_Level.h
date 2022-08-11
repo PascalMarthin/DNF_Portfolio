@@ -31,7 +31,7 @@ protected:
 
 	void End() override {}
 
-	// void OnEvent() {}
+	void OnEvent() override;
 	// void OffEvent() {}
 
 private:

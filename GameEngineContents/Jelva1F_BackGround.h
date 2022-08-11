@@ -26,7 +26,7 @@ protected:
 	// void OffEvent() override
 
 private:
-	GameEngineCollision* Collision_Jelva1F_Door;
-	GameEngineCollision* Collision_Jelva2F_01_Door;
+	GameEngineCollision* Collision_SeriaRoom_Door;
+	GameEngineCollision* Collision_Jelva2F_Door;
 };
 

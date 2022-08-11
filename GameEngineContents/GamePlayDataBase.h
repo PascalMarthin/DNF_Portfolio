@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineBase/GameEngineMath.h>
+#include <string>
 #include "GamePlayEnum.h"
 
 #define FighterAnimationInter 0.08f
@@ -135,6 +136,14 @@ public:
 	{
 		return DataBase_InventoryData[_BagType];
 	}
+	inline TownMap GetCurrentMap() const
+	{
+		return CurrentMap;
+	}
+	inline void  SetCurrentMap(TownMap _Town)
+	{
+		CurrentMap = _Town;
+	}
 
 
 	static void SetCurrentCharacterData(GamePlayDataBase* _Data)
@@ -162,7 +171,9 @@ private:
 
 	CharacterAbilityStat Class_CharacterAbilityStat;
 	std::map<InventoryBag, std::vector<InventoryData*>> DataBase_InventoryData;
-	// ½ºÅ³
+	
+
+	TownMap CurrentMap;
 
 
 

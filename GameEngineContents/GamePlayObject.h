@@ -53,6 +53,11 @@ public:
 		return Collision_HitBody;
 	}
 
+	inline MoveManager* GetMoveManager() const
+	{
+		return Manager_MoveManager;
+	}
+
 
 protected:
 	void Start() override;

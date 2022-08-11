@@ -7,6 +7,7 @@ GamePlayDataBase* GamePlayDataBase::CurrentCharacterData = nullptr;
 GamePlayDataBase::GamePlayDataBase(CharacterFormerClass _Class, const std::string& _Name)
 	: Enum_FormerClass(_Class)
 	, NickName(_Name)
+	, CurrentMap(TownMap::None)
 {
 
 }

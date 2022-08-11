@@ -18,6 +18,7 @@ AvataManager::AvataManager()
 	, Avata_Pants(nullptr)
 	, Avata_Shoes_a(nullptr)
 	, Avata_Shoes_b(nullptr)
+	, CurrentClassData(nullptr)
 
 	, Enum_Type(ObjectType::None)
 
@@ -195,6 +196,10 @@ void AvataManager::OnEvent()
 {
 	if (GamePlayCharacter::GetCurrentCharacterData() != nullptr)
 	{
+		if (CurrentClassData == GamePlayCharacter::GetCurrentCharacterData())
+		{
+			return;
+		}
 		SetCharacterDefaultAvata(GamePlayCharacter::GetCurrentCharacterData()->GetCharacterClass());
 		switch (Enum_Type)
 		{
@@ -230,5 +235,7 @@ void AvataManager::OnEvent()
 			break;
 		}
 	}
+
+	CurrentClassData = GamePlayCharacter::GetCurrentCharacterData();
 	 
 }

@@ -112,6 +112,8 @@ private:
 
 	void DeleteCharacterAvata();
 
+	GamePlayDataBase* CurrentClassData;
+
 	static std::map<GamePlayItem_DESC*, std::map<char, GameEngineTexture*>> Static_AllAvataItemData;
 public:
 	static void CreateAvataData();

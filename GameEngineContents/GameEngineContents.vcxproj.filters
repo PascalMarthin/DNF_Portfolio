@@ -122,6 +122,18 @@
     <ClInclude Include="Jelva2F_BackGround.h">
       <Filter>Level\BackGround</Filter>
     </ClInclude>
+    <ClInclude Include="DummyActor.h">
+      <Filter>Gobal</Filter>
+    </ClInclude>
+    <ClInclude Include="Jelva_2F01.h">
+      <Filter>Level\Play\Jelva</Filter>
+    </ClInclude>
+    <ClInclude Include="Jelva2F01_BackGround.h">
+      <Filter>Level\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="Jelva2F01_WaveBackGround.h">
+      <Filter>Level\BackGround</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -243,6 +255,18 @@
       <Filter>Level\Play\Jelva</Filter>
     </ClCompile>
     <ClCompile Include="Jelva2F_BackGround.cpp">
+      <Filter>Level\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="DummyActor.cpp">
+      <Filter>Gobal</Filter>
+    </ClCompile>
+    <ClCompile Include="Jelva_2F01.cpp">
+      <Filter>Level\Play\Jelva</Filter>
+    </ClCompile>
+    <ClCompile Include="Jelva2F01_BackGround.cpp">
+      <Filter>Level\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="Jelva2F01_WaveBackGround.cpp">
       <Filter>Level\BackGround</Filter>
     </ClCompile>
   </ItemGroup>

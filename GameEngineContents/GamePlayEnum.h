@@ -175,7 +175,8 @@ enum class CollisionOrder
 	None = 0,
 	InGame_Object = 1,
 	Player = 2,
-	Player_Att = 3,
+	Player_Floor = 3,
+	Player_Att = 4,
 	Monster = 10,
 	Monster_Att = 11,
 	UI_ect = 20,
@@ -189,4 +190,13 @@ enum class ObjectType
 	NPC,
 	Monster,
 	Custom
+};
+
+enum class TownMap
+{
+	None,
+	Seria_Room,
+	Jelva1F,
+	Jelva2F,
+	Jelva2F_01,
 };

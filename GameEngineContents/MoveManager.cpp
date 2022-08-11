@@ -5,6 +5,7 @@
 #include "GamePlayCharacter.h"
 #include "CharacterStatManager.h"
 #include "GamePlayEnum.h"
+#include "DummyActor.h"
 
 const float Gravitational_Constant = 9.8f;
 
@@ -35,10 +36,9 @@ void MoveManager::Start()
 	}
 
 
-	Collision_Move = ParentCharacter->CreateComponent<GameEngineCollision>("Character_Map_Collision");
-	Collision_Move->DetachObject();
+	Collision_Move = ParentCharacter->GetLevel()->CreateActor<DummyActor>()->CreateComponent<GameEngineCollision>("Character_Map_Collision");
 	Collision_Move->GetTransform().SetLocalScale({50 , 20 , 30});
-	Collision_Move->ChangeOrder(CollisionOrder::ChangeMap);
+	Collision_Move->ChangeOrder(CollisionOrder::Player_Floor);
 	Collision_Move->SetDebugSetting(CollisionType::CT_AABB2D, {0, 1, 0, 0.5f});
 	Collision_Move->GetTransform().SetLocalPosition({ 0, -56 });
 }
@@ -65,7 +65,7 @@ void MoveManager::Update(float _DeltaTime)
 		// x = 점프 시간
 		// 
 	}
-	GameEngineDebug::OutPutString(std::to_string(ParentCharacter->GetTransform().GetLocalPosition().z));
+	GameEngineDebug::OutPutString(std::to_string(Collision_Move->GetTransform().GetLocalPosition().x) + " " + std::to_string(Collision_Move->GetTransform().GetLocalPosition().y));
 }
 
 
@@ -152,8 +152,8 @@ void MoveManager::OnEvent()
 		Texture_CollisionMap = Level->GetCollisionMapTexture();
 	}
 
-	Collision_Move->GetTransform().SetLocalMove({ ParentCharacter->GetTransform().GetLocalPosition().x, 
-		ParentCharacter->GetTransform().GetLocalPosition().y, 
+	Collision_Move->GetTransform().SetLocalPosition({ ParentCharacter->GetTransform().GetLocalPosition().x, 
+		ParentCharacter->GetTransform().GetLocalPosition().y - 56,
 		ParentCharacter->GetTransform().GetLocalPosition().z });
 
 }
