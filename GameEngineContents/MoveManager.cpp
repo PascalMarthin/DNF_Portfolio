@@ -6,6 +6,7 @@
 #include "CharacterStatManager.h"
 #include "GamePlayEnum.h"
 #include "DummyActor.h"
+#include "BattleLevel.h"
 
 const float Gravitational_Constant = 9.8f;
 
@@ -151,6 +152,17 @@ void MoveManager::OnEvent()
 	{
 		Texture_CollisionMap = Level->GetCollisionMapTexture();
 	}
+	else
+	{
+		BattleLevel* BatLevel = dynamic_cast<BattleLevel*>(Character->GetLevel());
+		if (BatLevel != nullptr)
+		{
+			Texture_CollisionMap = BatLevel->GetCollisionMapTexture();
+		}
+	}
+
+
+
 
 	Collision_Move->GetTransform().SetLocalPosition({ ParentCharacter->GetTransform().GetLocalPosition().x, 
 		ParentCharacter->GetTransform().GetLocalPosition().y - 56,

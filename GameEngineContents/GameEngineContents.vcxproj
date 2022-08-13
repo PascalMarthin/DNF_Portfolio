@@ -165,6 +165,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="BattleLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ButtonComponent.h">
       <SubType>
       </SubType>
@@ -194,6 +198,30 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="DummyActor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="DungeonLoding.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="DungeonLoding_BackGround.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="DungeonSelect.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="DungeonSelect_BackGround.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="DungeonSelect_Slot.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Dungeon_Luke.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -260,6 +288,14 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Jelva_2F01.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Luke_Stage1.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Luke_Stage1_BackGround.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -341,6 +377,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="BattleLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ButtonComponent.cpp">
       <SubType>
       </SubType>
@@ -370,6 +410,30 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="DummyActor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="DungeonLoding.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="DungeonLoding_BackGround.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="DungeonSelect.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="DungeonSelect_BackGround.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="DungeonSelect_Slot.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Dungeon_Luke.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -435,6 +499,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Jelva_2F01.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Luke_Stage1.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Luke_Stage1_BackGround.cpp">
       <SubType>
       </SubType>
     </ClCompile>

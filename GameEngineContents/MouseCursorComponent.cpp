@@ -23,7 +23,7 @@ void MouseCursorComponent::Start()
 
 	Collision_MouseCursor = CreateComponent<GameEngineCollision>("Collision_MouseCursor");
 	Collision_MouseCursor->GetTransform().SetLocalScale({8, 8});
-	Collision_MouseCursor->ChangeOrder(CollisionOrder::UI_ect);
+	Collision_MouseCursor->ChangeOrder(CollisionOrder::UI_Mouse);
 }
 
 void MouseCursorComponent::Update(float _DeltaTime)

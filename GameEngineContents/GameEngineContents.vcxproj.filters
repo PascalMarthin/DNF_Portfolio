@@ -29,9 +29,6 @@
     <ClInclude Include="GamePlayObjectNPC.h">
       <Filter>Object\NPC</Filter>
     </ClInclude>
-    <ClInclude Include="SeriaRoomBackground.h">
-      <Filter>Level\BackGround</Filter>
-    </ClInclude>
     <ClInclude Include="GameEnginePlusTextureRenderer.h">
       <Filter>CorePlus</Filter>
     </ClInclude>
@@ -110,17 +107,11 @@
     <ClInclude Include="Jelva_1F.h">
       <Filter>Level\Play\Jelva</Filter>
     </ClInclude>
-    <ClInclude Include="Jelva1F_BackGround.h">
-      <Filter>Level\BackGround</Filter>
-    </ClInclude>
     <ClInclude Include="BackGroundParent.h">
       <Filter>Level\BackGround</Filter>
     </ClInclude>
     <ClInclude Include="Jelva_2F.h">
       <Filter>Level\Play\Jelva</Filter>
-    </ClInclude>
-    <ClInclude Include="Jelva2F_BackGround.h">
-      <Filter>Level\BackGround</Filter>
     </ClInclude>
     <ClInclude Include="DummyActor.h">
       <Filter>Gobal</Filter>
@@ -128,11 +119,47 @@
     <ClInclude Include="Jelva_2F01.h">
       <Filter>Level\Play\Jelva</Filter>
     </ClInclude>
-    <ClInclude Include="Jelva2F01_BackGround.h">
-      <Filter>Level\BackGround</Filter>
+    <ClInclude Include="DungeonSelect.h">
+      <Filter>Level\Select&amp;Load</Filter>
+    </ClInclude>
+    <ClInclude Include="DungeonSelect_Slot.h">
+      <Filter>Level\Select&amp;Load</Filter>
+    </ClInclude>
+    <ClInclude Include="DungeonLoding.h">
+      <Filter>Level\Select&amp;Load</Filter>
+    </ClInclude>
+    <ClInclude Include="Luke_Stage1.h">
+      <Filter>Level\Battle</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleLevel.h">
+      <Filter>Level\Battle</Filter>
+    </ClInclude>
+    <ClInclude Include="Dungeon_Luke.h">
+      <Filter>Level\Battle</Filter>
     </ClInclude>
     <ClInclude Include="Jelva2F01_WaveBackGround.h">
-      <Filter>Level\BackGround</Filter>
+      <Filter>Level\BackGround\Town</Filter>
+    </ClInclude>
+    <ClInclude Include="Jelva1F_BackGround.h">
+      <Filter>Level\BackGround\Town</Filter>
+    </ClInclude>
+    <ClInclude Include="Jelva2F_BackGround.h">
+      <Filter>Level\BackGround\Town</Filter>
+    </ClInclude>
+    <ClInclude Include="Jelva2F01_BackGround.h">
+      <Filter>Level\BackGround\Town</Filter>
+    </ClInclude>
+    <ClInclude Include="SeriaRoomBackground.h">
+      <Filter>Level\BackGround\Town</Filter>
+    </ClInclude>
+    <ClInclude Include="DungeonSelect_BackGround.h">
+      <Filter>Level\BackGround\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Luke_Stage1_BackGround.h">
+      <Filter>Level\BackGround\Battle</Filter>
+    </ClInclude>
+    <ClInclude Include="DungeonLoding_BackGround.h">
+      <Filter>Level\BackGround\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -160,9 +187,6 @@
     </ClCompile>
     <ClCompile Include="GamePlayObjectNPC.cpp">
       <Filter>Object\NPC</Filter>
-    </ClCompile>
-    <ClCompile Include="SeriaRoomBackground.cpp">
-      <Filter>Level\BackGround</Filter>
     </ClCompile>
     <ClCompile Include="GameEnginePlusTextureRenderer.cpp">
       <Filter>CorePlus</Filter>
@@ -245,17 +269,11 @@
     <ClCompile Include="Jelva_1F.cpp">
       <Filter>Level\Play\Jelva</Filter>
     </ClCompile>
-    <ClCompile Include="Jelva1F_BackGround.cpp">
-      <Filter>Level\BackGround</Filter>
-    </ClCompile>
     <ClCompile Include="BackGroundParent.cpp">
       <Filter>Level\BackGround</Filter>
     </ClCompile>
     <ClCompile Include="Jelva_2F.cpp">
       <Filter>Level\Play\Jelva</Filter>
-    </ClCompile>
-    <ClCompile Include="Jelva2F_BackGround.cpp">
-      <Filter>Level\BackGround</Filter>
     </ClCompile>
     <ClCompile Include="DummyActor.cpp">
       <Filter>Gobal</Filter>
@@ -263,11 +281,47 @@
     <ClCompile Include="Jelva_2F01.cpp">
       <Filter>Level\Play\Jelva</Filter>
     </ClCompile>
+    <ClCompile Include="DungeonSelect.cpp">
+      <Filter>Level\Select&amp;Load</Filter>
+    </ClCompile>
+    <ClCompile Include="DungeonSelect_Slot.cpp">
+      <Filter>Level\Select&amp;Load</Filter>
+    </ClCompile>
+    <ClCompile Include="DungeonLoding.cpp">
+      <Filter>Level\Select&amp;Load</Filter>
+    </ClCompile>
+    <ClCompile Include="Luke_Stage1.cpp">
+      <Filter>Level\Battle</Filter>
+    </ClCompile>
+    <ClCompile Include="BattleLevel.cpp">
+      <Filter>Level\Battle</Filter>
+    </ClCompile>
+    <ClCompile Include="Dungeon_Luke.cpp">
+      <Filter>Level\Battle</Filter>
+    </ClCompile>
+    <ClCompile Include="Jelva1F_BackGround.cpp">
+      <Filter>Level\BackGround\Town</Filter>
+    </ClCompile>
+    <ClCompile Include="Jelva2F_BackGround.cpp">
+      <Filter>Level\BackGround\Town</Filter>
+    </ClCompile>
     <ClCompile Include="Jelva2F01_BackGround.cpp">
-      <Filter>Level\BackGround</Filter>
+      <Filter>Level\BackGround\Town</Filter>
     </ClCompile>
     <ClCompile Include="Jelva2F01_WaveBackGround.cpp">
-      <Filter>Level\BackGround</Filter>
+      <Filter>Level\BackGround\Town</Filter>
+    </ClCompile>
+    <ClCompile Include="SeriaRoomBackground.cpp">
+      <Filter>Level\BackGround\Town</Filter>
+    </ClCompile>
+    <ClCompile Include="DungeonSelect_BackGround.cpp">
+      <Filter>Level\BackGround\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Luke_Stage1_BackGround.cpp">
+      <Filter>Level\BackGround\Battle</Filter>
+    </ClCompile>
+    <ClCompile Include="DungeonLoding_BackGround.cpp">
+      <Filter>Level\BackGround\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -300,9 +354,6 @@
     </Filter>
     <Filter Include="Object\NPC">
       <UniqueIdentifier>{d99b5e75-8b7b-4c26-9385-c970db845620}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Level\Battle">
-      <UniqueIdentifier>{37192671-0765-45d3-bff8-2cb2c8abe9c6}</UniqueIdentifier>
     </Filter>
     <Filter Include="CorePlus">
       <UniqueIdentifier>{7937e3ba-3f4b-4792-82af-f4f07a937229}</UniqueIdentifier>
@@ -342,6 +393,21 @@
     </Filter>
     <Filter Include="Level\Play\Jelva">
       <UniqueIdentifier>{b42dce4b-d84d-4526-abb0-1b443c375411}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\Select&amp;Load">
+      <UniqueIdentifier>{37192671-0765-45d3-bff8-2cb2c8abe9c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\Battle">
+      <UniqueIdentifier>{90c81c09-0b63-4c60-9d15-fa5c35255bda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\BackGround\Town">
+      <UniqueIdentifier>{77b185b2-94e9-4b8e-b735-b1ff089ed438}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\BackGround\UI">
+      <UniqueIdentifier>{325f4760-d678-4060-bf61-62c84e3d16e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\BackGround\Battle">
+      <UniqueIdentifier>{3c32e66c-eb72-4619-ad46-2b62a48daa3f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

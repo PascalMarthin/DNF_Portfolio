@@ -50,11 +50,11 @@ void SeriaRoom_Level::OnEvent()
 	float Hight = Texture_SeriaRoom->GetBackGroundTextureScale().y;
 	if (GamePlayDataBase::GetCurrentCharacterData()->GetCurrentMap() == TownMap::None)
 	{
-		Fighter->GetTransform().SetLocalPosition({ GameEngineWindow::GetScale().hx(), -GameEngineWindow::GetScale().hy() - 50.f, Hight - GameEngineWindow::GetScale().hy() - 50.f + static_cast<float>(ZSortOrder::Character_Avata) - static_cast<float>(ZSortOrder::Character_Fighter_F) });
+		Fighter->GetTransform().SetLocalPosition({ GameEngineWindow::GetScale().hx(), -GameEngineWindow::GetScale().hy() - 50.f, Hight });
 	}
 	else
 	{
-		Fighter->GetTransform().SetLocalPosition({ GameEngineWindow::GetScale().hx(), -GameEngineWindow::GetScale().hy() - 200.f, Hight - GameEngineWindow::GetScale().hy() - 200.f + static_cast<float>(ZSortOrder::Character_Avata) - static_cast<float>(ZSortOrder::Character_Fighter_F) });
+		Fighter->GetTransform().SetLocalPosition({ GameEngineWindow::GetScale().hx(), -GameEngineWindow::GetScale().hy() - 200.f, Hight });
 	}
 	GamePlayDataBase::GetCurrentCharacterData()->SetCurrentMap(TownMap::Seria_Room);
 }

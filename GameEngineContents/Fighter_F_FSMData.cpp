@@ -154,7 +154,7 @@ void GamePlayCharacter::FSM_Move_Dash_Update(float _DeltaTime, const StateInfo& 
 	//StatManager->GetFSMManager().ChangeState("Att_Dash");
 
 	bool IsMove = false;
-	float MoveSpeed = Manager_StatManager->GetMoveSpeed() * 1.8f;
+	float MoveSpeed = Manager_StatManager->GetMoveSpeed() * 2.2f;
 
 	if (PlayerUserInterface->GetUI_KeyManager()->Input_BaseAttKey_DownAndPress())
 	{
@@ -495,7 +495,7 @@ void GamePlayCharacter::FSM_Move_Helper()
 	{
 		if (GetObjectDir())
 		{
-			MoveIndex = 4.f;
+			MoveIndex = 6.f;
 		}
 		else
 		{
@@ -512,7 +512,7 @@ void GamePlayCharacter::FSM_Move_Helper()
 		}
 		else
 		{
-			MoveIndex = -4.f;
+			MoveIndex = -6.f;
 		}
 		Left = true;
 	}

@@ -5,7 +5,7 @@
 
 Jelva_2F01::Jelva_2F01() 
 	: Texture_Jelva2F01(nullptr)
-	, Player_Fighter(nullptr)
+	, Player_Character(nullptr)
 	, Texture_Jelva2F01_Wave(nullptr)
 {
 }
@@ -25,16 +25,16 @@ void Jelva_2F01::Start()
 	Texture_Jelva2F01->GetTransform().SetLocalPosition({ 0, 0, Hight + static_cast<float>(ZSortOrder::BackGround) });
 	Texture_Jelva2F01_Wave->GetTransform().SetLocalPosition({ 0, 0, Hight + static_cast<float>(ZSortOrder::BackGround) });
 
-	Player_Fighter = CreateActor<GamePlayCharacter>();
-	Player_Fighter->GetTransform().SetLocalPosition({ GameEngineWindow::GetScale().hx(), -GameEngineWindow::GetScale().hy() - 200.f, Hight - GameEngineWindow::GetScale().hy() - 200.f + static_cast<float>(ZSortOrder::Character_Avata) - static_cast<float>(ZSortOrder::Character_Fighter_F) });
-	GetMainCameraActor()->GetTransform().SetWorldMove(Player_Fighter->GetTransform().GetLocalPosition());
+	Player_Character = CreateActor<GamePlayCharacter>();
+	//Player_Character->GetTransform().SetLocalPosition({ GameEngineWindow::GetScale().hx(), -GameEngineWindow::GetScale().hy() - 200.f, Hight - GameEngineWindow::GetScale().hy() - 200.f + static_cast<float>(ZSortOrder::Character_Avata) - static_cast<float>(ZSortOrder::Character_Fighter_F) });
+	GetMainCameraActor()->GetTransform().SetWorldMove(Player_Character->GetTransform().GetLocalPosition());
 
 }
 
 void Jelva_2F01::Update(float _DeltaTime)
 {
 
-	float4 Pos = Player_Fighter->GetMoveManager()->GetMoveCollision()->GetTransform().GetLocalPosition();
+	float4 Pos = Player_Character->GetMoveManager()->GetMoveCollision()->GetTransform().GetLocalPosition();
 	if (!GetMainCameraActor()->IsFreeCameraMode())
 	{
 		if (Pos.x <= 642.f)
@@ -74,15 +74,15 @@ void Jelva_2F01::OnEvent()
 	float Hight = Texture_Jelva2F01->GetBackGroundTextureScale().y;
 	if (GamePlayDataBase::GetCurrentCharacterData()->GetCurrentMap() == TownMap::Jelva2F)
 	{
-		Player_Fighter->GetTransform().SetLocalPosition({ 200.f , -650.f , Hight - 650.f + static_cast<float>(ZSortOrder::Character_Avata) - static_cast<float>(ZSortOrder::Character_Fighter_F) });
+		Player_Character->GetTransform().SetLocalPosition({ 200.f , -650.f , Hight });
 	}
-	//else if (GamePlayDataBase::GetCurrentCharacterData()->GetCurrentMap() == TownMap::Jelva2F_01)
-	//{
-	//	Player_Fighter->GetTransform().SetLocalPosition({ 2216.f  , -600.f , Hight - 600.f + static_cast<float>(ZSortOrder::Character_Avata) - static_cast<float>(ZSortOrder::Character_Fighter_F) });
-	//}
+	else if (GamePlayDataBase::GetCurrentCharacterData()->GetCurrentMap() == TownMap::DungeonSelect)
+	{
+		Player_Character->GetTransform().SetLocalPosition({ 1530.f  , -750.f , Hight  });
+	}
 	else// Debug
 	{
-		Player_Fighter->GetTransform().SetLocalPosition({ 800.f  , -700.f , Hight - 700.f + static_cast<float>(ZSortOrder::Character_Avata) - static_cast<float>(ZSortOrder::Character_Fighter_F) });
+		Player_Character->GetTransform().SetLocalPosition({ 1200.f  , -700.f , Hight });
 	}
 
 	GamePlayDataBase::GetCurrentCharacterData()->SetCurrentMap(TownMap::Jelva2F_01);

@@ -17,8 +17,12 @@
 #include "Jelva_1F.h"
 #include "Jelva_2F.h"
 #include "Jelva_2F01.h"
+#include "DungeonSelect.h"
+#include "DungeonLoding.h"
 
 //#pragma comment(lib, "GameEngineBase.lib")
+
+DNF* DNF::MainCoreEngine = nullptr;
 
 DNF::DNF()
 {
@@ -30,6 +34,8 @@ DNF::~DNF()
 
 void DNF::Start()
 {
+
+	DNF::MainCoreEngine = this;
 	// GameEngineDebug::ConsoleOpen();
 	//ShowCursor(false);
 	AllResourceLoad();
@@ -45,8 +51,11 @@ void DNF::Start()
 		CreateLevel<Jelva_1F>("Jelva_1F");
 		CreateLevel<Jelva_2F>("Jelva_2F");
 		CreateLevel<Jelva_2F01>("Jelva_2F01");
-		
-		
+
+	}
+	{
+		CreateLevel<DungeonSelect>("DungeonSelect");
+		CreateLevel<DungeonLoding>("DungeonLoding");
 	}
 
 	{
@@ -102,6 +111,8 @@ void DNF::BaseFolderTextureLoad()
 		Dir.Move("Resource");
 		Dir.Move("Texture");
 		Dir.Move("Map");
+		Dir.Move("Jelva");
+
 		std::vector<GameEngineDirectory> AllTextureDir = Dir.GetRecursiveAllDirectory();
 
 		for (GameEngineDirectory& DirIter : AllTextureDir)
@@ -109,6 +120,34 @@ void DNF::BaseFolderTextureLoad()
 			GameEngineFolderTexture::Load(DirIter.GetFullPath());
 		}
 	}
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resource");
+		Dir.Move("Resource");
+		Dir.Move("Texture");
+		Dir.Move("Map");
+		Dir.Move("Seria_Room");
+
+		GameEngineFolderTexture::Load(Dir.GetFullPath());
+
+	}
+
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resource");
+		Dir.Move("Resource");
+		Dir.Move("Texture");
+		Dir.Move("Map");
+		Dir.Move("Luke_Raid");
+
+		std::vector<GameEngineFile> Texture = Dir.GetAllFile();
+
+		for (size_t i = 0; i < Texture.size(); i++)
+		{
+			GameEngineTexture::Load(Texture[i].GetFullPath());
+		}
+	}
+
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExitsChildDirectory("Resource");
@@ -235,6 +274,38 @@ void DNF::BaseFolderTextureLoad()
 		Dir.Move("Texture");
 		Dir.Move("Map");
 		Dir.Move("Collision");
+
+		std::vector<GameEngineFile> Texture = Dir.GetAllFile();
+
+		for (size_t i = 0; i < Texture.size(); i++)
+		{
+			GameEngineTexture::Load(Texture[i].GetFullPath());
+		}
+	}
+
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resource");
+		Dir.Move("Resource");
+		Dir.Move("Texture");
+		Dir.Move("UI");
+		Dir.Move("DungeonSelect");
+
+		std::vector<GameEngineFile> Texture = Dir.GetAllFile();
+
+		for (size_t i = 0; i < Texture.size(); i++)
+		{
+			GameEngineTexture::Load(Texture[i].GetFullPath());
+		}
+	}
+
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resource");
+		Dir.Move("Resource");
+		Dir.Move("Texture");
+		Dir.Move("UI");
+		Dir.Move("DungeonLoading");
 
 		std::vector<GameEngineFile> Texture = Dir.GetAllFile();
 

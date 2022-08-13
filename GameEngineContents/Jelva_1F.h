@@ -33,6 +33,6 @@ protected:
 private:
 	Jelva1F_BackGround* Texture_Jelva1F;
 
-	GamePlayCharacter* Player_Fighter;
+	GamePlayCharacter* Player_Character;
 };
 

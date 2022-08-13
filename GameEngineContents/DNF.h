@@ -27,6 +27,14 @@ public:
 		return { 0,0 }; 
 	};
 
+	
+	template<typename LevelType>
+	inline void CreateLoadLevel(const std::string& _Name)
+	{
+		CreateLevel<LevelType>(_Name);
+	}
+
+
 protected:
 	void Start() override;
 
@@ -39,6 +47,7 @@ protected:
 
 private:
 
+
 	void AllResourceLoad();
 	void BaseSoundLoad();
 	void BaseTextureLoad();
@@ -46,4 +55,14 @@ private:
 	void BaseKeySetting();
 	
 
+	// ------------Static----------
+public:
+	inline static DNF* GetInst()
+	{
+		return DNF::MainCoreEngine;
+	}
+
+
+private:
+	static DNF* MainCoreEngine;
 };

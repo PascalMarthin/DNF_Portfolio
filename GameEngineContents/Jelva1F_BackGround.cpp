@@ -31,13 +31,13 @@ void Jelva1F_BackGround::Start()
 
 
 	Collision_SeriaRoom_Door = GetLevel()->CreateActor<DummyActor>()->CreateComponent<GameEngineCollision>();
-	Collision_SeriaRoom_Door->GetTransform().SetLocalScale({ 300.f, 80.f , 50.f });
+	Collision_SeriaRoom_Door->GetTransform().SetLocalScale({ 300.f, 80.f , 500.f });
 	Collision_SeriaRoom_Door->GetTransform().SetWorldPosition({ 1440.f, -450.f, Hight - 450.f });
 	Collision_SeriaRoom_Door->ChangeOrder(CollisionOrder::ChangeMap);
 	Collision_SeriaRoom_Door->SetDebugSetting(CollisionType::CT_AABB, float4::GREEN);
 
 	Collision_Jelva2F_Door = GetLevel()->CreateActor<DummyActor>()->CreateComponent<GameEngineCollision>();
-	Collision_Jelva2F_Door->GetTransform().SetLocalScale({ 200.f, 80.f , 50.f });
+	Collision_Jelva2F_Door->GetTransform().SetLocalScale({ 200.f, 80.f , 500.f });
 	Collision_Jelva2F_Door->GetTransform().SetWorldPosition({ 2050, -375, Hight - 375 });
 	Collision_Jelva2F_Door->ChangeOrder(CollisionOrder::ChangeMap);
 	Collision_Jelva2F_Door->SetDebugSetting(CollisionType::CT_AABB, float4::GREEN);

@@ -179,7 +179,7 @@ enum class CollisionOrder
 	Player_Att = 4,
 	Monster = 10,
 	Monster_Att = 11,
-	UI_ect = 20,
+	UI_Mouse = 20,
 	ChangeMap = 21,
 };
 
@@ -199,4 +199,11 @@ enum class TownMap
 	Jelva1F,
 	Jelva2F,
 	Jelva2F_01,
+	DungeonSelect,
+};
+
+enum class WorldDungeon
+{
+	None,
+	Luke
 };

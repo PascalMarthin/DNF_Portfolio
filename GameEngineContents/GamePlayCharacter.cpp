@@ -135,9 +135,9 @@ void GamePlayCharacter::OnEvent()
 		MsgBoxAssert("데이터가 지정이 안되어 있습니다")
 	}
 	SetFSManager();
-
-
 	MoveIndex = 0.f;
+
+	GetTransform().SetLocalMove({0 , 0 , GetTransform().GetLocalPosition().y + static_cast<float>(ZSortOrder::Character_Avata) - static_cast<float>(ZSortOrder::Character_Fighter_F) });
 
 }
 

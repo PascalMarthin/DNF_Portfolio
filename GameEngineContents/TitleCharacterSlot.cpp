@@ -41,7 +41,7 @@ void TitleCharacterSlot::Start()
 	{
 		Collision_SlotBorder = CreateComponent<GameEngineCollision>();
 		Collision_SlotBorder->GetTransform().SetLocalScale(Texture_SlotBorder->GetTransform().GetLocalScale());
-		Collision_SlotBorder->ChangeOrder(CollisionOrder::UI_ect);
+		Collision_SlotBorder->ChangeOrder(CollisionOrder::UI_Mouse);
 	}
 
 
@@ -99,7 +99,7 @@ void TitleCharacterSlot::Update(float _DeltaTime)
 	{
 		return;
 	}
-	if (Collision_SlotBorder->IsCollision(CollisionType::CT_AABB2D, CollisionOrder::UI_ect, CollisionType::CT_AABB2D,
+	if (Collision_SlotBorder->IsCollision(CollisionType::CT_AABB2D, CollisionOrder::UI_Mouse, CollisionType::CT_AABB2D,
 		[](GameEngineCollision* _This, GameEngineCollision* _Other)
 		{
 			if (_Other->GetNameConstRef() == "Collision_MouseCursor")

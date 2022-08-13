@@ -21,7 +21,7 @@ void ButtonComponent::Start()
 	GetTransform().SetLocalScale({ MonitorX, MonitorY });
 	Texture_CreateCharacterButton = CreateComponent<GameEngineTextureRenderer>();
 	Collision_CreateCharacterButton = CreateComponent<GameEngineCollision>();
-	Collision_CreateCharacterButton->ChangeOrder(CollisionOrder::UI_ect);
+	Collision_CreateCharacterButton->ChangeOrder(CollisionOrder::UI_Mouse);
 }
 
 void ButtonComponent::Update(float _DeltaTime)
@@ -107,7 +107,7 @@ void ButtonComponent::SetOption(const std::vector<GameEngineTexture*>& _VectorTe
 
 bool ButtonComponent::UpdateButtonPush()
 {
-	if (Collision_CreateCharacterButton->IsCollision(CollisionType::CT_AABB2D, CollisionOrder::UI_ect, CollisionType::CT_AABB2D,
+	if (Collision_CreateCharacterButton->IsCollision(CollisionType::CT_AABB2D, CollisionOrder::UI_Mouse, CollisionType::CT_AABB2D,
 		[](GameEngineCollision* _This, GameEngineCollision* _Other)
 		{
 			if (_Other->GetNameConstRef() == "Collision_MouseCursor")

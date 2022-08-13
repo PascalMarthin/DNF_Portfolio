@@ -36,5 +36,5 @@ private:
 	Jelva2F01_BackGround* Texture_Jelva2F01;
 	Jelva2F01_WaveBackGround* Texture_Jelva2F01_Wave;
 
-	GamePlayCharacter* Player_Fighter;
+	GamePlayCharacter* Player_Character;
 };

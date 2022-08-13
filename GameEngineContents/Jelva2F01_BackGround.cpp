@@ -3,6 +3,7 @@
 #include "Jelva2F01_BackGround.h"
 #include "DummyActor.h"
 #include "GamePlayEnum.h"
+#include "DungeonSelect.h"
 
 Jelva2F01_BackGround::Jelva2F01_BackGround() 
 	: Collision_Jelva2F_Door(nullptr)
@@ -63,19 +64,20 @@ void Jelva2F01_BackGround::Update(float _DeltaTime)
 		GEngine::ChangeLevel("Jelva_2F");
 	}
 
-	//	if (Collision_LukeRaid_Door->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player_Floor, CollisionType::CT_AABB,
-	//		[](GameEngineCollision* _This, GameEngineCollision* _Other)
-	//		{
-	//			if (_Other->GetNameConstRef() == "Character_Map_Collision")
-	//			{
-	//				return true;
-	//			}
-	//			else
-	//			{
-	//				return false;
-	//			}
-	//		}))
-	//	{
-	//	//	GEngine::ChangeLevel("Jelva_2F01");
-	//	}
+	if (Collision_LukeRaid_Door->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player_Floor, CollisionType::CT_AABB,
+		[](GameEngineCollision* _This, GameEngineCollision* _Other)
+		{
+			if (_Other->GetNameConstRef() == "Character_Map_Collision")
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}))
+	{
+		DungeonSelect::SetWorldDungeon(WorldDungeon::Luke);
+		GEngine::ChangeLevel("DungeonSelect");
+	}
 }

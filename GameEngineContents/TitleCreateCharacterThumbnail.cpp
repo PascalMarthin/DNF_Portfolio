@@ -36,7 +36,7 @@ void TitleCreateCharacterThumbnail::Start()
 }
 void TitleCreateCharacterThumbnail::Update(float _DeltaTime)
 {
-	if (Collision_Thumbnails->IsCollision(CollisionType::CT_AABB2D, CollisionOrder::UI_ect, CollisionType::CT_AABB2D,
+	if (Collision_Thumbnails->IsCollision(CollisionType::CT_AABB2D, CollisionOrder::UI_Mouse, CollisionType::CT_AABB2D,
 		[](GameEngineCollision* _This, GameEngineCollision* _Other)
 		{
 			if (_Other->GetNameConstRef() == "Collision_MouseCursor")
