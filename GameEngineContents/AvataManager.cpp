@@ -214,17 +214,18 @@ void AvataManager::OnEvent()
 				}
 				Avata->ChangeFrameAnimationPlus("Move_Stand");
 			}
-			Avata_Belt->GetTransform().SetLocalPosition({ 0, 74 , 0.02f });
-			Avata_Cap->GetTransform().SetLocalPosition({ 0, 74 , 0.01f });
-			Avata_Coat->GetTransform().SetLocalPosition({ 0, 74 , 0.01f });
-			Avata_Face->GetTransform().SetLocalPosition({ 0, 74 , 0.03f });
-			Avata_Hair_a->GetTransform().SetLocalPosition({ 0, 74 , 0.02f });
-			Avata_Hair_b->GetTransform().SetLocalPosition({ 0, 74 , 0.02f });
-			Avata_Neck->GetTransform().SetLocalPosition({ 0, 74 , 0.01f });
-			Avata_Pants->GetTransform().SetLocalPosition({ 0, 74 , 0.03f });
-			Avata_Shoes_a->GetTransform().SetLocalPosition({ 0,74 , 0.01f });
-			Avata_Shoes_b->GetTransform().SetLocalPosition({ 0, 74 , 0.01f });
-			Avata_Skin->GetTransform().SetLocalPosition({ 0, 74 , 0.04f });
+			Avata_Belt->GetTransform().SetLocalPosition({ 0, 0 , 0.02f });
+			Avata_Cap->GetTransform().SetLocalPosition({ 0, 0 , 0.01f });
+			Avata_Coat->GetTransform().SetLocalPosition({ 0, 0 , 0.01f });
+			Avata_Face->GetTransform().SetLocalPosition({ 0, 0 , 0.03f });
+			Avata_Hair_a->GetTransform().SetLocalPosition({ 0, 0 , 0.02f });
+			Avata_Hair_b->GetTransform().SetLocalPosition({ 0, 0 , 0.02f });
+			Avata_Neck->GetTransform().SetLocalPosition({ 0, 0 , 0.01f });
+			Avata_Pants->GetTransform().SetLocalPosition({ 0, 0 , 0.03f });
+			Avata_Shoes_a->GetTransform().SetLocalPosition({ 0,0 , 0.01f });
+			Avata_Shoes_b->GetTransform().SetLocalPosition({ 0, 0 , 0.01f });
+			Avata_Skin->GetTransform().SetLocalPosition({ 0, 0 , 0.04f });
+
 		}
 		break;
 		case ObjectType::NPC:
@@ -235,6 +236,7 @@ void AvataManager::OnEvent()
 			break;
 		}
 	}
+	GetTransform().SetLocalPosition({ 0, 72.f, 0 });
 
 	CurrentClassData = GamePlayCharacter::GetCurrentCharacterData();
 	 

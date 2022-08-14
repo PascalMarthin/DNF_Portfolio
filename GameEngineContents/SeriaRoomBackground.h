@@ -1,9 +1,8 @@
 #pragma once
-#include <GameEngineCore/GameEngineActor.h>
 #include "BackGroundParent.h"
 
 // Ό³Έν :
-class SeriaRoomBackground : public GameEngineActor, public BackGroundParent
+class SeriaRoomBackground :  public BackGroundParent
 {
 public:
 	// constrcuter destructer

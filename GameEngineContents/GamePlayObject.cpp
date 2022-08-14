@@ -3,13 +3,14 @@
 #include "GamePlayCharacter.h"
 #include "GamePlayObjectNPC.h"
 #include "MoveManager.h"
+#include "SkillManager.h"
 
 GamePlayObject::GamePlayObject() 
 	: Dir_RightSide(false)
 	, Manager_MoveManager(nullptr)
 	, Enum_ObjectType(ObjectType::None)
 	, CharacterWeight(0.f)
-	, Collision_HitBody(nullptr)
+	, Manager_StatManager(nullptr)
 {
 	//GetTransform().SetLocalPosition();
 }
@@ -40,3 +41,12 @@ void GamePlayObject::Start()
 	}
 }
 
+void GamePlayObject::BeHit(SkillManager* _Skill, const GamePlayDataBase* _Character)
+{
+	//
+	// 스킬안으로 들어가서 스킬 타입을보고 본인의 자세를 고침
+	// 대미지는 스킬과 캐릭터 데이터 베이스를 기반으로 함
+	// 
+	// 
+	//
+}

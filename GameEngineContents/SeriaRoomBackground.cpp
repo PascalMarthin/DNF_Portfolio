@@ -36,6 +36,8 @@ void SeriaRoomBackground::Start()
 	Collision_SeriaRoom_OutDoor->ChangeOrder(CollisionOrder::ChangeMap);
 	Collision_SeriaRoom_OutDoor->SetDebugSetting(CollisionType::CT_AABB, float4::GREEN);
 
+	SetBackGroundZOrder();
+
 }
 
 void SeriaRoomBackground::Update(float _DeltaTime)

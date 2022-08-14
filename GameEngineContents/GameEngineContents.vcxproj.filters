@@ -161,6 +161,15 @@
     <ClInclude Include="DungeonLoding_BackGround.h">
       <Filter>Level\BackGround\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Bale.h">
+      <Filter>Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlayMonster.h">
+      <Filter>Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillManager.h">
+      <Filter>Object\Character\SkillTemp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -323,6 +332,15 @@
     <ClCompile Include="DungeonLoding_BackGround.cpp">
       <Filter>Level\BackGround\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Bale.cpp">
+      <Filter>Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlayMonster.cpp">
+      <Filter>Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillManager.cpp">
+      <Filter>Object\Character\SkillTemp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -408,6 +426,12 @@
     </Filter>
     <Filter Include="Level\BackGround\Battle">
       <UniqueIdentifier>{3c32e66c-eb72-4619-ad46-2b62a48daa3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Monster">
+      <UniqueIdentifier>{b127ebdd-2aa1-4cfb-a77a-43f1c9e8937a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Character\SkillTemp">
+      <UniqueIdentifier>{d2bfe07b-693e-4ac9-9c83-7236cb81fe03}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

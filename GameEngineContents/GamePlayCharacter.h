@@ -71,7 +71,6 @@ protected:
 
 
 protected:
-	CharacterStatManager* Manager_StatManager;
 	AvataManager* Manager_AvataManager;
 
 	void Create_Fighter_F_Default_FSManager();

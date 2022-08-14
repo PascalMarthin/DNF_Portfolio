@@ -1,9 +1,8 @@
 #pragma once
-#include <GameEngineCore/GameEngineActor.h>
 #include "BackGroundParent.h"
 
 // Ό³Έν :
-class Jelva2F01_WaveBackGround : public GameEngineActor, public BackGroundParent
+class Jelva2F01_WaveBackGround :  public BackGroundParent
 {
 public:
 	// constrcuter destructer

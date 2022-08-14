@@ -49,12 +49,12 @@ void GamePlayCharacter::Start()
 
 	PlayerUserInterface = GetLevel()->CreateActor<PlayerInterface>();
 
-	Collision_HitBody = CreateComponent<GameEngineCollision>("Hit_Collision");
-	Collision_HitBody->ChangeOrder(CollisionOrder::Player);
-	Collision_HitBody->GetTransform().SetLocalPosition({ 0, -80 });
-	Collision_HitBody->GetTransform().SetLocalScale({ 48, 110 });
-	Collision_HitBody->SetDebugSetting(CollisionType::CT_AABB2D, {0, 0, 255, 100});
-	Collision_HitBody->Off();
+	//Collision_HitBody = CreateComponent<GameEngineCollision>("Hit_Collision");
+	//Collision_HitBody->ChangeOrder(CollisionOrder::Player);
+	//Collision_HitBody->GetTransform().SetLocalPosition({ 0, -80 });
+	//Collision_HitBody->GetTransform().SetLocalScale({ 48, 110 });
+	//Collision_HitBody->SetDebugSetting(CollisionType::CT_AABB2D, {0, 0, 255, 100});
+	//Collision_HitBody->Off();
 }
 
 void GamePlayCharacter::On_EnumCollision(Collision_AllSkill _Collsion)
@@ -137,8 +137,7 @@ void GamePlayCharacter::OnEvent()
 	SetFSManager();
 	MoveIndex = 0.f;
 
-	GetTransform().SetLocalMove({0 , 0 , GetTransform().GetLocalPosition().y + static_cast<float>(ZSortOrder::Character_Avata) - static_cast<float>(ZSortOrder::Character_Fighter_F) });
-
+	GetTransform().SetLocalMove({0 , 0 , GetTransform().GetLocalPosition().y });
 }
 
 void GamePlayCharacter::OffEvent()

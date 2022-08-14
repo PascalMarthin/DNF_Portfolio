@@ -41,6 +41,8 @@ void Jelva1F_BackGround::Start()
 	Collision_Jelva2F_Door->GetTransform().SetWorldPosition({ 2050, -375, Hight - 375 });
 	Collision_Jelva2F_Door->ChangeOrder(CollisionOrder::ChangeMap);
 	Collision_Jelva2F_Door->SetDebugSetting(CollisionType::CT_AABB, float4::GREEN);
+
+	SetBackGroundZOrder();
 }
 void Jelva1F_BackGround::Update(float _DeltaTime)
 {

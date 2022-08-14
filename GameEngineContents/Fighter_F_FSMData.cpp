@@ -344,6 +344,8 @@ void GamePlayCharacter::FSM_Att_BasePunch1_Start(const StateInfo& _Info)
 	Manager_StatManager->SetDoBaseAtt();
 	Att_BaseAtt_Delay = 0.f;
 	Manager_AvataManager->ChangeAvataAnimation("Att_BasePunch1");
+
+	On_EnumCollision(Collision_AllSkill::BasePunch1);
 }
 
 void GamePlayCharacter::FSM_Att_BasePunch1_Update(float _DeltaTime, const StateInfo& _Info)
@@ -364,11 +366,19 @@ void GamePlayCharacter::FSM_Att_BasePunch1_Update(float _DeltaTime, const StateI
 		}
 
 	}
+	else if (Manager_AvataManager->Avata_Skin->GetCurrentFrameStuck() == 1)
+	{
+		if (Collision_HitCollision[Collision_AllSkill::BasePunch1][0]->IsCollision())
+		{
+
+		}
+	}
 }
 void GamePlayCharacter::FSM_Att_BasePunch1_End(const StateInfo& _Info)
 {
 	Manager_StatManager->SetEngage();
 	Manager_StatManager->SetDoBaseAttEnd();
+	Off_EnumCollision(Collision_AllSkill::BasePunch1);
 }
 
 

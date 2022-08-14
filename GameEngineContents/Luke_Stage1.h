@@ -5,6 +5,7 @@
 
 // Ό³Έν :
 class Luke_Stage1_BackGround;
+class Bale;
 class Luke_Stage1 : public GameEngineLevel, public Dungeon_Luke
 {
 public:
@@ -34,5 +35,6 @@ protected:
 private:
 
 	Luke_Stage1_BackGround* Texture_Luke_Stage1;
+	Bale* Debug_Bale;
 };
 

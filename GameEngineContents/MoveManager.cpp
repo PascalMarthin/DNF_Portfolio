@@ -66,7 +66,7 @@ void MoveManager::Update(float _DeltaTime)
 		// x = 점프 시간
 		// 
 	}
-	GameEngineDebug::OutPutString(std::to_string(Collision_Move->GetTransform().GetLocalPosition().x) + " " + std::to_string(Collision_Move->GetTransform().GetLocalPosition().y));
+	GameEngineDebug::OutPutString(std::to_string(Collision_Move->GetTransform().GetLocalPosition().y) + " " + std::to_string(Collision_Move->GetTransform().GetLocalPosition().z));
 }
 
 

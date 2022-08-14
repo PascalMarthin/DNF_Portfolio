@@ -11,5 +11,3 @@ BackGroundParent::~BackGroundParent()
 {
 }
 
-
-

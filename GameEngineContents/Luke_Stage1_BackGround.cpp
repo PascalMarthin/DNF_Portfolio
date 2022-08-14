@@ -17,6 +17,8 @@ void Luke_Stage1_BackGround::Start()
 	Texture_BackGround->SetPivot(PIVOTMODE::LEFTTOP);
 
 	Texture_MapCollision = GameEngineTexture::Find("Luke_Raid_Stage1_Collision.png");
+
+	SetBackGroundZOrder();
 }
 
 void Luke_Stage1_BackGround::Update(float _DeltaTime)

@@ -6,6 +6,9 @@
 
 // Ό³Έν :
 class MoveManager;
+class SkillManager;
+class GamePlayDataBase;
+class CharacterStatManager;
 class GamePlayObject : public GameEngineActor
 {
 public:
@@ -48,10 +51,6 @@ public:
 		return Enum_ObjectType;
 	}
 
-	inline GameEngineCollision* GetBodyCollision() const
-	{
-		return Collision_HitBody;
-	}
 
 	inline MoveManager* GetMoveManager() const
 	{
@@ -64,14 +63,19 @@ protected:
 
 
 protected:
+
+	// ----------Manager-----------
 	MoveManager* Manager_MoveManager;
+	CharacterStatManager* Manager_StatManager;
 
-	//--------------------Collision---------------
-	GameEngineCollision* Collision_HitBody;
-	//CollisionManager* Manager_CollisionManager;
+	// -------------------Battle-------------------
 
+	virtual void BeHit(SkillManager* _Skill, const GamePlayDataBase* _Character);
+
+
+
+	// --------------------------------------------
 private:
-	//float4 ObjectPos;
 	ObjectType Enum_ObjectType;
 
 	bool Dir_RightSide;

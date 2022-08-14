@@ -44,6 +44,8 @@ void Jelva2F01_BackGround::Start()
 	Collision_LukeRaid_Door->ChangeOrder(CollisionOrder::ChangeMap);
 	Collision_LukeRaid_Door->SetDebugSetting(CollisionType::CT_AABB, float4::WHITE);
 
+	SetBackGroundZOrder();
+
 
 }
 void Jelva2F01_BackGround::Update(float _DeltaTime)
