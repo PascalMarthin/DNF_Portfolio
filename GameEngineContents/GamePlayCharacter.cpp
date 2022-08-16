@@ -12,8 +12,7 @@ GamePlayDataBase* GamePlayCharacter::CurrentCharacterData = nullptr;
 std::list<GamePlayDataBase*> GamePlayCharacter::AllCharacterData;
 
 GamePlayCharacter::GamePlayCharacter()
-	: Manager_StatManager(nullptr)
-	, Manager_AvataManager(nullptr)
+	: Manager_AvataManager(nullptr)
 	, PlayerUserInterface(nullptr)
 	, PlayerFormerClass(CharacterFormerClass::None)
 	, StartJump(false)
@@ -24,6 +23,7 @@ GamePlayCharacter::GamePlayCharacter()
 	, BaseJumpKick(false)
 	, Att_BaseAtt_Delay(0.f)
 	, DelayPunch(false)
+	, Class_Skill_Fighter_F_HamKick(nullptr)
 {
 }
 

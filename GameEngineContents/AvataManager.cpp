@@ -161,6 +161,7 @@ void AvataManager::ReadCharacterDataBase(GamePlayDataBase* _Data)
 
 void AvataManager::ChangeAvataAnimation(const std::string& _AnimationName) const
 {
+	int a = 0;
 	for (GameEnginePlusTextureRenderer* Avata : AllAvatas)
 	{
 		Avata->ChangeFrameAnimationPlus(_AnimationName);

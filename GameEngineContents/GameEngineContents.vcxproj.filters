@@ -167,8 +167,11 @@
     <ClInclude Include="GamePlayMonster.h">
       <Filter>Object\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="SkillManager.h">
+    <ClInclude Include="GamePlaySkill.h">
       <Filter>Object\Character\SkillTemp</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill_Fighter_F_Ham_Kick.h">
+      <Filter>Object\Character\Fighter</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -338,8 +341,11 @@
     <ClCompile Include="GamePlayMonster.cpp">
       <Filter>Object\Monster</Filter>
     </ClCompile>
-    <ClCompile Include="SkillManager.cpp">
+    <ClCompile Include="GamePlaySkill.cpp">
       <Filter>Object\Character\SkillTemp</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill_Fighter_F_Ham_Kick.cpp">
+      <Filter>Object\Character\Fighter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

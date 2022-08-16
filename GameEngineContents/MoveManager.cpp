@@ -52,21 +52,21 @@ void MoveManager::Update(float _DeltaTime)
 {
 	if (ManagerStat != nullptr )
 	{
-		if (ManagerStat->IsJump())
+		if (ManagerStat->IsJump() || ManagerStat->IsBeAir())
 		{
 			JumpTime += _DeltaTime;
 			if (JumpHigh > -650)
 			{
 				JumpHigh = (-(ParentCharacter->GetCharacterWeight()  * JumpTime * Gravitational_Constant) * JumpTime + JumpPower);
 			}
-		
+			SetCharacterJump(float4({ 0, 1, 0 }) * JumpHigh * _DeltaTime);
 		}
 		// Y = x(ax);
 		// y = 속력
 		// x = 점프 시간
 		// 
 	}
-	GameEngineDebug::OutPutString(std::to_string(Collision_Move->GetTransform().GetLocalPosition().y) + " " + std::to_string(Collision_Move->GetTransform().GetLocalPosition().z));
+	//GameEngineDebug::OutPutString(std::to_string(Collision_Move->GetTransform().GetLocalPosition().y) + " " + std::to_string(Collision_Move->GetTransform().GetLocalPosition().z));
 }
 
 
@@ -133,6 +133,11 @@ void MoveManager::SetJump()
 	JumpTime = 0.f;
 	LandingPostion = ParentCharacter->GetTransform().GetLocalPosition();
 	GameEngineDebug::OutPutString(std::to_string(LandingPostion.y));
+}
+void MoveManager::SetBeAir()
+{
+	CurrentGravitIndex = -1.f;
+	JumpTime = 0.f;
 }
 
 void MoveManager::OnEvent()

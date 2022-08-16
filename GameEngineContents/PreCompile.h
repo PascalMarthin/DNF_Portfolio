@@ -28,3 +28,6 @@
 #include <GameEngineCore/CoreMinimal.h>
 #include <GameEngineCore/GameEngineCollision.h>
 #include <GameEngineCore/GameEngineTextureRenderer.h>
+
+// contents
+#include "GamePlayEnum.h"

@@ -9,6 +9,7 @@ class CharacterStatManager;
 class MoveManager : public GameEngineComponent
 {
 	friend class GamePlayCharacter;
+	friend class CharacterStatManager;
 public:
 	// constrcuter destructer
 	MoveManager();
@@ -28,6 +29,7 @@ public:
 	float4 SetCharacterMove(const float4& _Move);
 	void SetCharacterLocation(const float4& _Pos);
 	void SetJump();
+	void SetBeAir();
 
 
 protected:

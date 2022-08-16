@@ -57,6 +57,15 @@ public:
 	{
 		return PlayerCurrentState & CharacterStat::Player_Character_BaseAtt;
 	}
+	inline bool IsSuperarmor() const
+	{
+		return PlayerCurrentState & CharacterStat::Player_Character_Superarmor;
+	}
+	inline bool IsBeAir() const
+	{
+		return PlayerCurrentState & CharacterStat::Player_Character_BeAir;
+	}
+	
 
 	void SetWalk();
 	void SetWalkEnd();
@@ -67,27 +76,15 @@ public:
 	void SetDoBaseAttEnd();
 	void SetJump();
 	void SetJumpEnd();
+	void SetHit(const float4& _HitTime, float _Damge);
 	inline void SetEngage()
 	{
-		CurrentEngageTime = 5.f;
+		Time_CurrentEngage = 5.f;
 	}
 	inline float GetEngage() const
 	{
-		return CurrentEngageTime;
+		return Time_CurrentEngage;
 	}
-
-
-
-	inline bool IsCanAction() const
-	{
-		return CanAction;
-	}
-	inline bool IsCanMove() const
-	{
-		return CanMove;
-	}
-
-
 	inline float GetMoveSpeed() const
 	{
 		return CurrentAbilityStat->MoveSpeed;
@@ -97,7 +94,6 @@ public:
 
 protected:
 	void Start() override;
-
 	void Update(float _DeltaTime) override;
 
 	// void End() override {}
@@ -106,19 +102,18 @@ protected:
 
 
 private:
-	unsigned int PlayerCurrentState;
+	// -----------PlayerSetting----------
 	void SettingFirstTime();
 	void SetCharacter_Fighter_F();
-
-	bool CanAction;
-	bool CanMove;
-
+	// ----------------------------------
+	unsigned int PlayerCurrentState;
 
 private:
 	GameEngineStateManager FSMManager;
 	CharacterAbilityStat* CurrentAbilityStat;
 
 private:
-	float CurrentEngageTime;
+	float Time_CurrentEngage;
+	float4 Time_BeHit;
 };
 

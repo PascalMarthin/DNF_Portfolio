@@ -9,10 +9,9 @@
 
 CharacterStatManager::CharacterStatManager() 
 	: PlayerCurrentState(0x0)
-	, CanAction(false)
-	, CanMove(false)
-	, CurrentEngageTime(0.f)
+	, Time_CurrentEngage(0.f)
 	, CurrentAbilityStat(nullptr)
+	, Time_BeHit(float4::ZERO)
 {
 }
 
@@ -46,20 +45,28 @@ void CharacterStatManager::SettingFirstTime()
 
 void CharacterStatManager::SetCharacter_Fighter_F()
 {
-	PlayerCurrentState = (0x0);
-	CanAction = false;
-	CanMove = false;
-	CurrentEngageTime = 0.f;
-
+	PlayerCurrentState = (0x01);
+	Time_CurrentEngage = 0.f;
 }
 
 void CharacterStatManager::Update(float _DeltaTime)
 {
-	CurrentEngageTime -= _DeltaTime;
+	Time_CurrentEngage -= _DeltaTime;
 
 	FSMManager.Update(_DeltaTime);
 
-	//GameEngineDebug::OutPutString(std::to_string(PlayerCurrentState));
+	if (!IsLive() || CurrentAbilityStat->HP < 0.f)
+	{
+		// 사망
+	}
+
+	if (Time_BeHit.z > 0)
+	{
+		Time_BeHit.z -= _DeltaTime * 100.f * CurrentAbilityStat->Hit_Recovery;
+	}
+
+
+	//역경직을 시스템으로 봐야하는가?????
 }
 
 
@@ -129,6 +136,22 @@ void CharacterStatManager::SetDoBaseAttEnd()
 	PlayerCurrentState &= ~(CharacterStat::Player_Character_BaseAtt);
 }
 
+void CharacterStatManager::SetHit(const float4& _HitTime, float _Damge)
+{
+	if (!IsSuperarmor())
+	{
+		PlayerCurrentState |= CharacterStat::Player_Character_BeHit;
+		PlayerCurrentState &= ~0b0000000111101110;
+		FSMManager.ChangeState("Hit_Stand1");
+	}
+	Time_BeHit = _HitTime;
+	CurrentAbilityStat->HP -= _Damge;
+	if (true)
+	{
+
+	}
+}
+
 
 
 void CharacterStatManager::OnEvent() 
@@ -143,7 +166,6 @@ void CharacterStatManager::OffEvent()
 	CurrentAbilityStat = nullptr;
 
 	PlayerCurrentState = 0x0;
-	CanAction = false;
-	CanMove = false;
-	CurrentEngageTime = 0.f;
+	Time_CurrentEngage = 0.f;
+	Time_BeHit = float4::ZERO;
 }

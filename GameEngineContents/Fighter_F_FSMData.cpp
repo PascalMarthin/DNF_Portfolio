@@ -4,6 +4,7 @@
 #include "PlayerInterface.h"
 #include "MoveManager.h"
 #include "AvataManager.h"
+#include "Skill_Fighter_F_Ham_Kick.h"
 
 void GamePlayCharacter::Create_Fighter_F_Default_FSManager()
 {
@@ -92,6 +93,12 @@ void GamePlayCharacter::Create_Fighter_F_Default_FSManager()
 		//Collision->SetDebugSetting(CollisionType::CT_AABB, float4({ 0, 50, 0, 0.5f }));
 		Collision->Off();
 	}
+
+	Manager_StatManager->GetFSMManager().CreateStateMember
+	("Att_HamKick", std::bind(&GamePlayCharacter::FSM_Att_HamKick_Update, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&GamePlayCharacter::FSM_Att_HamKick_Start, this, std::placeholders::_1)
+		, std::bind(&GamePlayCharacter::FSM_Att_HamKick_End, this, std::placeholders::_1));
+	Class_Skill_Fighter_F_HamKick = CreateComponent<Skill_Fighter_F_Ham_Kick>();
 
 	Manager_StatManager->GetFSMManager().ChangeState("None");
 }
@@ -202,6 +209,11 @@ void GamePlayCharacter::FSM_Move_Stand_Start(const StateInfo& _Info)
 
 void GamePlayCharacter::FSM_Move_Stand_Update(float _DeltaTime, const StateInfo& _Info)
 {
+	if (GameEngineInput::GetInst()->IsDown("Key_F"))
+	{
+		Manager_StatManager->GetFSMManager().ChangeState("Att_HamKick"); 
+		return;
+	}
 
 	if (Manager_StatManager->GetEngage() < 0.f)
 	{
@@ -242,7 +254,6 @@ void GamePlayCharacter::FSM_Move_Jump_Start(const StateInfo& _Info)
 	StartJump = true;
 	JumpGoingDown = false;
 	Manager_AvataManager->ChangeAvataAnimation("Move_JumpReady");
-	Manager_StatManager->SetJump();
 	Manager_MoveManager->SetJump();
 
 	On_EnumCollision(Collision_AllSkill::Jump_Kick);
@@ -265,11 +276,11 @@ void GamePlayCharacter::FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& 
 		if (Manager_AvataManager->Avata_Skin->IsEndFrame())
 		{
 			Manager_AvataManager->ChangeAvataAnimation("Move_JumpUp");
+			Manager_StatManager->SetJump();
 			StartJump = false;
 		}
 		return;
 	}
-	Manager_MoveManager->SetCharacterJump(float4({ 0, 1, 0 }) * Manager_MoveManager->JumpHigh * _DeltaTime);
 
 	if (JumpKick_DelayTime > 0.f)
 	{
@@ -316,6 +327,7 @@ void GamePlayCharacter::FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& 
 	{
 		Manager_AvataManager->ChangeAvataAnimation("Move_Landing");
 		Manager_MoveManager->SetCharacterLocation(LandingPos);
+		Manager_StatManager->SetJumpEnd();
 		EndJump = true;
 		return;
 	}
@@ -368,10 +380,10 @@ void GamePlayCharacter::FSM_Att_BasePunch1_Update(float _DeltaTime, const StateI
 	}
 	else if (Manager_AvataManager->Avata_Skin->GetCurrentFrameStuck() == 1)
 	{
-		if (Collision_HitCollision[Collision_AllSkill::BasePunch1][0]->IsCollision())
-		{
+		//if (Collision_HitCollision[Collision_AllSkill::BasePunch1][0]->IsCollision())
+		//{
 
-		}
+		//}
 	}
 }
 void GamePlayCharacter::FSM_Att_BasePunch1_End(const StateInfo& _Info)
@@ -543,6 +555,34 @@ void GamePlayCharacter::FSM_Move_Helper()
 		}
 	}
 }
+
+void GamePlayCharacter::FSM_Att_HamKick_Start(const StateInfo& _Info)
+{
+	Manager_AvataManager->ChangeAvataAnimation("Att_Basekick");
+}
+void GamePlayCharacter::FSM_Att_HamKick_Update(float _DeltaTime, const StateInfo& _Info)
+{
+	if (Manager_AvataManager->Avata_Skin->IsEndFrame())
+	{
+		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
+		return;
+	}
+
+	if (Manager_AvataManager->Avata_Skin->GetCurrentFrameStuck() > 2 && Manager_AvataManager->Avata_Skin->GetCurrentFrameStuck() < 4)
+	{
+		Class_Skill_Fighter_F_HamKick->On();
+	}
+	else
+	{
+		Class_Skill_Fighter_F_HamKick->Off();
+	}
+	
+}
+void GamePlayCharacter::FSM_Att_HamKick_End(const StateInfo& _Info)
+{
+	Class_Skill_Fighter_F_HamKick->Off();
+}
+
 
 void GamePlayCharacter::FSM_Att_Dash_Start(const StateInfo& _Info)
 {

@@ -5,8 +5,14 @@
 #include "GamePlayEnum.h"
 
 // 설명 :
+enum class UnitType
+{
+	None,
+	Unit,
+	Building,
+};
 class MoveManager;
-class SkillManager;
+class GamePlaySkill;
 class GamePlayDataBase;
 class CharacterStatManager;
 class GamePlayObject : public GameEngineActor
@@ -69,12 +75,13 @@ protected:
 	CharacterStatManager* Manager_StatManager;
 
 	// -------------------Battle-------------------
-
-	virtual void BeHit(SkillManager* _Skill, const GamePlayDataBase* _Character);
-
+public:
+	virtual void BeHit(GamePlaySkill* _Skill, const GamePlayDataBase* _Character, int _Index);
+	// virtual void BeHit(적 대미지);
 
 
 	// --------------------------------------------
+	UnitType Enum_UnitType;
 private:
 	ObjectType Enum_ObjectType;
 

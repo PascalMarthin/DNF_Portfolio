@@ -13,6 +13,9 @@ Bale::~Bale()
 
 void Bale::Start()
 {
+	Enum_UnitType = UnitType::Unit;
+
+
 	Texture_Monster = CreateComponent<GameEngineTextureRenderer>();
 	Texture_Monster->CreateFrameAnimationFolder("Bale_Standing", FrameAnimation_DESC("Bale", 0, 5, 0.15f));
 	Texture_Monster->CreateFrameAnimationFolder("Bale_Walk", FrameAnimation_DESC("Bale", 6, 13, 0.15f));
@@ -31,6 +34,7 @@ void Bale::Start()
 	Texture_Monster->GetTransform().SetLocalPosition({ 72, 12, 1 }); // Áß¾Ó ±âÁØ
 	Texture_Monster->GetTransform().SetLocalScale({454, 340});
 	Texture_Monster->ChangeFrameAnimation("Bale_Standing");
+
 
 	Collision_HitBody = CreateComponent<GameEngineCollision>();
 	//Collision_HitBody->GetTransform().SetLocalPosition({0, 0, -1});

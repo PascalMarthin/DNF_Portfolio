@@ -49,7 +49,7 @@ public:
 		, Accuracy(0.f)
 		, Evasion(0.f)
 		, Hit_Stun(0)
-		, Hit_Recovery(0)
+		, Hit_Recovery(1.f)
 		, JumpPower(600.f)
 
 	{
@@ -87,7 +87,7 @@ private:
 	float Accuracy;
 	float Evasion;
 	unsigned int Hit_Stun;
-	unsigned int Hit_Recovery;
+	float Hit_Recovery;
 
 
 	float JumpPower;
