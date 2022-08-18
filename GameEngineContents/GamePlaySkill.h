@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineCore/GameEngineTransformComponent.h>
+#include <GameEngineCore/GameEngineCollision.h>
 
 // Ό³Έν :
 enum class HitType
@@ -45,7 +46,8 @@ protected:
 
 	virtual bool TriggerSkill(GameEngineCollision* _This, GameEngineCollision* _Other) = 0;
 
-	std::vector<GamePlayObject*> HitList;
+	std::vector<GameEngineCollision*> Collision_AllCollisionList;
+	std::vector<GamePlayObject*> Object_HitList;
 
 private:
 };

@@ -40,6 +40,8 @@ private:
 	void FSM_Hit_Aerial_Update(float _DeltaTime, const StateInfo& _Info);
 	void FSM_Hit_Aerial_End(const StateInfo& _Info);
 
+	void Ani_StandUp(const FrameAnimation_DESC&);
+
 
 	void FSM_Hit_Aerial_DoingDown_Start(const StateInfo& _Info);
 	void FSM_Hit_Aerial_DoingDown_Update(float _DeltaTime, const StateInfo& _Info);

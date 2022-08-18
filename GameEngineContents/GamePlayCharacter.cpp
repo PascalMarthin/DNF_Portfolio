@@ -23,6 +23,7 @@ GamePlayCharacter::GamePlayCharacter()
 	, Att_BaseAtt_Delay(0.f)
 	, DelayPunch(false)
 	, Class_Skill_Fighter_F_HamKick(nullptr)
+	, Class_Skill_Fighter_F_BaseHit(nullptr)
 {
 }
 

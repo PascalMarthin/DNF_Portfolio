@@ -1,6 +1,5 @@
 #pragma once
 #include <GameEngineCore/GameEngineTextureRenderer.h>
-#include <GameEngineCore/GameEngineCollision.h>
 #include "GamePlaySkill.h"
 
 // Ό³Έν :
@@ -27,7 +26,6 @@ protected:
 	//void OffEvent() override;
 
 private:
-	GameEngineCollision* Collision_HamerKick;
 
 
 };

@@ -5,6 +5,7 @@
 #include "GamePlayEnum.h"
 
 // ¼³¸í :
+class Skill_Fighter_F_BaseHit;
 class Skill_Fighter_F_Ham_Kick;
 enum class Collision_AllSkill
 {
@@ -137,6 +138,8 @@ public:
 	void FSM_Att_BaseKick_Start(const StateInfo& _Info);
 	void FSM_Att_BaseKick_Update(float _DeltaTime, const StateInfo& _Info);
 	void FSM_Att_BaseKick_End(const StateInfo& _Info);
+
+	Skill_Fighter_F_BaseHit* Class_Skill_Fighter_F_BaseHit;
 	void FSM_Move_Helper();
 	// ÇØ¸Ó Å±
 	void FSM_Att_HamKick_Start(const StateInfo& _Info);

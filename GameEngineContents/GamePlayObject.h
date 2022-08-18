@@ -102,9 +102,9 @@ protected:
 	// --------------------------------------------
 	UnitType Enum_UnitType;
 	ObjectType Enum_ObjectType;
+	float CharacterWeight;
 private:
 
 	bool Dir_RightSide;
-	float CharacterWeight;
 };
 

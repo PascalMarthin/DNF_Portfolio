@@ -331,6 +331,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Skill_Fighter_F_BaseHit.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Skill_Fighter_F_Ham_Kick.h">
       <SubType>
       </SubType>
@@ -555,6 +559,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="GamePlaySkill.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Skill_Fighter_F_BaseHit.cpp">
       <SubType>
       </SubType>
     </ClCompile>

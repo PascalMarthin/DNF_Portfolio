@@ -29,6 +29,8 @@ void Bale::Start()
 	Texture_Monster->CreateFrameAnimationFolder("Bale_HitDown", FrameAnimation_DESC("Bale", 26, 29, 0.07f, false));
 	Texture_Monster->CreateFrameAnimationFolder("Bale_Down", FrameAnimation_DESC("Bale", 29, 29, 0.05f, false));
 	Texture_Monster->CreateFrameAnimationFolder("Bale_Sit", FrameAnimation_DESC("Bale", 30, 30, 0.05f, false));
+	Texture_Monster->CreateFrameAnimationFolder("Bale_Stand_Up", FrameAnimation_DESC("Bale", 29, 30, 0.01f, false));
+	Texture_Monster->AnimationBindEnd("Bale_Stand_Up", std::bind(&Bale::Ani_StandUp, this, std::placeholders::_1));
 	Texture_Monster->CreateFrameAnimationFolder("Bale_Stamping", FrameAnimation_DESC("Bale", 31, 35, 0.08f, false));
 	Texture_Monster->CreateFrameAnimationFolder("Bale_Grap", FrameAnimation_DESC("Bale", 36, 37, 0.08f, false));
 	Texture_Monster->CreateFrameAnimationFolder("Bale_Hold", FrameAnimation_DESC("Bale", 38, 38, 0.15f, false));
@@ -49,6 +51,8 @@ void Bale::Start()
 	Collision_HitBody->ChangeOrder(CollisionOrder::Monster);
 	Collision_HitBody->SetDebugSetting(CollisionType::CT_AABB, {0, 0 , 0, 0});
 	//Collision_HitBody->Off();
+
+	CharacterWeight = 500.f;
 }
 
 void Bale::Update(float _DeltaTime)
@@ -99,11 +103,21 @@ void Bale::SetFSManager()
 
 void Bale::FSM_Move_Stand_Start(const StateInfo& _Info)
 {
-	Texture_Monster->ChangeFrameAnimation("Bale_Standing");
+	if (_Info.PrevState == "Hit_Down")
+	{
+		Texture_Monster->ChangeFrameAnimation("Bale_Stand_Up");
+	}
+	else
+	{
+		Texture_Monster->ChangeFrameAnimation("Bale_Standing");
+	}
 }
 void Bale::FSM_Move_Stand_Update(float _DeltaTime, const StateInfo& _Info)
 {
+	if (Texture_Monster)
+	{
 
+	}
 }
 void Bale::FSM_Move_Stand_End(const StateInfo& _Info)
 {
@@ -171,11 +185,18 @@ void Bale::FSM_Hit_Aerial_DoingDown_End(const StateInfo& _Info)
 	GoingDownTime = 0.f;
 }
 
+void Bale::Ani_StandUp(const FrameAnimation_DESC&)
+{
+	Texture_Monster->ChangeFrameAnimation("Bale_Standing");
+}
+
 
 void Bale::LandingEnd()
 {
 	Manager_StatManager->SetAerialEnd();
 }
+
+
 
 void Bale::FSM_Hit_Down_Start(const StateInfo& _Info)
 {

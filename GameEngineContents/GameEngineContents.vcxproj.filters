@@ -173,6 +173,9 @@
     <ClInclude Include="Skill_Fighter_F_Ham_Kick.h">
       <Filter>Object\Character\Fighter</Filter>
     </ClInclude>
+    <ClInclude Include="Skill_Fighter_F_BaseHit.h">
+      <Filter>Object\Character\Fighter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -345,6 +348,9 @@
       <Filter>Object\Character\SkillTemp</Filter>
     </ClCompile>
     <ClCompile Include="Skill_Fighter_F_Ham_Kick.cpp">
+      <Filter>Object\Character\Fighter</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill_Fighter_F_BaseHit.cpp">
       <Filter>Object\Character\Fighter</Filter>
     </ClCompile>
   </ItemGroup>

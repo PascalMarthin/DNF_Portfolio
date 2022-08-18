@@ -5,6 +5,7 @@
 #include "MoveManager.h"
 #include "AvataManager.h"
 #include "Skill_Fighter_F_Ham_Kick.h"
+#include "Skill_Fighter_F_BaseHit.h"
 
 void GamePlayCharacter::Create_Fighter_F_Default_FSManager()
 {
@@ -99,6 +100,8 @@ void GamePlayCharacter::Create_Fighter_F_Default_FSManager()
 		, std::bind(&GamePlayCharacter::FSM_Att_HamKick_Start, this, std::placeholders::_1)
 		, std::bind(&GamePlayCharacter::FSM_Att_HamKick_End, this, std::placeholders::_1));
 	Class_Skill_Fighter_F_HamKick = CreateComponent<Skill_Fighter_F_Ham_Kick>();
+	Class_Skill_Fighter_F_BaseHit = CreateComponent<Skill_Fighter_F_BaseHit>();
+
 
 	Manager_StatManager->GetFSMManager().ChangeState("None");
 }
