@@ -62,6 +62,11 @@ public:
 	{
 		return Manager_MoveManager;
 	}
+	inline CharacterStatManager* GetStatManager() const
+	{
+		return Manager_StatManager;
+	}
+
 
 
 protected:
@@ -78,12 +83,26 @@ protected:
 public:
 	virtual void BeHit(GamePlaySkill* _Skill, const GamePlayDataBase* _Character, int _Index);
 	// virtual void BeHit(적 대미지);
+	virtual void Jump_GoingDown() 
+	{
+		JumpGoingDown = true;
+	};
+
+	virtual void LandingEnd() {}
 
 
+	virtual void LandingEnd_Down() {}
+	//virtual void LandingEnd_Down() {}
+	virtual void SetFSManager() {}
+
+
+protected:
+	bool JumpGoingDown;
+	float DownWait;
 	// --------------------------------------------
 	UnitType Enum_UnitType;
-private:
 	ObjectType Enum_ObjectType;
+private:
 
 	bool Dir_RightSide;
 	float CharacterWeight;

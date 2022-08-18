@@ -34,10 +34,7 @@ public:
 
 	
 
-	inline CharacterStatManager* GetStatManager() const
-	{
-		return Manager_StatManager;
-	}
+
 	inline PlayerInterface* GetInterface() const
 	{
 		return PlayerUserInterface;
@@ -90,7 +87,7 @@ public:
 	static GamePlayDataBase* CreateCharacterBase(CharacterFormerClass _Class, const std::string& _NickName = "Debug");
 	//-------------------------------------------
 
-	void SetFSManager();
+	void SetFSManager() override;
 	//void SetCollisionManager();
 
 	//------FSM--------------
@@ -112,9 +109,10 @@ public:
 	// Á¡ÇÁ
 	void FSM_Move_Jump_Start(const StateInfo& _Info);
 	bool StartJump;
-	bool JumpGoingDown;
 	void FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& _Info);
 	bool EndJump;
+	void Jump_GoingDown() override;
+	void LandingEnd() override;
 	void FSM_Move_Jump_End(const StateInfo& _Info);
 	// Á¡ÇÁ Å±
 	float JumpKick_DelayTime;

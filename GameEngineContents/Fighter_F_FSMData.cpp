@@ -204,7 +204,7 @@ void GamePlayCharacter::FSM_Move_Stand_Start(const StateInfo& _Info)
 		Manager_AvataManager->ChangeAvataAnimation("Move_Stand_Battle");
 	}
 	Manager_StatManager->SetStand();
-	GameEngineDebug::OutPutString(std::to_string(GetTransform().GetLocalPosition().y));
+	//GameEngineDebug::OutPutString(std::to_string(GetTransform().GetLocalPosition().y));
 }
 
 void GamePlayCharacter::FSM_Move_Stand_Update(float _DeltaTime, const StateInfo& _Info)
@@ -254,7 +254,7 @@ void GamePlayCharacter::FSM_Move_Jump_Start(const StateInfo& _Info)
 	StartJump = true;
 	JumpGoingDown = false;
 	Manager_AvataManager->ChangeAvataAnimation("Move_JumpReady");
-	Manager_MoveManager->SetJump();
+	Manager_MoveManager->SetJump(Manager_StatManager->GetAbilityStat()->JumpPower);
 
 	On_EnumCollision(Collision_AllSkill::Jump_Kick);
 	
@@ -323,21 +323,49 @@ void GamePlayCharacter::FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& 
 		}
 	}
 
-	if (LandingPos.y  >= GetTransform().GetWorldPosition().y )
-	{
-		Manager_AvataManager->ChangeAvataAnimation("Move_Landing");
-		Manager_MoveManager->SetCharacterLocation(LandingPos);
-		Manager_StatManager->SetJumpEnd();
-		EndJump = true;
-		return;
-	}
+	//if (JumpGoingDown == true)
+	//{
+	//	Manager_AvataManager->ChangeAvataAnimation("Move_JumpDown");
+	//	GoingDown = false;
+	//}
 
-	if (Manager_MoveManager->JumpHigh <= 0.f &&
-		JumpGoingDown == false &&
+	//if (LandingPos.y  >= GetTransform().GetWorldPosition().y )
+	//{
+
+	//	Manager_MoveManager->SetCharacterLocation(LandingPos);
+	//	return;
+	//}
+
+}
+
+void GamePlayCharacter::Jump_GoingDown()
+{
+	if (JumpGoingDown == false &&
 		BaseJumpKick == false)
 	{
-		Manager_AvataManager->ChangeAvataAnimation("Move_JumpDown");
+		if (Manager_StatManager->IsAerial())
+		{
+			Manager_AvataManager->ChangeAvataAnimation("Hit_Falling");
+		}
+		else
+		{
+			Manager_AvataManager->ChangeAvataAnimation("Move_JumpDown");
+		}
 		JumpGoingDown = true;
+	}
+}
+
+void GamePlayCharacter::LandingEnd()
+{
+	EndJump = true;
+	if (Manager_StatManager->IsAerial())
+	{
+
+	}
+	else
+	{
+		Manager_AvataManager->ChangeAvataAnimation("Move_Landing");
+		Manager_StatManager->SetJumpEnd();
 	}
 
 }

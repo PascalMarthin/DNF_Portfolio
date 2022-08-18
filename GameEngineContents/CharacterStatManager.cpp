@@ -4,14 +4,15 @@
 #include "GamePlayDataBase.h"
 #include "GamePlayEnum.h"
 #include "GamePlayCharacter.h"
+#include "GamePlayMonster.h"
 
 
 
 CharacterStatManager::CharacterStatManager() 
 	: PlayerCurrentState(0x0)
 	, Time_CurrentEngage(0.f)
-	, CurrentAbilityStat(nullptr)
-	, Time_BeHit(float4::ZERO)
+	, CurrentPlayerAbilityStat(nullptr)
+	, CurrentMonsterAbilityStat(nullptr)
 {
 }
 
@@ -27,8 +28,27 @@ void CharacterStatManager::Start()
 
 void CharacterStatManager::SettingFirstTime()
 {
+
+	GamePlayObject* Object = GetParent<GamePlayObject>();
+	switch (Object->GetObjectType())
+	{
+	case ObjectType::Character:
+		SetCharacter_Fighter_F();
+		break;
+	case ObjectType::Monster:
+
+
+		break;
+	case ObjectType::NPC:
+		break;
+	case ObjectType::None:
+		break;
+	case ObjectType::Custom:
+		break;
+	default:
+		break;
+	}
 	//CharacterClass Class = GetParent<GamePlayCharacter>()->GetPlayerClass();
-	SetCharacter_Fighter_F();
 
 	/*switch (Class)
 	{
@@ -55,14 +75,9 @@ void CharacterStatManager::Update(float _DeltaTime)
 
 	FSMManager.Update(_DeltaTime);
 
-	if (!IsLive() || CurrentAbilityStat->HP < 0.f)
+	if (!IsLive() || CurrentPlayerAbilityStat->HP < 0.f)
 	{
 		// 사망
-	}
-
-	if (Time_BeHit.z > 0)
-	{
-		Time_BeHit.z -= _DeltaTime * 100.f * CurrentAbilityStat->Hit_Recovery;
 	}
 
 
@@ -82,7 +97,7 @@ void CharacterStatManager::Update(float _DeltaTime)
 //Player_Character_Evasion = 0x09,// 절대회피(피격판정X)					
 //Player_Character_Superarmor = 0x0a,// 슈퍼아머							
 //Player_Character_BeHit = 0x0b,// 경직								
-//Player_Character_BeAir = 0x0c,// 공중에 뜸							
+//Player_Character_Aerial = 0x0c,// 공중에 뜸							
 //Player_Character_BeDown = 0x0d,// 다운								
 //Player_Character_BeHold = 0x0e  // 잡힘		
 
@@ -124,6 +139,15 @@ void CharacterStatManager::SetJumpEnd()
 	PlayerCurrentState &= ~CharacterStat::Player_Character_Jump;
 }
 
+void CharacterStatManager::SetAerial()
+{
+	PlayerCurrentState |= CharacterStat::Player_Character_Aerial;
+}
+void CharacterStatManager::SetAerialEnd()
+{
+	PlayerCurrentState &= ~CharacterStat::Player_Character_Aerial;
+}
+
 void CharacterStatManager::SetDoBaseAtt()
 {
 	PlayerCurrentState |= CharacterStat::Player_Character_BaseAtt;
@@ -136,36 +160,69 @@ void CharacterStatManager::SetDoBaseAttEnd()
 	PlayerCurrentState &= ~(CharacterStat::Player_Character_BaseAtt);
 }
 
-void CharacterStatManager::SetHit(const float4& _HitTime, float _Damge)
+void CharacterStatManager::SetCantAction()
+{
+	PlayerCurrentState &= ~0b0000000111101110;
+}
+
+void CharacterStatManager::SetHit_Stand()
 {
 	if (!IsSuperarmor())
 	{
 		PlayerCurrentState |= CharacterStat::Player_Character_BeHit;
-		PlayerCurrentState &= ~0b0000000111101110;
-		FSMManager.ChangeState("Hit_Stand1");
-	}
-	Time_BeHit = _HitTime;
-	CurrentAbilityStat->HP -= _Damge;
-	if (true)
-	{
-
+		SetCantAction();
+		FSMManager.ChangeState("Hit_Stand");
 	}
 }
+
+void CharacterStatManager::SetHit_BlowUp()
+{
+	if (!IsSuperarmor())
+	{
+		PlayerCurrentState |= CharacterStat::Player_Character_Aerial;
+		PlayerCurrentState &= ~CharacterStat::Player_Character_BeHit;
+		SetCantAction();
+		FSMManager.ChangeState("Hit_Aerial");
+	}
+}
+
 
 
 
 void CharacterStatManager::OnEvent() 
 {
-	SetCharacter_Fighter_F();
-	CurrentAbilityStat = GamePlayCharacter::GetCurrentCharacterData()->GetAbilityStat();
+	;
+	switch (GetParent<GamePlayObject>()->GetObjectType())
+	{
+	case ObjectType::Character:
+	{
+		SetCharacter_Fighter_F();
+		CurrentPlayerAbilityStat = GamePlayCharacter::GetCurrentCharacterData()->GetAbilityStat();
+		CurrentMonsterAbilityStat = nullptr;
+	}
+		break;
+	case ObjectType::Monster:
+		CurrentPlayerAbilityStat = nullptr;
+		CurrentMonsterAbilityStat = GetParent<GamePlayMonster>()->GetMonsterStat();
+		break;
+	case ObjectType::NPC:
+		break;
+	case ObjectType::None:
+		break;
+	case ObjectType::Custom:
+		break;
+	default:
+		break;
+	}
+
+
 
 }
 
 void CharacterStatManager::OffEvent()
 {
-	CurrentAbilityStat = nullptr;
+	CurrentPlayerAbilityStat = nullptr;
 
 	PlayerCurrentState = 0x0;
 	Time_CurrentEngage = 0.f;
-	Time_BeHit = float4::ZERO;
 }

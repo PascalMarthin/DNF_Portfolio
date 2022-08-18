@@ -7,6 +7,7 @@
 
 // 설명 : 상태를 체크하고 업데이트마다 정리하는 클래스
 class CharacterAbilityStat;
+class MonsterAbilityStat;
 class CharacterStatManager : public GameEngineComponent
 {
 public:
@@ -29,6 +30,11 @@ public:
 
 
 public:
+	inline CharacterAbilityStat* GetAbilityStat() const
+	{
+		return CurrentPlayerAbilityStat;
+	}
+
 	inline bool IsLive() const
 	{
 		return PlayerCurrentState & CharacterStat::Player_Character_ALive;
@@ -61,9 +67,9 @@ public:
 	{
 		return PlayerCurrentState & CharacterStat::Player_Character_Superarmor;
 	}
-	inline bool IsBeAir() const
+	inline bool IsAerial() const
 	{
-		return PlayerCurrentState & CharacterStat::Player_Character_BeAir;
+		return PlayerCurrentState & CharacterStat::Player_Character_Aerial;
 	}
 	
 
@@ -76,7 +82,11 @@ public:
 	void SetDoBaseAttEnd();
 	void SetJump();
 	void SetJumpEnd();
-	void SetHit(const float4& _HitTime, float _Damge);
+	void SetAerial();
+	void SetAerialEnd();
+	void SetCantAction();
+	void SetHit_Stand();
+	void SetHit_BlowUp();
 	inline void SetEngage()
 	{
 		Time_CurrentEngage = 5.f;
@@ -87,7 +97,7 @@ public:
 	}
 	inline float GetMoveSpeed() const
 	{
-		return CurrentAbilityStat->MoveSpeed;
+		return CurrentPlayerAbilityStat->MoveSpeed;
 	}
 
 
@@ -110,10 +120,9 @@ private:
 
 private:
 	GameEngineStateManager FSMManager;
-	CharacterAbilityStat* CurrentAbilityStat;
-
+	CharacterAbilityStat* CurrentPlayerAbilityStat;
+	MonsterAbilityStat* CurrentMonsterAbilityStat;
 private:
 	float Time_CurrentEngage;
-	float4 Time_BeHit;
 };
 

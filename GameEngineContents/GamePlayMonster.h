@@ -3,6 +3,18 @@
 #include <GameEngineCore/GameEngineCollision.h> 
 
 // Ό³Έν :
+class MonsterAbilityStat
+{
+	friend class CharacterStatManager;
+	friend class GamePlayMonster;
+
+private: 
+	unsigned int MAXHP;
+	unsigned int HP;
+
+	float Def;
+
+};
 class GameEngineStateManager;
 class GamePlayMonster : public GamePlayObject
 {
@@ -21,11 +33,20 @@ public:
 	{
 		return Collision_HitBody;
 	}
+	inline MonsterAbilityStat* GetMonsterStat()
+	{
+		return &MonsterAbilityStat;
+	}
+
 
 protected:
-	// -------------------FSM---------------------
-	GameEngineStateManager FSMManager;
+	MonsterAbilityStat MonsterAbilityStat;
+	void CreateMonsterStat(unsigned int _MAXHP, float Def);
 
+	void Jump_GoingDown() override;
+	float GoingDownTime;
+
+	void Start() override;
 	void OnEvent() override;
 	//--------------------Collision---------------
 	GameEngineCollision* Collision_HitBody;

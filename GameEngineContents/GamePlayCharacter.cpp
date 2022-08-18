@@ -17,7 +17,6 @@ GamePlayCharacter::GamePlayCharacter()
 	, PlayerFormerClass(CharacterFormerClass::None)
 	, StartJump(false)
 	, EndJump(false)
-	, JumpGoingDown(false)
 	, MoveIndex(0.f)
 	, JumpKick_DelayTime(0.f)
 	, BaseJumpKick(false)
@@ -137,10 +136,11 @@ void GamePlayCharacter::OnEvent()
 	SetFSManager();
 	MoveIndex = 0.f;
 
+
 	GetTransform().SetLocalMove({0 , 0 , GetTransform().GetLocalPosition().y });
 }
 
 void GamePlayCharacter::OffEvent()
 {
-
+	JumpGoingDown = false;
 }

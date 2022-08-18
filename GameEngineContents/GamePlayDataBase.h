@@ -23,6 +23,7 @@ enum class InventoryBag
 class CharacterAbilityStat
 {
 	friend class CharacterStatManager;
+	friend class GamePlayCharacter;
 public:
 	CharacterAbilityStat()
 		: Level(0)

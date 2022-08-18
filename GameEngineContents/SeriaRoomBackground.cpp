@@ -32,7 +32,7 @@ void SeriaRoomBackground::Start()
 
 	Collision_SeriaRoom_OutDoor = GetLevel()->CreateActor<DummyActor>()->CreateComponent<GameEngineCollision>();
 	Collision_SeriaRoom_OutDoor->GetTransform().SetLocalScale({ 700.f, 100.f , 50.f });
-	Collision_SeriaRoom_OutDoor->GetTransform().SetWorldPosition({ 640, -720, 0 });
+	Collision_SeriaRoom_OutDoor->GetTransform().SetWorldPosition({ 640, -720 + 80, 80 });
 	Collision_SeriaRoom_OutDoor->ChangeOrder(CollisionOrder::ChangeMap);
 	Collision_SeriaRoom_OutDoor->SetDebugSetting(CollisionType::CT_AABB, float4::GREEN);
 

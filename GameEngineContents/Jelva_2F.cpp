@@ -32,7 +32,7 @@ void Jelva_2F::Update(float _DeltaTime)
 
 	if (!GetMainCameraActor()->IsFreeCameraMode())
 	{
-		float4 Pos = Player_Character->GetMoveManager()->GetMoveCollision()->GetTransform().GetLocalPosition();
+		float4 Pos = Player_Character->GetMoveManager()->GetMoveCollision()->GetTransform().GetWorldPosition();
 		if (Pos.x <= 793.f)
 		{
 			Pos.x = 793.f;

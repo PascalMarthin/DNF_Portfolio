@@ -32,7 +32,7 @@ void SeriaRoom_Level::Start()
 
 	NPCSeria = CreateActor<Seria_NPC>();
 	Fighter = CreateActor<GamePlayCharacter>();
-	NPCSeria->GetTransform().SetLocalPosition({ GameEngineWindow::GetScale().hx(), -GameEngineWindow::GetScale().hy() - 200.f , Hight - GameEngineWindow::GetScale().hy() - 200.f - static_cast<float>(ZSortOrder::NPC_Object) });
+	NPCSeria->GetTransform().SetLocalPosition({ GameEngineWindow::GetScale().hx(), -GameEngineWindow::GetScale().hy() - 200.f , Hight - GameEngineWindow::GetScale().hy() - 200.f});
 	GetMainCameraActor()->GetTransform().SetWorldMove({ Width / 2, -Hight / 2 });
 
 
@@ -41,7 +41,7 @@ void SeriaRoom_Level::Start()
 
 void SeriaRoom_Level::Update(float _DeltaTime)
 {
-
+	//GameEngineDebug::OutPutString(std::to_string(Fighter->GetTransform().GetLocalPosition().z));
 
 }
 
@@ -50,7 +50,7 @@ void SeriaRoom_Level::OnEvent()
 	float Hight = Texture_SeriaRoom->GetBackGroundTextureScale().y;
 	if (GamePlayDataBase::GetCurrentCharacterData()->GetCurrentMap() == TownMap::None)
 	{
-		Fighter->GetTransform().SetLocalPosition({ GameEngineWindow::GetScale().hx(), -GameEngineWindow::GetScale().hy() - 50.f, Hight });
+		Fighter->GetTransform().SetLocalPosition({ GameEngineWindow::GetScale().hx(), -GameEngineWindow::GetScale().hy() - 100.f, Hight });
 	}
 	else
 	{

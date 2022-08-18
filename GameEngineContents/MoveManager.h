@@ -1,12 +1,12 @@
 #pragma once
-#include <GameEngineCore/GameEngineComponent.h>
+#include <GameEngineCore/GameEngineTransformComponent.h>
 
 // Ό³Έν :
 class GamePlayObject;
 class GameEngineCollision;
 class GamePlayCharacter;
 class CharacterStatManager;
-class MoveManager : public GameEngineComponent
+class MoveManager : public GameEngineTransformComponent
 {
 	friend class GamePlayCharacter;
 	friend class CharacterStatManager;
@@ -27,9 +27,12 @@ public:
 	}
 
 	float4 SetCharacterMove(const float4& _Move);
+	//void SetCharacterMove_Inertia(const float4& _Move);
 	void SetCharacterLocation(const float4& _Pos);
 	void SetJump();
-	void SetBeAir();
+	void SetJump(float _Power);
+
+	//void SetBeAir();
 
 
 protected:
@@ -43,13 +46,17 @@ protected:
 private:
 	GamePlayObject* ParentCharacter;
 
+	// -------------Hit-----------------
+public:
+	void SetHit(const float4& _HitPower);
+
+private:
+	float4 BlowPower;
 	// -------------Jump----------------
 	float JumpTime;
-	float JumpPower;
 	float JumpHigh;
-	float CurrentGravitIndex;
 	float4 LandingPostion;
-	void SetCharacterJump(const float4& _Move);
+	//float4 Move_Inertia;
 	// -------------Jump----------------
 
 	CharacterStatManager* ManagerStat;

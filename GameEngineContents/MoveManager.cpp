@@ -12,12 +12,11 @@ const float Gravitational_Constant = 9.8f;
 
 MoveManager::MoveManager() 
 	: ParentCharacter(nullptr)
-	, JumpPower(600.f)
 	, JumpHigh(0.f)
-	, CurrentGravitIndex(-1.f)
 	, JumpTime(0.f)
 	, Collision_Move(nullptr)
 	, Texture_CollisionMap(nullptr)
+	, BlowPower(float4::ZERO)
 {
 }
 
@@ -37,11 +36,13 @@ void MoveManager::Start()
 	}
 
 
-	Collision_Move = ParentCharacter->GetLevel()->CreateActor<DummyActor>()->CreateComponent<GameEngineCollision>("Character_Map_Collision");
+	Collision_Move = ParentCharacter->CreateComponent<GameEngineCollision>("Character_Map_Collision");
 	Collision_Move->GetTransform().SetLocalScale({50 , 20 , 30});
 	Collision_Move->ChangeOrder(CollisionOrder::Player_Floor);
 	Collision_Move->SetDebugSetting(CollisionType::CT_AABB2D, {0, 1, 0, 0.5f});
-	Collision_Move->GetTransform().SetLocalPosition({ 0, -56 });
+//	Collision_Move->GetTransform().SetLocalPosition({ 0, -56 });
+	Collision_Move->SetParent(this);
+	//GetTransform().SetLocalPosition({ 0, -56, 0});
 }
 
 
@@ -50,23 +51,72 @@ void MoveManager::Start()
 // -------------Update------------------
 void MoveManager::Update(float _DeltaTime)
 {
+	const float4& A = ParentCharacter->GetTransform().GetLocalPosition();
 	if (ManagerStat != nullptr )
 	{
-		if (ManagerStat->IsJump() || ManagerStat->IsBeAir())
+		if (ManagerStat->IsJump() || ManagerStat->IsAerial())
 		{
 			JumpTime += _DeltaTime;
-			if (JumpHigh > -650)
+			JumpHigh = (-(ParentCharacter->GetCharacterWeight() * JumpTime * Gravitational_Constant) * JumpTime);
+
+
+			float4 Power = BlowPower;
+
+			Power.x += Power.x == 0 ? 0 : JumpHigh * 0.2f;
+			Power.y += JumpHigh;
+
+
+
+			if (Power.y <= -650.f)
 			{
-				JumpHigh = (-(ParentCharacter->GetCharacterWeight()  * JumpTime * Gravitational_Constant) * JumpTime + JumpPower);
+				Power.y = -650.f;
 			}
-			SetCharacterJump(float4({ 0, 1, 0 }) * JumpHigh * _DeltaTime);
+			Power *= _DeltaTime;
+			Power.x *= 1.5f;
+			SetCharacterMove({ Power.x , 0, 0});
+			ParentCharacter->GetTransform().SetWorldMove({ 0, Power.y, 0 });
+	
+			LandingPostion.x += Power.x;
+			// Y = x(ax);
+			// y = 속력
+			// x = 점프 시간
+			// 
+			const float4& A = ParentCharacter->GetTransform().GetLocalPosition();
+			if (LandingPostion.y > ParentCharacter->GetTransform().GetLocalPosition().y)
+			{
+				if (ManagerStat->IsAerial()/* && JumpHigh <= -600.f*/) // Bouns
+				{
+					ParentCharacter->GetTransform().SetLocalPosition(LandingPostion);
+					ParentCharacter->LandingEnd();
+				}
+				else if (ManagerStat->IsJump())
+				{
+					ParentCharacter->GetTransform().SetLocalPosition(LandingPostion);
+					ParentCharacter->LandingEnd();
+
+				}
+				BlowPower = float4::ZERO;
+			}
+
+			if (Power.y < 0.f)
+			{
+				ParentCharacter->Jump_GoingDown();
+			}
+
+
+			if (Power.x > 0)
+			{
+				ParentCharacter->SetLeftDir();
+			}
+			else if (Power.x < 0)
+			{
+				ParentCharacter->SetRightDir();
+			}
+
+		//GameEngineDebug::OutPutString(std::to_string(GetTransform().GetWorldPosition().x) + " " +std::to_string(GetTransform().GetWorldPosition().y) + " " + std::to_string(GetTransform().GetWorldPosition().z));
 		}
-		// Y = x(ax);
-		// y = 속력
-		// x = 점프 시간
-		// 
+
 	}
-	//GameEngineDebug::OutPutString(std::to_string(Collision_Move->GetTransform().GetLocalPosition().y) + " " + std::to_string(Collision_Move->GetTransform().GetLocalPosition().z));
 }
 
 
@@ -87,10 +137,6 @@ float4 MoveManager::SetCharacterMove(const float4& _Move)
 
 	float4 Move = _Move;
 
-	//float4 IndexL = { Pos.x - Scale.hx(), -Pos.y};
-	//float4 IndexR = { Pos.x + Scale.hx(), -Pos.y };
-	//float4 IndexU = { Pos.x , -(Pos.y + Scale.hx()) };
-	//float4 IndexD = { Pos.x , -(Pos.y - Scale.hx()) };
 
 	// Left 	// Right
 	if ((Move.x < 0 && Texture_CollisionMap->GetPixelToFloat4(Pos.ix() - Scale.hix(), -Pos.iy()).CompareInt4D(float4::RED)) ||
@@ -110,16 +156,17 @@ float4 MoveManager::SetCharacterMove(const float4& _Move)
 	Move.y *= 0.73f;
 	Move.z = Move.y;
 	ParentCharacter->GetTransform().SetLocalMove(Move);
-	Collision_Move->GetTransform().SetLocalMove(Move);
+	//Collision_Move->GetTransform().SetLocalMove(Move);
 
 	//
 	return Move;
 }
 
-void MoveManager::SetCharacterJump(const float4& _Move)
-{
-	ParentCharacter->GetTransform().SetWorldMove(_Move);
-}
+//void MoveManager::SetCharacterMove_Inertia(const float4& _Move)
+//{
+//	Move_Inertia = _Move;
+//}
+
 
 void MoveManager::SetCharacterLocation(const float4& _Pos)
 {
@@ -129,53 +176,80 @@ void MoveManager::SetCharacterLocation(const float4& _Pos)
 void MoveManager::SetJump()
 {
 	JumpHigh = 0.f;
-	CurrentGravitIndex = -1.f;
 	JumpTime = 0.f;
-	LandingPostion = ParentCharacter->GetTransform().GetLocalPosition();
+	LandingPostion = ParentCharacter->GetTransform().GetWorldPosition();
 	GameEngineDebug::OutPutString(std::to_string(LandingPostion.y));
+
 }
-void MoveManager::SetBeAir()
+void MoveManager::SetJump(float _Power)
 {
-	CurrentGravitIndex = -1.f;
+	JumpHigh = 0.f;
 	JumpTime = 0.f;
+	LandingPostion = ParentCharacter->GetTransform().GetWorldPosition();
+	BlowPower.y = _Power;
+}
+//void MoveManager::SetBeAir()
+//{
+//	JumpTime = 0.f;
+//}
+
+void MoveManager::SetHit(const float4& _HitPower)
+{
+	BlowPower = _HitPower;
+	if (_HitPower.y != 0 )
+	{
+		SetJump();
+	}
 }
 
 void MoveManager::OnEvent()
 {
 	JumpHigh = 0.f;
-	CurrentGravitIndex = -1.f;
 	JumpTime = 0.f;
+	ManagerStat = GetActor<GamePlayObject>()->GetStatManager();
 
-	GamePlayCharacter* Character = dynamic_cast<GamePlayCharacter*>(ParentCharacter);
 
-	if (Character->GetObjectType() == ObjectType::Character)
-	{
-		ManagerStat = Character->GetStatManager();
-	}
-	TownLevel* Level = dynamic_cast<TownLevel*>(Character->GetLevel());
+	TownLevel* Level = dynamic_cast<TownLevel*>(GetActor()->GetLevel());
 	if (Level != nullptr)
 	{
 		Texture_CollisionMap = Level->GetCollisionMapTexture();
 	}
 	else
 	{
-		BattleLevel* BatLevel = dynamic_cast<BattleLevel*>(Character->GetLevel());
+		BattleLevel* BatLevel = dynamic_cast<BattleLevel*>(GetActor()->GetLevel());
 		if (BatLevel != nullptr)
 		{
 			Texture_CollisionMap = BatLevel->GetCollisionMapTexture();
 		}
 	}
 
+	//switch (GetActor<GamePlayObject>()->GetObjectType())
+	//{
+	//case ObjectType::Character:
+	//{
+	//	Collision_Move->GetTransform().SetLocalPosition({ ParentCharacter->GetTransform().GetLocalPosition().x,
+	//ParentCharacter->GetTransform().GetLocalPosition().y - 56,
+	//ParentCharacter->GetTransform().GetLocalPosition().z });
+	//}
+	//	break;
+	//case ObjectType::Monster:
+	//	Collision_Move->Off();
+	//	break;
+	//case ObjectType::NPC:
+	//	break;
+	//case ObjectType::None:
+	//	break;
+	//case ObjectType::Custom:
+	//	break;
+	//default:
+	//	break;
+	//}
 
-
-
-	Collision_Move->GetTransform().SetLocalPosition({ ParentCharacter->GetTransform().GetLocalPosition().x, 
-		ParentCharacter->GetTransform().GetLocalPosition().y - 56,
-		ParentCharacter->GetTransform().GetLocalPosition().z });
 
 }
 
 void MoveManager::OffEvent()
 {
 	Texture_CollisionMap = nullptr;
+	BlowPower = float4::ZERO;
 }

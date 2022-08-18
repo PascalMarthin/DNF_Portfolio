@@ -85,7 +85,7 @@ enum CharacterStat
 	Player_Character_Evasion		=	0b0000010000000000 ,// 절대회피(피격판정X)					
 	Player_Character_Superarmor		=	0b0000100000000000 ,// 슈퍼아머상태							
 	Player_Character_BeHit			=	0b0001000000000000 ,// 경직중						
-	Player_Character_BeAir	        =   0b0010000000000000 ,// 타의로 공중에 뜨는중							
+	Player_Character_Aerial	        =   0b0010000000000000 ,// 타의로 공중에 뜨는중							
 	Player_Character_BeDown	        =   0b0100000000000000 ,// 다운중		
 	Player_Character_BeHold			=	0b1000000000000000  // 잡혀있는중															
 };

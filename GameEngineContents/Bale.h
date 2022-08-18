@@ -25,7 +25,32 @@ protected:
 private:
 
 	// ---------FSM-------------
-	void CreateFSMForBale();	
+	void SetFSManager() override;
+
+	void FSM_Move_Stand_Start(const StateInfo& _Info);
+	void FSM_Move_Stand_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Move_Stand_End(const StateInfo& _Info);
+
+	void FSM_Hit_Stand_Start(const StateInfo& _Info);
+	void FSM_Hit_Stand_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Hit_Stand_End(const StateInfo& _Info);
+
+
+	void FSM_Hit_Aerial_Start(const StateInfo& _Info);
+	void FSM_Hit_Aerial_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Hit_Aerial_End(const StateInfo& _Info);
+
+
+	void FSM_Hit_Aerial_DoingDown_Start(const StateInfo& _Info);
+	void FSM_Hit_Aerial_DoingDown_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Hit_Aerial_DoingDown_End(const StateInfo& _Info);
+
+	void LandingEnd() override;
+
+	void FSM_Hit_Down_Start(const StateInfo& _Info);
+	void FSM_Hit_Down_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Hit_Down_End(const StateInfo& _Info);
+	
 
 	//void FSM_Move_Walk_Start(const StateInfo& _Info);
 	//void FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _Info);

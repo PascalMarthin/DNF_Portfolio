@@ -9,6 +9,7 @@ enum class HitType
 	Hold,
 	Air,
 };
+class GamePlayObject;
 class GamePlaySkill : public GameEngineTransformComponent
 {
 public:
@@ -43,6 +44,8 @@ protected:
 	float4 float4_HitPhysicsPower; // xyz = 날리는 파워, w = 경직시간
 
 	virtual bool TriggerSkill(GameEngineCollision* _This, GameEngineCollision* _Other) = 0;
+
+	std::vector<GamePlayObject*> HitList;
 
 private:
 };
