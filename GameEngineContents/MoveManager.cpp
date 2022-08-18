@@ -84,18 +84,30 @@ void MoveManager::Update(float _DeltaTime)
 			const float4& A = ParentCharacter->GetTransform().GetLocalPosition();
 			if (LandingPostion.y > ParentCharacter->GetTransform().GetLocalPosition().y)
 			{
-				if (ManagerStat->IsAerial()/* && JumpHigh <= -600.f*/) // Bouns
+				if (ManagerStat->IsAerial()) 
 				{
-					ParentCharacter->GetTransform().SetLocalPosition(LandingPostion);
-					ParentCharacter->LandingEnd();
+					if (JumpHigh <= -400.f) // Bouns
+					{
+						ParentCharacter->GetTransform().SetLocalPosition(LandingPostion);
+						BlowPower = { BlowPower.x * 0.2f ,JumpHigh * -1.f * 0.1f, 0 };
+						SetJump();
+					}
+					else
+					{
+						ParentCharacter->GetTransform().SetLocalPosition(LandingPostion);
+						ParentCharacter->LandingEnd();
+						ParentCharacter->LandingEnd();
+						BlowPower = float4::ZERO;
+					}
+
 				}
 				else if (ManagerStat->IsJump())
 				{
 					ParentCharacter->GetTransform().SetLocalPosition(LandingPostion);
 					ParentCharacter->LandingEnd();
+					BlowPower = float4::ZERO;
 
 				}
-				BlowPower = float4::ZERO;
 			}
 
 			if (Power.y < 0.f)
@@ -178,7 +190,7 @@ void MoveManager::SetJump()
 	JumpHigh = 0.f;
 	JumpTime = 0.f;
 	LandingPostion = ParentCharacter->GetTransform().GetWorldPosition();
-	GameEngineDebug::OutPutString(std::to_string(LandingPostion.y));
+	//GameEngineDebug::OutPutString(std::to_string(LandingPostion.y));
 
 }
 void MoveManager::SetJump(float _Power)
