@@ -62,10 +62,17 @@ void MoveManager::Update(float _DeltaTime)
 
 			float4 Power = BlowPower;
 
-			Power.x += Power.x == 0 ? 0 : JumpHigh * 0.2f;
+			Power.x += Power.x == 0 ? 0 : (-(ParentCharacter->GetCharacterWeight() * JumpTime * 0.1f) * JumpTime);;
 			Power.y += JumpHigh;
 
-
+			if (BlowPower.x > 0 && Power.x < 0)
+			{
+				Power.x = 0.f;
+			}
+			if (BlowPower.x < 0 && Power.x > 0)
+			{
+				Power.x = 0.f;
+			}
 
 			if (Power.y <= -650.f)
 			{
@@ -73,6 +80,7 @@ void MoveManager::Update(float _DeltaTime)
 			}
 			Power *= _DeltaTime;
 			Power.x *= 1.5f;
+			GetTransform().SetWorldMove({ 0, -Power.y , 0 });
 			SetCharacterMove({ Power.x , 0, 0});
 			ParentCharacter->GetTransform().SetWorldMove({ 0, Power.y, 0 });
 	

@@ -16,7 +16,7 @@ void Skill_Fighter_F_Ham_Kick::Start()
 {
 	int_SkillDamage = 100;
 	Enum_HitType = HitType::Air;
-	float4_HitPhysicsPower = { 500, 200, 0, 0 };
+	float4_HitPhysicsPower = { 200, 800, 0, 0 };
 
 	GameEngineCollision* Collision_HamerKick = GetActor()->CreateComponent<GameEngineCollision>("Ham_Kick");
 	Collision_HamerKick->GetTransform().SetLocalScale({100.f, 100.f, 40.f});
