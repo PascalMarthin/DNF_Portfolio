@@ -61,7 +61,7 @@ void DungeonSelect::Update(float _DeltaTime)
 }
 
 
-void DungeonSelect::OnEvent()
+void DungeonSelect::LevelStartEvent()
 {
 	switch (CurrentWorldDungeon)
 	{
@@ -96,7 +96,7 @@ void DungeonSelect::SetLukeDungeon()
 	GamePlayDataBase::GetCurrentCharacterData()->SetCurrentMap(TownMap::DungeonSelect);
 }
 
-void DungeonSelect::OffEvent()
+void DungeonSelect::LevelEndEvent()
 {
 	DungeonSelect::CurrentWorldDungeon = WorldDungeon::None;
 

@@ -45,7 +45,7 @@ void SeriaRoom_Level::Update(float _DeltaTime)
 
 }
 
-void SeriaRoom_Level::OnEvent()
+void SeriaRoom_Level::LevelStartEvent()
 {
 	float Hight = Texture_SeriaRoom->GetBackGroundTextureScale().y;
 	if (GamePlayDataBase::GetCurrentCharacterData()->GetCurrentMap() == TownMap::None)

@@ -19,7 +19,7 @@ void DungeonSelect_BackGround::Update(float _DeltaTime)
 
 }
 
-void DungeonSelect_BackGround::OnEvent()
+void DungeonSelect_BackGround::LevelStartEvent()
 {
 
 }

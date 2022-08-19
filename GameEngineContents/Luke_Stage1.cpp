@@ -51,7 +51,7 @@ void Luke_Stage1::Update(float _DeltaTime)
 	}
 }
 
-void Luke_Stage1::OnEvent()
+void Luke_Stage1::LevelStartEvent()
 {
 	float Hight = Texture_Luke_Stage1->GetBackGroundTextureScale().y;
 	if (Dungeon_Luke::GetStage() == Luke_Stage::Stage_2)

@@ -128,7 +128,7 @@ void GamePlayCharacter::SetFSManager()
 	}
 }
 
-void GamePlayCharacter::OnEvent()
+void GamePlayCharacter::LevelStartEvent()
 {
 	if (CurrentCharacterData == nullptr)
 	{
@@ -141,7 +141,7 @@ void GamePlayCharacter::OnEvent()
 	GetTransform().SetLocalMove({0 , 0 , GetTransform().GetLocalPosition().y });
 }
 
-void GamePlayCharacter::OffEvent()
+void GamePlayCharacter::LevelEndEvent()
 {
 	JumpGoingDown = false;
 }

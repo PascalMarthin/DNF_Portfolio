@@ -8,6 +8,7 @@
 LocalDungeon DungeonLoding::CurrentDungeon = LocalDungeon::None;
 
 DungeonLoding::DungeonLoding() 
+	: Texture_BackGround(nullptr)
 {
 }
 
@@ -28,7 +29,7 @@ void DungeonLoding::Update(float _DeltaTime)
 
 }
 
-void DungeonLoding::OnEvent()
+void DungeonLoding::LevelStartEvent()
 {
 	switch (DungeonLoding::CurrentDungeon)
 	{
@@ -46,7 +47,7 @@ void DungeonLoding::OnEvent()
 		// Debug
 		{
 			DungeonLoding::CurrentDungeon = LocalDungeon::Luke_LightOfAltar;
-			DungeonLoding::OnEvent();
+			DungeonLoding::LevelStartEvent();
 			return;
 		}
 		break;
@@ -54,7 +55,7 @@ void DungeonLoding::OnEvent()
 }
 
 
-void DungeonLoding::OffEvent()
+void DungeonLoding::LevelEndEvent()
 {
 	DungeonLoding::CurrentDungeon = LocalDungeon::None;
 }

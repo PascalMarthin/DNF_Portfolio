@@ -227,7 +227,7 @@ void MoveManager::SetHit(const float4& _HitPower)
 	}
 }
 
-void MoveManager::OnEvent()
+void MoveManager::LevelStartEvent()
 {
 	JumpHigh = 0.f;
 	JumpTime = 0.f;
@@ -273,7 +273,7 @@ void MoveManager::OnEvent()
 
 }
 
-void MoveManager::OffEvent()
+void MoveManager::LevelEndEvent()
 {
 	Texture_CollisionMap = nullptr;
 	BlowPower = float4::ZERO;

@@ -77,8 +77,8 @@ void GameEngineCore::CoreUpdate(GameEngineCore* _UserCore)
 
 		if (nullptr != CurrentLevel)
 		{
-			CurrentLevel->ActorOffEvent();
-			CurrentLevel->OffEvent();
+			CurrentLevel->ActorLevelEndEvent();
+			CurrentLevel->LevelEndEvent();
 			// 넘어가려는 액터가 이때 존재해야 겠죠?
 
 			CurrentLevel->OverChildMove(NextLevel);
@@ -86,8 +86,8 @@ void GameEngineCore::CoreUpdate(GameEngineCore* _UserCore)
 
 		CurrentLevel = NextLevel;
 		NextLevel = nullptr;
-		CurrentLevel->OnEvent();
-		CurrentLevel->ActorOnEvent();
+		CurrentLevel->LevelStartEvent();
+		CurrentLevel->ActorLevelStartEvent();
 
 		// ex) 타이틀에서 5초후 => 플레이 레벨로 이동
 		//     플레이 레벨에서 => 다시 타이틀레벨로
@@ -166,13 +166,13 @@ void GameEngineCore::InitializeLevel(GameEngineLevel* _Level, const std::string 
 	{
 		GameEngineCameraActor* actor = _Level->CreateActor<GameEngineCameraActor>();
 		actor->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
-		actor->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -300.0f });
+		actor->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -100.0f });
 	}
 
 	{
 		GameEngineCameraActor* actor = _Level->CreateActor<GameEngineCameraActor>();
 		actor->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
-		actor->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -300.0f });
+		actor->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -100.0f });
 	}
 
 	_Level->Start();

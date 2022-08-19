@@ -55,8 +55,8 @@ public:
 
 protected:
 	void Start() override;
-	void OnEvent() override;
-	void OffEvent() override;
+	void LevelStartEvent() override;
+	void LevelEndEvent() override;
 
 protected:
 	PlayerInterface* PlayerUserInterface;

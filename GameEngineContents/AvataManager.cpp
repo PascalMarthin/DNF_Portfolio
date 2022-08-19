@@ -193,7 +193,7 @@ void AvataManager::SetAllAvataAutoControl()
 
 //----------------- On/ Off-------------------
 
-void AvataManager::OnEvent()
+void AvataManager::LevelStartEvent()
 {
 	if (GamePlayCharacter::GetCurrentCharacterData() != nullptr)
 	{

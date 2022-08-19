@@ -29,7 +29,7 @@ protected:
 
 	void End() override {}
 
-	void OnEvent() override;
+	void LevelStartEvent() override;
 	// void OffEvent() {}
 private:
 	Jelva2F_BackGround* Texture_Jelva2F;

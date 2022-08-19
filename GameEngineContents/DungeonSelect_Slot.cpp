@@ -70,6 +70,6 @@ void DungeonSelect_Slot::Update(float _DeltaTime)
 		Texture_DungeonSelect_SelectBorder->Off();
 	}
 }
-void DungeonSelect_Slot::OnEvent()
+void DungeonSelect_Slot::LevelStartEvent()
 {
 }

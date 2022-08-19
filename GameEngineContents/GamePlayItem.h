@@ -47,9 +47,9 @@ protected:
 
 	void Update(float _DeltaTime) override;
 
-	void OnEvent() override {}
+	//void LevelStartEvent() override {}
 
-	void OffEvent() override {}
+	//void OffEvent() override {}
 
 	void Start() override;
 

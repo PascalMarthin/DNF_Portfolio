@@ -47,7 +47,7 @@ protected:
 	float GoingDownTime;
 
 	void Start() override;
-	void OnEvent() override;
+	void LevelStartEvent() override;
 	//--------------------Collision---------------
 	GameEngineCollision* Collision_HitBody;
 

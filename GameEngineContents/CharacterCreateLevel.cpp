@@ -94,7 +94,7 @@ void CharacterCreateLevel::CreateCharacter()
 	GEngine::ChangeLevel("SelectCharacter");
 }
 
-void CharacterCreateLevel::OnEvent()
+void CharacterCreateLevel::LevelStartEvent()
 {
 	ChangeCurrentClass(AllCharacterClass::Fighter_F);
 }

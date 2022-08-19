@@ -35,7 +35,7 @@ void GamePlayMonster::Jump_GoingDown()
 	}
 }
 
-void GamePlayMonster::OnEvent()
+void GamePlayMonster::LevelStartEvent()
 {
 	GetTransform().SetLocalMove({ 0 , 0 , GetTransform().GetLocalPosition().y });
 }

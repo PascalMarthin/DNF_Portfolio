@@ -55,7 +55,7 @@ void Jelva_1F::Update(float _DeltaTime)
 }
 
 
-void Jelva_1F::OnEvent()
+void Jelva_1F::LevelStartEvent()
 {
 	float Hight = Texture_Jelva1F->GetBackGroundTextureScale().y;
 	if (GamePlayDataBase::GetCurrentCharacterData()->GetCurrentMap() == TownMap::Seria_Room)

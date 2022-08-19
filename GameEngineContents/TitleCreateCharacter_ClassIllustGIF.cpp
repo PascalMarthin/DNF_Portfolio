@@ -43,7 +43,7 @@ void TitleCreateCharacter_ClassIllustGIF::Update(float _DeltaTime)
 	}
 }
 
-void TitleCreateCharacter_ClassIllustGIF::OffEvent()
+void TitleCreateCharacter_ClassIllustGIF::LevelEndEvent()
 {
 	FolderTexture_BackBufferGIF->SetTexture("Null.png");
 }

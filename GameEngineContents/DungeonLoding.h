@@ -25,8 +25,8 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override {}
 
-	void OnEvent() override;
-	void OffEvent() override;
+	void LevelStartEvent() override;
+	void LevelEndEvent() override;
 private:
 
 	DungeonLoding_BackGround* Texture_BackGround;

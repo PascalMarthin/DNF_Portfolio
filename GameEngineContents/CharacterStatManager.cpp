@@ -189,7 +189,7 @@ void CharacterStatManager::SetHit_BlowUp()
 
 
 
-void CharacterStatManager::OnEvent() 
+void CharacterStatManager::LevelStartEvent()
 {
 	;
 	switch (GetParent<GamePlayObject>()->GetObjectType())
@@ -219,7 +219,7 @@ void CharacterStatManager::OnEvent()
 
 }
 
-void CharacterStatManager::OffEvent()
+void CharacterStatManager::LevelEndEvent()
 {
 	CurrentPlayerAbilityStat = nullptr;
 

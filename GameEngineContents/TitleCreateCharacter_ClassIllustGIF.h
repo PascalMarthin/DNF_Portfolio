@@ -24,7 +24,7 @@ protected:
 
 	// void End() override {}
 	// void OnEvent() {}
-	void OffEvent() override;
+	void LevelEndEvent() override;
 private:
 	GameEngineTextureRenderer* FolderTexture_CurrentGIF;
 	GameEngineTextureRenderer* FolderTexture_BackBufferGIF;
