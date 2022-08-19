@@ -29,7 +29,7 @@ public:
 	float4 SetCharacterMove(const float4& _Move);
 	//void SetCharacterMove_Inertia(const float4& _Move);
 	void SetCharacterLocation(const float4& _Pos);
-	void SetJump();
+	void SetAerial();
 	void SetJump(float _Power);
 
 	//void SetBeAir();

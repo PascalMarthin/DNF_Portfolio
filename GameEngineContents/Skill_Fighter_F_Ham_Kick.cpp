@@ -16,7 +16,7 @@ void Skill_Fighter_F_Ham_Kick::Start()
 {
 	int_SkillDamage = 100;
 	Enum_HitType = HitType::Air;
-	float4_HitPhysicsPower = { 200, 800, 0, 0 };
+	float4_HitPhysicsPower = { 500, 300, 0, 0 };
 
 	GameEngineCollision* Collision_HamerKick = GetActor()->CreateComponent<GameEngineCollision>("Ham_Kick");
 	Collision_HamerKick->GetTransform().SetLocalScale({100.f, 100.f, 40.f});
@@ -37,26 +37,13 @@ void Skill_Fighter_F_Ham_Kick::Update(float _DeltaTime)
 bool Skill_Fighter_F_Ham_Kick::TriggerSkill(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	GamePlayObject* Actor = _Other->GetActor<GamePlayObject>();
-	for (auto Object : Object_HitList)
+
+	if (GamePlaySkill::IsHitObject(Actor, 1))
 	{
-		if (Object == Actor)
-		{
-			return false;
-		}
+		return false;
 	}
 
-	int DirIndex = 0;
-	if (_This->GetActor()->GetTransform().GetLocalPosition().x > _Other->GetActor()->GetTransform().GetLocalPosition().x)
-	{
-		DirIndex = -1;
-	}
-	else
-	{
-		DirIndex = 1;
-	}
-
-	Actor->BeHit(this, GamePlayCharacter::GetCurrentCharacterData(), DirIndex); //
-	Object_HitList.push_back(Actor);
+	Actor->BeHit(this, GamePlayCharacter::GetCurrentCharacterData(), CheckDir(_This, _Other)); //
 	return false;
 }
 

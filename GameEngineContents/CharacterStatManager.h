@@ -71,7 +71,28 @@ public:
 	{
 		return PlayerCurrentState & CharacterStat::Player_Character_Aerial;
 	}
+	inline bool IsBeHit() const
+	{
+		return PlayerCurrentState & CharacterStat::Player_Character_BeHit;
+	}
 	
+
+	//  Player_Character_ALive
+	//	Player_Character_Action
+	//	Player_Character_Move
+	//	Player_Character_Dash
+	//	Player_Character_Jump
+	//	Player_Character_BaseAtt
+	//	Player_Character_DoSkill
+	//	Player_Character_Casting
+	//	Player_Character_Charging
+	//	Player_Character_Invincibility
+	//	Player_Character_Evasion
+	//	Player_Character_Superarmor
+	//	Player_Character_BeHit
+	//	Player_Character_Aerial
+	//	Player_Character_BeDown
+	//	Player_Character_BeHold
 
 	void SetWalk();
 	void SetWalkEnd();
