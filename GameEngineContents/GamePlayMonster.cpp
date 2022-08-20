@@ -3,9 +3,12 @@
 #include "CharacterStatManager.h"
 
 GamePlayMonster::GamePlayMonster() 
-	: Collision_HitBody(nullptr)
+	: Collision_HitBody_Top(nullptr)
+	, Collision_HitBody_Mid(nullptr)
+	, Collision_HitBody_Bottom(nullptr)
 	, Texture_Monster(nullptr)
 	, GoingDownTime(0.f)
+	, MonsterAbilityStat()
 {
 }
 

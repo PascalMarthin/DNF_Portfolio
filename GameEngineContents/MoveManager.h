@@ -48,8 +48,9 @@ private:
 
 	// -------------Hit-----------------
 public:
+	inline void HitDir(float _Dir);
 	void SetHit(const float4& _HitPower);
-
+	float HitTime;
 private:
 	float4 BlowPower;
 	// -------------Jump----------------

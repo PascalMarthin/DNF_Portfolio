@@ -31,7 +31,7 @@ public:
 
 	inline GameEngineCollision* GetBodyCollision() const
 	{
-		return Collision_HitBody;
+		return Collision_HitBody_Top;
 	}
 	inline MonsterAbilityStat* GetMonsterStat()
 	{
@@ -49,7 +49,9 @@ protected:
 	void Start() override;
 	void LevelStartEvent() override;
 	//--------------------Collision---------------
-	GameEngineCollision* Collision_HitBody;
+	GameEngineCollision* Collision_HitBody_Top;
+	GameEngineCollision* Collision_HitBody_Mid;
+	GameEngineCollision* Collision_HitBody_Bottom;
 
 
 	//---------------------Texture-----------------

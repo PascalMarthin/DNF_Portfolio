@@ -160,6 +160,11 @@ void CharacterStatManager::SetDoBaseAttEnd()
 	PlayerCurrentState &= ~(CharacterStat::Player_Character_BaseAtt);
 }
 
+void CharacterStatManager::SetCanAction()
+{
+	PlayerCurrentState |= 0b0000000111101110;
+}
+
 void CharacterStatManager::SetCantAction()
 {
 	PlayerCurrentState &= ~0b0000000111101110;
@@ -175,6 +180,12 @@ void CharacterStatManager::SetHit_Stand()
 	}
 }
 
+void CharacterStatManager::SetHit_StandEnd()
+{
+	PlayerCurrentState &= ~CharacterStat::Player_Character_BeHit;
+	SetCanAction();
+}
+
 void CharacterStatManager::SetHit_BlowUp()
 {
 	if (!IsSuperarmor())
@@ -184,6 +195,20 @@ void CharacterStatManager::SetHit_BlowUp()
 		SetCantAction();
 		FSMManager.ChangeState("Hit_Aerial");
 	}
+}
+
+void CharacterStatManager::SetDown()
+{
+	PlayerCurrentState &= ~CharacterStat::Player_Character_Aerial;
+	PlayerCurrentState &= ~CharacterStat::Player_Character_BeHit;
+	PlayerCurrentState |= CharacterStat::Player_Character_BeDown;
+	SetCantAction();
+	FSMManager.ChangeState("Hit_Down");
+}
+void CharacterStatManager::SetDownEnd()
+{
+	PlayerCurrentState &= ~CharacterStat::Player_Character_BeDown;
+	SetCanAction();
 }
 
 

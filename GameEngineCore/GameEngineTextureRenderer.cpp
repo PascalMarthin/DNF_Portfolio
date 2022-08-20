@@ -38,6 +38,7 @@ void FrameAnimation::Update(float _Delta)
 
 		if (Info.Inter <= Info.FrameTime)
 		{
+		
 			if (Info.CurFrame == (Info.Frames.size() - 1)
 				&& false == bOnceEnd
 				&& nullptr != End)
@@ -255,6 +256,8 @@ void GameEngineTextureRenderer::CreateFrameAnimationFolder(const std::string& _A
 			NewAni.Info.Frames.push_back(i);
 		}
 	}
+
+	NewAni.Info.CurRenderer = NewAni.ParentRenderer;
 }
 
 void GameEngineTextureRenderer::CreateFrameAnimationCutTexture(const std::string& _AnimationName, const FrameAnimation_DESC& _Desc)
@@ -272,6 +275,8 @@ void GameEngineTextureRenderer::CreateFrameAnimationCutTexture(const std::string
 	NewAni.ParentRenderer = this;
 	NewAni.Texture = GameEngineTexture::Find(_Desc.TextureName);
 	NewAni.FolderTexture = nullptr;
+
+	NewAni.Info.CurRenderer = NewAni.ParentRenderer;
 }
 
 void GameEngineTextureRenderer::ChangeFrameAnimation(const std::string& _AnimationName)

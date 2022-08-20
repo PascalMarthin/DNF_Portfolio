@@ -49,7 +49,7 @@ void GamePlayObject::Start()
 	}
 }
 
-void GamePlayObject::BeHit(GamePlaySkill* _Skill, const GamePlayDataBase* _Character, int _Index)
+void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitCollision , const GamePlayDataBase* _Character, int _Index)
 {
 	if (Enum_UnitType == UnitType::None)
 	{
@@ -59,21 +59,20 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, const GamePlayDataBase* _Chara
 	float4 Power = _Skill->GetBlowPower();
 	Power.x *= static_cast<float>(_Index);
 
+
 	//
 	// x > 0 y > 0 w > 0
 	// x > 0 y = 0 w > 0
 	// x = 0 y > 0 w = 0
 	// 
-	// 
-	// 
-	//_Skill->GetSkillDamage()
+
 	
 	// 대미지 처리
 
-	switch (_Skill->GetHitType())
+	switch (_Skill->GetHitPostureType())
 	{
-	case HitType::Standing:
-	case HitType::Air:
+	case HitPostureType::Standing:
+	case HitPostureType::Air:
 	{
 
 		if (Power.x != 0 && Power.y != 0 && Power.w == 0)
@@ -92,13 +91,42 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, const GamePlayDataBase* _Chara
 		Manager_MoveManager->SetHit(Power);
 	}
 		break;
-	case HitType::Hold:
+	case HitPostureType::Hold:
 		
 		break;
 
-	case HitType::None:
+	case HitPostureType::None:
 	default:
 		MsgBoxAssert("스킬이 설정되지 않았습니다");
+		break;
+	}
+
+
+
+	GamePlayObject* Hit = _Skill->GetActor<GamePlayObject>();
+	switch (_Skill->GetHitType())
+	{
+	case HitType::Hit:
+	{
+		for (auto* Iter: Hit->map_NomalEffect["KnockLarge"])
+		{
+			if (Iter->IsUpdate())
+			{
+				continue;
+			}
+			else
+			{
+				HitEffect(Iter, _HitCollision, "KnockLarge");
+				break;
+			}
+		}
+		// 3개다 쓰고있으면 그냥 이펙트 생략
+	}
+		break;
+	case HitType::Slash:
+	case HitType::None:
+	default:
+		MsgBoxAssert("타입 설정을 안했습니다")
 		break;
 	}
 
@@ -108,4 +136,28 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, const GamePlayDataBase* _Chara
 	// 
 	// 
 	//
+}
+
+void GamePlayObject::HitEffect(GameEngineTextureRenderer* _Texture, GameEngineCollision* _HitCollision, const std::string& _AniName)
+{
+	const float4 Postion = _HitCollision->GetTransform().GetWorldPosition();
+	const float4& Scale = _HitCollision->GetTransform().GetLocalScale();
+
+	_Texture->GetTransform().SetWorldPosition({ Postion.x + GameEngineRandom::MainRandom.RandomFloat(-Scale.x * 0.5f, Scale.x * 0.5f),
+											    Postion.y + GameEngineRandom::MainRandom.RandomFloat(-Scale.y * 0.5f, Scale.y * 0.5f),
+												0 });
+	_Texture->On();
+	_Texture->ChangeFrameAnimation(_AniName);
+	
+}
+
+void GamePlayObject::Ani_BindEndOff(const FrameAnimation_DESC& _Desc)
+{
+	_Desc.CurRenderer->Off();
+	_Desc.CurRenderer->ChangeFrameAnimation("None");
+}
+
+void GamePlayObject::BeHitEnd()
+{
+	Manager_StatManager->SetHit_StandEnd();
 }

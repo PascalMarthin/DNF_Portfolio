@@ -331,11 +331,24 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="SkillHeader.h" />
     <ClInclude Include="Skill_Fighter_F_BaseHit.h">
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Skill_Fighter_F_BaseKick.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Skill_Fighter_F_Ham_Kick.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Skill_Fighter_F_DashHit.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Skill_Fighter_F_Upper.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -566,7 +579,19 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Skill_Fighter_F_BaseKick.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Skill_Fighter_F_Ham_Kick.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Skill_Fighter_F_DashHit.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Skill_Fighter_F_Upper.cpp">
       <SubType>
       </SubType>
     </ClCompile>

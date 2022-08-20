@@ -75,6 +75,10 @@ public:
 	{
 		return PlayerCurrentState & CharacterStat::Player_Character_BeHit;
 	}
+	inline bool IsDown() const
+	{
+		return PlayerCurrentState & CharacterStat::Player_Character_BeDown;
+	}
 	
 
 	//  Player_Character_ALive
@@ -105,9 +109,14 @@ public:
 	void SetJumpEnd();
 	void SetAerial();
 	void SetAerialEnd();
+	void SetCanAction();
 	void SetCantAction();
 	void SetHit_Stand();
+	void SetHit_StandEnd();
 	void SetHit_BlowUp();
+	void SetDown();
+	void SetDownEnd();
+
 	inline void SetEngage()
 	{
 		Time_CurrentEngage = 5.f;

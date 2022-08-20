@@ -26,38 +26,50 @@ void Bale::Start()
 	Texture_Monster->CreateFrameAnimationFolder("Bale_Sting", FrameAnimation_DESC("Bale", 14, 23, 0.08f, false));
 	Texture_Monster->CreateFrameAnimationFolder("Bale_Hit1", FrameAnimation_DESC("Bale", 24, 24, 0.05f, false));
 	Texture_Monster->CreateFrameAnimationFolder("Bale_Hit2", FrameAnimation_DESC("Bale", 25, 25, 0.05f, false));
-	Texture_Monster->CreateFrameAnimationFolder("Bale_HitDown", FrameAnimation_DESC("Bale", 26, 29, 0.07f, false));
-	Texture_Monster->CreateFrameAnimationFolder("Bale_Down", FrameAnimation_DESC("Bale", 29, 29, 0.05f, false));
-	Texture_Monster->CreateFrameAnimationFolder("Bale_Sit", FrameAnimation_DESC("Bale", 30, 30, 0.05f, false));
-	Texture_Monster->CreateFrameAnimationFolder("Bale_Stand_Up", FrameAnimation_DESC("Bale", 29, 30, 0.01f, false));
+	Texture_Monster->CreateFrameAnimationFolder("Bale_HitDown", FrameAnimation_DESC("Bale", 26, 30, 0.1f, false));
+	Texture_Monster->CreateFrameAnimationFolder("Bale_Down", FrameAnimation_DESC("Bale", 30, 30, 0.05f, false));
+	Texture_Monster->CreateFrameAnimationFolder("Bale_Sit", FrameAnimation_DESC("Bale", 31, 31, 0.05f, false));
+	Texture_Monster->CreateFrameAnimationFolder("Bale_Stand_Up", FrameAnimation_DESC("Bale", 30, 31, 0.08f, false));
 	Texture_Monster->AnimationBindEnd("Bale_Stand_Up", std::bind(&Bale::Ani_StandUp, this, std::placeholders::_1));
-	Texture_Monster->CreateFrameAnimationFolder("Bale_Stamping", FrameAnimation_DESC("Bale", 31, 35, 0.08f, false));
-	Texture_Monster->CreateFrameAnimationFolder("Bale_Grap", FrameAnimation_DESC("Bale", 36, 37, 0.08f, false));
-	Texture_Monster->CreateFrameAnimationFolder("Bale_Hold", FrameAnimation_DESC("Bale", 38, 38, 0.15f, false));
-	Texture_Monster->CreateFrameAnimationFolder("Bale_Press", FrameAnimation_DESC("Bale", 39, 44, 0.08f, false));
-	Texture_Monster->CreateFrameAnimationFolder("Bale_RunReady", FrameAnimation_DESC("Bale", 45, 46, 0.2f, false));
-	Texture_Monster->CreateFrameAnimationFolder("Bale_Running", FrameAnimation_DESC("Bale", 47, 48, 0.1f));
-	Texture_Monster->CreateFrameAnimationFolder("Bale_RunEnd", FrameAnimation_DESC("Bale", 49, 49, 0.1f, false));
+	Texture_Monster->CreateFrameAnimationFolder("Bale_Stamping", FrameAnimation_DESC("Bale", 32, 36, 0.08f, false));
+	Texture_Monster->CreateFrameAnimationFolder("Bale_Grap", FrameAnimation_DESC("Bale", 37, 38, 0.08f, false));
+	Texture_Monster->CreateFrameAnimationFolder("Bale_Hold", FrameAnimation_DESC("Bale", 39, 39, 0.15f, false));
+	Texture_Monster->CreateFrameAnimationFolder("Bale_Press", FrameAnimation_DESC("Bale", 40, 45, 0.08f, false));
+	Texture_Monster->CreateFrameAnimationFolder("Bale_RunReady", FrameAnimation_DESC("Bale", 46, 47, 0.2f, false));
+	Texture_Monster->CreateFrameAnimationFolder("Bale_Running", FrameAnimation_DESC("Bale", 48, 49, 0.1f));
+	Texture_Monster->CreateFrameAnimationFolder("Bale_RunEnd", FrameAnimation_DESC("Bale", 50, 50, 0.1f, false));
 
 
-	Texture_Monster->GetTransform().SetLocalPosition({ 72, 12, 1 }); // Áß¾Ó ±âÁØ
+	Texture_Monster->GetTransform().SetLocalPosition({ 72, 12, 10 }); // Áß¾Ó ±âÁØ
 	Texture_Monster->GetTransform().SetLocalScale({454, 340, 100});
 	Texture_Monster->ChangeFrameAnimation("Bale_Standing");
 
+	Collision_HitBody_Mid = CreateComponent<GameEngineCollision>();
+	Collision_HitBody_Mid->GetTransform().SetLocalScale({ 80, 50, 50 });
+	Collision_HitBody_Mid->GetTransform().SetLocalPosition({ 0, 0, 0 });
+	Collision_HitBody_Mid->ChangeOrder(CollisionOrder::Monster);
+	Collision_HitBody_Mid->SetDebugSetting(CollisionType::CT_AABB, { 1, 1 , 0, 0.5 });
 
-	Collision_HitBody = CreateComponent<GameEngineCollision>();
-	//Collision_HitBody->GetTransform().SetLocalPosition({0, 0, -1});
-	Collision_HitBody->GetTransform().SetLocalScale({ 80, 150, 50 });
-	Collision_HitBody->ChangeOrder(CollisionOrder::Monster);
-	Collision_HitBody->SetDebugSetting(CollisionType::CT_AABB, {0, 0 , 0, 0});
-	//Collision_HitBody->Off();
+	Collision_HitBody_Top = CreateComponent<GameEngineCollision>();
+	Collision_HitBody_Top->GetTransform().SetLocalScale({ 80, 50, 30 });
+	Collision_HitBody_Top->GetTransform().SetLocalPosition({ 0, 50, 0 });
+	Collision_HitBody_Top->ChangeOrder(CollisionOrder::Monster);
+	Collision_HitBody_Top->SetDebugSetting(CollisionType::CT_AABB, {0, 1 , 1, 0.5});
+
+
+	Collision_HitBody_Bottom = CreateComponent<GameEngineCollision>();
+	Collision_HitBody_Bottom->GetTransform().SetLocalScale({ 80, 50, 30 });
+	Collision_HitBody_Bottom->GetTransform().SetLocalPosition({ 0, -50, 0 });
+	Collision_HitBody_Bottom->ChangeOrder(CollisionOrder::Monster);
+	Collision_HitBody_Bottom->SetDebugSetting(CollisionType::CT_AABB, { 1, 0 , 1, 0.5 });
+	//Collision_HitBody_Top->Off();
 
 	CharacterWeight = 500.f;
 }
 
 void Bale::Update(float _DeltaTime)
 {
-	//GameEngineDebug::OutPutString(std::to_string(Collision_HitBody->GetTransform().GetLocalScale().z));
+	//GameEngineDebug::OutPutString(std::to_string(Collision_HitBody_Top->GetTransform().GetLocalScale().z));
 }
 
 void Bale::SetFSManager()
@@ -138,7 +150,10 @@ void Bale::FSM_Hit_Stand_Start(const StateInfo& _Info)
 }
 void Bale::FSM_Hit_Stand_Update(float _DeltaTime, const StateInfo& _Info)
 {
-
+	if (Manager_StatManager->IsAction())
+	{
+		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
+	}
 }
 void Bale::FSM_Hit_Stand_End(const StateInfo& _Info)
 {
@@ -164,6 +179,7 @@ void Bale::FSM_Hit_Aerial_End(const StateInfo& _Info)
 void Bale::FSM_Hit_Aerial_DoingDown_Start(const StateInfo& _Info)
 {
 	Texture_Monster->ChangeFrameAnimation("Bale_HitDown");
+	Collision_HitBody_Top->Off();
 	GoingDownTime = 0.f;
 }
 void Bale::FSM_Hit_Aerial_DoingDown_Update(float _DeltaTime, const StateInfo& _Info)
@@ -173,17 +189,16 @@ void Bale::FSM_Hit_Aerial_DoingDown_Update(float _DeltaTime, const StateInfo& _I
 
 	if (!Manager_StatManager->IsAerial())
 	{
-		Manager_StatManager->GetFSMManager().ChangeState("Hit_Down");
+		Manager_StatManager->SetDown();
 	}
 	
 }
 void Bale::FSM_Hit_Aerial_DoingDown_End(const StateInfo& _Info)
 {
-	//Texture_Monster->GetTransform().SetLocalPosition({ 0, 0, 0 });
-	Texture_Monster->GetTransform().SetLocalRotation({ 0 , 0, 0, 0 });
-	//Texture_Monster->GetTransform().SetLocalPosition({ 72, 12, 1 });
+	Collision_HitBody_Top->On();
 	GoingDownTime = 0.f;
 }
+
 
 void Bale::Ani_StandUp(const FrameAnimation_DESC&)
 {
@@ -201,6 +216,8 @@ void Bale::LandingEnd()
 void Bale::FSM_Hit_Down_Start(const StateInfo& _Info)
 {
 	Texture_Monster->ChangeFrameAnimation("Bale_Down");
+	Collision_HitBody_Top->Off();
+	Collision_HitBody_Mid->Off();
 	DownWait = 0.6f;
 }
 void Bale::FSM_Hit_Down_Update(float _DeltaTime, const StateInfo& _Info)
@@ -208,10 +225,13 @@ void Bale::FSM_Hit_Down_Update(float _DeltaTime, const StateInfo& _Info)
 	DownWait -= _DeltaTime;
 	if (DownWait <= 0.f)
 	{
+		Manager_StatManager->SetDownEnd();
 		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
 	}
 }
 void Bale::FSM_Hit_Down_End(const StateInfo& _Info)
 {
+	Collision_HitBody_Top->On();
+	Collision_HitBody_Mid->On();
 	DownWait = 0.f;
 }

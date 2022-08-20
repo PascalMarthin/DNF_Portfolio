@@ -17,6 +17,7 @@ MoveManager::MoveManager()
 	, Collision_Move(nullptr)
 	, Texture_CollisionMap(nullptr)
 	, BlowPower(float4::ZERO)
+	, HitTime(0.f)
 {
 }
 
@@ -37,7 +38,7 @@ void MoveManager::Start()
 
 
 	Collision_Move = ParentCharacter->CreateComponent<GameEngineCollision>("Character_Map_Collision");
-	Collision_Move->GetTransform().SetLocalScale({50 , 20 , 30});
+	Collision_Move->GetTransform().SetLocalScale({50 , 20 , 20});
 	Collision_Move->ChangeOrder(CollisionOrder::Player_Floor);
 	Collision_Move->SetDebugSetting(CollisionType::CT_AABB2D, {0, 1, 0, 0.5f});
 //	Collision_Move->GetTransform().SetLocalPosition({ 0, -56 });
@@ -82,10 +83,10 @@ void MoveManager::Update(float _DeltaTime)
 			Power *= _DeltaTime;
 			Power.x *= 1.5f;
 
-			GetTransform().SetWorldMove({ 0, -Power.y , 0 }); // 보정
 
 			SetCharacterMove({ Power.x , 0, 0});
 			ParentCharacter->GetTransform().SetWorldMove({ 0, Power.y, 0 });
+			GetTransform().SetWorldMove({ 0, -Power.y , 0 }); // 보정
 	
 			LandingPostion.x += Power.x;
 			// Y = x(ax);
@@ -100,12 +101,14 @@ void MoveManager::Update(float _DeltaTime)
 					if (JumpHigh <= -450.f) // Bouns
 					{
 						ParentCharacter->GetTransform().SetLocalPosition(LandingPostion);
+						GetTransform().SetWorldPosition(LandingPostion);
 						BlowPower = { BlowPower.x * 0.1f ,JumpHigh * -1.f * 0.1f, 0 };
 						SetAerial();
 					}
 					else
 					{
 						ParentCharacter->GetTransform().SetLocalPosition(LandingPostion);
+						GetTransform().SetWorldPosition(LandingPostion);
 						ParentCharacter->LandingEnd();
 						BlowPower = float4::ZERO;
 					}
@@ -114,6 +117,7 @@ void MoveManager::Update(float _DeltaTime)
 				else if (ManagerStat->IsJump())
 				{
 					ParentCharacter->GetTransform().SetLocalPosition(LandingPostion);
+					GetTransform().SetWorldPosition(LandingPostion);
 					ParentCharacter->LandingEnd();
 					BlowPower = float4::ZERO;
 
@@ -125,21 +129,25 @@ void MoveManager::Update(float _DeltaTime)
 				ParentCharacter->Jump_GoingDown();
 			}
 
+			HitDir(Power.x);
 
-			if (Power.x > 0)
-			{
-				ParentCharacter->SetLeftDir();
-			}
-			else if (Power.x < 0)
-			{
-				ParentCharacter->SetRightDir();
-			}
 
 		//GameEngineDebug::OutPutString(std::to_string(GetTransform().GetWorldPosition().x) + " " +std::to_string(GetTransform().GetWorldPosition().y) + " " + std::to_string(GetTransform().GetWorldPosition().z));
 		}
 		else if (ManagerStat->IsBeHit())
 		{
-
+			HitTime += _DeltaTime;
+			BlowPower.w -= _DeltaTime * 100.f /* * 히트리커버리*/;
+			
+			SetCharacterMove({ float4::LerpLimit(BlowPower.x, 0, HitTime * 10.f).x * _DeltaTime , 0, 0 });
+			HitDir(BlowPower.x);
+			
+			if (BlowPower.w <= 0.f)
+			{
+				ParentCharacter->BeHitEnd();
+				BlowPower = float4::ZERO;
+				HitTime = 0.f;
+			}
 		}
 	}
 }
@@ -178,6 +186,8 @@ float4 MoveManager::SetCharacterMove(const float4& _Move)
 	{
 		Move.y = 0;
 	}
+
+
 	Move.y *= 0.73f;
 	Move.z = Move.y;
 	ParentCharacter->GetTransform().SetLocalMove(Move);
@@ -203,7 +213,11 @@ void MoveManager::SetAerial()
 	JumpHigh = 0.f;
 	JumpTime = 0.f;
 	LandingPostion = ParentCharacter->GetTransform().GetWorldPosition();
-	//GameEngineDebug::OutPutString(std::to_string(LandingPostion.y));
+	GameEngineDebug::OutPutString(std::to_string(LandingPostion.y));
+	if (ManagerStat->IsDown())
+	{
+		BlowPower *= 0.5f;
+	}
 
 }
 void MoveManager::SetJump(float _Power)
@@ -212,15 +226,30 @@ void MoveManager::SetJump(float _Power)
 	JumpTime = 0.f;
 	LandingPostion = ParentCharacter->GetTransform().GetWorldPosition();
 	BlowPower.y = _Power;
+	GameEngineDebug::OutPutString(std::to_string(LandingPostion.y));
 }
+
 //void MoveManager::SetBeAir()
 //{
 //	JumpTime = 0.f;
 //}
 
+inline void MoveManager::HitDir(float _Dir)
+{
+	if (_Dir > 0)
+	{
+		ParentCharacter->SetLeftDir();
+	}
+	else if (_Dir < 0)
+	{
+		ParentCharacter->SetRightDir();
+	}
+}
+
 void MoveManager::SetHit(const float4& _HitPower)
 {
 	BlowPower = _HitPower;
+	HitTime = 0.f;
 	if (_HitPower.y != 0 )
 	{
 		SetAerial();
@@ -231,6 +260,7 @@ void MoveManager::LevelStartEvent()
 {
 	JumpHigh = 0.f;
 	JumpTime = 0.f;
+	HitTime = 0.f;
 	ManagerStat = GetActor<GamePlayObject>()->GetStatManager();
 
 

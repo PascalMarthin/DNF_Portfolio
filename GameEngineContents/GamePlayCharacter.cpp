@@ -5,6 +5,7 @@
 #include "GamePlayCharacter.h"
 #include "GamePlayDataBase.h"
 #include "CollisionManager.h"
+#include "GamePlaySkill.h"
 #include "AvataManager.h"
 #include "InterfaceHUD.h"
 
@@ -22,8 +23,7 @@ GamePlayCharacter::GamePlayCharacter()
 	, BaseJumpKick(false)
 	, Att_BaseAtt_Delay(0.f)
 	, DelayPunch(false)
-	, Class_Skill_Fighter_F_HamKick(nullptr)
-	, Class_Skill_Fighter_F_BaseHit(nullptr)
+
 {
 }
 
@@ -49,29 +49,29 @@ void GamePlayCharacter::Start()
 
 	PlayerUserInterface = GetLevel()->CreateActor<PlayerInterface>();
 
-	//Collision_HitBody = CreateComponent<GameEngineCollision>("Hit_Collision");
-	//Collision_HitBody->ChangeOrder(CollisionOrder::Player);
-	//Collision_HitBody->GetTransform().SetLocalPosition({ 0, -80 });
-	//Collision_HitBody->GetTransform().SetLocalScale({ 48, 110 });
-	//Collision_HitBody->SetDebugSetting(CollisionType::CT_AABB2D, {0, 0, 255, 100});
-	//Collision_HitBody->Off();
+	//Collision_HitBody_Top = CreateComponent<GameEngineCollision>("Hit_Collision");
+	//Collision_HitBody_Top->ChangeOrder(CollisionOrder::Player);
+	//Collision_HitBody_Top->GetTransform().SetLocalPosition({ 0, -80 });
+	//Collision_HitBody_Top->GetTransform().SetLocalScale({ 48, 110 });
+	//Collision_HitBody_Top->SetDebugSetting(CollisionType::CT_AABB2D, {0, 0, 255, 100});
+	//Collision_HitBody_Top->Off();
 }
 
-void GamePlayCharacter::On_EnumCollision(Collision_AllSkill _Collsion)
-{
-	for (GameEngineCollision* Collision : Collision_HitCollision[_Collsion])
-	{
-		Collision->On();
-	}
-}
-
-void GamePlayCharacter::Off_EnumCollision(Collision_AllSkill _Collsion)
-{
-	for (GameEngineCollision* Collision : Collision_HitCollision[_Collsion])
-	{
-		Collision->Off();
-	}
-}
+//void GamePlayCharacter::On_EnumCollision(Collision_AllSkill _Collsion)
+//{
+//	for (GameEngineCollision* Collision : Collision_HitCollision[_Collsion])
+//	{
+//		Collision->On();
+//	}
+//}
+//
+//void GamePlayCharacter::Off_EnumCollision(Collision_AllSkill _Collsion)
+//{
+//	for (GameEngineCollision* Collision : Collision_HitCollision[_Collsion])
+//	{
+//		Collision->Off();
+//	}
+//}
 
 GamePlayDataBase* GamePlayCharacter::CreateCharacterBase(CharacterFormerClass _Class, const std::string& _NickName)
 {
@@ -144,4 +144,16 @@ void GamePlayCharacter::LevelStartEvent()
 void GamePlayCharacter::LevelEndEvent()
 {
 	JumpGoingDown = false;
+}
+
+void GamePlayCharacter::SkillCollisionActive(const std::string& _Name, int _Frame)
+{
+	if (Manager_AvataManager->Avata_Skin->GetCurrentFrameStuck() == _Frame)
+	{
+		SetOn(map_AllSkill[_Name]);
+	}
+	else
+	{
+		SetOff(map_AllSkill[_Name]);
+	}
 }

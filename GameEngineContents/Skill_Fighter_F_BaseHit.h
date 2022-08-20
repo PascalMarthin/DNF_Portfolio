@@ -15,16 +15,17 @@ public:
 	Skill_Fighter_F_BaseHit& operator=(const Skill_Fighter_F_BaseHit& _Other) = delete;
 	Skill_Fighter_F_BaseHit& operator=(Skill_Fighter_F_BaseHit&& _Other) noexcept = delete;
 
-	bool TriggerSkill(GameEngineCollision* _This, GameEngineCollision* _Other) override;
+	bool TriggerSkill_ect(GameEngineCollision* _This, GameEngineCollision* _Other) override;
 protected:
 	void Start() override;
-	void Update(float _DeltaTime) override;
+	//void Update(float _DeltaTime) override;
 
 	// void End() override {}
 	//void OnEvent() override;
 	//void OffEvent() override;
 
 private:
+	void CheckCollision() override;
 
 };
 

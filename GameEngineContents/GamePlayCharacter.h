@@ -70,13 +70,14 @@ protected:
 
 
 protected:
+
 	AvataManager* Manager_AvataManager;
 
 	void Create_Fighter_F_Default_FSManager();
 	// ---------------Collision------------------
 	std::map<Collision_AllSkill , std::vector<GameEngineCollision*> > Collision_HitCollision;
-	void On_EnumCollision(Collision_AllSkill _Collsion);
-	void Off_EnumCollision(Collision_AllSkill _Collsion);
+	//void On_EnumCollision(Collision_AllSkill _Collsion);
+	//void Off_EnumCollision(Collision_AllSkill _Collsion);
 
 
 private:
@@ -139,18 +140,23 @@ public:
 	void FSM_Att_BaseKick_Update(float _DeltaTime, const StateInfo& _Info);
 	void FSM_Att_BaseKick_End(const StateInfo& _Info);
 
-	Skill_Fighter_F_BaseHit* Class_Skill_Fighter_F_BaseHit;
 	void FSM_Move_Helper();
 	// 해머 킥
 	void FSM_Att_HamKick_Start(const StateInfo& _Info);
 	void FSM_Att_HamKick_Update(float _DeltaTime, const StateInfo& _Info);
 	void FSM_Att_HamKick_End(const StateInfo& _Info);
 
-	Skill_Fighter_F_Ham_Kick* Class_Skill_Fighter_F_HamKick;
+
 	// 대쉬 공격
 	void FSM_Att_Dash_Start(const StateInfo& _Info);
 	void FSM_Att_Dash_Update(float _DeltaTime, const StateInfo& _Info);
 	void FSM_Att_Dash_End(const StateInfo& _Info);
+
+
+
+	// ------------------Skill------------------
+	//std::map<std::string, GamePlaySkill*> map_AllSkill;
+	void SkillCollisionActive(const std::string& _Name, int _Frame);
 
 };
 

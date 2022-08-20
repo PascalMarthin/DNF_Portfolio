@@ -32,6 +32,35 @@ public:
 	//{
 	//	return ObjectPos;
 	//}
+
+
+	// -------------OnOff--------------------
+	static inline void SetOn(GameEngineUpdateObject* _Object)
+	{
+		if (_Object->IsUpdate())
+		{
+			return;
+		}
+		else
+		{
+			_Object->On();
+		}
+	}
+	static inline void SetOff(GameEngineUpdateObject* _Object)
+	{
+		if (!_Object->IsUpdate())
+		{
+			return;
+		}
+		else
+		{
+			_Object->Off();
+		}
+	}
+	
+
+
+	//-------------------------
 	inline void SetRightDir()
 	{
 		GetTransform().PixLocalPositiveX();
@@ -81,7 +110,8 @@ protected:
 
 	// -------------------Battle-------------------
 public:
-	virtual void BeHit(GamePlaySkill* _Skill, const GamePlayDataBase* _Character, int _Index);
+	virtual void BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitCollision, const GamePlayDataBase* _Character, int _Index);
+	virtual void BeHitEnd();
 	// virtual void BeHit(적 대미지);
 	virtual void Jump_GoingDown() 
 	{
@@ -89,16 +119,28 @@ public:
 	};
 
 	virtual void LandingEnd() {}
-
-
 	virtual void LandingEnd_Down() {}
 	//virtual void LandingEnd_Down() {}
+
+
 	virtual void SetFSManager() {}
 
 
 protected:
 	bool JumpGoingDown;
 	float DownWait;
+	// ------------------Effect--------------------
+public:
+		void Ani_BindEndOff(const FrameAnimation_DESC& _Desc);
+
+protected:
+	std::map<std::string, std::vector<GameEngineTextureRenderer*>> map_NomalEffect;
+	
+	
+private:
+	void HitEffect(GameEngineTextureRenderer* _Texture, GameEngineCollision* _HitCollision, const std::string& _AniName);
+
+protected:
 	// --------------------------------------------
 	UnitType Enum_UnitType;
 	ObjectType Enum_ObjectType;

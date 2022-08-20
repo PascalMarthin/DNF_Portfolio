@@ -27,10 +27,12 @@ struct ColorData
 
 	}
 };
-
+class GameEngineTextureRenderer;
 class FrameAnimation_DESC 
 {
 public:
+	GameEngineTextureRenderer* CurRenderer;
+
 	std::string TextureName;
 
 	unsigned int CurFrame;
