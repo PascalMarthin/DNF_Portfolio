@@ -336,7 +336,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Skill_Fighter_F_BaseKick.h">
+    <ClInclude Include="Skill_Fighter_F_Bungwon.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -579,7 +579,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Skill_Fighter_F_BaseKick.cpp">
+    <ClCompile Include="Skill_Fighter_F_Bungwon.cpp">
       <SubType>
       </SubType>
     </ClCompile>

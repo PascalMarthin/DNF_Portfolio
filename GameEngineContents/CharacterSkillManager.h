@@ -15,6 +15,8 @@ public:
 	CharacterSkillManager& operator=(const CharacterSkillManager& _Other) = delete;
 	CharacterSkillManager& operator=(CharacterSkillManager&& _Other) noexcept = delete;
 
+	GamePlaySkill* PossibleSkillReturn(char _Char);
+
 protected:
 
 	void Start() override;
@@ -24,6 +26,7 @@ protected:
 	void End() override {}
 
 	void LevelStartEvent() override;
+	void LevelEndEvent() override;
 	//void OnEvent();
 	//void OffEvent();
 
@@ -32,6 +35,7 @@ private:
 	std::map<char, GamePlaySkill*> map_SkillSlot;
 	std::map<std::string ,GamePlaySkill*> List_AllSkill;
 
+	static std::map <std::string, float> Staic_CoolTime;
 	//std::function<void()> Input_SkillSlot_01;
 	//std::function<void()> Input_SkillSlot_02;
 	//std::function<void()> Input_SkillSlot_03;

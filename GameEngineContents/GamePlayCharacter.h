@@ -6,7 +6,7 @@
 
 // 설명 :
 class Skill_Fighter_F_BaseHit;
-class Skill_Fighter_F_Ham_Kick;
+class Skill_Fighter_F_DashHit;
 enum class Collision_AllSkill
 {
 	BasePunch1,
@@ -19,6 +19,7 @@ class PlayerInterface;
 class AvataManager;
 class InterfaceHUD;
 class GamePlayDataBase;
+class CharacterSkillManager;
 class GamePlayCharacter : public GamePlayObject
 {
 
@@ -72,6 +73,7 @@ protected:
 protected:
 
 	AvataManager* Manager_AvataManager;
+	CharacterSkillManager* Manager_SkillManager;
 
 	void Create_Fighter_F_Default_FSManager();
 	// ---------------Collision------------------
@@ -120,43 +122,55 @@ public:
 	float JumpKick_DelayTime;
 	bool BaseJumpKick;
 
-
-	// 기본공격
-	void FSM_Att_BasePunch1_Start(const StateInfo& _Info);
-	void FSM_Att_BasePunch1_Update(float _DeltaTime, const StateInfo& _Info);
-	void FSM_Att_BasePunch1_End(const StateInfo& _Info);
-	float Att_BaseAtt_Delay;
-
-	void FSM_Att_BasePunch2_Start(const StateInfo& _Info);
-	void FSM_Att_BasePunch2_Update(float _DeltaTime, const StateInfo& _Info);
-	void FSM_Att_BasePunch2_End(const StateInfo& _Info);
-
-	void FSM_Att_BasePunch3_Start(const StateInfo& _Info);
-	void FSM_Att_BasePunch3_Update(float _DeltaTime, const StateInfo& _Info);
-	void FSM_Att_BasePunch3_End(const StateInfo& _Info);
-	bool DelayPunch;
-
-	void FSM_Att_BaseKick_Start(const StateInfo& _Info);
-	void FSM_Att_BaseKick_Update(float _DeltaTime, const StateInfo& _Info);
-	void FSM_Att_BaseKick_End(const StateInfo& _Info);
-
-	void FSM_Move_Helper();
-	// 해머 킥
-	void FSM_Att_HamKick_Start(const StateInfo& _Info);
-	void FSM_Att_HamKick_Update(float _DeltaTime, const StateInfo& _Info);
-	void FSM_Att_HamKick_End(const StateInfo& _Info);
+	//// 기본공격
+	void FSM_Att_BaseHit_Start(const StateInfo& _Info);
+	void FSM_Att_BaseHit_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Att_BaseHit_End(const StateInfo& _Info);
 
 
-	// 대쉬 공격
-	void FSM_Att_Dash_Start(const StateInfo& _Info);
-	void FSM_Att_Dash_Update(float _DeltaTime, const StateInfo& _Info);
-	void FSM_Att_Dash_End(const StateInfo& _Info);
+	// 스킬공격
+	void FSM_Att_Skill_Start(const StateInfo& _Info);
+	void FSM_Att_Skill_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Att_Skill_End(const StateInfo& _Info);
+	//float Att_BaseAtt_Delay;
+
+	//void FSM_Att_BasePunch2_Start(const StateInfo& _Info);
+	//void FSM_Att_BasePunch2_Update(float _DeltaTime, const StateInfo& _Info);
+	//void FSM_Att_BasePunch2_End(const StateInfo& _Info);
+
+	//void FSM_Att_BasePunch3_Start(const StateInfo& _Info);
+	//void FSM_Att_BasePunch3_Update(float _DeltaTime, const StateInfo& _Info);
+	//void FSM_Att_BasePunch3_End(const StateInfo& _Info);
+	//bool DelayPunch;
+
+	//void FSM_Att_BaseKick_Start(const StateInfo& _Info);
+	//void FSM_Att_BaseKick_Update(float _DeltaTime, const StateInfo& _Info);
+	//void FSM_Att_BaseKick_End(const StateInfo& _Info);
+
+	//void FSM_Move_Helper();
+	//// 해머 킥
+	//void FSM_Att_HamKick_Start(const StateInfo& _Info);
+	//void FSM_Att_HamKick_Update(float _DeltaTime, const StateInfo& _Info);
+	//void FSM_Att_HamKick_End(const StateInfo& _Info);
+
+
+	//// 대쉬 공격
+	//void FSM_Att_Dash_Start(const StateInfo& _Info);
+	//void FSM_Att_Dash_Update(float _DeltaTime, const StateInfo& _Info);
+	//void FSM_Att_Dash_End(const StateInfo& _Info);
 
 
 
 	// ------------------Skill------------------
 	//std::map<std::string, GamePlaySkill*> map_AllSkill;
-	void SkillCollisionActive(const std::string& _Name, int _Frame);
+	//void SkillCollisionActive(const std::string& _Name, int _Frame);
+
+
+	GamePlaySkill* Skill_CurrentSkill;
+	Skill_Fighter_F_BaseHit* Skill_BaseHit;
+	Skill_Fighter_F_DashHit* Skill_BaseDashAtt;
+	std::function<bool(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata, float _DeltaTime)> Function_BaseAtt;
+	std::function<bool(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata, float _DeltaTime)> Function_CurrentSkill;
 
 };
 

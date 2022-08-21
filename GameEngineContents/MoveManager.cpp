@@ -120,7 +120,6 @@ void MoveManager::Update(float _DeltaTime)
 					GetTransform().SetWorldPosition(LandingPostion);
 					ParentCharacter->LandingEnd();
 					BlowPower = float4::ZERO;
-
 				}
 			}
 
@@ -212,7 +211,10 @@ void MoveManager::SetAerial()
 {
 	JumpHigh = 0.f;
 	JumpTime = 0.f;
-	LandingPostion = ParentCharacter->GetTransform().GetWorldPosition();
+	if (!ManagerStat->IsAerial())
+	{
+		LandingPostion = ParentCharacter->GetTransform().GetWorldPosition();
+	}
 	GameEngineDebug::OutPutString(std::to_string(LandingPostion.y));
 	if (ManagerStat->IsDown())
 	{
@@ -250,11 +252,8 @@ void MoveManager::SetHit(const float4& _HitPower)
 {
 	BlowPower = _HitPower;
 	HitTime = 0.f;
-	if (_HitPower.y != 0 )
-	{
-		SetAerial();
-	}
 }
+
 
 void MoveManager::LevelStartEvent()
 {

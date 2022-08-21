@@ -56,9 +56,8 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitColli
 		MsgBoxAssert("설정하지 않았습니다")
 	}
 
-	float4 Power = _Skill->GetBlowPower();
+	float4 Power = _Skill->Class_Power[_Skill->int_ComboStuck].float4_HitPhysicsPower;
 	Power.x *= static_cast<float>(_Index);
-
 
 	//
 	// x > 0 y > 0 w > 0
@@ -69,17 +68,17 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitColli
 	
 	// 대미지 처리
 
-	switch (_Skill->GetHitPostureType())
+	switch (_Skill->Class_Power[_Skill->int_ComboStuck].Enum_HitPostureType)
 	{
 	case HitPostureType::Standing:
-	case HitPostureType::Air:
+	case HitPostureType::Aerial:
 	{
 
 		if (Power.x != 0 && Power.y != 0 && Power.w == 0)
 		{
 			Manager_StatManager->SetHit_BlowUp();
 		}
-		else if (Power.x != 0 && Power.y == 0 && Power.w != 0)
+		else if (Power.x != 0 && Power.w != 0)
 		{
 			Manager_StatManager->SetHit_Stand();
 		}
@@ -104,7 +103,7 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitColli
 
 
 	GamePlayObject* Hit = _Skill->GetActor<GamePlayObject>();
-	switch (_Skill->GetHitType())
+	switch (_Skill->Class_Power[_Skill->int_ComboStuck].Enum_HitType)
 	{
 	case HitType::Hit:
 	{
@@ -140,6 +139,7 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitColli
 
 void GamePlayObject::HitEffect(GameEngineTextureRenderer* _Texture, GameEngineCollision* _HitCollision, const std::string& _AniName)
 {
+	_Texture->SetParent(_HitCollision->GetActor());
 	const float4 Postion = _HitCollision->GetTransform().GetWorldPosition();
 	const float4& Scale = _HitCollision->GetTransform().GetLocalScale();
 

@@ -19,22 +19,23 @@ class FrameAnimationForAvata : public GameEngineNameObject
 
 	bool bOnceStart;
 	bool bOnceEnd;
+
+
 	std::function<void(const FrameAnimation_DESC&)> Frame;
 	std::function<void(const FrameAnimation_DESC&)> End;
 	std::function<void(const FrameAnimation_DESC&)> Start;
 	std::function<void(const FrameAnimation_DESC&, float)> Time;
-
-	inline FrameAnimation_DESC& GetInfo()
-	{
-		return Info;
-	}
-	// 레퍼런스로 반환함
 
 	void Reset();
 
 	void Update(float _DeltaTime);
 
 public:
+	inline FrameAnimation_DESC& GetInfo()
+	{
+		return Info;
+	}
+
 	FrameAnimationForAvata()
 		: bOnceStart(true)
 		, bOnceEnd(false)
@@ -69,6 +70,11 @@ public:
 	{
 		return CurrentAniPlus->Info.CurFrame;
 	}
+	inline FrameAnimationForAvata* GetFrameAnimation() const
+	{
+		return CurrentAniPlus;
+	}
+
 	void SetDefaultCharacterAvata(const std::string& _TextureName);
 	void SetDefaultCharacterAvata(GameEngineFolderTexture* _FolderTexture);
 
@@ -85,7 +91,7 @@ public:
 
 	// 수동 조작관련
 	void SetManualControl();
-	void SetAutoControl();
+	void SetAutoControl(bool _Reset);
 	void SetFrame_Manual(int _Frame);
 private:
 	bool ManualControl;

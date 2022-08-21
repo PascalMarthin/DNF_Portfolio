@@ -2,6 +2,7 @@
 #include "Bale.h"
 #include "GamePlayEnum.h"
 #include "CharacterStatManager.h"
+#include "MoveManager.h"
 //#include <GameEngineCore/>
 
 Bale::Bale() 
@@ -162,7 +163,10 @@ void Bale::FSM_Hit_Stand_End(const StateInfo& _Info)
 
 void Bale::FSM_Hit_Aerial_Start(const StateInfo& _Info)
 {
+	Manager_MoveManager->SetAerial();
+	Manager_StatManager->SetAerial();
 	Texture_Monster->ChangeFrameAnimation("Bale_Hit1");
+	JumpGoingDown = false;
 }
 void Bale::FSM_Hit_Aerial_Update(float _DeltaTime, const StateInfo& _Info)
 {
@@ -173,7 +177,7 @@ void Bale::FSM_Hit_Aerial_Update(float _DeltaTime, const StateInfo& _Info)
 }
 void Bale::FSM_Hit_Aerial_End(const StateInfo& _Info)
 {
-
+	JumpGoingDown = false;
 }
 
 void Bale::FSM_Hit_Aerial_DoingDown_Start(const StateInfo& _Info)

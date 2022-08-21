@@ -176,9 +176,6 @@
     <ClInclude Include="Skill_Fighter_F_BaseHit.h">
       <Filter>Object\Character\Fighter</Filter>
     </ClInclude>
-    <ClInclude Include="Skill_Fighter_F_BaseKick.h">
-      <Filter>Object\Character\Fighter</Filter>
-    </ClInclude>
     <ClInclude Include="Skill_Fighter_F_Upper.h">
       <Filter>Object\Character\Fighter</Filter>
     </ClInclude>
@@ -187,6 +184,9 @@
     </ClInclude>
     <ClInclude Include="SkillHeader.h">
       <Filter>Object\Character\SkillTemp</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill_Fighter_F_Bungwon.h">
+      <Filter>Object\Character\Fighter</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -365,13 +365,13 @@
     <ClCompile Include="Skill_Fighter_F_BaseHit.cpp">
       <Filter>Object\Character\Fighter</Filter>
     </ClCompile>
-    <ClCompile Include="Skill_Fighter_F_BaseKick.cpp">
-      <Filter>Object\Character\Fighter</Filter>
-    </ClCompile>
     <ClCompile Include="Skill_Fighter_F_Upper.cpp">
       <Filter>Object\Character\Fighter</Filter>
     </ClCompile>
     <ClCompile Include="Skill_Fighter_F_DashHit.cpp">
+      <Filter>Object\Character\Fighter</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill_Fighter_F_Bungwon.cpp">
       <Filter>Object\Character\Fighter</Filter>
     </ClCompile>
   </ItemGroup>

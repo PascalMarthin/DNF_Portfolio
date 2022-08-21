@@ -26,7 +26,7 @@ protected:
 	//void OffEvent() override;
 
 private:
-	void CheckCollision() override;
+	bool ActiveSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata, float _DeltaTime) override;
 
 };
 

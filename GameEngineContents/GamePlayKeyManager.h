@@ -1,14 +1,16 @@
 #pragma once
 #include <queue>
 #include <GameEngineBase/GameEngineMath.h>
-#include <GameEngineCore/GameEngineComponent.h>
+#include <GameEngineCore/GameEngineTransformComponent.h>
 #include "GamePlayEnum.h"
 
 // Ό³Έν :
 class CharacterStatManager;
 class GamePlayCharacter;
 class PlayerInterface;
-class GamePlayKeyManager : public GameEngineComponent
+class GamePlaySkill;
+class CharacterSkillManager;
+class GamePlayKeyManager : public GameEngineTransformComponent
 {
 public:
 	// constrcuter destructer
@@ -44,6 +46,7 @@ public:
 	bool Input_AllArrow_DownAndPress() const;
 	bool Input_JumpKey_Down() const;
 	bool Input_BaseAttKey_DownAndPress() const;
+	GamePlaySkill* Input_SkillKeyCheck(CharacterSkillManager* _SkillManager) const;
 
 	float4 Input_Move_Press();
 protected:

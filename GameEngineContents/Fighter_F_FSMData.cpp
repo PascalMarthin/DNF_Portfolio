@@ -4,15 +4,14 @@
 #include "PlayerInterface.h"
 #include "MoveManager.h"
 #include "AvataManager.h"
-#include "Skill_Fighter_F_Ham_Kick.h"
+#include "CharacterSkillManager.h"
 #include "Skill_Fighter_F_BaseHit.h"
-#include "Skill_Fighter_F_BaseKick.h"
 #include "Skill_Fighter_F_DashHit.h"
-#include "Skill_Fighter_F_Upper.h"
 
 void GamePlayCharacter::Create_Fighter_F_Default_FSManager()
 {
 	GameEngineCollision* Collision = nullptr;
+	Manager_SkillManager = CreateComponent<CharacterSkillManager>();
 
 	Manager_StatManager->GetFSMManager().CreateStateMember
 	("None", [=](float _DeltaTime, const StateInfo & _Info)
@@ -43,44 +42,21 @@ void GamePlayCharacter::Create_Fighter_F_Default_FSManager()
 		//Collision->SetDebugSetting(CollisionType::CT_AABB, float4({ 0, 255, 0, 50 }));
 		Collision->Off();
 	}
-	Manager_StatManager->GetFSMManager().CreateStateMember
-	("Att_BasePunch1", std::bind(&GamePlayCharacter::FSM_Att_BasePunch1_Update, this, std::placeholders::_1, std::placeholders::_2)
-		, std::bind(&GamePlayCharacter::FSM_Att_BasePunch1_Start, this, std::placeholders::_1)
-		, std::bind(&GamePlayCharacter::FSM_Att_BasePunch1_End, this, std::placeholders::_1));
-
 
 	Manager_StatManager->GetFSMManager().CreateStateMember
-	("Att_BasePunch2", std::bind(&GamePlayCharacter::FSM_Att_BasePunch2_Update, this, std::placeholders::_1, std::placeholders::_2)
-		, std::bind(&GamePlayCharacter::FSM_Att_BasePunch2_Start, this, std::placeholders::_1)
-		, std::bind(&GamePlayCharacter::FSM_Att_BasePunch2_End, this, std::placeholders::_1));
-	Manager_StatManager->GetFSMManager().CreateStateMember
-	("Att_BasePunch3", std::bind(&GamePlayCharacter::FSM_Att_BasePunch3_Update, this, std::placeholders::_1, std::placeholders::_2)
-		, std::bind(&GamePlayCharacter::FSM_Att_BasePunch3_Start, this, std::placeholders::_1)
-		, std::bind(&GamePlayCharacter::FSM_Att_BasePunch3_End, this, std::placeholders::_1));
-	Manager_StatManager->GetFSMManager().CreateStateMember
-	("Att_BaseKick", std::bind(&GamePlayCharacter::FSM_Att_BaseKick_Update, this, std::placeholders::_1, std::placeholders::_2)
-		, std::bind(&GamePlayCharacter::FSM_Att_BaseKick_Start, this, std::placeholders::_1)
-		, std::bind(&GamePlayCharacter::FSM_Att_BaseKick_End, this, std::placeholders::_1));
-
-
+	("Att_BaseHit", std::bind(&GamePlayCharacter::FSM_Att_BaseHit_Update, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&GamePlayCharacter::FSM_Att_BaseHit_Start, this, std::placeholders::_1)
+		, std::bind(&GamePlayCharacter::FSM_Att_BaseHit_End, this, std::placeholders::_1));
 
 	Manager_StatManager->GetFSMManager().CreateStateMember
-	("Att_Dash", std::bind(&GamePlayCharacter::FSM_Att_Dash_Update, this, std::placeholders::_1, std::placeholders::_2)
-		, std::bind(&GamePlayCharacter::FSM_Att_Dash_Start, this, std::placeholders::_1)
-		, std::bind(&GamePlayCharacter::FSM_Att_Dash_End, this, std::placeholders::_1));
-	{
-		Collision_HitCollision[Collision_AllSkill::Att_Dash].push_back(Collision = CreateComponent<GameEngineCollision>("Att_Dash"));
-		Collision->GetTransform().SetLocalScale({ 60, 90, 20 });
-		Collision->GetTransform().SetLocalPosition({ 40, -60 });
-		Collision->ChangeOrder(CollisionOrder::Player_Att);
-		//Collision->SetDebugSetting(CollisionType::CT_AABB, float4({ 0, 50, 0, 0.5f }));
-		Collision->Off();
-	}
+	("Att_Skill", std::bind(&GamePlayCharacter::FSM_Att_Skill_Update, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&GamePlayCharacter::FSM_Att_Skill_Start, this, std::placeholders::_1)
+		, std::bind(&GamePlayCharacter::FSM_Att_Skill_End, this, std::placeholders::_1));
 
-	Manager_StatManager->GetFSMManager().CreateStateMember
-	("Att_HamKick", std::bind(&GamePlayCharacter::FSM_Att_HamKick_Update, this, std::placeholders::_1, std::placeholders::_2)
-		, std::bind(&GamePlayCharacter::FSM_Att_HamKick_Start, this, std::placeholders::_1)
-		, std::bind(&GamePlayCharacter::FSM_Att_HamKick_End, this, std::placeholders::_1));
+	Skill_BaseHit = CreateComponent<Skill_Fighter_F_BaseHit>();
+	Skill_BaseDashAtt = CreateComponent<Skill_Fighter_F_DashHit>();
+		
+
 	//map_AllSkill["Fighter_HamKick"] = CreateComponent<Skill_Fighter_F_Ham_Kick>();
 	//map_AllSkill["Fighter_BaseHit"] = CreateComponent<Skill_Fighter_F_BaseHit>();
 	//map_AllSkill["Fighter_BaseKick"] = CreateComponent<Skill_Fighter_F_BaseKick>();
@@ -130,12 +106,19 @@ void GamePlayCharacter::Create_Fighter_F_Default_FSManager()
 
 void GamePlayCharacter::FSM_Move_Walk_Start(const StateInfo& _Info)
 {
+	Skill_CurrentSkill = nullptr;
 	Manager_AvataManager->ChangeAvataAnimation("Move_Walk");
 	Manager_StatManager->SetWalk();
 }
 
 void GamePlayCharacter::FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _Info)
 {
+	if (Skill_CurrentSkill = PlayerUserInterface->GetUI_KeyManager()->Input_SkillKeyCheck(Manager_SkillManager))
+	{
+		Manager_StatManager->GetFSMManager().ChangeState("Att_Skill");
+		return;
+	}
+
 	bool IsMove = false;
 	float MoveSpeed = Manager_StatManager->GetMoveSpeed();
 
@@ -164,7 +147,7 @@ void GamePlayCharacter::FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& 
 
 	if (PlayerUserInterface->GetUI_KeyManager()->Input_BaseAttKey_DownAndPress())
 	{
-		Manager_StatManager->GetFSMManager().ChangeState("Att_BasePunch1");
+		Manager_StatManager->GetFSMManager().ChangeState("Att_BaseHit");
 		return;
 	}
 }
@@ -176,6 +159,7 @@ void GamePlayCharacter::FSM_Move_Walk_End(const StateInfo& _Info)
 
 void GamePlayCharacter::FSM_Move_Dash_Start(const StateInfo& _Info)
 {
+	Skill_CurrentSkill = nullptr;
 	Manager_AvataManager->ChangeAvataAnimation("Move_Dash");
 	Manager_StatManager->SetDash();
 }
@@ -183,13 +167,18 @@ void GamePlayCharacter::FSM_Move_Dash_Start(const StateInfo& _Info)
 void GamePlayCharacter::FSM_Move_Dash_Update(float _DeltaTime, const StateInfo& _Info)
 {
 	//StatManager->GetFSMManager().ChangeState("Att_Dash");
+	if (Skill_CurrentSkill = PlayerUserInterface->GetUI_KeyManager()->Input_SkillKeyCheck(Manager_SkillManager))
+	{
+		Manager_StatManager->GetFSMManager().ChangeState("Att_Skill");
+		return;
+	}
 
 	bool IsMove = false;
 	float MoveSpeed = Manager_StatManager->GetMoveSpeed() * 2.2f;
 
 	if (PlayerUserInterface->GetUI_KeyManager()->Input_BaseAttKey_DownAndPress())
 	{
-		Manager_StatManager->GetFSMManager().ChangeState("Att_Dash");
+		Manager_StatManager->GetFSMManager().ChangeState("Att_BaseHit");
 		return;
 	}
 
@@ -228,14 +217,20 @@ void GamePlayCharacter::FSM_Move_Stand_Start(const StateInfo& _Info)
 		Manager_AvataManager->ChangeAvataAnimation("Move_Stand_Battle");
 	}
 	Manager_StatManager->SetStand();
+	Skill_CurrentSkill = nullptr;
 	//GameEngineDebug::OutPutString(std::to_string(GetTransform().GetLocalPosition().y));
 }
 
 void GamePlayCharacter::FSM_Move_Stand_Update(float _DeltaTime, const StateInfo& _Info)
 {
-	if (GameEngineInput::GetInst()->IsDown("Key_F"))
+	//if (GameEngineInput::GetInst()->IsDown("Key_F"))
+	//{
+	//	Manager_StatManager->GetFSMManager().ChangeState("Att_HamKick"); 
+	//	return;
+	//}
+	if (Skill_CurrentSkill = PlayerUserInterface->GetUI_KeyManager()->Input_SkillKeyCheck(Manager_SkillManager))
 	{
-		Manager_StatManager->GetFSMManager().ChangeState("Att_HamKick"); 
+		Manager_StatManager->GetFSMManager().ChangeState("Att_Skill");
 		return;
 	}
 
@@ -256,9 +251,10 @@ void GamePlayCharacter::FSM_Move_Stand_Update(float _DeltaTime, const StateInfo&
 		return;
 	}
 
+	
 	if (PlayerUserInterface->GetUI_KeyManager()->Input_BaseAttKey_DownAndPress())
 	{
-		Manager_StatManager->GetFSMManager().ChangeState("Att_BasePunch1");
+		Manager_StatManager->GetFSMManager().ChangeState("Att_BaseHit");
 		return;
 	}
 }
@@ -279,7 +275,6 @@ void GamePlayCharacter::FSM_Move_Jump_Start(const StateInfo& _Info)
 	JumpGoingDown = false;
 	Manager_AvataManager->ChangeAvataAnimation("Move_JumpReady");
 	Manager_MoveManager->SetJump(Manager_StatManager->GetAbilityStat()->JumpPower);
-	
 }
 
 void GamePlayCharacter::FSM_Move_Jump_Update(float _DeltaTime, const StateInfo& _Info)
@@ -400,292 +395,60 @@ void GamePlayCharacter::FSM_Move_Jump_End(const StateInfo& _Info)
 }
 
 
-void GamePlayCharacter::FSM_Att_BasePunch1_Start(const StateInfo& _Info)
+void GamePlayCharacter::FSM_Att_BaseHit_Start(const StateInfo& _Info)
 {
 	Manager_StatManager->SetDoBaseAtt();
-	Att_BaseAtt_Delay = 0.f;
-	Manager_AvataManager->ChangeAvataAnimation("Att_BasePunch1");
-	SetOff(map_AllSkill["Fighter_BaseHit"]);
-	map_AllSkill["Fighter_BaseHit"]->SetCollisionIndex(0);
-}
-
-void GamePlayCharacter::FSM_Att_BasePunch1_Update(float _DeltaTime, const StateInfo& _Info)
-{
-	SkillCollisionActive("Fighter_BaseHit", 1);
-
-	if (Manager_AvataManager->Avata_Skin->IsEndFrame())
+	if (_Info.PrevState == "Move_Dash")
 	{
-		Att_BaseAtt_Delay += _DeltaTime;
-		if (Att_BaseAtt_Delay > 0.2f)
-		{
-			Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
-			return;
-		}
-
-		if (PlayerUserInterface->GetUI_KeyManager()->Input_BaseAttKey_DownAndPress())
-		{
-			Manager_StatManager->GetFSMManager().ChangeState("Att_BasePunch2");
-			return;
-		}
-
-	}
-	
-}
-void GamePlayCharacter::FSM_Att_BasePunch1_End(const StateInfo& _Info)
-{
-	Manager_StatManager->SetEngage();
-	Manager_StatManager->SetDoBaseAttEnd();
-	SetOff(map_AllSkill["Fighter_BaseHit"]);
-}
-
-
-
-void GamePlayCharacter::FSM_Att_BasePunch2_Start(const StateInfo& _Info)
-{
-	Manager_StatManager->SetDoBaseAtt();
-	DelayPunch = false;
-	Manager_AvataManager->ChangeAvataAnimation("Att_BasePunch2");
-	SetOff(map_AllSkill["Fighter_BaseHit"]);
-	map_AllSkill["Fighter_BaseHit"]->SetCollisionIndex(1);
-	FSM_Move_Helper();
-}
-void GamePlayCharacter::FSM_Att_BasePunch2_Update(float _DeltaTime, const StateInfo& _Info)
-{
-	if (DelayPunch == false)
-	{
-		SkillCollisionActive("Fighter_BaseHit", 1);
-		if (Manager_AvataManager->Avata_Skin->IsEndFrame())
-		{
-			Manager_AvataManager->ChangeAvataAnimation("Att_BasePunch2_Delay");
-			DelayPunch = true;
-		}
-		else if (Manager_AvataManager->Avata_Skin->GetCurrentFrameStuck() < 2)
-		{
-			Manager_MoveManager->SetCharacterMove({ MoveIndex * DefaultMove * 0.5f * Manager_StatManager->GetMoveSpeed() * _DeltaTime, 0 });
-		}
+		Skill_BaseDashAtt->On();
+		Skill_BaseDashAtt->StartSkill(Manager_StatManager, Manager_MoveManager, Manager_AvataManager);
+		Function_BaseAtt = Skill_BaseDashAtt->Get_SkillAction();
 	}
 	else
 	{
-		if (Manager_AvataManager->Avata_Skin->IsEndFrame())
-		{
-			Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
-			return;
-		}
-
-		if (PlayerUserInterface->GetUI_KeyManager()->Input_BaseAttKey_DownAndPress())
-		{
-			Manager_StatManager->GetFSMManager().ChangeState("Att_BasePunch3");
-			return;
-		}
+		Skill_BaseHit->On();
+		Skill_BaseHit->StartSkill(Manager_StatManager, Manager_MoveManager, Manager_AvataManager);
+		Function_BaseAtt = Skill_BaseHit->Get_SkillAction();
 	}
-
-
+	//SetOff(map_AllSkill["Fighter_BaseHit"]);
+	//map_AllSkill["Fighter_BaseHit"]->SetCollisionIndex(0);
 }
-void GamePlayCharacter::FSM_Att_BasePunch2_End(const StateInfo& _Info)
+void GamePlayCharacter::FSM_Att_BaseHit_Update(float _DeltaTime, const StateInfo& _Info)
 {
-	Manager_StatManager->SetEngage();
-	Manager_StatManager->SetDoBaseAttEnd();
-	MoveIndex = 0.f;
-	SetOff(map_AllSkill["Fighter_BaseHit"]);
-}
-
-void GamePlayCharacter::FSM_Att_BasePunch3_Start(const StateInfo& _Info)
-{
-	Manager_StatManager->SetDoBaseAtt();
-	DelayPunch = false;
-	Manager_AvataManager->ChangeAvataAnimation("Att_BasePunch3");
-	SetOff(map_AllSkill["Fighter_BaseHit"]);
-	map_AllSkill["Fighter_BaseHit"]->SetCollisionIndex(2);
-	FSM_Move_Helper();
-
-}
-
-void GamePlayCharacter::FSM_Att_BasePunch3_Update(float _DeltaTime, const StateInfo& _Info)
-{
-	if (DelayPunch == false)
-	{
-		SkillCollisionActive("Fighter_BaseHit", 1);
-		if (Manager_AvataManager->Avata_Skin->IsEndFrame())
-		{
-			Manager_AvataManager->ChangeAvataAnimation("Att_BasePunch3_Delay");
-			DelayPunch = true;
-		}
-		else if (Manager_AvataManager->Avata_Skin->GetCurrentFrameStuck() < 2)
-		{
-			Manager_MoveManager->SetCharacterMove({ MoveIndex * 0.5f * DefaultMove * Manager_StatManager->GetMoveSpeed() * _DeltaTime, 0 });
-		}
-	}
-	else 
-	{
-		if (Manager_AvataManager->Avata_Skin->IsEndFrame())
-		{
-			Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
-			return;
-		}
-
-		if (PlayerUserInterface->GetUI_KeyManager()->Input_BaseAttKey_DownAndPress())
-		{
-			Manager_StatManager->GetFSMManager().ChangeState("Att_BaseKick");
-			return;
-		}
-	}
-
-}
-
-void GamePlayCharacter::FSM_Att_BasePunch3_End(const StateInfo& _Info)
-{
-	Manager_StatManager->SetEngage();
-	Manager_StatManager->SetDoBaseAttEnd();
-	MoveIndex = 0.f;
-	SetOff(map_AllSkill["Fighter_BaseHit"]);
-}
-
-
-void GamePlayCharacter::FSM_Att_BaseKick_Start(const StateInfo& _Info)
-{
-	Manager_StatManager->SetDoBaseAtt();
-	Manager_AvataManager->ChangeAvataAnimation("Att_Basekick");
-	SetOff(map_AllSkill["Fighter_BaseKick"]);
-	FSM_Move_Helper();
-}
-
-void GamePlayCharacter::FSM_Att_BaseKick_Update(float _DeltaTime, const StateInfo& _Info)
-{
-	SkillCollisionActive("Fighter_BaseKick", 1);
-
-	if (Manager_AvataManager->Avata_Skin->IsEndFrame())
+	if (Function_BaseAtt(Manager_StatManager, Manager_MoveManager, Manager_AvataManager, _DeltaTime))
 	{
 		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
-		return;
-	}
-	else if (Manager_AvataManager->Avata_Skin->GetCurrentFrameStuck() < 2)
-	{
-		Manager_MoveManager->SetCharacterMove({ MoveIndex * 0.7f * DefaultMove * Manager_StatManager->GetMoveSpeed() * _DeltaTime, 0 });
 	}
 }
-
-void GamePlayCharacter::FSM_Att_BaseKick_End(const StateInfo& _Info)
+void GamePlayCharacter::FSM_Att_BaseHit_End(const StateInfo& _Info)
 {
-	Manager_StatManager->SetEngage();
-	Manager_StatManager->SetDoBaseAttEnd();
-	MoveIndex = 0.f;
-	SetOff(map_AllSkill["Fighter_BaseKick"]);
+
 }
 
-void GamePlayCharacter::FSM_Move_Helper()
-{
-	bool Left = false;
-	bool Right = false;
-	if (GameEngineInput::GetInst()->IsDown("Right_Arrow") || GameEngineInput::GetInst()->IsPress("Right_Arrow"))
-	{
-		if (GetObjectDir())
-		{
-			MoveIndex = 6.f;
-		}
-		else
-		{
-			MoveIndex = 0.f;
-		}
-		Right = true;
-	}
 
-	if ((GameEngineInput::GetInst()->IsDown("Left_Arrow")) || GameEngineInput::GetInst()->IsPress("Left_Arrow"))
-	{
-		if (GetObjectDir())
-		{
-			MoveIndex = 0.f;
-		}
-		else
-		{
-			MoveIndex = -6.f;
-		}
-		Left = true;
-	}
-
-	if (Left == true && Right == true)
-	{
-		MoveIndex = 0.f;
-	}
-	else if (Left == false && Right == false)
-	{
-		if (GetObjectDir())
-		{
-			MoveIndex = 0.5f;
-		}
-		else
-		{
-			MoveIndex = -0.5f;
-		}
-	}
-}
-
-void GamePlayCharacter::FSM_Att_HamKick_Start(const StateInfo& _Info)
+void GamePlayCharacter::FSM_Att_Skill_Start(const StateInfo& _Info)
 {
-	Manager_AvataManager->ChangeAvataAnimation("Att_Basekick");
-}
-void GamePlayCharacter::FSM_Att_HamKick_Update(float _DeltaTime, const StateInfo& _Info)
-{
-	if (Manager_AvataManager->Avata_Skin->IsEndFrame())
+	if (Skill_CurrentSkill == nullptr)
 	{
 		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
+		// 임파서블
 		return;
 	}
+	Skill_CurrentSkill->On();
+	Skill_CurrentSkill->StartSkill(Manager_StatManager, Manager_MoveManager, Manager_AvataManager);
+	Function_CurrentSkill = Skill_CurrentSkill->Get_SkillAction();
 
-	SkillCollisionActive("Fighter_HamKick", 2);
+}
+void GamePlayCharacter::FSM_Att_Skill_Update(float _DeltaTime, const StateInfo& _Info)
+{
+	if (Function_CurrentSkill(Manager_StatManager, Manager_MoveManager, Manager_AvataManager, _DeltaTime))
+	{
+		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
+	}
 	
 }
-void GamePlayCharacter::FSM_Att_HamKick_End(const StateInfo& _Info)
-{
-	SetOff(map_AllSkill["Fighter_HamKick"]);
-}
-
-
-void GamePlayCharacter::FSM_Att_Dash_Start(const StateInfo& _Info)
-{
-	DelayPunch = false;
-	Manager_StatManager->SetDash();
-	Manager_StatManager->SetDoBaseAtt();
-	Manager_AvataManager->ChangeAvataAnimation("Att_Dash");
-	SetOff(map_AllSkill["Fighter_DashHit"]);
-	FSM_Move_Helper();
-}
-
-void GamePlayCharacter::FSM_Att_Dash_Update(float _DeltaTime, const StateInfo& _Info)
+void GamePlayCharacter::FSM_Att_Skill_End(const StateInfo& _Info)
 {
 
-	if (DelayPunch == false)
-	{
-		SkillCollisionActive("Fighter_DashHit", 2);
-		if (Manager_AvataManager->Avata_Skin->GetCurrentFrameStuck() < 2)
-		{
-			Manager_MoveManager->SetCharacterMove({ MoveIndex * DefaultMove * 0.2f * Manager_StatManager->GetMoveSpeed() * _DeltaTime, 0 });
-		}
-		else if (Manager_AvataManager->Avata_Skin->IsEndFrame() && DelayPunch == false)
-		{
-			Manager_AvataManager->ChangeAvataAnimation("Att_Dash_Delay");
-			DelayPunch = true;
-		}
-	}
-	else
-	{
-		if (Manager_AvataManager->Avata_Skin->IsEndFrame())
-		{
-			Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
-			return;
-		}
-
-		//if (GameEngineInput::GetInst()->IsDown("BaseAtt") ||
-		//	GameEngineInput::GetInst()->IsPress("BaseAtt"))
-		//{
-		//	StatManager->GetFSMManager().ChangeState("Att_BaseKick");
-		//	return;
-		//}
-	}
 }
 
-void GamePlayCharacter::FSM_Att_Dash_End(const StateInfo& _Info)
-{
-	SetOff(map_AllSkill["Fighter_DashHit"]);
-	Manager_StatManager->SetDashEnd();
-	Manager_StatManager->SetDoBaseAttEnd();
-}

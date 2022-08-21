@@ -1,19 +1,21 @@
+
 #pragma once
 #include "GamePlaySkill.h"
 
+
 // Ό³Έν :
-class Skill_Fighter_F_BaseHit : public GamePlaySkill
+class Skill_Fighter_F_Bungwon : public GamePlaySkill
 {
 public:
 	// constrcuter destructer
-	Skill_Fighter_F_BaseHit();
-	~Skill_Fighter_F_BaseHit();
+	Skill_Fighter_F_Bungwon();
+	~Skill_Fighter_F_Bungwon();
 
 	// delete Function
-	Skill_Fighter_F_BaseHit(const Skill_Fighter_F_BaseHit& _Other) = delete;
-	Skill_Fighter_F_BaseHit(Skill_Fighter_F_BaseHit&& _Other) noexcept = delete;
-	Skill_Fighter_F_BaseHit& operator=(const Skill_Fighter_F_BaseHit& _Other) = delete;
-	Skill_Fighter_F_BaseHit& operator=(Skill_Fighter_F_BaseHit&& _Other) noexcept = delete;
+	Skill_Fighter_F_Bungwon(const Skill_Fighter_F_Bungwon& _Other) = delete;
+	Skill_Fighter_F_Bungwon(Skill_Fighter_F_Bungwon&& _Other) noexcept = delete;
+	Skill_Fighter_F_Bungwon& operator=(const Skill_Fighter_F_Bungwon& _Other) = delete;
+	Skill_Fighter_F_Bungwon& operator=(Skill_Fighter_F_Bungwon&& _Other) noexcept = delete;
 
 	bool TriggerSkill_ect(GameEngineCollision* _This, GameEngineCollision* _Other) override;
 	bool ActiveSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata, float _DeltaTime) override;
@@ -29,7 +31,5 @@ protected:
 
 private:
 	float MoveDistance;
-	float Att_BaseAtt_Delay;
-	bool DelayPunch;
+	float Att_Bungwon_Delay;
 };
-

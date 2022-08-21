@@ -65,10 +65,10 @@ public:
 	//{ 
 	//	return Avata_Shoes_b;
 	//}
-	//inline GameEnginePlusTextureRenderer* GetAvata_Skin()
-	//{ 
-	//	return Avata_Skin;
-	//}
+	inline GameEnginePlusTextureRenderer* GetAvata_Skin()
+	{ 
+		return Avata_Skin;
+	}
 
 
 	void SetAvataSetup(ObjectType _Type);
@@ -78,7 +78,7 @@ public:
 
 	void ChangeAvataAnimation(const std::string& _AnimationName) const;
 	void SetAllAvataManualControl();
-	void SetAllAvataAutoControl();
+	void SetAllAvataAutoControl(bool _Reset = true);
 	void ChangeFrame_Manual(int _Frame = -1) const;
 
 protected:

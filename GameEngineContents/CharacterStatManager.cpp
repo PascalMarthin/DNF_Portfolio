@@ -174,9 +174,17 @@ void CharacterStatManager::SetHit_Stand()
 {
 	if (!IsSuperarmor())
 	{
-		PlayerCurrentState |= CharacterStat::Player_Character_BeHit;
-		SetCantAction();
-		FSMManager.ChangeState("Hit_Stand");
+		if (IsAerial())
+		{
+			FSMManager.ChangeState("Hit_Aerial");
+			SetCantAction();
+		}
+		else
+		{
+			FSMManager.ChangeState("Hit_Stand");
+			PlayerCurrentState |= CharacterStat::Player_Character_BeHit;
+			SetCantAction();
+		}
 	}
 }
 
@@ -190,10 +198,9 @@ void CharacterStatManager::SetHit_BlowUp()
 {
 	if (!IsSuperarmor())
 	{
-		PlayerCurrentState |= CharacterStat::Player_Character_Aerial;
+		FSMManager.ChangeState("Hit_Aerial");
 		PlayerCurrentState &= ~CharacterStat::Player_Character_BeHit;
 		SetCantAction();
-		FSMManager.ChangeState("Hit_Aerial");
 	}
 }
 

@@ -3,6 +3,7 @@
 #include "PlayerInterface.h"
 #include "GamePlayCharacter.h"
 #include "GamePlayKeyManager.h"
+#include "CharacterSkillManager.h"
 
 
 GamePlayKeyManager::GamePlayKeyManager() 
@@ -255,6 +256,52 @@ float4 GamePlayKeyManager::Input_Move_Press()
 	}
 
 	return Dir;
+}
+
+GamePlaySkill* GamePlayKeyManager::Input_SkillKeyCheck(CharacterSkillManager* _SkillManager) const
+{
+	GamePlaySkill* Skill = nullptr;
+	if (GameEngineInput::GetInst()->IsDown("Key_A") && (Skill = _SkillManager->PossibleSkillReturn('A')))
+	{
+		return Skill;
+	}
+	if (GameEngineInput::GetInst()->IsDown("Key_S") && (Skill = _SkillManager->PossibleSkillReturn('S')))
+	{
+		return Skill;
+	}
+	if (GameEngineInput::GetInst()->IsDown("Key_D") && (Skill = _SkillManager->PossibleSkillReturn('D')))
+	{
+		return Skill;
+	}
+	if (GameEngineInput::GetInst()->IsDown("Key_F") && (Skill = _SkillManager->PossibleSkillReturn('F')))
+	{
+		return Skill;
+	}
+	if (GameEngineInput::GetInst()->IsDown("Key_G") && (Skill = _SkillManager->PossibleSkillReturn('G')))
+	{
+		return Skill;
+	}
+	if (GameEngineInput::GetInst()->IsDown("Key_H") && (Skill = _SkillManager->PossibleSkillReturn('H')))
+	{
+		return Skill;
+	}
+	if (GameEngineInput::GetInst()->IsDown("Key_Q") && (Skill = _SkillManager->PossibleSkillReturn('Q')))
+	{
+		return Skill;
+	}
+	if (GameEngineInput::GetInst()->IsDown("Key_W") && (Skill = _SkillManager->PossibleSkillReturn('W')))
+	{
+		return Skill;
+	}
+	if (GameEngineInput::GetInst()->IsDown("Key_E") && (Skill = _SkillManager->PossibleSkillReturn('E')))
+	{
+		return Skill;
+	}
+	if (GameEngineInput::GetInst()->IsDown("Key_R") && (Skill = _SkillManager->PossibleSkillReturn('R')))
+	{
+		return Skill;
+	}
+	return Skill;
 }
 
 void GamePlayKeyManager::OnEvent()

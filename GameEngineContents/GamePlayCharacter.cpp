@@ -8,6 +8,7 @@
 #include "GamePlaySkill.h"
 #include "AvataManager.h"
 #include "InterfaceHUD.h"
+#include "Skill_Fighter_F_BaseHit.h"
 
 GamePlayDataBase* GamePlayCharacter::CurrentCharacterData = nullptr;
 std::list<GamePlayDataBase*> GamePlayCharacter::AllCharacterData;
@@ -21,9 +22,11 @@ GamePlayCharacter::GamePlayCharacter()
 	, MoveIndex(0.f)
 	, JumpKick_DelayTime(0.f)
 	, BaseJumpKick(false)
-	, Att_BaseAtt_Delay(0.f)
-	, DelayPunch(false)
-
+	, Skill_CurrentSkill(nullptr)
+	, Skill_BaseHit(nullptr)
+	, Skill_BaseDashAtt(nullptr)
+	, Function_CurrentSkill(nullptr)
+	, Function_BaseAtt(nullptr)
 {
 }
 
@@ -48,6 +51,7 @@ void GamePlayCharacter::Start()
 	Manager_StatManager = CreateComponent<CharacterStatManager>();
 
 	PlayerUserInterface = GetLevel()->CreateActor<PlayerInterface>();
+	Function_BaseAtt = CreateComponent<Skill_Fighter_F_BaseHit>()->Get_SkillAction();
 
 	//Collision_HitBody_Top = CreateComponent<GameEngineCollision>("Hit_Collision");
 	//Collision_HitBody_Top->ChangeOrder(CollisionOrder::Player);
@@ -146,14 +150,14 @@ void GamePlayCharacter::LevelEndEvent()
 	JumpGoingDown = false;
 }
 
-void GamePlayCharacter::SkillCollisionActive(const std::string& _Name, int _Frame)
-{
-	if (Manager_AvataManager->Avata_Skin->GetCurrentFrameStuck() == _Frame)
-	{
-		SetOn(map_AllSkill[_Name]);
-	}
-	else
-	{
-		SetOff(map_AllSkill[_Name]);
-	}
-}
+//void GamePlayCharacter::SkillCollisionActive(const std::string& _Name, int _Frame)
+//{
+//	if (Manager_AvataManager->Avata_Skin->GetCurrentFrameStuck() == _Frame)
+//	{
+//		SetOn(map_AllSkill[_Name]);
+//	}
+//	else
+//	{
+//		SetOff(map_AllSkill[_Name]);
+//	}
+//}

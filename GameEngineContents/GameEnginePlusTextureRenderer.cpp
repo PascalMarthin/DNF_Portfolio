@@ -204,22 +204,28 @@ void GameEnginePlusTextureRenderer::SetManualControl()
 
 }
 
-void GameEnginePlusTextureRenderer::SetAutoControl()
+void GameEnginePlusTextureRenderer::SetAutoControl(bool _Reset)
 {
-	CurrentAniPlus->Reset();
+	if (_Reset)
+	{
+		CurrentAniPlus->Reset();
+	}
+
 	if (CurrentAvata != nullptr)
 	{
-		SetTexture(CurrentAvata->GetTexture(CurrentAniPlus->Info.CurFrame));
+		SetTexture(CurrentAvata->GetTexture(CurrentAniPlus->Info.Frames[MC_CurFrame]));
 	}
 	else if (DefaultCharacterAvata != nullptr)
 	{
-		SetTexture(DefaultCharacterAvata->GetTexture(CurrentAniPlus->Info.CurFrame));
+		SetTexture(DefaultCharacterAvata->GetTexture(CurrentAniPlus->Info.Frames[MC_CurFrame]));
 	}
 	else
 	{
 		SetTexture(CurrentAniPlus->Texture);
 	}
 	ManualControl = false;
+
+
 }
 
 void GameEnginePlusTextureRenderer::SetFrame_Manual(int _Frame)
@@ -232,5 +238,18 @@ void GameEnginePlusTextureRenderer::SetFrame_Manual(int _Frame)
 	{
 		MC_CurFrame = _Frame;
 	}
-	SetTexture(CurrentAvata->GetTexture(MC_CurFrame));
+
+	if (CurrentAvata != nullptr)
+	{
+		SetTexture(CurrentAvata->GetTexture(CurrentAniPlus->Info.Frames[MC_CurFrame]));
+	}
+	else if (DefaultCharacterAvata != nullptr)
+	{
+		SetTexture(DefaultCharacterAvata->GetTexture(CurrentAniPlus->Info.Frames[MC_CurFrame]));
+	}
+	else
+	{
+		SetTexture(CurrentAniPlus->Texture);
+	}
+	
 }

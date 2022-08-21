@@ -14,9 +14,7 @@ Skill_Fighter_F_Ham_Kick::~Skill_Fighter_F_Ham_Kick()
 
 void Skill_Fighter_F_Ham_Kick::Start()
 {
-	SettingFirst(100, 1, HitPostureType::Air, HitType::Hit, { 500, 300, 0, 0 });
-
-
+	SetCoolTime(5.f);
 	GameEngineCollision* Collision_HamerKick = GetActor()->CreateComponent<GameEngineCollision>("Ham_Kick");
 	Collision_HamerKick->GetTransform().SetLocalScale({100.f, 100.f, 40.f});
 	Collision_HamerKick->GetTransform().SetLocalPosition({30, -10.f, 0});
@@ -27,10 +25,9 @@ void Skill_Fighter_F_Ham_Kick::Start()
 	//GameEngineDebug::OutPutString(std::to_string(Collision_HamerKick->GetTransform().GetWorldScale().z));
 }
 
-void Skill_Fighter_F_Ham_Kick::CheckCollision()
+bool Skill_Fighter_F_Ham_Kick::ActiveSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata, float _DeltaTime)
 {
-	Collision_AllCollisionList[0]->IsCollision(CollisionType::CT_AABB, CollisionOrder::Monster, CollisionType::CT_AABB,
-		std::bind(&Skill_Fighter_F_Ham_Kick::TriggerSkill, this, std::placeholders::_1, std::placeholders::_2));
+	return false;
 }
 
 bool Skill_Fighter_F_Ham_Kick::TriggerSkill_ect(GameEngineCollision* _This, GameEngineCollision* _Other)

@@ -16,6 +16,8 @@ public:
 	Skill_Fighter_F_DashHit& operator=(Skill_Fighter_F_DashHit&& _Other) noexcept = delete;
 
 
+	void StartSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata) override;
+	bool ActiveSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata, float _DeltaTime) override;
 	bool TriggerSkill_ect(GameEngineCollision* _This, GameEngineCollision* _Other) override;
 protected:
 	void Start() override;
@@ -25,7 +27,8 @@ protected:
 	//void OnEvent() override;
 	//void OffEvent() override;
 
-private:
-	void CheckCollision() override;
 
+private:
+	float MoveDistance;
+	bool DelayPunch;
 };

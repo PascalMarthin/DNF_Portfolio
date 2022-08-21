@@ -161,7 +161,6 @@ void AvataManager::ReadCharacterDataBase(GamePlayDataBase* _Data)
 
 void AvataManager::ChangeAvataAnimation(const std::string& _AnimationName) const
 {
-	int a = 0;
 	for (GameEnginePlusTextureRenderer* Avata : AllAvatas)
 	{
 		Avata->ChangeFrameAnimationPlus(_AnimationName);
@@ -183,11 +182,11 @@ void AvataManager::SetAllAvataManualControl()
 		Avata->SetManualControl();
 	}
 }
-void AvataManager::SetAllAvataAutoControl()
+void AvataManager::SetAllAvataAutoControl(bool _Reset)
 {
 	for (GameEnginePlusTextureRenderer* Avata : AllAvatas)
 	{
-		Avata->SetAutoControl();
+		Avata->SetAutoControl(_Reset);
 	}
 }
 
@@ -217,7 +216,7 @@ void AvataManager::LevelStartEvent()
 			}
 			Avata_Belt->GetTransform().SetLocalPosition({ 0, 0 , 0.02f });
 			Avata_Cap->GetTransform().SetLocalPosition({ 0, 0 , 0.01f });
-			Avata_Coat->GetTransform().SetLocalPosition({ 0, 0 , 0.01f });
+			Avata_Coat->GetTransform().SetLocalPosition({ 0, 0 , 0.025f });
 			Avata_Face->GetTransform().SetLocalPosition({ 0, 0 , 0.03f });
 			Avata_Hair_a->GetTransform().SetLocalPosition({ 0, 0 , 0.02f });
 			Avata_Hair_b->GetTransform().SetLocalPosition({ 0, 0 , 0.02f });
