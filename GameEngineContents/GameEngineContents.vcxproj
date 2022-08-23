@@ -340,11 +340,27 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Skill_Fighter_F_ClosePunch.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Skill_Fighter_F_CrashLowKick.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Skill_Fighter_F_Ham_Kick.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="Skill_Fighter_F_DashHit.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Skill_Fighter_F_LightingDance.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Skill_Fighter_F_LowKick.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -583,11 +599,27 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Skill_Fighter_F_ClosePunch.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Skill_Fighter_F_CrashLowKick.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Skill_Fighter_F_Ham_Kick.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="Skill_Fighter_F_DashHit.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Skill_Fighter_F_LightingDance.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Skill_Fighter_F_LowKick.cpp">
       <SubType>
       </SubType>
     </ClCompile>

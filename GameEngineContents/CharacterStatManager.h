@@ -75,6 +75,10 @@ public:
 	{
 		return PlayerCurrentState & CharacterStat::Player_Character_BeHit;
 	}
+	inline bool IsHold() const
+	{
+		return PlayerCurrentState & CharacterStat::Player_Character_BeHold;
+	}
 	inline bool IsDown() const
 	{
 		return PlayerCurrentState & CharacterStat::Player_Character_BeDown;
@@ -114,6 +118,8 @@ public:
 	void SetHit_Stand();
 	void SetHit_StandEnd();
 	void SetHit_BlowUp();
+	void SetHold();
+	void SetHoldEnd();
 	void SetDown();
 	void SetDownEnd();
 

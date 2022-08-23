@@ -16,6 +16,7 @@ public:
 	Skill_Fighter_F_Ham_Kick& operator=(const Skill_Fighter_F_Ham_Kick& _Other) = delete;
 	Skill_Fighter_F_Ham_Kick& operator=(Skill_Fighter_F_Ham_Kick&& _Other) noexcept = delete;
 
+	bool ActiveSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata, float _DeltaTime) override;
 	bool TriggerSkill_ect(GameEngineCollision* _This, GameEngineCollision* _Other) override;
 protected:
 	void Start() override;
@@ -26,7 +27,6 @@ protected:
 	//void OffEvent() override;
 
 private:
-	bool ActiveSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata, float _DeltaTime) override;
 
 };
 

@@ -55,97 +55,109 @@ void MoveManager::Update(float _DeltaTime)
 	const float4& A = ParentCharacter->GetTransform().GetLocalPosition();
 	if (ManagerStat != nullptr )
 	{
-		if (ManagerStat->IsJump() || ManagerStat->IsAerial())
+		if (!ManagerStat->IsHold())
 		{
-			JumpTime += _DeltaTime;
-			JumpHigh = (-(ParentCharacter->GetCharacterWeight() * JumpTime * Gravitational_Constant) * JumpTime);
-
-
-			float4 Power = BlowPower;
-
-			Power.x += Power.x == 0 ? 0 : (-(ParentCharacter->GetCharacterWeight() * JumpTime * 0.1f) * JumpTime);;
-			Power.y += JumpHigh;
-
-			if (BlowPower.x > 0 && Power.x < 0)
+			if (ManagerStat->IsJump() || ManagerStat->IsAerial())
 			{
-				Power.x = 0.f;
-			}
-			if (BlowPower.x < 0 && Power.x > 0)
-			{
-				Power.x = 0.f;
-			}
-
-			if (Power.y <= -650.f)
-			{
-				Power.y = -650.f;
-			}
-
-			Power *= _DeltaTime;
-			Power.x *= 1.5f;
+				JumpTime += _DeltaTime;
+				JumpHigh = (-(ParentCharacter->GetCharacterWeight() * JumpTime * Gravitational_Constant) * JumpTime);
 
 
-			SetCharacterMove({ Power.x , 0, 0});
-			ParentCharacter->GetTransform().SetWorldMove({ 0, Power.y, 0 });
-			GetTransform().SetWorldMove({ 0, -Power.y , 0 }); // 보정
-	
-			LandingPostion.x += Power.x;
-			// Y = x(ax);
-			// y = 속력
-			// x = 점프 시간
-			// 
-			const float4& A = ParentCharacter->GetTransform().GetLocalPosition();
-			if (LandingPostion.y > ParentCharacter->GetTransform().GetLocalPosition().y)
-			{
-				if (ManagerStat->IsAerial()) 
+				float4 Power = BlowPower;
+
+				Power.x += Power.x == 0 ? 0 : (-(ParentCharacter->GetCharacterWeight() * JumpTime * 0.1f) * JumpTime);;
+				Power.y += JumpHigh;
+
+				if (BlowPower.x > 0 && Power.x < 0)
 				{
-					if (JumpHigh <= -450.f) // Bouns
+					Power.x = 0.f;
+				}
+				if (BlowPower.x < 0 && Power.x > 0)
+				{
+					Power.x = 0.f;
+				}
+
+				if (Power.y <= -650.f)
+				{
+					Power.y = -650.f;
+				}
+
+				Power *= _DeltaTime;
+				Power.x *= 1.5f;
+
+
+				SetCharacterMove({ Power.x , 0, 0 });
+				ParentCharacter->GetTransform().SetWorldMove({ 0, Power.y, 0 });
+				GetTransform().SetWorldMove({ 0, -Power.y , 0 }); // 보정
+
+				LandingPostion.x += Power.x;
+				// Y = x(ax);
+				// y = 속력
+				// x = 점프 시간
+				// 
+				const float4& A = ParentCharacter->GetTransform().GetLocalPosition();
+				if (LandingPostion.y > ParentCharacter->GetTransform().GetLocalPosition().y)
+				{
+					if (ManagerStat->IsAerial())
 					{
-						ParentCharacter->GetTransform().SetLocalPosition(LandingPostion);
-						GetTransform().SetWorldPosition(LandingPostion);
-						BlowPower = { BlowPower.x * 0.1f ,JumpHigh * -1.f * 0.1f, 0 };
-						SetAerial();
+						if (JumpHigh <= -450.f) // Bouns
+						{
+							ParentCharacter->GetTransform().SetLocalPosition(LandingPostion);
+							GetTransform().SetWorldPosition(LandingPostion);
+							BlowPower = { BlowPower.x * 0.1f ,JumpHigh * -1.f * 0.1f, 0 };
+							SetAerial();
+						}
+						else
+						{
+							ParentCharacter->GetTransform().SetLocalPosition(LandingPostion);
+							GetTransform().SetWorldPosition(LandingPostion);
+							ParentCharacter->LandingEnd();
+							BlowPower = float4::ZERO;
+						}
+
 					}
-					else
+					else if (ManagerStat->IsJump())
 					{
 						ParentCharacter->GetTransform().SetLocalPosition(LandingPostion);
 						GetTransform().SetWorldPosition(LandingPostion);
 						ParentCharacter->LandingEnd();
 						BlowPower = float4::ZERO;
 					}
-
 				}
-				else if (ManagerStat->IsJump())
+
+				if (Power.y < 0.f)
 				{
-					ParentCharacter->GetTransform().SetLocalPosition(LandingPostion);
-					GetTransform().SetWorldPosition(LandingPostion);
-					ParentCharacter->LandingEnd();
+					ParentCharacter->Jump_GoingDown();
+				}
+
+				HitDir(Power.x);
+
+
+				//GameEngineDebug::OutPutString(std::to_string(GetTransform().GetWorldPosition().x) + " " +std::to_string(GetTransform().GetWorldPosition().y) + " " + std::to_string(GetTransform().GetWorldPosition().z));
+			}
+			else if (ManagerStat->IsBeHit())
+			{
+				HitTime += _DeltaTime;
+				BlowPower.w -= _DeltaTime * 100.f /* * 히트리커버리*/;
+
+				SetCharacterMove({ float4::LerpLimit(BlowPower.x, 0, HitTime * 10.f).x * _DeltaTime , 0, 0 });
+				HitDir(BlowPower.x);
+
+				if (BlowPower.w <= 0.f)
+				{
+					ParentCharacter->BeHitEnd();
 					BlowPower = float4::ZERO;
+					HitTime = 0.f;
 				}
 			}
-
-			if (Power.y < 0.f)
-			{
-				ParentCharacter->Jump_GoingDown();
-			}
-
-			HitDir(Power.x);
-
-
-		//GameEngineDebug::OutPutString(std::to_string(GetTransform().GetWorldPosition().x) + " " +std::to_string(GetTransform().GetWorldPosition().y) + " " + std::to_string(GetTransform().GetWorldPosition().z));
 		}
-		else if (ManagerStat->IsBeHit())
+		else
 		{
-			HitTime += _DeltaTime;
-			BlowPower.w -= _DeltaTime * 100.f /* * 히트리커버리*/;
-			
-			SetCharacterMove({ float4::LerpLimit(BlowPower.x, 0, HitTime * 10.f).x * _DeltaTime , 0, 0 });
-			HitDir(BlowPower.x);
-			
+			BlowPower.w -= _DeltaTime;
 			if (BlowPower.w <= 0.f)
 			{
-				ParentCharacter->BeHitEnd();
-				BlowPower = float4::ZERO;
-				HitTime = 0.f;
+				BlowPower.w = 0.f;
+				ManagerStat->SetHoldEnd();
 			}
 		}
 	}
@@ -252,6 +264,11 @@ void MoveManager::SetHit(const float4& _HitPower)
 {
 	BlowPower = _HitPower;
 	HitTime = 0.f;
+}
+
+void MoveManager::SetHold(float _HoldTime)
+{
+	BlowPower.w = _HoldTime;
 }
 
 

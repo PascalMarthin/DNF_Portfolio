@@ -1,6 +1,7 @@
 #pragma once
 #include <GameEngineCore/GameEngineTransformComponent.h>
 #include <GameEngineCore/GameEngineCollision.h>
+#include <GameEngineCore/GameEngineTextureRenderer.h>
 #include "CharacterStatManager.h"
 #include "MoveManager.h"
 #include "AvataManager.h"

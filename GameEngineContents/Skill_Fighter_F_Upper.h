@@ -28,6 +28,6 @@ protected:
 	//void OffEvent() override;
 
 private:
-
+	GameEngineTextureRenderer* Texture_Upper;
 };
 

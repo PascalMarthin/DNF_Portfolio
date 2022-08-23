@@ -204,6 +204,28 @@ void CharacterStatManager::SetHit_BlowUp()
 	}
 }
 
+void CharacterStatManager::SetHold()
+{
+	if (IsAerial())
+	{
+		FSMManager.ChangeState("Hit_Aerial");
+		SetCantAction();
+	}
+	else
+	{
+		FSMManager.ChangeState("Hit_Stand");
+		PlayerCurrentState |= CharacterStat::Player_Character_BeHit;
+		SetCantAction();
+	}
+
+	PlayerCurrentState |= CharacterStat::Player_Character_BeHold;
+}
+
+void CharacterStatManager::SetHoldEnd()
+{
+	PlayerCurrentState &= ~CharacterStat::Player_Character_BeHold;
+}
+
 void CharacterStatManager::SetDown()
 {
 	PlayerCurrentState &= ~CharacterStat::Player_Character_Aerial;

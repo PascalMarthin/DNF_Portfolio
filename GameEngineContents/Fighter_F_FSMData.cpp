@@ -67,11 +67,12 @@ void GamePlayCharacter::Create_Fighter_F_Default_FSManager()
 	for (size_t i = 0; i < 3; i++)
 	{
 		GameEngineTextureRenderer* EffectRenderer = CreateComponent<GameEngineTextureRenderer>("KnockLarge" + std::to_string(i));
-		EffectRenderer->CreateFrameAnimationFolder("KnockLarge", FrameAnimation_DESC("KnockLarge", 0.05f, false));
+		EffectRenderer->CreateFrameAnimationFolder("KnockLarge", FrameAnimation_DESC("KnockLarge", 0.1f, false));
 		EffectRenderer->CreateFrameAnimationFolder("None", FrameAnimation_DESC("None", 0.08f, false));
-		EffectRenderer->GetTransform().SetWorldScale({160.f, 160.f});
+		EffectRenderer->GetTransform().SetWorldScale({160.f * MonitorX, 160.f * MonitorY });
 		EffectRenderer->AnimationBindEnd("KnockLarge",
 			std::bind(&GamePlayObject::Ani_BindEndOff, this, std::placeholders::_1));
+		EffectRenderer->GetTransform().PixLocalNegativeX();
 		EffectRenderer->Off();
 		map_NomalEffect["KnockLarge"].push_back(EffectRenderer);
 	}
@@ -79,11 +80,12 @@ void GamePlayCharacter::Create_Fighter_F_Default_FSManager()
 	for (size_t i = 0; i < 3; i++)
 	{
 		GameEngineTextureRenderer* EffectRenderer = CreateComponent<GameEngineTextureRenderer>("KnockSmall" + std::to_string(i));
-		EffectRenderer->CreateFrameAnimationFolder("KnockSmall", FrameAnimation_DESC("KnockSmall", 0.05f, false));
+		EffectRenderer->CreateFrameAnimationFolder("KnockSmall", FrameAnimation_DESC("KnockSmall", 0.1f, false));
 		EffectRenderer->CreateFrameAnimationFolder("None", FrameAnimation_DESC("None", 0.08f, false));
 		EffectRenderer->GetTransform().SetLocalScale({ 160.f, 160.f });
 		EffectRenderer->AnimationBindEnd("KnockSmall",
 			std::bind(&GamePlayObject::Ani_BindEndOff, this, std::placeholders::_1));
+		EffectRenderer->GetTransform().PixLocalNegativeX();
 		EffectRenderer->Off();
 		map_NomalEffect["KnockSmall"].push_back(EffectRenderer);
 	}
@@ -91,11 +93,12 @@ void GamePlayCharacter::Create_Fighter_F_Default_FSManager()
 	for (size_t i = 0; i < 3; i++)
 	{
 		GameEngineTextureRenderer* EffectRenderer = CreateComponent<GameEngineTextureRenderer>("SuperarmorBreak" + std::to_string(i));
-		EffectRenderer->CreateFrameAnimationFolder("SuperarmorBreak", FrameAnimation_DESC("SuperarmorBreak", 0.05f, false));
+		EffectRenderer->CreateFrameAnimationFolder("SuperarmorBreak", FrameAnimation_DESC("SuperarmorBreak", 0.1f, false));
 		EffectRenderer->CreateFrameAnimationFolder("None", FrameAnimation_DESC("None", 0.08f, false));
 		EffectRenderer->GetTransform().SetLocalScale({ 800.f, 600.f });
 		EffectRenderer->AnimationBindEnd("SuperarmorBreak",
 			std::bind(&GamePlayObject::Ani_BindEndOff, this, std::placeholders::_1));
+		EffectRenderer->GetTransform().PixLocalNegativeX();
 		EffectRenderer->Off();
 		map_NomalEffect["SuperarmorBreak"].push_back(EffectRenderer);
 	}
@@ -398,6 +401,7 @@ void GamePlayCharacter::FSM_Move_Jump_End(const StateInfo& _Info)
 void GamePlayCharacter::FSM_Att_BaseHit_Start(const StateInfo& _Info)
 {
 	Manager_StatManager->SetDoBaseAtt();
+
 	if (_Info.PrevState == "Move_Dash")
 	{
 		Skill_BaseDashAtt->On();
@@ -415,6 +419,13 @@ void GamePlayCharacter::FSM_Att_BaseHit_Start(const StateInfo& _Info)
 }
 void GamePlayCharacter::FSM_Att_BaseHit_Update(float _DeltaTime, const StateInfo& _Info)
 {
+	if (Skill_CurrentSkill = PlayerUserInterface->GetUI_KeyManager()->Input_SkillKeyCheck(Manager_SkillManager))
+	{
+		Skill_BaseHit->Off();
+		Manager_StatManager->GetFSMManager().ChangeState("Att_Skill");
+		return;
+	}
+
 	if (Function_BaseAtt(Manager_StatManager, Manager_MoveManager, Manager_AvataManager, _DeltaTime))
 	{
 		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
@@ -441,6 +452,7 @@ void GamePlayCharacter::FSM_Att_Skill_Start(const StateInfo& _Info)
 }
 void GamePlayCharacter::FSM_Att_Skill_Update(float _DeltaTime, const StateInfo& _Info)
 {
+
 	if (Function_CurrentSkill(Manager_StatManager, Manager_MoveManager, Manager_AvataManager, _DeltaTime))
 	{
 		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");

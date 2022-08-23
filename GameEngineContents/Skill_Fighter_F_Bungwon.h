@@ -30,6 +30,10 @@ protected:
 	//void OffEvent() override;
 
 private:
+	GameEngineTextureRenderer* Texture_Dashpunch;
+	GameEngineTextureRenderer* Texture_Dashpunchdust;
+	GameEngineTextureRenderer* Texture_Dashpunchsub;
+
 	float MoveDistance;
 	float Att_Bungwon_Delay;
 };

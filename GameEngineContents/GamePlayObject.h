@@ -111,6 +111,7 @@ protected:
 	// -------------------Battle-------------------
 public:
 	virtual void BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitCollision, const GamePlayDataBase* _Character, int _Index);
+	virtual void BeHitHold();
 	virtual void BeHitEnd();
 	// virtual void BeHit(적 대미지);
 	virtual void Jump_GoingDown() 

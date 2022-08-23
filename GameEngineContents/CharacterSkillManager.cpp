@@ -36,6 +36,13 @@ void CharacterSkillManager::Start()
 	Staic_CoolTime["Fighter_Upper"] = 0.f;
 	List_AllSkill["Fighter_Bungwon"] = GetActor()->CreateComponent<Skill_Fighter_F_Bungwon>();
 	Staic_CoolTime["Fighter_Bungwon"] = 0.f;
+	List_AllSkill["Fighter_LowKick"] = GetActor()->CreateComponent<Skill_Fighter_F_LowKick>();
+	Staic_CoolTime["Fighter_LowKick"] = 0.f;
+	List_AllSkill["Fighter_CrashLowKick"] = GetActor()->CreateComponent<Skill_Fighter_F_CrashLowKick>();
+	Staic_CoolTime["Fighter_CrashLowKick"] = 0.f;
+	List_AllSkill["Fighter_ClosePunch"] = GetActor()->CreateComponent<Skill_Fighter_F_ClosePunch>();
+	Staic_CoolTime["Fighter_ClosePunch"] = 0.f;
+	
 
 	map_SkillSlot['Q'] = nullptr;
 	map_SkillSlot['W'] = nullptr;
@@ -96,13 +103,13 @@ void CharacterSkillManager::LevelStartEvent()
 	map_SkillSlot['E'] = nullptr;
 	map_SkillSlot['R'] = nullptr;
 	map_SkillSlot['T'] = nullptr;
-	map_SkillSlot['Y'] = nullptr;
-	map_SkillSlot['A'] = nullptr;
+	map_SkillSlot['Y'] = nullptr; 
+	map_SkillSlot['A'] = List_AllSkill["Fighter_ClosePunch"];
 	map_SkillSlot['S'] = List_AllSkill["Fighter_Upper"];
 	map_SkillSlot['D'] = List_AllSkill["Fighter_Bungwon"];
 	map_SkillSlot['F'] = nullptr;
-	map_SkillSlot['G'] = nullptr;
-	map_SkillSlot['H'] = nullptr;
+	map_SkillSlot['G'] = List_AllSkill["Fighter_LowKick"];
+	map_SkillSlot['H'] = List_AllSkill["Fighter_CrashLowKick"];
 
 	GamePlayDataBase::GetCurrentCharacterData();
 }

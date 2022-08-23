@@ -81,6 +81,16 @@ public:
 	void SetAllAvataAutoControl(bool _Reset = true);
 	void ChangeFrame_Manual(int _Frame = -1) const;
 
+	// ------Shake--------------
+	void SetShake(float _Power ,float _Time);
+
+private:
+	float ShakeTime;
+	float CurrentShakeTime;
+	float ShakePower;
+	// -------------------
+
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;

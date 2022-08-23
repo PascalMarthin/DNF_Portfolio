@@ -91,7 +91,10 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitColli
 	}
 		break;
 	case HitPostureType::Hold:
-		
+	{
+		Manager_StatManager->SetHold();
+		Manager_MoveManager->SetHold(Power.w);
+	}
 		break;
 
 	case HitPostureType::None:
@@ -125,7 +128,7 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitColli
 	case HitType::Slash:
 	case HitType::None:
 	default:
-		MsgBoxAssert("타입 설정을 안했습니다")
+		//MsgBoxAssert("타입 설정을 안했습니다")
 		break;
 	}
 
@@ -135,6 +138,11 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitColli
 	// 
 	// 
 	//
+}
+
+void GamePlayObject::BeHitHold()
+{
+
 }
 
 void GamePlayObject::HitEffect(GameEngineTextureRenderer* _Texture, GameEngineCollision* _HitCollision, const std::string& _AniName)
@@ -153,8 +161,8 @@ void GamePlayObject::HitEffect(GameEngineTextureRenderer* _Texture, GameEngineCo
 
 void GamePlayObject::Ani_BindEndOff(const FrameAnimation_DESC& _Desc)
 {
-	_Desc.CurRenderer->Off();
-	_Desc.CurRenderer->ChangeFrameAnimation("None");
+	_Desc.Renderer->Off();
+	_Desc.Renderer->ChangeFrameAnimation("None");
 }
 
 void GamePlayObject::BeHitEnd()

@@ -39,7 +39,7 @@ bool GamePlaySkill::CollsionHitFunction(GameEngineCollision* _This, GameEngineCo
 	}
 
 	TriggerSkill_ect(_This, _Other);
-
+	Object_HitList[Actor] += 1;
 	Actor->BeHit(this, _Other, GamePlayCharacter::GetCurrentCharacterData(), CheckDir(_This, _Other)); //
 
 	return false;
@@ -54,7 +54,6 @@ bool GamePlaySkill::IsHitObject(GamePlayObject* _Object, int _HitOrder)
 	}
 	else
 	{
-		Object_HitList[_Object] += 1;
 		return false;
 	}
 }

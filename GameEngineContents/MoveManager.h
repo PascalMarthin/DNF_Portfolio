@@ -25,6 +25,10 @@ public:
 	{
 		return Collision_Move;
 	}
+	inline float4 GetLandPos() const
+	{
+		return LandingPostion;
+	}
 
 	float4 SetCharacterMove(const float4& _Move);
 	//void SetCharacterMove_Inertia(const float4& _Move);
@@ -50,6 +54,7 @@ private:
 public:
 	inline void HitDir(float _Dir);
 	void SetHit(const float4& _HitPower);
+	void SetHold(float _HoldTime);
 	float HitTime;
 private:
 	float4 BlowPower;

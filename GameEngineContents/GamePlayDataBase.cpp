@@ -64,7 +64,7 @@ void GamePlayDataBase::CreateFighter_F_Animation()
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_Dash"] = new FrameAnimation_DESC("", 0, 2, 0.1f, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_Dash_Delay"] = new FrameAnimation_DESC("", 3, 4, 0.1f, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_BasePunch1"] = new FrameAnimation_DESC("", 5, 6, 0.1f, false);
-	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_OneinchPunch"] = new FrameAnimation_DESC("", 7, 9, FighterAnimationInter, false);
+	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_OneinchPunch"] = new FrameAnimation_DESC("", 7, 9, FighterAnimationInter , false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_Upper"] = new FrameAnimation_DESC("", 10, 16, FighterAnimationInter, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_BasePunch2"] = new FrameAnimation_DESC("", 17, 19, 0.06f, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_BasePunch2_Delay"] = new FrameAnimation_DESC("", 20, 20, 0.08f, false);
@@ -79,7 +79,7 @@ void GamePlayDataBase::CreateFighter_F_Animation()
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Move_Landing"] = new FrameAnimation_DESC("", 52, 53, 0.03f, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_JumpKick"] = new FrameAnimation_DESC("", 54, 57, FighterAnimationInter, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_Spire"] = new FrameAnimation_DESC("", 58, 65, FighterAnimationInter, false);
-	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_LowKick1"] = new FrameAnimation_DESC("", 66, 70, FighterAnimationInter, false);
+	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_LowKick1"] = new FrameAnimation_DESC("", 66, 70, 0.05f, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_LowKick2"] = new FrameAnimation_DESC("", 71, 75, FighterAnimationInter, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Hit_Stand1"] = new FrameAnimation_DESC("", 76, 77, FighterAnimationInter, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Hit_Stand2"] = new FrameAnimation_DESC("", 78, 78, FighterAnimationInter, false);

@@ -19,7 +19,9 @@ AvataManager::AvataManager()
 	, Avata_Shoes_a(nullptr)
 	, Avata_Shoes_b(nullptr)
 	, CurrentClassData(nullptr)
-
+	, ShakeTime(0.f)
+	, ShakePower(0.f)
+	, CurrentShakeTime(0.f)
 	, Enum_Type(ObjectType::None)
 
 {
@@ -146,7 +148,30 @@ void AvataManager::CreateCustomAvata()
 //----------------- Update-------------------
 void AvataManager::Update(float _DeltaTime)
 {
+	if (ShakePower != 0.f)
+	{
+		CurrentShakeTime += _DeltaTime;
+	}
+	if (CurrentShakeTime < ShakeTime)
+	{
+		if (CurrentShakeTime > 0.1f)
+		{
+			ShakeTime -= 0.1f;
+			CurrentShakeTime -= 0.1f;
+			ShakePower *= -1.f;
+			const float4& Pos = GetTransform().GetLocalPosition();
+			GetTransform().SetLocalPosition({ ShakePower * (ShakeTime - CurrentShakeTime) + 0 * CurrentShakeTime , Pos.y , Pos.z });
+		}
 
+	}
+	else if (ShakePower != 0.f)
+	{
+		const float4& Pos = GetTransform().GetLocalPosition();
+		GetTransform().SetLocalPosition({ 0.f, Pos.y, Pos.z });
+		ShakeTime = 0.f;
+		ShakePower = 0.f;
+		CurrentShakeTime = 0.f;
+	}
 }
 
 void AvataManager::ReadCharacterDataBase(GamePlayDataBase* _Data)
@@ -188,6 +213,14 @@ void AvataManager::SetAllAvataAutoControl(bool _Reset)
 	{
 		Avata->SetAutoControl(_Reset);
 	}
+}
+
+
+void AvataManager::SetShake(float _Power, float _Time)
+{
+	ShakePower = _Power;
+	ShakeTime = _Time;
+	CurrentShakeTime = 0.f;
 }
 
 //----------------- On/ Off-------------------
@@ -239,5 +272,7 @@ void AvataManager::LevelStartEvent()
 	GetTransform().SetLocalPosition({ 0, 72.f, 0 });
 
 	CurrentClassData = GamePlayCharacter::GetCurrentCharacterData();
-	 
+	ShakeTime = 0.f;
+	ShakePower = 0.f;
+	CurrentShakeTime = 0.f;
 }
