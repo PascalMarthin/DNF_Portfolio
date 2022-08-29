@@ -19,7 +19,7 @@ public:
 
 	inline GameEngineCollision* GetMouseCursor() const
 	{
-		return Collision_MouseCursor;
+		return Collision_MainCam_MouseCursor;
 	}
 
 protected:
@@ -30,8 +30,12 @@ protected:
 	// void OnEvent() {}
 	// void OffEvent() {}
 
+	void LevelStartEvent() override;
+
 private:
 	GameEngineTextureRenderer* Texture_Cursor;
-	GameEngineCollision* Collision_MouseCursor;
+	GameEngineCollision* Collision_MainCam_MouseCursor;
+	GameEngineCollision* Collision_UICam_MouseCursor;
+
 };
 

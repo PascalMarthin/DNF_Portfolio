@@ -29,6 +29,8 @@
 #include <GameEngineCore/CoreMinimal.h>
 #include <GameEngineCore/GameEngineCollision.h>
 #include <GameEngineCore/GameEngineTextureRenderer.h>
+#include <GameEngineCore/GameEngineUIRenderer.h>
 
 // contents
 #include "GamePlayEnum.h"
+#include "DummyActor.h"

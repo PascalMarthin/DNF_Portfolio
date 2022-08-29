@@ -7,3 +7,4 @@
 #include "Skill_Fighter_F_LowKick.h"
 #include "Skill_Fighter_F_CrashLowKick.h"
 #include "Skill_Fighter_F_ClosePunch.h"
+#include "Skill_Fighter_F_LightingDance.h"

@@ -35,7 +35,6 @@ public:
 private:
 	float Att_ClosePunch_Delay;
 	bool Bool_Texture_W_Middle_d_Start;
-	bool SomeOneHit; // 사이드 이펙트 사전차단용
 	bool Texture_W_Front_; //엔진 추가전
 
 	GameEngineTextureRenderer* Texture_Punch00;

@@ -44,10 +44,10 @@ void DungeonSelect_Slot::Start()
 }
 void DungeonSelect_Slot::Update(float _DeltaTime)
 {
-	if (Collision_DungeonSelect->IsCollision(CollisionType::CT_AABB2D, CollisionOrder::UI_Mouse, CollisionType::CT_AABB2D,
+	if (Collision_DungeonSelect->IsCollision(CollisionType::CT_AABB2D, CollisionOrder::UI_MainMouse, CollisionType::CT_AABB2D,
 		[](GameEngineCollision* _This, GameEngineCollision* _Other)
 		{
-			if (_Other->GetNameConstRef() == "Collision_MouseCursor")
+			if (_Other->GetNameConstRef() == "Collision_MainCam_MouseCursor")
 			{
 				return true;
 			}

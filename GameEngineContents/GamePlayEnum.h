@@ -52,15 +52,22 @@ enum class GamePlayItemCode
 	Error,
 	Empty,
 
-	Fighter_F_Default_Belt	 = 20,
-	Fighter_F_Default_Cap	 = 21,
-	Fighter_F_Default_Coat	 = 22,
-	Fighter_F_Default_Face	 = 23,
-	Fighter_F_Default_Hair	 = 24,
-	Fighter_F_Default_Neck	 = 25,
-	Fighter_F_Default_Pants	 = 26,
-	Fighter_F_Default_Shoes	 = 27,
-	Fighter_F_Default_Skin	 = 28,
+	Fighter_F_Default_Belt = 20,
+	Fighter_F_Default_Cap = 21,
+	Fighter_F_Default_Coat = 22,
+	Fighter_F_Default_Face = 23,
+	Fighter_F_Default_Hair = 24,
+	Fighter_F_Default_Neck = 25,
+	Fighter_F_Default_Pants = 26,
+	Fighter_F_Default_Shoes = 27,
+	Fighter_F_Default_Skin = 28,
+
+	Debug_Weapon = 100,
+
+
+	Level1Up = 2000,
+	Equipment_Upgrade12,
+
 
 };
 //    0 ~   99 µð¹ö±×
@@ -180,8 +187,9 @@ enum class CollisionOrder
 	Player_Att = 4,
 	Monster = 10,
 	Monster_Att = 11,
-	UI_Mouse = 20,
-	ChangeMap = 21,
+	UI_MainMouse = 20,
+	UI_UIMouse = 21,
+	ChangeMap = 22,
 };
 
 enum class ObjectType

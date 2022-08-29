@@ -9,6 +9,8 @@
 #include "AvataManager.h"
 #include "InterfaceHUD.h"
 #include "Skill_Fighter_F_BaseHit.h"
+#include "ItemInventory.h"
+#include "MouseCursorComponent.h"
 
 GamePlayDataBase* GamePlayCharacter::CurrentCharacterData = nullptr;
 std::list<GamePlayDataBase*> GamePlayCharacter::AllCharacterData;
@@ -27,6 +29,9 @@ GamePlayCharacter::GamePlayCharacter()
 	, Skill_BaseDashAtt(nullptr)
 	, Function_CurrentSkill(nullptr)
 	, Function_BaseAtt(nullptr)
+	, Class_ItemInventory(nullptr)
+	, Component_MouseCursorComponent(nullptr)
+	, Manager_SkillManager(nullptr)
 {
 }
 
@@ -45,13 +50,19 @@ GamePlayCharacter::~GamePlayCharacter()
 void GamePlayCharacter::Start()
 {
 	GamePlayObject::Start();
+
+	Component_MouseCursorComponent = GetLevel()->CreateActor<MouseCursorComponent>();
 	Manager_AvataManager = GetLevel()->CreateActor<AvataManager>();
 	Manager_AvataManager->SetParent(this);
 	Manager_AvataManager->SetAvataSetup(ObjectType::Character);
 	Manager_StatManager = CreateComponent<CharacterStatManager>();
 
+
 	PlayerUserInterface = GetLevel()->CreateActor<PlayerInterface>();
 	Function_BaseAtt = CreateComponent<Skill_Fighter_F_BaseHit>()->Get_SkillAction();
+	
+	Class_ItemInventory = GetLevel()->CreateActor<ItemInventory>();
+
 
 	//Collision_HitBody_Top = CreateComponent<GameEngineCollision>("Hit_Collision");
 	//Collision_HitBody_Top->ChangeOrder(CollisionOrder::Player);
@@ -59,6 +70,23 @@ void GamePlayCharacter::Start()
 	//Collision_HitBody_Top->GetTransform().SetLocalScale({ 48, 110 });
 	//Collision_HitBody_Top->SetDebugSetting(CollisionType::CT_AABB2D, {0, 0, 255, 100});
 	//Collision_HitBody_Top->Off();
+}
+
+void GamePlayCharacter::Update(float _Delta)
+{
+	if (GameEngineInput::GetInst()->IsDown("Inventory"))
+	{
+		if (Class_ItemInventory->IsUpdate())
+		{
+			Class_ItemInventory->Off();
+		}
+		else
+		{
+			Class_ItemInventory->On();
+		}
+	}
+
+	
 }
 
 //void GamePlayCharacter::On_EnumCollision(Collision_AllSkill _Collsion)
@@ -80,7 +108,10 @@ void GamePlayCharacter::Start()
 GamePlayDataBase* GamePlayCharacter::CreateCharacterBase(CharacterFormerClass _Class, const std::string& _NickName)
 {
 	GamePlayDataBase* NewCharacter = new GamePlayDataBase(_Class , _NickName);
+	NewCharacter->GetInventoryData();
 	AllCharacterData.push_back(NewCharacter);
+
+
 	return NewCharacter;
 }
 
@@ -143,6 +174,7 @@ void GamePlayCharacter::LevelStartEvent()
 
 
 	GetTransform().SetLocalMove({0 , 0 , GetTransform().GetLocalPosition().y });
+	//Class_ItemInventory->GetTransform().SetLocalPosition({ GetTransform().GetLocalPosition().x, GetTransform().GetLocalPosition().y, 0 });
 }
 
 void GamePlayCharacter::LevelEndEvent()

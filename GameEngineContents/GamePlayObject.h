@@ -72,6 +72,19 @@ public:
 		Dir_RightSide = false;
 	}
 
+	inline void SetDirSwitch()
+	{
+		if (Dir_RightSide)
+		{
+			GetTransform().PixLocalNegativeX();
+		}
+		else
+		{
+			GetTransform().PixLocalPositiveX();
+		}
+		Dir_RightSide = !Dir_RightSide;
+	}
+
 	inline bool GetObjectDir() const
 	{
 		return Dir_RightSide;

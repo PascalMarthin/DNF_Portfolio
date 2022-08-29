@@ -7,6 +7,7 @@
 // Ό³Έν :
 class Skill_Fighter_F_BaseHit;
 class Skill_Fighter_F_DashHit;
+class MouseCursorComponent;
 enum class Collision_AllSkill
 {
 	BasePunch1,
@@ -20,6 +21,7 @@ class AvataManager;
 class InterfaceHUD;
 class GamePlayDataBase;
 class CharacterSkillManager;
+class ItemInventory;
 class GamePlayCharacter : public GamePlayObject
 {
 
@@ -56,6 +58,7 @@ public:
 
 protected:
 	void Start() override;
+	void Update(float _Delta) override;
 	void LevelStartEvent() override;
 	void LevelEndEvent() override;
 
@@ -172,5 +175,12 @@ public:
 	std::function<bool(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata, float _DeltaTime)> Function_BaseAtt;
 	std::function<bool(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata, float _DeltaTime)> Function_CurrentSkill;
 
+private:
+	// -----------------Inventory------------------------------
+	ItemInventory* Class_ItemInventory;
+
+	//------------------Mouse---------------------------------
+
+	MouseCursorComponent* Component_MouseCursorComponent;
 };
 

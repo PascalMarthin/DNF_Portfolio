@@ -200,6 +200,12 @@
     <ClInclude Include="Skill_Fighter_F_ClosePunch.h">
       <Filter>Object\Character\Fighter</Filter>
     </ClInclude>
+    <ClInclude Include="ItemInventory.h">
+      <Filter>Object\Character\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlayInventory.h">
+      <Filter>Object\Character\Inventory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -398,6 +404,12 @@
     <ClCompile Include="Skill_Fighter_F_ClosePunch.cpp">
       <Filter>Object\Character\Fighter</Filter>
     </ClCompile>
+    <ClCompile Include="ItemInventory.cpp">
+      <Filter>Object\Character\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlayInventory.cpp">
+      <Filter>Object\Character\Inventory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -489,6 +501,9 @@
     </Filter>
     <Filter Include="Object\Character\SkillTemp">
       <UniqueIdentifier>{d2bfe07b-693e-4ac9-9c83-7236cb81fe03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Character\Inventory">
+      <UniqueIdentifier>{bf421ceb-6aef-4335-b080-da248bf413be}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

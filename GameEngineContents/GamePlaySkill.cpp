@@ -9,6 +9,8 @@ GamePlaySkill::GamePlaySkill()
 	, Is_CollisionCheck(false)
 	, CoolTime(0.f)
 	, CurrentCoolTime(0.f)
+	, SomeOneHit(false)
+	, Actor_DummyActor(nullptr)
 {
 }
 
@@ -37,8 +39,8 @@ bool GamePlaySkill::CollsionHitFunction(GameEngineCollision* _This, GameEngineCo
 	{
 		return false;
 	}
-
 	TriggerSkill_ect(_This, _Other);
+	SomeOneHit = true;
 	Object_HitList[Actor] += 1;
 	Actor->BeHit(this, _Other, GamePlayCharacter::GetCurrentCharacterData(), CheckDir(_This, _Other)); //
 
@@ -123,8 +125,13 @@ float GamePlaySkill::FSM_Move_Helper()
 
 void GamePlaySkill::OnEvent()
 {
+	if (Actor_DummyActor == nullptr)
+	{
+		Actor_DummyActor = GetActor()->GetLevel()->CreateActor<DummyActor>();
+	}
 	Object_HitList.clear();
 	Is_CollisionCheck = false;
+	SomeOneHit = false;
 }
 
 void GamePlaySkill::OffEvent()

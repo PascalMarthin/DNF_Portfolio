@@ -15,7 +15,6 @@ Skill_Fighter_F_ClosePunch::Skill_Fighter_F_ClosePunch()
 	, Texture_W_2_d(nullptr)
 	, Att_ClosePunch_Delay(0.f)
 	, Bool_Texture_W_Middle_d_Start(false)
-	, SomeOneHit(false)
 
 {
 }
@@ -27,7 +26,7 @@ Skill_Fighter_F_ClosePunch::~Skill_Fighter_F_ClosePunch()
 
 void Skill_Fighter_F_ClosePunch::Start()
 {
-	Class_Power.push_back(SkillComboPower(1500, 1, { 0.f, 0.f, 0, 1.f }, HitPostureType::Hold, HitType::None));
+	Class_Power.push_back(SkillComboPower(3000, 1, { 0.f, 0.f, 0, 1.f }, HitPostureType::Hold, HitType::None));
 	Class_Power.push_back(SkillComboPower(2000, 1, { 50, 100.f, 0, 0.f }, HitPostureType::Aerial, HitType::Hit));
 	{
 		GameEngineCollision* ClosePunch = GetActor()->CreateComponent<GameEngineCollision>("ClosePunch");
@@ -174,7 +173,7 @@ bool Skill_Fighter_F_ClosePunch::ActiveSkill(CharacterStatManager* _Stat, MoveMa
 		Is_CollisionCheck = true;
 		if (Object_HitList.empty())
 		{
-			_Avata->SetShake(10, _Avata->GetAvata_Skin()->GetFrameAnimation()->GetInfo().Inter * 3.f);
+			_Avata->SetShake(10, _Avata->GetAvata_Skin()->GetFrameAnimation()->GetInfo().Inter * 6.f);
 			Texture_W_Front_d->CurAnimationPauseSwitch();
 		}
 		else
@@ -193,9 +192,9 @@ bool Skill_Fighter_F_ClosePunch::ActiveSkill(CharacterStatManager* _Stat, MoveMa
 		Att_ClosePunch_Delay += _DeltaTime;
 		if (int_ComboStuck == 1)
 		{
-			if (Bool_Texture_W_Middle_d_Start == false && Att_ClosePunch_Delay >= _Avata->GetAvata_Skin()->GetFrameAnimation()->GetInfo().Inter * 1.f)
+			if (Bool_Texture_W_Middle_d_Start == false && Att_ClosePunch_Delay >= _Avata->GetAvata_Skin()->GetFrameAnimation()->GetInfo().Inter * 2.f)
 			{
-				_Avata->SetShake(10, _Avata->GetAvata_Skin()->GetFrameAnimation()->GetInfo().Inter * 3.f);
+				_Avata->SetShake(10, _Avata->GetAvata_Skin()->GetFrameAnimation()->GetInfo().Inter * 6.f);
 				Texture_W_Middle_d->On();
 				Bool_Texture_W_Middle_d_Start = true;
 			}
@@ -205,7 +204,7 @@ bool Skill_Fighter_F_ClosePunch::ActiveSkill(CharacterStatManager* _Stat, MoveMa
 			}
 
 		}
-		else if (Att_ClosePunch_Delay >= _Avata->GetAvata_Skin()->GetFrameAnimation()->GetInfo().Inter * 3.f)
+		else if (Att_ClosePunch_Delay >= _Avata->GetAvata_Skin()->GetFrameAnimation()->GetInfo().Inter * 6.f)
 		{
 			_Avata->SetAllAvataAutoControl(false);
 		}
@@ -263,7 +262,6 @@ void Skill_Fighter_F_ClosePunch::StartSkill(CharacterStatManager* _Stat, MoveMan
 	Texture_W_Front_d->CurAnimationPauseSwitch();
 	Att_ClosePunch_Delay = 0.f;
 	Bool_Texture_W_Middle_d_Start = false;
-	SomeOneHit = false;
 	Texture_W_Front_ = false;
 }
 

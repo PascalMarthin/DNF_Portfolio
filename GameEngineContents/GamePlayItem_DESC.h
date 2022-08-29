@@ -51,7 +51,7 @@ public:
 		return ItemName;
 	}
 
-	inline const GameEngineTexture* GetItemIcon() const
+	inline GameEngineTexture* GetItemIcon() const
 	{
 		return ItemIcon;
 	}
@@ -66,7 +66,7 @@ private:
 
 	const std::string ItemName;
 
-	const GameEngineTexture* const ItemIcon;
+	GameEngineTexture* const ItemIcon;
 
 
 	//std::string Explanation;

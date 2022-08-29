@@ -81,7 +81,8 @@ private:
 protected:
 	int int_ComboStuck;
 	float TimePass;
-
+	bool SomeOneHit;
+	GameEngineActor* Actor_DummyActor;
 
 	//
 	virtual bool ActiveSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata, float _DeltaTime)  = 0;

@@ -38,12 +38,12 @@ bool Skill_Fighter_F_DashHit::ActiveSkill(CharacterStatManager* _Stat, MoveManag
 			{
 				if (_Avata->GetAvata_Skin()->GetCurrentFrameStuck() < 2)
 				{
+					if (Is_CollisionCheck == false && _Avata->GetAvata_Skin()->GetCurrentFrameStuck() == 1)
+					{
+						CheckCollision();
+						Is_CollisionCheck = true;
+					}
 					_Move->SetCharacterMove({ MoveDistance * DefaultMove * 0.2f * _Stat->GetMoveSpeed() * _DeltaTime, 0 });
-				}
-				else if (Is_CollisionCheck == false && _Avata->GetAvata_Skin()->GetCurrentFrameStuck() == 2)
-				{
-					CheckCollision();
-					Is_CollisionCheck = true;
 				}
 				else if (_Avata->GetAvata_Skin()->IsEndFrame())
 				{

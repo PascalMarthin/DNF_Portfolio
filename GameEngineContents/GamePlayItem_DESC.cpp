@@ -17,6 +17,14 @@ void GamePlayItem_DESC::CreateALLItemData()
 		return;
 	}
 
+
+	AllItem_DESC[GamePlayItemCode::Level1Up] = new GamePlayItem_DESC(GamePlayItemCode::Level1Up, GamePlayItemRate::Rare, "Level1Up", "Item_Level1Up.png");
+
+	AllItem_DESC[GamePlayItemCode::Equipment_Upgrade12] = new GamePlayItem_DESC(GamePlayItemCode::Equipment_Upgrade12, GamePlayItemRate::Unique, "Equipment_Upgrade12", "Equipment_Upgrade12.png");
+
+//	AllItem_DESC[GamePlayItemCode::Equipment_Upgrade12] = new GamePlayItem_DESC(GamePlayItemCode::Equipment_Upgrade12, GamePlayItemRate::Unique, "Equipment_Upgrade12", "Equipment_Upgrade12.png");
+
+
 	{
 		//AllItem_DESC[GamePlayItemCode::Fighter_F_Default_Belt] = new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Default_Belt, GamePlayItemRate::Common, "Fighter_F_Default_Belt");
 		//AllItem_DESC[GamePlayItemCode::Fighter_F_Default_Cap] =   new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Default_Cap,  GamePlayItemRate::Common, "Fighter_F_Default_Cap");

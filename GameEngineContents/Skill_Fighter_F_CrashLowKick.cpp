@@ -137,8 +137,11 @@ bool Skill_Fighter_F_CrashLowKick::ActiveSkill(CharacterStatManager* _Stat, Move
 
 	if (Is_CollisionCheck == false && _Avata->GetAvata_Skin()->GetCurrentFrameStuck() == 2)
 	{
+		Object_HitList;
 		CheckCollision();
 		Is_CollisionCheck = true;
+
+
 		//Texture_CrashLowKick_Wave01->On();
 	}
 	else if (_Avata->GetAvata_Skin()->IsEndFrame())
@@ -156,7 +159,8 @@ bool Skill_Fighter_F_CrashLowKick::TriggerSkill_ect(GameEngineCollision* _This, 
 	//Texture_LowKick_WaveEffect09->On();
 	//Texture_LowKick_WaveEffect06->SetParent(_Other->GetActor());
 	//Texture_LowKick_WaveEffect06->On();
-	if (Object_HitList.empty())
+
+	if (!SomeOneHit)
 	{
 		GamePlayObject* Object = _Other->GetActor<GamePlayObject>();
 		Texture_CrashLowKick->ChangeFrameAnimation("CrashLowKick_Hit");
@@ -165,7 +169,6 @@ bool Skill_Fighter_F_CrashLowKick::TriggerSkill_ect(GameEngineCollision* _This, 
 		Texture_CrashLowKick_Bone->SetParent(Object);
 		Texture_CrashLowKick_Bone->On();
 	}
-
 
 	return false;
 }

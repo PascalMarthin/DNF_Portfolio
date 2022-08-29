@@ -19,6 +19,9 @@ public:
 	bool TriggerSkill_ect(GameEngineCollision* _This, GameEngineCollision* _Other) override;
 
 	void StartSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata) override;
+
+	bool GetTarget(GameEngineCollision* _This, GameEngineCollision* _Other);
+	void CheckEffectFrame(const FrameAnimation_DESC& _Desc);
 protected:
 	void Start() override;
 	//void Update(float _DeltaTime) override;
@@ -28,6 +31,19 @@ protected:
 	//void OffEvent() override;
 
 private:
+	float4 TargetPos;
+	bool FirstHit_Animation;
+	bool IsHitFloor;
+	bool DanceFrameEnd;
+	int DanceStuck;
+	GameEngineCollision* Collision_CheckHitPos;
 
+	GameEngineTextureRenderer* Texture_Kick;
+	GameEngineTextureRenderer* Texture_Illusion_1;
+	GameEngineTextureRenderer* Texture_Illusion_2;
+	GameEngineTextureRenderer* Texture_Flash;
+
+	void LightingAnimition(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata, float _DeltaTime);
+	
 };
 

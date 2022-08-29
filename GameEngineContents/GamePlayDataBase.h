@@ -164,6 +164,11 @@ public:
 		return &Class_CharacterAbilityStat;
 	}
 
+	inline void CreateItem()
+	{
+
+	}
+
 protected:
 
 private:

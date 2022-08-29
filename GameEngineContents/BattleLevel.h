@@ -22,8 +22,8 @@ public:
 protected:
 	GamePlayCharacter* Player_Character;
 
-	// UI
 
+	// UI
 private:
 
 };

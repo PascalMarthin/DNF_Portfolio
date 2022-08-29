@@ -6,7 +6,8 @@
 
 MouseCursorComponent::MouseCursorComponent() 
 	: Texture_Cursor(nullptr)
-	, Collision_MouseCursor(nullptr)
+	, Collision_MainCam_MouseCursor(nullptr)
+	, Collision_UICam_MouseCursor(nullptr)
 {
 }
 
@@ -21,15 +22,28 @@ void MouseCursorComponent::Start()
 	Texture_Cursor->ScaleToTexture();
 
 
-	Collision_MouseCursor = CreateComponent<GameEngineCollision>("Collision_MouseCursor");
-	Collision_MouseCursor->GetTransform().SetLocalScale({8, 8});
-	Collision_MouseCursor->ChangeOrder(CollisionOrder::UI_Mouse);
+	Collision_MainCam_MouseCursor = CreateComponent<GameEngineCollision>("Collision_MainCam_MouseCursor");
+	Collision_MainCam_MouseCursor->GetTransform().SetLocalScale({8, 8});
+	Collision_MainCam_MouseCursor->ChangeOrder(CollisionOrder::UI_MainMouse);
+
+	Collision_UICam_MouseCursor = CreateComponent<GameEngineCollision>("Collision_UICam_MouseCursor");
+	Collision_UICam_MouseCursor->GetTransform().SetLocalScale({ 8, 8 });
+	Collision_UICam_MouseCursor->ChangeOrder(CollisionOrder::UI_UIMouse);
 }
 
 void MouseCursorComponent::Update(float _DeltaTime)
 {
-	const float4& MousePos = GetLevel()->GetMainCamera()->GetMouseWorldPosition();
-	Texture_Cursor->GetTransform().SetLocalPosition({ MousePos.x + 8.f , MousePos.y - 8.f, 0 });
-	Collision_MouseCursor->GetTransform().SetLocalPosition({ MousePos.x - 8 , MousePos.y + 8 , 0 });
+	const float4& MainMousePos = GetLevel()->GetMainCamera()->GetMouseWorldPositionToActor();
+	Texture_Cursor->GetTransform().SetLocalPosition({ MainMousePos.x + 8.f , MainMousePos.y - 8.f, 0 });
+	Collision_MainCam_MouseCursor->GetTransform().SetLocalPosition({ MainMousePos.x - 8 , MainMousePos.y + 8 , 0 });
+
+	const float4& UIMousePos = GetLevel()->GetUICamera()->GetMouseWorldPositionToActor();
+	Collision_UICam_MouseCursor->GetTransform().SetLocalPosition({ UIMousePos.x - 8 , UIMousePos.y + 8 , 0 });
+
 	//GameEngineDebug::OutPutString(std::to_string(Texture_Cursor->GetTransform().GetLocalPosition().x) + " / " + std::to_string(Texture_Cursor->GetTransform().GetLocalPosition().y) + " / " + std::to_string(Texture_Cursor->GetTransform().GetLocalPosition().z));
+}
+
+void MouseCursorComponent::LevelStartEvent()
+{
+
 }
