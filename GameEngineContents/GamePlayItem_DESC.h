@@ -57,6 +57,7 @@ public:
 	}
 
 	static GamePlayItem_DESC* Find(GamePlayItemCode _Code);
+	static GamePlayItemType CheckItemType(GamePlayItemCode _Code);
 
 	//get
 private:
@@ -75,7 +76,6 @@ private:
 	static std::map<GamePlayItemCode, GamePlayItem_DESC*> AllItem_DESC;
 	static void CreateALLItemData();
 
-	static GamePlayItemType CheckItemType(GamePlayItemCode _Code);
 	// GamePlayItemCode를 기반으로 ItemType을 입력
 
 	static void DestoryALLItemData();

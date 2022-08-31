@@ -19,6 +19,7 @@
 #include "Jelva_2F01.h"
 #include "DungeonSelect.h"
 #include "DungeonLoding.h"
+#include "GamePlayItem_DESC.h"
 
 //#pragma comment(lib, "GameEngineBase.lib")
 
@@ -75,6 +76,7 @@ void DNF::AllResourceLoad()
 	BaseTextureLoad();
 	BaseFolderTextureLoad();
 	BaseKeySetting();
+	GamePlayItem_DESC::CreateALLItemData();
 }
 
 void DNF::BaseSoundLoad()
@@ -443,5 +445,6 @@ void DNF::Update(float _DeltaTime)
 
 void DNF::End()
 {
+	GamePlayItem_DESC::DestoryALLItemData();
 	GamePlayDataBase::DestroyFrameAnimationDESC();
 }

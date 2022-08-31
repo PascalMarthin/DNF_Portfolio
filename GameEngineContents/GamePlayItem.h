@@ -12,6 +12,8 @@
 class GamePlayItem_DESC;
 class GamePlayItem : public GameEngineTransformComponent
 {
+
+	friend class GamePlayInventory;
 public:
 	GamePlayItem();
 	~GamePlayItem();
@@ -37,7 +39,10 @@ public:
 	//static GamePlayItem* CreateItemByBag(const GamePlayItemCode _ItemCode, float4& _Pos, GamePlayItemBag* _ItemBag, int _Stack = 1);
 	// ItemBag으로 다이렉트 생성
 
-	
+	void SetDESC(GamePlayItem_DESC* _DESC);
+	void SetTransform(GameEngineTransformBase* _Parent);
+
+
 	void DestroyItem();
 
 
@@ -56,11 +61,14 @@ protected:
 	void End() override;
 
 private:
-
+	void SetThumbnail();
 
 
 private:
-	GamePlayItem_DESC* ItemDesc;
+	GamePlayItem_DESC* Desc_ItemDesc;
+
+	GameEngineUIRenderer* Texture_Item;
+	GameEngineCollision* Collision_Item;
 
 	int Stack;
 	bool Field;

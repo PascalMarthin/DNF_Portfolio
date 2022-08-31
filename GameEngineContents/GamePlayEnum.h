@@ -190,6 +190,8 @@ enum class CollisionOrder
 	UI_MainMouse = 20,
 	UI_UIMouse = 21,
 	ChangeMap = 22,
+	UI_InventoryItem,
+	UI_InventoryBlank,
 };
 
 enum class ObjectType

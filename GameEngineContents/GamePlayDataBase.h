@@ -1,6 +1,7 @@
 #pragma once
 #include <GameEngineBase/GameEngineMath.h>
 #include <string>
+#include <vector>
 #include "GamePlayEnum.h"
 
 #define FighterAnimationInter 0.08f
@@ -95,7 +96,6 @@ private:
 };
 struct InventoryData
 {
-	float4 Location;
 	GamePlayItem_DESC* Item_DESC;
 	unsigned int Stack;
 };
@@ -164,11 +164,8 @@ public:
 		return &Class_CharacterAbilityStat;
 	}
 
-	inline void CreateItem()
-	{
-
-	}
-
+	void CreateItem(GamePlayItemCode _Code, int _Stack);
+	bool PushInventoryToItem(InventoryData* _Data);
 protected:
 
 private:
@@ -190,6 +187,7 @@ private:
 
 	// Static
 public:
+
 	static void SetAnimationForFrameAnimationDESC(AllCharacterClass _Class);
 	static void DestroyFrameAnimationDESC();
 
@@ -199,6 +197,8 @@ public:
 	}
 
 private:
+	std::list<InventoryData*> All_ItemData;
+
 	static GamePlayDataBase* CurrentCharacterData;
 	static std::map<AllCharacterClass, std::map<std::string, FrameAnimation_DESC*>> CharacterAnimation_DESCs;
 	static void CreateFighter_F_Animation();

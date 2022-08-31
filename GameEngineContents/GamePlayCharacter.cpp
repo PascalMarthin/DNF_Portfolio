@@ -11,6 +11,8 @@
 #include "Skill_Fighter_F_BaseHit.h"
 #include "ItemInventory.h"
 #include "MouseCursorComponent.h"
+#include "GamePlayDataBase.h"
+#include "MouseCursorComponent.h"
 
 GamePlayDataBase* GamePlayCharacter::CurrentCharacterData = nullptr;
 std::list<GamePlayDataBase*> GamePlayCharacter::AllCharacterData;
@@ -51,7 +53,7 @@ void GamePlayCharacter::Start()
 {
 	GamePlayObject::Start();
 
-	Component_MouseCursorComponent = GetLevel()->CreateActor<MouseCursorComponent>();
+	Component_MouseCursorComponent = GetLevel()->CreateActor<MouseCursorComponent>("Component_Mouse");
 	Manager_AvataManager = GetLevel()->CreateActor<AvataManager>();
 	Manager_AvataManager->SetParent(this);
 	Manager_AvataManager->SetAvataSetup(ObjectType::Character);
@@ -108,7 +110,9 @@ void GamePlayCharacter::Update(float _Delta)
 GamePlayDataBase* GamePlayCharacter::CreateCharacterBase(CharacterFormerClass _Class, const std::string& _NickName)
 {
 	GamePlayDataBase* NewCharacter = new GamePlayDataBase(_Class , _NickName);
-	NewCharacter->GetInventoryData();
+	NewCharacter->CreateItem(GamePlayItemCode::Level1Up, 1);
+
+	//NewCharacter->CreateItem(GamePlayItemCode::Level1Up);
 	AllCharacterData.push_back(NewCharacter);
 
 

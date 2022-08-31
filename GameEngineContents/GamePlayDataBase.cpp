@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "GamePlayDataBase.h"
+#include "GamePlayItem_DESC.h"
 
 std::map<AllCharacterClass, std::map<std::string, FrameAnimation_DESC*>> GamePlayDataBase::CharacterAnimation_DESCs;
 GamePlayDataBase* GamePlayDataBase::CurrentCharacterData = nullptr;
@@ -10,6 +11,15 @@ GamePlayDataBase::GamePlayDataBase(CharacterFormerClass _Class, const std::strin
 	, CurrentMap(TownMap::None)
 {
 
+
+	DataBase_InventoryData[InventoryBag::Inventory_QuickSlot].resize(6);
+	DataBase_InventoryData[InventoryBag::Inventory_ItemInventory_Equipment].resize(8 * 6);
+	DataBase_InventoryData[InventoryBag::Inventory_ItemInventory_Equipment_Wear].resize(8);
+	DataBase_InventoryData[InventoryBag::Inventory_ItemInventory_Stuff].resize(8 * 6);
+	DataBase_InventoryData[InventoryBag::Inventory_ItemInventory_Consumable].resize(8 * 6);
+	DataBase_InventoryData[InventoryBag::Inventory_Avata].resize(8 * 6);
+	DataBase_InventoryData[InventoryBag::Inventory_Avata_Wear].resize(8);
+	//DataBase_InventoryData[InventoryBag::Inventory_Pet]
 }
 
 GamePlayDataBase::~GamePlayDataBase() 
@@ -21,10 +31,21 @@ GamePlayDataBase::~GamePlayDataBase()
 			for (auto& InventoryDataIter : ItemData.second)
 			{
 				delete InventoryDataIter;
+				InventoryDataIter = nullptr;
 			}
 		}
 		DataBase_InventoryData.clear();
 	}
+
+	//for (auto* Data : All_ItemData)
+	//{
+	//	if (Data != nullptr)
+	//	{
+	//		//delete Data;
+	//	}
+	//	
+	//}
+	
 }
 
 void GamePlayDataBase::SetAnimationForFrameAnimationDESC(AllCharacterClass _Class)
@@ -121,4 +142,104 @@ void GamePlayDataBase::DestroyFrameAnimationDESC()
 		}
 	}
 	CharacterAnimation_DESCs.clear();
+}
+
+void GamePlayDataBase::CreateItem(GamePlayItemCode _Code, int _Stack)
+{
+	GamePlayItem_DESC* DESC = GamePlayItem_DESC::Find(_Code);
+	InventoryData* Data = new InventoryData();
+	Data->Item_DESC = DESC;
+	Data->Stack = _Stack;
+
+	if (!PushInventoryToItem(Data))
+	{
+
+	}
+
+	All_ItemData.push_back(Data);
+}
+
+bool GamePlayDataBase::PushInventoryToItem(InventoryData* _Data)
+{
+
+	switch (_Data->Item_DESC->GetItemType())
+	{
+	case GamePlayItemType::Equipment:
+	{
+		for (auto& Data : DataBase_InventoryData[InventoryBag::Inventory_ItemInventory_Equipment])
+		{
+			if (Data == nullptr)
+			{
+				Data = _Data;
+				return true;
+				break;
+			}
+		}
+		return false;
+	}
+	break;
+	case GamePlayItemType::Stuff:
+	{
+		for (auto& Data : DataBase_InventoryData[InventoryBag::Inventory_ItemInventory_Stuff])
+		{
+			if (Data == nullptr)
+			{
+				Data = _Data;
+				return true;
+				break;
+			}
+		}
+		return false;
+	}
+	break;
+	case GamePlayItemType::Consumable:
+	{
+		for (auto& Data : DataBase_InventoryData[InventoryBag::Inventory_ItemInventory_Consumable])
+		{
+			if (Data == nullptr)
+			{
+				Data = _Data;
+				return true;
+				break;
+			}
+		}
+		return false;
+	}
+	break;
+	case GamePlayItemType::Avatar:
+	{
+		for (auto& Data : DataBase_InventoryData[InventoryBag::Inventory_Avata])
+		{
+			if (Data == nullptr)
+			{
+				Data = _Data;
+				return true;
+				break;
+			}
+		}
+		return false;
+	}
+	break;
+	case GamePlayItemType::Pet:
+	{
+		for (auto& Data : DataBase_InventoryData[InventoryBag::Inventory_Pet])
+		{
+			if (Data == nullptr)
+			{
+				Data = _Data;
+				return true;
+				break;
+			}
+		}
+		return false;
+	}
+	break;
+	case GamePlayItemType::Debug:
+		break;
+	case GamePlayItemType::Unknown:
+		break;
+	default:
+		break;
+	}
+
 }

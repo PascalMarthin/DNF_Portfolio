@@ -92,8 +92,8 @@ private:
 
 public:
 	static GamePlayDataBase* CreateCharacterBase(CharacterFormerClass _Class, const std::string& _NickName = "Debug");
-	//-------------------------------------------
 
+	//---------------------------------------
 	void SetFSManager() override;
 	//void SetCollisionManager();
 
@@ -180,7 +180,12 @@ private:
 	ItemInventory* Class_ItemInventory;
 
 	//------------------Mouse---------------------------------
+	inline MouseCursorComponent* GetMouseCursor()
+	{
+		return Component_MouseCursorComponent;
+	}
 
+	private:
 	MouseCursorComponent* Component_MouseCursorComponent;
 };
 

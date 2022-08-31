@@ -13,8 +13,10 @@ struct BlankInventory
 	GameEngineCollision* Collision_Blank;
 	GameEngineUIRenderer* Texture_Blank;
 };
+class GamePlayItem;
 class GameEngineUIRenderer;
 class GameEngineCollision;
+class MouseCursorComponent;
 class GamePlayInventory : public GameEngineActor
 {
 public:
@@ -28,16 +30,24 @@ public:
 	GamePlayInventory& operator=(const GamePlayInventory& _Other) = delete;
 	GamePlayInventory& operator=(GamePlayInventory&& _Other) noexcept = delete;
 
+
+	bool IsItemDrag(GameEngineCollision* _This, GameEngineCollision* _Other);
+
 protected:
+	//void Update(float _DeltaTime) override;
+
 	GameEngineUIRenderer* Texture_Inventory;
 
 	GameEngineCollision* Collision_WindowInventory;
 
-	std::map<float4, BlankInventory> Inventory_CurrentItem;
-	std::map<float4, BlankInventory> Inventory_Blank;
+	std::map<unsigned int, GamePlayItem*> Inventory_CurrentItem;
+	std::map<unsigned int, BlankInventory> Inventory_Blank;
 	//std::map<float4, >
 	void SetLevelStartItem(std::vector<InventoryData*>& Inventory);
+	MouseCursorComponent* Component_MouseCursorComponent;
 
+	bool DragMode;
+	GamePlayItem* Item_DragData;
 private:
 };
 

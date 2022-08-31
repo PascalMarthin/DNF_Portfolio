@@ -56,8 +56,12 @@ void GamePlayItem_DESC::DestoryALLItemData()
 	AllItem_DESC.clear();
 }
 
-inline GamePlayItem_DESC* GamePlayItem_DESC::Find(GamePlayItemCode _Code)
+GamePlayItem_DESC* GamePlayItem_DESC::Find(GamePlayItemCode _Code)
 {
+	if (AllItem_DESC.find(_Code) == AllItem_DESC.end())
+	{
+		MsgBoxAssert("아이템이 구현이 안되어있습니다")
+	}
 	return AllItem_DESC[_Code];
 }
 
