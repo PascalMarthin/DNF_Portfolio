@@ -72,18 +72,16 @@ public:
 	//	return CreateActor<ActorType>(static_cast<int>(_ObjectGroupIndex));
 	//}
 
-	//template<typename ActorType, typename GroupIndexType>
-	//ActorType* CreateActor(GroupIndexType _ObjectGroupIndex)
-	//{
-	//	return CreateActor<ActorType>(static_cast<int>(_ObjectGroupIndex));
-	//}
+	template<typename ActorType, typename GroupIndexType>
+	ActorType* CreateActor(GroupIndexType _ObjectGroupIndex)
+	{
+		return CreateActor<ActorType>(static_cast<int>(_ObjectGroupIndex));
+	}
 
 	template<typename ActorType>
 	ActorType* CreateActor(const std::string _Name, int _ObjectGroupIndex = 0)
 	{
-		ActorType* Actor = CreateActor<ActorType>(_ObjectGroupIndex);
-		Actor->SetName(_Name);
-		return Actor;
+		CreateActor(_ObjectGroupIndex);
 	}
 
 	template<typename ActorType>

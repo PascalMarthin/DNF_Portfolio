@@ -22,6 +22,7 @@ class InterfaceHUD;
 class GamePlayDataBase;
 class CharacterSkillManager;
 class ItemInventory;
+class AvataInventory;
 class GamePlayCharacter : public GamePlayObject
 {
 
@@ -178,6 +179,7 @@ public:
 private:
 	// -----------------Inventory------------------------------
 	ItemInventory* Class_ItemInventory;
+	AvataInventory* Class_AvataInventory;
 
 	//------------------Mouse---------------------------------
 	inline MouseCursorComponent* GetMouseCursor()

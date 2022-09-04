@@ -239,3 +239,16 @@ void Bale::FSM_Hit_Down_End(const StateInfo& _Info)
 	Collision_HitBody_Mid->On();
 	DownWait = 0.f;
 }
+
+void Bale::FSM_Hit_Walk_Start(const StateInfo& _Info)
+{
+
+}
+void Bale::FSM_Hit_Walk_Update(float _DeltaTime, const StateInfo& _Info)
+{
+
+}
+void Bale::FSM_Hit_Walk_End(const StateInfo& _Info)
+{
+
+}

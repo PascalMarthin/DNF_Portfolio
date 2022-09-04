@@ -30,14 +30,14 @@ void TitleCreateCharacter_ClassIllustGIF::Update(float _DeltaTime)
 		Float_TextureBackDelay += _DeltaTime;
 		FolderTexture_CurrentGIF->GetTransform().SetLocalMove({ -1200.f * _DeltaTime, 0 });
 		FolderTexture_BackBufferGIF->GetTransform().SetLocalMove({ -1200.f * _DeltaTime, 0 });
-		FolderTexture_BackBufferGIF->GetColorData().PlusColor = { 0, 0, 0 , -Float_TextureBackDelay * 2.f };
+		FolderTexture_BackBufferGIF->GetPixelData().PlusColor = { 0, 0, 0 , -Float_TextureBackDelay * 2.f };
 		if (FolderTexture_CurrentGIF->GetTransform().GetLocalPosition().x < 0.f )
 		{
 			FolderTexture_CurrentGIF->GetTransform().SetLocalPosition({0, 0, 5});
 			FolderTexture_BackBufferGIF->GetTransform().SetLocalPosition({ 0 , 0 , 10});
 			FolderTexture_BackBufferGIF->GetTransform().SetLocalPosition({ 0 , 0 , ZSortOrder::BackGround + 10 });
 			//FolderTexture_BackBufferGIF->ChangeFrameAnimation(CurrentAnimationName);
-			FolderTexture_BackBufferGIF->GetColorData().PlusColor = { float4::ZERO };
+			FolderTexture_BackBufferGIF->GetPixelData().PlusColor = { float4::ZERO };
 			ChangeGIF = false;
 		}
 	}

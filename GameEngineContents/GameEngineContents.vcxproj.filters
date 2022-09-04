@@ -206,6 +206,15 @@
     <ClInclude Include="GamePlayInventory.h">
       <Filter>Object\Character\Inventory</Filter>
     </ClInclude>
+    <ClInclude Include="AvataInventory.h">
+      <Filter>Object\Character\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill_Fighter_F_Rising.h">
+      <Filter>Object\Character\Fighter</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineDamageRenderer.h">
+      <Filter>CorePlus</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -409,6 +418,15 @@
     </ClCompile>
     <ClCompile Include="GamePlayInventory.cpp">
       <Filter>Object\Character\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="AvataInventory.cpp">
+      <Filter>Object\Character\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill_Fighter_F_Rising.cpp">
+      <Filter>Object\Character\Fighter</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineDamageRenderer.cpp">
+      <Filter>CorePlus</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

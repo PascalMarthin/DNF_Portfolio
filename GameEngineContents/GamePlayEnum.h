@@ -218,3 +218,9 @@ enum class WorldDungeon
 	None,
 	Luke
 };
+
+enum class ActorOrder
+{
+	None,
+	Mouse = 1,
+};

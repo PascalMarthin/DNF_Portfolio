@@ -13,6 +13,7 @@
 #include "MouseCursorComponent.h"
 #include "GamePlayDataBase.h"
 #include "MouseCursorComponent.h"
+#include "AvataInventory.h"
 
 GamePlayDataBase* GamePlayCharacter::CurrentCharacterData = nullptr;
 std::list<GamePlayDataBase*> GamePlayCharacter::AllCharacterData;
@@ -34,6 +35,7 @@ GamePlayCharacter::GamePlayCharacter()
 	, Class_ItemInventory(nullptr)
 	, Component_MouseCursorComponent(nullptr)
 	, Manager_SkillManager(nullptr)
+	, Class_AvataInventory(nullptr)
 {
 }
 
@@ -53,7 +55,6 @@ void GamePlayCharacter::Start()
 {
 	GamePlayObject::Start();
 
-	Component_MouseCursorComponent = GetLevel()->CreateActor<MouseCursorComponent>("Component_Mouse");
 	Manager_AvataManager = GetLevel()->CreateActor<AvataManager>();
 	Manager_AvataManager->SetParent(this);
 	Manager_AvataManager->SetAvataSetup(ObjectType::Character);
@@ -64,7 +65,9 @@ void GamePlayCharacter::Start()
 	Function_BaseAtt = CreateComponent<Skill_Fighter_F_BaseHit>()->Get_SkillAction();
 	
 	Class_ItemInventory = GetLevel()->CreateActor<ItemInventory>();
+	Class_AvataInventory = GetLevel()->CreateActor<AvataInventory>();
 
+	Component_MouseCursorComponent = GetLevel()->CreateActor<MouseCursorComponent>(ActorOrder::Mouse);
 
 	//Collision_HitBody_Top = CreateComponent<GameEngineCollision>("Hit_Collision");
 	//Collision_HitBody_Top->ChangeOrder(CollisionOrder::Player);
@@ -84,7 +87,21 @@ void GamePlayCharacter::Update(float _Delta)
 		}
 		else
 		{
+			Class_AvataInventory->Off();
 			Class_ItemInventory->On();
+		}
+	}
+
+	if (GameEngineInput::GetInst()->IsDown("Avata"))
+	{
+		if (Class_ItemInventory->IsUpdate())
+		{
+			Class_AvataInventory->Off();
+		}
+		else
+		{
+			Class_ItemInventory->Off();
+			Class_AvataInventory->On();
 		}
 	}
 

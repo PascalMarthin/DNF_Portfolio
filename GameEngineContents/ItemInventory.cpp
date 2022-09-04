@@ -37,7 +37,7 @@ void ItemInventory::Start()
 				Renderer->ScaleToTexture();
 				Renderer->GetTransform().SetLocalPosition({static_cast<float>(30 * x) - 15,static_cast<float>(30 * y) -12.f , 5});
 				GameEngineCollision* Collision = CreateComponent<GameEngineCollision>();
-				Collision->GetTransform().SetLocalScale(Renderer->GetTransform().GetLocalPosition().Half());
+				Collision->GetTransform().SetLocalScale(Renderer->GetTransform().GetLocalScale() * 0.125f);
 				Collision->GetTransform().SetLocalPosition(Renderer->GetTransform().GetLocalPosition());
 				Collision->SetDebugSetting(CollisionType::CT_AABB2D, {0.5f, 0.5f, 0, 0.5f});
 				Collision->ChangeOrder(CollisionOrder::UI_InventoryBlank);
@@ -48,61 +48,10 @@ void ItemInventory::Start()
 			}
 		}
 	}
-	
+
 }
 
-void ItemInventory::Update(float _DeltaTime)
-{
-	
-	if (GameEngineInput::GetInst()->IsPress("LMouseCLK"))
-	{
-		if (Collision_WindowInventory->IsCollision(CollisionType::CT_AABB2D, CollisionOrder::UI_UIMouse, CollisionType::CT_AABB2D,
-			[](GameEngineCollision* _This, GameEngineCollision* _Other)
-			{
-				if (_Other->GetNameConstRef() == "Collision_UICam_MouseCursor")
-				{
-					return true;
-				}
-				else
-				{
-					return false;
-				}
 
-			}))
-		{
-			GetTransform().SetLocalMove(GetLevel()->GetUICamera()->GetMouseWorldDir());
-		}
-	}
-
-	if (DragMode == false)
-	{
-		if (GameEngineInput::GetInst()->IsDown("LMouseCLK"))
-		{
-			Component_MouseCursorComponent->GetMouseCursor()->IsCollision(CollisionType::CT_AABB2D, CollisionOrder::UI_InventoryItem, CollisionType::CT_AABB2D),
-				std::bind(&GamePlayInventory::IsItemDrag, this, std::placeholders::_1, std::placeholders::_2);
-		}
-	}
-	else
-	{
-		if (GameEngineInput::GetInst()->IsPress("LMouseCLK"))
-		{
-			if (Item_DragData != nullptr)
-			{
-				Item_DragData->SetTransform(Component_MouseCursorComponent->GetMouseCursor());
-			}
-		}
-		else if (GameEngineInput::GetInst()->IsUp("LMouseCLK"))
-		{
-			DragMode = false;
-			Item_DragData = nullptr;
-		}
-	}
-
-	//else if (GameEngineInput::GetInst()->IsPress("MouseCLK"))
-	//{
-
-	//}
-}
 
 
 void ItemInventory::LevelStartEvent()
@@ -110,15 +59,8 @@ void ItemInventory::LevelStartEvent()
 	SetLevelStartItem(GamePlayDataBase::GetCurrentCharacterData()->GetInventoryData(InventoryBag::Inventory_ItemInventory_Consumable));
 	if (Component_MouseCursorComponent == nullptr)
 	{
-		const std::list<GameEngineActor*>& ActorList = GetLevel()->GetGroup(0);
-		for (auto& Actor : ActorList)
-		{
-			if (Actor->GetNameConstRef() == "Component_Mouse")
-			{
-				Component_MouseCursorComponent = dynamic_cast<MouseCursorComponent*>(Actor);
-				break;
-			}
-		}
+		const std::list<GameEngineActor*>& ActorList = GetLevel()->GetGroup(ActorOrder::Mouse);
+		Component_MouseCursorComponent = dynamic_cast<MouseCursorComponent*>(ActorList.front());
 
 	}
 
@@ -127,7 +69,7 @@ void ItemInventory::LevelStartEvent()
 	{
 		MsgBoxAssert("마우스포인터가 설정되지 않았습니다");
 	}
-	
+	Off();
 }
 
 void ItemInventory::LevelEndEvent()
@@ -139,4 +81,5 @@ void ItemInventory::LevelEndEvent()
 	}
 	DragMode = false;
 	Item_DragData = nullptr;
+	Item_DragDataIndex = -1;
 }

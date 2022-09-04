@@ -157,6 +157,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AvataInventory.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="AvataManager.h">
       <SubType>
       </SubType>
@@ -226,6 +230,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Dungeon_Luke.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GameEngineDamageRenderer.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -372,6 +380,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Skill_Fighter_F_Rising.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Skill_Fighter_F_Upper.h">
       <SubType>
       </SubType>
@@ -426,6 +438,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AvataInventory.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="AvataManager.cpp">
       <SubType>
       </SubType>
@@ -495,6 +511,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Dungeon_Luke.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GameEngineDamageRenderer.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -636,6 +656,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Skill_Fighter_F_LowKick.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Skill_Fighter_F_Rising.cpp">
       <SubType>
       </SubType>
     </ClCompile>

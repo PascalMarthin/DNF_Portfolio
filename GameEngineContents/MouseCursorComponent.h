@@ -17,9 +17,14 @@ public:
 	MouseCursorComponent& operator=(const MouseCursorComponent& _Other) = delete;
 	MouseCursorComponent& operator=(MouseCursorComponent&& _Other) noexcept = delete;
 
-	inline GameEngineCollision* GetMouseCursor() const
+	inline GameEngineCollision* GetMainCamMouseCursor() const
 	{
 		return Collision_MainCam_MouseCursor;
+	}
+
+	inline GameEngineCollision* GetUICamMouseCursor() const
+	{
+		return Collision_UICam_MouseCursor;
 	}
 
 protected:
@@ -33,7 +38,7 @@ protected:
 	void LevelStartEvent() override;
 
 private:
-	GameEngineTextureRenderer* Texture_Cursor;
+	GameEngineUIRenderer* Texture_Cursor;
 	GameEngineCollision* Collision_MainCam_MouseCursor;
 	GameEngineCollision* Collision_UICam_MouseCursor;
 

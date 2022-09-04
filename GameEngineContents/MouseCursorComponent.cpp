@@ -17,7 +17,7 @@ MouseCursorComponent::~MouseCursorComponent()
 
 void MouseCursorComponent::Start()
 {
-	Texture_Cursor = CreateComponent<GameEngineTextureRenderer>();
+	Texture_Cursor = CreateComponent<GameEngineUIRenderer>();
 	Texture_Cursor->SetTexture("Cursor_Basic.png");
 	Texture_Cursor->ScaleToTexture();
 
@@ -33,8 +33,8 @@ void MouseCursorComponent::Start()
 
 void MouseCursorComponent::Update(float _DeltaTime)
 {
-	const float4& MainMousePos = GetLevel()->GetMainCamera()->GetMouseWorldPositionToActor();
-	Texture_Cursor->GetTransform().SetLocalPosition({ MainMousePos.x + 8.f , MainMousePos.y - 8.f, 0 });
+	const float4& MainMousePos = GetLevel()->GetMainCamera()->GetMouseWorldPosition();
+	Texture_Cursor->GetTransform().SetLocalPosition({ MainMousePos.x + 8.f , MainMousePos.y - 8.f, -100.f });
 	Collision_MainCam_MouseCursor->GetTransform().SetLocalPosition({ MainMousePos.x - 8 , MainMousePos.y + 8 , 0 });
 
 	const float4& UIMousePos = GetLevel()->GetUICamera()->GetMouseWorldPositionToActor();

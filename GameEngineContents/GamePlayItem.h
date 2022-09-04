@@ -25,6 +25,15 @@ public:
 
 
 
+	inline GameEngineUIRenderer* GetUIRenderer() const
+	{
+		return Texture_Item;
+	}
+	inline GameEngineCollision* GetCollision() const
+	{
+		return Collision_Item;
+	}
+
 	int CombineStackItem(GamePlayItem* _Item);
 	// 99개 초과시 초과된 갯수만큼 리턴
 

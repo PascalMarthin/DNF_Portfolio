@@ -52,6 +52,11 @@ private:
 	void FSM_Hit_Down_Start(const StateInfo& _Info);
 	void FSM_Hit_Down_Update(float _DeltaTime, const StateInfo& _Info);
 	void FSM_Hit_Down_End(const StateInfo& _Info);
+
+
+	void FSM_Hit_Walk_Start(const StateInfo& _Info);
+	void FSM_Hit_Walk_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Hit_Walk_End(const StateInfo& _Info);
 	
 
 	//void FSM_Move_Walk_Start(const StateInfo& _Info);

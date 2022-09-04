@@ -5,6 +5,7 @@
 #include "MoveManager.h"
 #include "GamePlaySkill.h"
 #include "GamePlayMonster.h"
+#include "GameEngineDamageRenderer.h"
 
 GamePlayObject::GamePlayObject() 
 	: Dir_RightSide(false)
@@ -65,8 +66,12 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitColli
 	// x = 0 y > 0 w = 0
 	// 
 
+
 	
 	// 대미지 처리
+	SetDamage(1234567890);
+
+
 
 	switch (_Skill->Class_Power[_Skill->int_ComboStuck].Enum_HitPostureType)
 	{
@@ -138,6 +143,15 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitColli
 	// 
 	// 
 	//
+}
+
+void GamePlayObject::SetDamage(unsigned int _Damage)
+{
+	GameEngineDamageRenderer* Font = GetLevel()->CreateActor<GameEngineDamageRenderer>();
+	Font->GetTransform().SetLocalPosition({ GetTransform().GetLocalPosition().x ,GetTransform().GetLocalPosition().y, -10.f});
+	Font->SetDamage(_Damage);
+	// 대미지 - 방어력 
+
 }
 
 void GamePlayObject::BeHitHold()

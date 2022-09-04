@@ -136,6 +136,9 @@ public:
 	virtual void LandingEnd_Down() {}
 	//virtual void LandingEnd_Down() {}
 
+	void SetDamage(unsigned int _Damage);
+	virtual void SetHPFromHit(unsigned int _Damage) {}
+
 
 	virtual void SetFSManager() {}
 
@@ -145,7 +148,7 @@ protected:
 	float DownWait;
 	// ------------------Effect--------------------
 public:
-		void Ani_BindEndOff(const FrameAnimation_DESC& _Desc);
+	void Ani_BindEndOff(const FrameAnimation_DESC& _Desc);
 
 protected:
 	std::map<std::string, std::vector<GameEngineTextureRenderer*>> map_NomalEffect;

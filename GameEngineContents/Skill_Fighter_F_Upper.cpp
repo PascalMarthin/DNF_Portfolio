@@ -36,7 +36,8 @@ void Skill_Fighter_F_Upper::Start()
 			});
 		Texture_Upper->ChangeFrameAnimation("Upper");
 		Texture_Upper->ScaleToTexture();
-		Texture_Upper->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texture_Upper->GetPixelData().MulColor = { 1 , 1 , 1 , 0.65f };
+		//Texture_Upper->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texture_Upper->Off();
 	
 	}

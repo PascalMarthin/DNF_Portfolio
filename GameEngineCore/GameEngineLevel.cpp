@@ -100,11 +100,16 @@ void GameEngineLevel::PushRenderer(GameEngineRenderer* _Renderer, int _CameraOrd
 {
 	// 기존 자신이 있던 자리에서 지우고
 
-	Cameras[static_cast<UINT>(_Renderer->CameraOrder)]->AllRenderer_[_Renderer->GetOrder()].remove(_Renderer);
+	GameEngineCamera* PrevCamera = Cameras[static_cast<UINT>(_Renderer->CameraOrder)];
+
+	PrevCamera->AllRenderer_[_Renderer->GetRenderingOrder()].remove(_Renderer);
 
 	_Renderer->CameraOrder = static_cast<CAMERAORDER>(_CameraOrder);
+
+	GameEngineCamera* NextCamera = Cameras[_CameraOrder];
 	// 다른 카메라로 들어갈수도 있습니다.
 	Cameras[_CameraOrder]->PushRenderer(_Renderer);
+	_Renderer->Camera = NextCamera;
 }
 
 void GameEngineLevel::PushCamera(GameEngineCamera* _Camera, int _CameraOrder)
@@ -181,14 +186,26 @@ void GameEngineLevel::Render(float _DelataTime)
 			continue;
 		}
 
+		Cameras[i]->GetCameraRenderTarget()->EffectProcess();
+	}
+
+	for (size_t i = 0; i < Cameras.size(); i++)
+	{
+		if (nullptr == Cameras[i])
+		{
+			continue;
+		}
+
 		GameEngineDevice::GetBackBuffer()->Merge(Cameras[i]->CameraRenderTarget, 0);
 	}
+
+	GameEngineDevice::GetBackBuffer()->EffectProcess();
+
 
 	// 여기서 그려져야 합니다.
 	GameEngineDebug::Debug3DRender();
 
 	GameEngineGUI::GUIRender(this, _DelataTime);
-
 
 	GameEngineDevice::RenderEnd();
 }

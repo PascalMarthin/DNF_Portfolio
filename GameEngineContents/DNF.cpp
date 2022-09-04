@@ -364,6 +364,22 @@ void DNF::BaseFolderTextureLoad()
 		}
 	}
 
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resource");
+		Dir.Move("Resource");
+		Dir.Move("Texture");
+		Dir.Move("UI");
+		Dir.Move("ComboTexture");
+		
+		std::vector<GameEngineDirectory> AllTextureDir = Dir.GetRecursiveAllDirectory();
+
+		for (GameEngineDirectory& DirIter : AllTextureDir)
+		{
+			GameEngineFolderTexture::Load(DirIter.GetFullPath());
+		}
+	}
+
 
 	{
 		//GameEngineDirectory Dir;
@@ -428,6 +444,7 @@ void DNF::BaseKeySetting()
 	{
 		GameEngineInput::GetInst()->CreateKey("ESC", VK_ESCAPE);
 		GameEngineInput::GetInst()->CreateKey("Inventory", 'I');
+		GameEngineInput::GetInst()->CreateKey("Avata", 'U');
 		GameEngineInput::GetInst()->CreateKey("Skill", 'K');
 		GameEngineInput::GetInst()->CreateKey("MyStat", 'P');
 	}

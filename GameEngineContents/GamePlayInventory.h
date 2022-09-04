@@ -5,6 +5,12 @@
 // Ό³Έν :
 struct BlankInventory
 {
+	BlankInventory()
+		: Collision_Blank(nullptr)
+		, Texture_Blank(nullptr)
+	{
+
+	}
 	//BlankInventory(GameEngineCollision* _Collision, GameEngineUIRenderer* _Renderer)
 	//	: Collision_Blank(_Collision), Texture_Blank(_Renderer)
 	//{
@@ -32,9 +38,13 @@ public:
 
 
 	bool IsItemDrag(GameEngineCollision* _This, GameEngineCollision* _Other);
+	bool CheckBlankCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
 
 protected:
 	//void Update(float _DeltaTime) override;
+
+
+	void Update(float _DeltaTime) override;
 
 	GameEngineUIRenderer* Texture_Inventory;
 
@@ -47,6 +57,7 @@ protected:
 	MouseCursorComponent* Component_MouseCursorComponent;
 
 	bool DragMode;
+	int Item_DragDataIndex;
 	GamePlayItem* Item_DragData;
 private:
 };

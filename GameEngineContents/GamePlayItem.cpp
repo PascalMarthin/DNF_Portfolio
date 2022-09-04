@@ -22,10 +22,13 @@ GamePlayItem::~GamePlayItem()
 void GamePlayItem::Start()
 {
 	GetTransform().SetLocalPosition({ 0, 0, -1 });
-	//GetTransform().SetLocalScale({ 1, 1, 1 });
+	GetTransform().SetLocalScale({ 1, 1, 1 });
 	Texture_Item = GetActor()->CreateComponent<GameEngineUIRenderer>();
+	Texture_Item->SetParent(this);
 	Collision_Item = GetActor()->CreateComponent<GameEngineCollision>();
+	Collision_Item->SetParent(this);
 	Collision_Item->ChangeOrder(CollisionOrder::UI_InventoryItem);
+	Collision_Item->SetDebugSetting(CollisionType::CT_AABB2D, float4::BLACK);
 }
 
 void GamePlayItem::SetDESC(GamePlayItem_DESC* _DESC)
