@@ -7,7 +7,7 @@ enum DamageFontEvent
 {
 	FirstTime = 0b0000000000000001,
 	SecondTime = 0b0000000000000010,
-	LastTime = 0b0000000000000010
+	LastTime = 0b0000000000000100
 };
 class GameEngineDamageRenderer : public GameEngineActor
 {
@@ -42,11 +42,13 @@ private:
 
 	std::vector<GameEngineTextureRenderer*> All_Font;
 	bool Critical;
+	bool MaxDamage;
 
 	int CheckTimeEvent;
 
+	float FontSize;
 	float CurrentTime;
-	float Interval;
+	//float Interval;
 
 private:
 	void FirstTime();
