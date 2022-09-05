@@ -86,53 +86,22 @@ void DNF::BaseSoundLoad()
 
 void DNF::BaseTextureLoad()
 {
-
-}
-
-void DNF::BaseFolderTextureLoad()
-{
-
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExitsChildDirectory("Resource");
 		Dir.Move("Resource");
 		Dir.Move("Texture");
-		Dir.Move("Object");
-		std::vector<GameEngineDirectory> AllTextureDir = Dir.GetRecursiveAllDirectory();
+		Dir.Move("UI");
+		Dir.Move("Monster_HP");
 
-		for (GameEngineDirectory& DirIter : AllTextureDir)
+		std::vector<GameEngineFile> Texture = Dir.GetAllFile();
+
+		for (size_t i = 0; i < Texture.size(); i++)
 		{
-
-			GameEngineFolderTexture::Load(DirIter.GetFullPath());
+			GameEngineTexture::Load(Texture[i].GetFullPath());
 		}
 	}
 
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExitsChildDirectory("Resource");
-		Dir.Move("Resource");
-		Dir.Move("Texture");
-		Dir.Move("Map");
-		Dir.Move("Jelva");
-
-		std::vector<GameEngineDirectory> AllTextureDir = Dir.GetRecursiveAllDirectory();
-
-		for (GameEngineDirectory& DirIter : AllTextureDir)
-		{
-			GameEngineFolderTexture::Load(DirIter.GetFullPath());
-		}
-	}
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExitsChildDirectory("Resource");
-		Dir.Move("Resource");
-		Dir.Move("Texture");
-		Dir.Move("Map");
-		Dir.Move("Seria_Room");
-
-		GameEngineFolderTexture::Load(Dir.GetFullPath());
-
-	}
 
 	{
 		GameEngineDirectory Dir;
@@ -210,7 +179,7 @@ void DNF::BaseFolderTextureLoad()
 		Dir.Move("UI");
 		Dir.Move("CharacterCreate");
 		Dir.Move("CharacterBackGround");
-		
+
 		std::vector<GameEngineFile> Texture = Dir.GetAllFile();
 
 		for (size_t i = 0; i < Texture.size(); i++)
@@ -317,6 +286,54 @@ void DNF::BaseFolderTextureLoad()
 		}
 	}
 
+}
+
+void DNF::BaseFolderTextureLoad()
+{
+
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resource");
+		Dir.Move("Resource");
+		Dir.Move("Texture");
+		Dir.Move("Object");
+		std::vector<GameEngineDirectory> AllTextureDir = Dir.GetRecursiveAllDirectory();
+
+		for (GameEngineDirectory& DirIter : AllTextureDir)
+		{
+
+			GameEngineFolderTexture::Load(DirIter.GetFullPath());
+		}
+	}
+
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resource");
+		Dir.Move("Resource");
+		Dir.Move("Texture");
+		Dir.Move("Map");
+		Dir.Move("Jelva");
+
+		std::vector<GameEngineDirectory> AllTextureDir = Dir.GetRecursiveAllDirectory();
+
+		for (GameEngineDirectory& DirIter : AllTextureDir)
+		{
+			GameEngineFolderTexture::Load(DirIter.GetFullPath());
+		}
+	}
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resource");
+		Dir.Move("Resource");
+		Dir.Move("Texture");
+		Dir.Move("Map");
+		Dir.Move("Seria_Room");
+
+		GameEngineFolderTexture::Load(Dir.GetFullPath());
+
+	}
+
+
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExitsChildDirectory("Resource");
@@ -379,6 +396,23 @@ void DNF::BaseFolderTextureLoad()
 			GameEngineFolderTexture::Load(DirIter.GetFullPath());
 		}
 	}
+
+	//{
+	//	GameEngineDirectory Dir;
+	//	Dir.MoveParentToExitsChildDirectory("Resource");
+	//	Dir.Move("Resource");
+	//	Dir.Move("Texture");
+	//	Dir.Move("UI");
+	//	Dir.Move("Monster_HP");
+
+	//	std::vector<GameEngineDirectory> AllTextureDir = Dir.GetRecursiveAllDirectory();
+
+	//	for (GameEngineDirectory& DirIter : AllTextureDir)
+	//	{
+	//		GameEngineFolderTexture::Load(DirIter.GetFullPath());
+	//	}
+
+	//}
 
 
 	{

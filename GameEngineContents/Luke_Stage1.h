@@ -6,7 +6,7 @@
 // Ό³Έν :
 class Luke_Stage1_BackGround;
 class Bale;
-class Luke_Stage1 : public GameEngineLevel, public Dungeon_Luke
+class Luke_Stage1 : public Dungeon_Luke
 {
 public:
 	// constrcuter destructer

@@ -2,6 +2,8 @@
 #include "BattleLevel.h"
 
 // Ό³Έν :
+class GamePlayMonsterHPBar;
+class GameEngineLevel;
 enum class Luke_Stage
 {
 	None,
@@ -11,7 +13,7 @@ enum class Luke_Stage
 	Stage_4,
 	Stage_Boss
 };
-class Dungeon_Luke : public BattleLevel
+class Dungeon_Luke : public GameEngineLevel ,public BattleLevel
 {
 public:
 	// constrcuter destructer
@@ -34,8 +36,11 @@ protected:
 		return CurrentStage;
 	}
 
+
 private:
 	static Luke_Stage CurrentStage;
+
+	GamePlayMonsterHPBar* Actor_MonsterHP;
 
 };
 

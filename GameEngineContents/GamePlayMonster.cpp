@@ -9,6 +9,7 @@ GamePlayMonster::GamePlayMonster()
 	, Texture_Monster(nullptr)
 	, GoingDownTime(0.f)
 	, MonsterAbilityStat()
+	, Monster_Class(MonsterClass::None)
 {
 }
 

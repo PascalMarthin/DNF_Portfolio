@@ -246,6 +246,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GamePlayComboSystem.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="GamePlayDataBase.h">
       <SubType>
       </SubType>
@@ -268,6 +272,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="GamePlayMonster.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GamePlayMonsterHPBar.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -527,6 +535,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GamePlayComboSystem.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GamePlayDataBase.cpp">
       <SubType>
       </SubType>
@@ -548,6 +560,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="GamePlayMonster.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GamePlayMonsterHPBar.cpp">
       <SubType>
       </SubType>
     </ClCompile>

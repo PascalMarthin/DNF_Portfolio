@@ -3,10 +3,32 @@
 #include <GameEngineCore/GameEngineCollision.h> 
 
 // Ό³Έν :
+enum class MonsterClass
+{
+	None,
+	Nomal,
+	Named,
+	Boss
+};
 class MonsterAbilityStat
 {
 	friend class CharacterStatManager;
 	friend class GamePlayMonster;
+public:
+	inline unsigned int GetMAXHP() const
+	{
+		return MAXHP;
+	}
+
+	inline unsigned int GetHP() const
+	{
+		return HP;
+	}
+
+	inline float GetDef() const
+	{
+		return Def;
+	}
 
 private: 
 	unsigned int MAXHP;
@@ -38,6 +60,11 @@ public:
 		return &MonsterAbilityStat;
 	}
 
+	inline MonsterClass GetMonsterClass() const
+	{
+		return Monster_Class;
+	}
+
 
 protected:
 	MonsterAbilityStat MonsterAbilityStat;
@@ -57,8 +84,17 @@ protected:
 	//---------------------Texture-----------------
 	GameEngineTextureRenderer* Texture_Monster;
 
+
+	//void HPMonster;
+
+
+	inline void SetMonsterClass(MonsterClass _Class)
+	{
+		Monster_Class = _Class;
+	}
 private:
 	
 
+	MonsterClass Monster_Class;
 };
 

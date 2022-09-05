@@ -26,7 +26,7 @@ void GameEngineDamageRenderer::Start()
 {
 	for (size_t i = 0; i < 10; i++)
 	{
-		GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>("Font");
+		GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>("DamageFont");
 		Renderer->GetTransform().SetLocalPosition({0, 0, -10.f - i});
 		All_Font.push_back(Renderer);
 			
@@ -186,7 +186,6 @@ void GameEngineDamageRenderer::FirstTime()
 		All_Font[0]->SetScaleRatio(2.f);
 		All_Font[0]->ScaleToTexture();
 		All_Font[1]->GetPixelData().MulColor = { 1, 1, 1, 0.6f };
-
 	}
 	else
 	{
@@ -220,7 +219,6 @@ void GameEngineDamageRenderer::SecondTime()
 		All_Font[1]->SetScaleRatio(1.f);
 		All_Font[1]->ScaleToTexture();
 		All_Font[1]->GetPixelData().MulColor = float4::WHITE;
-
 
 		All_Font[2]->GetTransform().SetLocalPosition({ 0, 0, -1.f });
 	}

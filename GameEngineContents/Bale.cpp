@@ -17,7 +17,7 @@ void Bale::Start()
 {
 	GamePlayMonster::Start();
 	Enum_UnitType = UnitType::Unit;
-	CreateMonsterStat(100000000, 50);
+	CreateMonsterStat(1000000000000000, 50);
 
 	SetFSManager();
 
@@ -66,6 +66,9 @@ void Bale::Start()
 	//Collision_HitBody_Top->Off();
 
 	CharacterWeight = 500.f;
+
+
+	SetMonsterClass(MonsterClass::Named);
 }
 
 void Bale::Update(float _DeltaTime)

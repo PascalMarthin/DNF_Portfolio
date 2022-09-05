@@ -215,6 +215,12 @@
     <ClInclude Include="GameEngineDamageRenderer.h">
       <Filter>CorePlus</Filter>
     </ClInclude>
+    <ClInclude Include="GamePlayComboSystem.h">
+      <Filter>CorePlus</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlayMonsterHPBar.h">
+      <Filter>Object\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -427,6 +433,12 @@
     </ClCompile>
     <ClCompile Include="GameEngineDamageRenderer.cpp">
       <Filter>CorePlus</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlayComboSystem.cpp">
+      <Filter>CorePlus</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlayMonsterHPBar.cpp">
+      <Filter>Object\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
