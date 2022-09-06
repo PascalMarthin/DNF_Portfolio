@@ -137,7 +137,7 @@ public:
 	//virtual void LandingEnd_Down() {}
 
 	void SetDamage(unsigned int _Damage);
-	virtual void SetHPFromHit(unsigned int _Damage) {}
+	virtual unsigned int  SetHPFromHit(unsigned int _Damage) { return 0; }
 
 
 	virtual void SetFSManager() {}

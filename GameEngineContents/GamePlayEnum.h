@@ -3,12 +3,11 @@
 #define WindowX 1280
 #define WindowY 720 
 
-#define CameraZoom 1.0f
-#define CameraZoomInvers 1.f - ((CameraZoom - 1.0f) / 2.0f)
-
-
 #define MonitorX 1260.f / 1067.f
 #define MonitorY 720.f / 600.f
+
+
+
 
 enum class GamePlayItemType
 {

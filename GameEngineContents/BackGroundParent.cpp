@@ -11,3 +11,7 @@ BackGroundParent::~BackGroundParent()
 {
 }
 
+//void BackGroundParent::Start()
+//{
+//	GetTransform().SetLocalScale({MonitorX, MonitorY });
+//}

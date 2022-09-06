@@ -10,6 +10,7 @@ enum class MonsterClass
 	Named,
 	Boss
 };
+class GamePlayMonsterHPBar;
 class MonsterAbilityStat
 {
 	friend class CharacterStatManager;
@@ -85,7 +86,7 @@ protected:
 	GameEngineTextureRenderer* Texture_Monster;
 
 
-	//void HPMonster;
+	unsigned int SetHPFromHit(unsigned int _Damage) override;
 
 
 	inline void SetMonsterClass(MonsterClass _Class)

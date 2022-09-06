@@ -28,6 +28,8 @@ public:
 	
 
 protected:
+	//void Start() override
+
 	inline void SetBackGroundZOrder()
 	{
 		GetTransform().SetLocalPosition({ 0, 0, GetBackGroundTextureScale().y + static_cast<float>(ZSortOrder::BackGround) });

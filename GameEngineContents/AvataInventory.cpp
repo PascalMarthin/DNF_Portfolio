@@ -66,6 +66,7 @@ void AvataInventory::LevelStartEvent()
 	{
 		MsgBoxAssert("마우스포인터가 설정되지 않았습니다");
 	}
+	Off();
 
 }
 

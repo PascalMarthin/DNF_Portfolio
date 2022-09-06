@@ -21,6 +21,13 @@ void Luke_Stage1::Start()
 	Player_Character = CreateActor<GamePlayCharacter>();
 
 	Debug_Bale = CreateActor<Bale>();
+
+	for (auto& Actor :GetGroup(0))
+	{
+		Actor->GetTransform().SetLocalScale({ MonitorX, MonitorY, 1.f });
+	}
+
+	
 }
 
 void Luke_Stage1::Update(float _DeltaTime)
@@ -28,24 +35,24 @@ void Luke_Stage1::Update(float _DeltaTime)
 	if (!GetMainCameraActor()->IsFreeCameraMode())
 	{
 		float4 Pos = Player_Character->GetMoveManager()->GetMoveCollision()->GetTransform().GetWorldPosition();
-		if (Pos.x <= 705.f)
+		if (Pos.x <= 705.f * MonitorX)
 		{
-			Pos.x = 705.f;
+			Pos.x = 705.f * MonitorX;
 		}
-		else if (Pos.x >= 1350.f)
+		else if (Pos.x >= 1350.f * MonitorX)
 		{
-			Pos.x = 1350.f;
+			Pos.x = 1350.f * MonitorX;
 		}
 
-		if ((Pos.y <= -580.f))
+		if ((Pos.y <= -580.f * MonitorY))
 		{
-			Pos.y = -580.f;
+			Pos.y = -580.f * MonitorY;
 		}
-		else if (Pos.y >= -460.f)
+		else if (Pos.y >= -460.f * MonitorY)
 		{
-			Pos.y = -460.f;
+			Pos.y = -460.f * MonitorY;
 		}
-		Pos.y += 100.f;
+		Pos.y += 80.f;
 
 		GetMainCameraActor()->GetTransform().SetWorldPosition(Pos);
 	}

@@ -69,7 +69,7 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitColli
 
 	
 	// 대미지 처리
-	SetDamage(1234567890);
+	SetDamage(12345670);
 
 
 
@@ -149,9 +149,9 @@ void GamePlayObject::SetDamage(unsigned int _Damage)
 {
 	GameEngineDamageRenderer* Font = GetLevel()->CreateActor<GameEngineDamageRenderer>();
 	Font->GetTransform().SetLocalPosition({ GetTransform().GetLocalPosition().x ,GetTransform().GetLocalPosition().y, -10.f});
-	Font->SetDamage(_Damage);
+	Font->SetDamage(SetHPFromHit(_Damage));
 
-
+	
 	// 대미지 - 방어력 
 
 }

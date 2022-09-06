@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "GamePlayMonster.h"
 #include "CharacterStatManager.h"
+#include "GamePlayMonsterHPBar.h"
 
 GamePlayMonster::GamePlayMonster() 
 	: Collision_HitBody_Top(nullptr)
@@ -38,6 +39,23 @@ void GamePlayMonster::Jump_GoingDown()
 		JumpGoingDown = true;
 	}
 }
+
+unsigned int GamePlayMonster::SetHPFromHit(unsigned int _Damage)
+{
+	GamePlayMonsterHPBar::SetMonster(this);
+	
+	if (MonsterAbilityStat.Def > 1000.f)
+	{
+		MonsterAbilityStat.Def = 1000.f;
+	}
+	unsigned int Damage = _Damage - static_cast<unsigned int>((255.f * MonsterAbilityStat.Def) * 0.8f);
+	MonsterAbilityStat.HP -= Damage;
+
+
+
+	return Damage;
+}
+
 
 void GamePlayMonster::LevelStartEvent()
 {

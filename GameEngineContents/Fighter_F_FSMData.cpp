@@ -69,7 +69,7 @@ void GamePlayCharacter::Create_Fighter_F_Default_FSManager()
 		GameEngineTextureRenderer* EffectRenderer = CreateComponent<GameEngineTextureRenderer>("KnockLarge" + std::to_string(i));
 		EffectRenderer->CreateFrameAnimationFolder("KnockLarge", FrameAnimation_DESC("KnockLarge", 0.1f, false));
 		EffectRenderer->CreateFrameAnimationFolder("None", FrameAnimation_DESC("None", 0.08f, false));
-		EffectRenderer->GetTransform().SetWorldScale({160.f * MonitorX, 160.f * MonitorY });
+		EffectRenderer->GetTransform().SetLocalScale({160.f , 160.f });
 		EffectRenderer->AnimationBindEnd("KnockLarge",
 			std::bind(&GamePlayObject::Ani_BindEndOff, this, std::placeholders::_1));
 		EffectRenderer->GetTransform().PixLocalNegativeX();

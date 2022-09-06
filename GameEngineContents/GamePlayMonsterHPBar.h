@@ -27,10 +27,13 @@ protected:
 	void LevelEndEvent() override;
 private:
 	GameEngineUIRenderer* Texture_MonsterHPBar_UI;
-	GameEngineUIRenderer* Texture_MonsterHPBar_UI;
+	GameEngineUIRenderer* Texture_MonsterHPBar_UIEnd;
 
 	static GameEngineTexture* Texture_NomalHPBar;
 	static GameEngineTexture* Texture_BossHPBar;
+
+	static GameEngineTexture* Texture_NomalHPBarEnd;
+	static GameEngineTexture* Texture_BossHPBarEnd;
 
 	static std::vector<GameEngineTexture*> Vector_BossColor;
 	static std::vector<GameEngineTexture*> Vector_NomalColor;
@@ -46,8 +49,8 @@ private:
 	GameEngineUIRenderer* Texture_HP2_Front;
 	GameEngineUIRenderer* Texture_HP2_Back;
 
-	GameEngineUIRenderer* Texture_HP_White;
-
+	GameEngineUIRenderer* Texture_HP1_White;
+	GameEngineUIRenderer* Texture_HP2_White;
 
 	int CurrentIndex;
 	// Monster
