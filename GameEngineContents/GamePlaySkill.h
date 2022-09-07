@@ -23,7 +23,7 @@ enum class HitType
 class SkillComboPower
 {
 public:
-	SkillComboPower() {}
+	//SkillComboPower() {}
 
 	unsigned int int_SkillDamage;
 	unsigned int int_MaxHit;

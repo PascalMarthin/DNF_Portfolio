@@ -10,6 +10,13 @@ enum class MonsterClass
 	Named,
 	Boss
 };
+enum class MonsterCategory
+{
+	None,
+	Human,
+	Machine,
+};
+
 class GamePlayMonsterHPBar;
 class MonsterAbilityStat
 {
@@ -31,9 +38,16 @@ public:
 		return Def;
 	}
 
+	inline float GetMaxHPLine() const
+	{
+		return MAXHPLine;
+	}
+
 private: 
 	unsigned int MAXHP;
 	unsigned int HP;
+
+	float MAXHPLine;
 
 	float Def;
 
@@ -65,11 +79,19 @@ public:
 	{
 		return Monster_Class;
 	}
+	inline const std::string& GetMonsterNameRef()
+	{
+		return String_MonsterName;
+	}
+	inline const std::vector<MonsterCategory>& GetMonsterCategory()
+	{
+		return All_MonsterCategory;
+	}
 
 
 protected:
 	MonsterAbilityStat MonsterAbilityStat;
-	void CreateMonsterStat(unsigned int _MAXHP, float Def);
+	void CreateMonsterStat(unsigned int _MAXHP, float Def, float _HPLine = -1.f);
 
 	void Jump_GoingDown() override;
 	float GoingDownTime;
@@ -93,9 +115,20 @@ protected:
 	{
 		Monster_Class = _Class;
 	}
-private:
-	
 
+	inline void SetMonsterName(const std::string& _Name)
+	{
+		String_MonsterName = _Name;
+	}
+	inline void SetCategory(MonsterCategory _Category)
+	{
+		All_MonsterCategory.push_back(_Category);
+	}
+
+private:
+	std::string String_MonsterName;
+	
 	MonsterClass Monster_Class;
+	std::vector<MonsterCategory> All_MonsterCategory;
 };
 

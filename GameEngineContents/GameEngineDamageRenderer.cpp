@@ -4,7 +4,8 @@
 //#include "GameEngineTexture.h"
 //#include "GameEngineFolderTexture.h"
 
-
+GameEngineFolderTexture* GameEngineDamageRenderer::Folder_NumberTexture_Critical = nullptr;
+GameEngineFolderTexture* GameEngineDamageRenderer::Folder_NumberTexture_Nomal = nullptr;
 std::list<GameEngineDamageRenderer*> GameEngineDamageRenderer::Static_AllDamageRenderer;
 GameEngineDamageRenderer::GameEngineDamageRenderer()
 	: Critical(false)
@@ -30,6 +31,12 @@ void GameEngineDamageRenderer::Start()
 		Renderer->GetTransform().SetLocalPosition({0, 0, -10.f - i});
 		All_Font.push_back(Renderer);
 			
+	}
+
+	if (GameEngineDamageRenderer::Folder_NumberTexture_Critical == nullptr)
+	{
+		GameEngineDamageRenderer::Folder_NumberTexture_Critical = GameEngineFolderTexture::Find("CriticalFont");
+		GameEngineDamageRenderer::Folder_NumberTexture_Nomal = GameEngineFolderTexture::Find("NomalFont");
 	}
 }
 
@@ -72,9 +79,9 @@ void GameEngineDamageRenderer::SetDamage(unsigned int _Damage)
 			//int Pow = static_cast<int>(pow(10, i - 1));
 			int DamagePow = Damage[Damage.size() - i - 1] - 48;
 
-			if (Critical == false)
+			if (Critical == true)
 			{
-				All_Font[i]->SetFolderTextureToIndex("CriticalFont", DamagePow);
+				All_Font[i]->SetTexture(Folder_NumberTexture_Critical->GetTexture(DamagePow));
 
 				XPos += 2;
 				if (DamagePow == 1)
@@ -84,7 +91,7 @@ void GameEngineDamageRenderer::SetDamage(unsigned int _Damage)
 			}
 			else
 			{
-				All_Font[i]->SetFolderTextureToIndex("NomalFont", DamagePow);
+				All_Font[i]->SetTexture(Folder_NumberTexture_Nomal->GetTexture(DamagePow));
 				switch (DamagePow)
 				{
 				case 6:

@@ -17,7 +17,7 @@ void Bale::Start()
 {
 	GamePlayMonster::Start();
 	Enum_UnitType = UnitType::Unit;
-	CreateMonsterStat(1000000000000000, 50);
+	CreateMonsterStat(1115180000, 50, 301.4f); //1,115,180,000
 
 	SetFSManager();
 
@@ -64,6 +64,13 @@ void Bale::Start()
 	Collision_HitBody_Bottom->ChangeOrder(CollisionOrder::Monster);
 	Collision_HitBody_Bottom->SetDebugSetting(CollisionType::CT_AABB, { 1, 0 , 1, 0.5 });
 	//Collision_HitBody_Top->Off();
+
+
+
+	SetMonsterName("증오의 베일");
+	SetCategory(MonsterCategory::Human);
+	SetCategory(MonsterCategory::Machine);
+
 
 	CharacterWeight = 500.f;
 

@@ -25,11 +25,16 @@ void GamePlayMonster::Start()
 	Manager_StatManager = CreateComponent<CharacterStatManager>();
 }
 
-void GamePlayMonster::CreateMonsterStat(unsigned int _MAXHP, float Def)
+void GamePlayMonster::CreateMonsterStat(unsigned int _MAXHP, float Def, float _HPLine)
 {
 	MonsterAbilityStat.MAXHP = _MAXHP;
 	MonsterAbilityStat.HP = _MAXHP;
 	MonsterAbilityStat.Def = Def;
+	if (_HPLine == -1.f)
+	{
+		MonsterAbilityStat.MAXHPLine = static_cast<float>(_MAXHP) / 3500000.f;
+	}
+	MonsterAbilityStat.MAXHPLine = _HPLine;
 }
 
 void GamePlayMonster::Jump_GoingDown()
@@ -49,8 +54,16 @@ unsigned int GamePlayMonster::SetHPFromHit(unsigned int _Damage)
 		MonsterAbilityStat.Def = 1000.f;
 	}
 	unsigned int Damage = _Damage - static_cast<unsigned int>((255.f * MonsterAbilityStat.Def) * 0.8f);
-	MonsterAbilityStat.HP -= Damage;
 
+	if (MonsterAbilityStat.HP < Damage)
+	{
+		GamePlayMonsterHPBar::SetHitDamage(0);
+	}
+	else
+	{
+		MonsterAbilityStat.HP -= Damage;
+		GamePlayMonsterHPBar::SetHitDamage(MonsterAbilityStat.HP);
+	}
 
 
 	return Damage;

@@ -59,5 +59,9 @@ private:
 	{
 		return All_Font[0]->GetCurTexture()->GetScale();
 	}
+
+	static GameEngineFolderTexture* Folder_NumberTexture_Critical;
+	static GameEngineFolderTexture* Folder_NumberTexture_Nomal;
+
 };
 
