@@ -397,6 +397,23 @@ void DNF::BaseFolderTextureLoad()
 		}
 	}
 
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resource");
+		Dir.Move("Resource");
+		Dir.Move("Texture");
+		Dir.Move("UI");
+		Dir.Move("Monster");
+		//Dir.Move("MonsterCategory");
+
+		std::vector<GameEngineDirectory> AllTextureDir = Dir.GetRecursiveAllDirectory();
+
+		for (GameEngineDirectory& DirIter : AllTextureDir)
+		{
+			GameEngineFolderTexture::Load(DirIter.GetFullPath());
+		}
+	}
+
 	//{
 	//	GameEngineDirectory Dir;
 	//	Dir.MoveParentToExitsChildDirectory("Resource");

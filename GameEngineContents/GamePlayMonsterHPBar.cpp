@@ -36,6 +36,10 @@ GamePlayMonsterHPBar::GamePlayMonsterHPBar()
 	, DecreaseTime(0.f)
 	, Texture_MonsterHP_Delete(nullptr)
 	, DeathBlink(0.f)
+	, MaxSpeed(0)
+	, FrameSpeed(0)
+	, Texture_HP1_Black(nullptr)
+	, Texture_HP2_Black(nullptr)
 	//, Monster_CurrentMonsterClass(MonsterClass::None)
 {
 }
@@ -63,6 +67,15 @@ void GamePlayMonsterHPBar::Start()
 	Texture_HP2_White = CreateComponent<GameEngineUIRenderer>();
 	Texture_HP2_White->GetTransform().SetLocalPosition({ 0, 0, -0.75f });
 
+
+	Texture_HP1_Black = CreateComponent<GameEngineUIRenderer>();
+	Texture_HP1_Black->GetTransform().SetLocalPosition({ 0, 0, -1.6f });
+	Texture_HP2_Black = CreateComponent<GameEngineUIRenderer>();
+	Texture_HP2_Black->GetTransform().SetLocalPosition({ 0, 0, -0.6f });
+
+	Texture_HP1_Black->GetPixelData().MulColor = { 0,0,0,0.5f };
+	Texture_HP2_Black->GetPixelData().MulColor = { 0,0,0,0.5f };
+
 	Texture_MonsterHP_Delete = CreateComponent<GameEngineUIRenderer>();
 	Texture_MonsterHP_Delete->SetTexture("MonsterHP_ODelete.png");
 	Texture_MonsterHP_Delete->ScaleToTexture();
@@ -85,6 +98,8 @@ void GamePlayMonsterHPBar::Start()
 	Texture_HP2_Back->SetPivot(PIVOTMODE::LEFTTOP);
 	Texture_HP1_White->SetPivot(PIVOTMODE::LEFTTOP);
 	Texture_HP2_White->SetPivot(PIVOTMODE::LEFTTOP);
+	Texture_HP1_Black->SetPivot(PIVOTMODE::LEFTTOP);
+	Texture_HP2_Black->SetPivot(PIVOTMODE::LEFTTOP);
 
 	if (Texture_NomalHPBar == nullptr)
 	{
@@ -107,8 +122,8 @@ void GamePlayMonsterHPBar::Start()
 		GamePlayMonsterHPBar::Vector_NomalColor.push_back(GameEngineTexture::Find("MonsterHP_NomalHP_Green.png"));
 		GamePlayMonsterHPBar::Vector_NomalColor.push_back(GameEngineTexture::Find("MonsterHP_NomalHP_Blue.png"));
 
-		GamePlayMonsterHPBar::Texture_BossColor = GameEngineTexture::Find("MonsterHP_BossHP_White.png");
 		GamePlayMonsterHPBar::Texture_BossColor = GameEngineTexture::Find("MonsterHP_NomalHP_White.png");
+		GamePlayMonsterHPBar::Texture_NomalColor = GameEngineTexture::Find("MonsterHP_NomalHP_White.png");
 	}
 	
 }
@@ -130,26 +145,37 @@ void GamePlayMonsterHPBar::SetMonster_InMember(GamePlayMonster* _Monster)
 	}
 	Monster_BeforeHPLine = Monster_GoalHPLine;
 
-
-	for (auto& Category : Monster_Target->GetMonsterCategory())
 	{
-		GameEngineUIRenderer* Renderer = CreateComponent<GameEngineUIRenderer>();
-		switch (Category)
+		for (auto& Clear : All_MonsterCategory)
 		{
-		case MonsterCategory::None:
-			break;
-		case MonsterCategory::Human:
-			Renderer->SetFolderTextureToIndex("MonsterCategory", 0);
-			break;
-		case MonsterCategory::Machine:
-			break;
-		default:
-			break;
+			Clear->Death();
 		}
-		
-		Category
+		All_MonsterCategory.clear();
+		float Pos = 28.f;
+		for (auto& Category : Monster_Target->GetMonsterCategory())
+		{
+			GameEngineUIRenderer* Renderer = CreateComponent<GameEngineUIRenderer>();
+			switch (Category)
+			{
+			case MonsterCategory::None:
+				break;
+			case MonsterCategory::Human:
+				Renderer->SetFolderTextureToIndex("MonsterCategory", 0);
+				break;
+			case MonsterCategory::Machine:
+				Renderer->SetFolderTextureToIndex("MonsterCategory", 1);
+				break;
+			default:
+				break;
+			}
+			Renderer->ScaleToTexture();
+			Renderer->GetTransform().SetLocalPosition({ Pos , 14.f });
+			Pos += Renderer->GetCurTexture()->GetScale().x + 2.f;
+
+			All_MonsterCategory.push_back(Renderer);
+		}
 	}
-	All_MonsterCategory.push_back()
+
 
 
 	HP1Front = true;
@@ -183,6 +209,8 @@ void GamePlayMonsterHPBar::SetMonster_InMember(GamePlayMonster* _Monster)
 		Texture_HP2_Back->GetTransform().SetLocalPosition({ 9, 3, 0 });
 		Texture_HP1_White->GetTransform().SetLocalPosition({ 9, 3, 0 });
 		Texture_HP2_White->GetTransform().SetLocalPosition({ 9, 3, 0 });
+		Texture_HP1_Black->GetTransform().SetLocalPosition({ 9, 3, 0 });
+		Texture_HP2_Black->GetTransform().SetLocalPosition({ 9, 3, 0 });
 
 		Texture_HP1_Front->ScaleToTexture();
 		Texture_HP1_Back->ScaleToTexture();
@@ -191,11 +219,19 @@ void GamePlayMonsterHPBar::SetMonster_InMember(GamePlayMonster* _Monster)
 
 		SetHPStack();
 
-		Texture_HP1_White->SetTexture(GamePlayMonsterHPBar::Texture_BossColor);
+		Texture_HP1_White->SetTexture(GamePlayMonsterHPBar::Texture_NomalColor);
 		Texture_HP1_White->GetTransform().SetLocalScale(Texture_HP1_Back->GetTransform().GetLocalScale());
-		Texture_HP2_White->SetTexture(GamePlayMonsterHPBar::Texture_BossColor);
+		Texture_HP2_White->SetTexture(GamePlayMonsterHPBar::Texture_NomalColor);
 		Texture_HP2_White->GetTransform().SetLocalScale(Texture_HP2_Back->GetTransform().GetLocalScale());
 
+		Texture_HP1_Black->SetTexture(GamePlayMonsterHPBar::Texture_NomalColor);
+		Texture_HP1_Black->GetTransform().SetLocalScale(Texture_HP1_Back->GetTransform().GetLocalScale());
+		Texture_HP2_Black->SetTexture(GamePlayMonsterHPBar::Texture_NomalColor);
+		Texture_HP2_Black->GetTransform().SetLocalScale(Texture_HP2_Back->GetTransform().GetLocalScale());
+
+
+		Texture_HP1_Black->GetPixelData().MulColor = { 0,0,0,0.5f };
+		Texture_HP2_Black->GetPixelData().MulColor = { 0,0,0,0.5f };
 
 
 		Texture_HP1_White->GetPixelData().MulColor = { 1,1,1,1 };
@@ -230,12 +266,14 @@ void GamePlayMonsterHPBar::SetMonster_InMember(GamePlayMonster* _Monster)
 		Texture_HP2_Back->GetTransform().SetLocalMove({ 0, 0, -0.5f });
 		Texture_HP1_White->GetTransform().SetLocalMove({ 0, 0, -1.75f });
 		Texture_HP2_White->GetTransform().SetLocalMove({ 0, 0, -0.75f });
+		Texture_HP1_Black->GetTransform().SetLocalMove({ 0, 0, -1.6f });
+		Texture_HP2_Black->GetTransform().SetLocalMove({ 0, 0, -0.6f });
 	}
 
 	DeathBlink = 0.f;
 	FlashTime = 0.f;
-
-
+	Texture_MonsterHP_Delete->Off();
+	SetHPBarRatioTexture_Front(Monster_BeforeHPLine - Monster_GoalHPLine);
 }
 
 void GamePlayMonsterHPBar::SetHPTexture()
@@ -328,6 +366,7 @@ void GamePlayMonsterHPBar::SetHPStack()
 
 void GamePlayMonsterHPBar::Update(float _DeltaTime)
 {
+
 	if (Monster_Target != nullptr)
 	{
 
@@ -335,27 +374,23 @@ void GamePlayMonsterHPBar::Update(float _DeltaTime)
 		{
 			FlashTime -= _DeltaTime;
 
-			float Color = (1.f - ((0.125f - FlashTime) / 0.125f));
+			float Color = (1.f - ((0.2f - FlashTime) / 0.2f));
 
 
-			Texture_HP1_White->GetPixelData().MulColor = { Color,Color,Color,Color + 0.5f * ((0.1f - FlashTime) / 0.1f) };
-			Texture_HP2_White->GetPixelData().MulColor = { Color,Color,Color,Color + 0.5f * ((0.1f - FlashTime) / 0.1f) };
+			Texture_HP1_White->GetPixelData().MulColor = { 1,1,1,Color };
+			Texture_HP2_White->GetPixelData().MulColor = { 1,1,1,Color };
 		}
 
 
 		if (Monster_BeforeHPLine > Monster_GoalHPLine)
 		{
 			DecreaseTime += _DeltaTime;
-			if (DecreaseTime > 0.09f)
+			if (DecreaseTime > FrameSpeed)
 			{
 				//int Index = static_cast<int>(static_cast<float>(Monster_BeforeHPLine) * (1.0f - (DecreaseTime / 0.3f)) + static_cast<float>(Monster_GoalHPLine * (DecreaseTime / 0.3f)));
-				int Index = Monster_BeforeHPLine - Monster_GoalHPLine;
+				//int Index = Monster_BeforeHPLine - Monster_GoalHPLine;
 
-
-				Index = Index > 120 ? 120 : Index; // 최대 속도 조절
-
-
-				SetDecreaseHP(Index);
+				SetDecreaseHP(MaxSpeed);
 
 				SetHPBarRatioTexture_Front(Monster_BeforeHPLine - Monster_GoalHPLine);
 				SetHPTexture();
@@ -407,16 +442,26 @@ void GamePlayMonsterHPBar::SetDecreaseHP(int _Decrease)
 			if (HP1Front)
 			{
 				Texture_HP2_Back->ScaleToTexture();
-				Texture_HP2_White->ScaleToTexture();
+				Texture_HP2_Black->ScaleToTexture();
 			}
 			else
 			{
 				Texture_HP1_Back->ScaleToTexture();
-				Texture_HP1_White->ScaleToTexture();
+				Texture_HP1_Black->ScaleToTexture();
 			}
-			_Decrease -= Before;
-			Monster_BeforeHPLine -= Before;
-			Before = Monster_BeforeHPLine % 100;
+
+			if (Monster_BeforeHPLine < static_cast<unsigned int>(Before))
+			{
+				_Decrease = 0;
+				Monster_BeforeHPLine = 0;
+			}
+			else
+			{
+				_Decrease -= Before;
+				Monster_BeforeHPLine -= Before;
+				Before = Monster_BeforeHPLine % 100;
+			}
+
 
 		}
 		else
@@ -426,17 +471,27 @@ void GamePlayMonsterHPBar::SetDecreaseHP(int _Decrease)
 				Texture_HP1_Back->ScaleToTexture();
 				const float4& Scale = Texture_HP1_Back->GetTransform().GetLocalScale();
 				Texture_HP1_Back->GetTransform().SetLocalScale({ Scale.x * (static_cast<float>(Before - _Decrease) * 0.01f),Scale.y });
-				Texture_HP1_White->GetTransform().SetLocalScale({ Scale.x * (static_cast<float>(Before - _Decrease) * 0.01f),Scale.y });
+				Texture_HP1_Black->GetTransform().SetLocalScale({ Scale.x * (static_cast<float>(Before - _Decrease) * 0.01f),Scale.y });
 			}
 			else
 			{
 				Texture_HP2_Back->ScaleToTexture();
 				const float4& Scale = Texture_HP2_Back->GetTransform().GetLocalScale();
 				Texture_HP2_Back->GetTransform().SetLocalScale({ Scale.x * (static_cast<float>(Before - _Decrease) * 0.01f),Scale.y });
-				Texture_HP2_White->GetTransform().SetLocalScale({ Scale.x * (static_cast<float>(Before - _Decrease) * 0.01f),Scale.y });
+				Texture_HP2_Black->GetTransform().SetLocalScale({ Scale.x * (static_cast<float>(Before - _Decrease) * 0.01f),Scale.y });
 			}
-			Monster_BeforeHPLine -= _Decrease;
-			_Decrease -= _Decrease;
+
+			if (Monster_BeforeHPLine < static_cast<unsigned int>(_Decrease))
+			{
+				_Decrease = 0;
+				Monster_BeforeHPLine = 0;
+			}
+			else
+			{
+				Monster_BeforeHPLine -= _Decrease;
+				_Decrease -= _Decrease;
+			}
+
 		}
 	}
 
@@ -445,12 +500,12 @@ void GamePlayMonsterHPBar::SetDecreaseHP(int _Decrease)
 		if (HP1Front)
 		{
 			Texture_HP2_Back->GetTransform().SetLocalScale(float4::ZERO);
-			Texture_HP2_White->GetTransform().SetLocalScale(float4::ZERO);
+			Texture_HP2_Black->GetTransform().SetLocalScale(float4::ZERO);
 		}
 		else
 		{
 			Texture_HP1_Back->GetTransform().SetLocalScale(float4::ZERO);
-			Texture_HP1_White->GetTransform().SetLocalScale(float4::ZERO);
+			Texture_HP1_Black->GetTransform().SetLocalScale(float4::ZERO);
 		}
 	}
 	
@@ -465,14 +520,45 @@ void GamePlayMonsterHPBar::SetHitDamage_InMember(unsigned int _CurrentHP)
 	if (Damage >= 0)
 	{
 
+
 		Monster_CurrentHP = _CurrentHP;
 		Monster_GoalHPLine = static_cast<int>(((static_cast<float>(Monster_CurrentHP) * Monster_Target->GetMonsterStat()->GetMaxHPLine()) / Monster_Target->GetMonsterStat()->GetMAXHP()) * 100.f);
 
 		Texture_HP1_White->GetPixelData().MulColor = { 1,1,1,1 };
 		Texture_HP2_White->GetPixelData().MulColor = { 1,1,1,1 };
 
+		Texture_HP1_White->GetTransform().SetLocalScale(Texture_HP1_Front->GetTransform().GetLocalScale());
+		Texture_HP2_White->GetTransform().SetLocalScale(Texture_HP2_Front->GetTransform().GetLocalScale());
 
 		SetHPBarRatioTexture_Front(Monster_BeforeHPLine - Monster_GoalHPLine);
+
+		if ((Monster_BeforeHPLine - Monster_GoalHPLine) > 1000)
+		{
+			MaxSpeed = 95;
+			FrameSpeed = 0.09f;
+		}
+		else if ((Monster_BeforeHPLine - Monster_GoalHPLine) > 500)
+		{
+			MaxSpeed = 60;
+			FrameSpeed = 0.05f;
+		}
+		else if ((Monster_BeforeHPLine - Monster_GoalHPLine) > 100)
+		{
+			MaxSpeed = 1;
+			FrameSpeed = 0;
+		}
+		else
+		{
+			MaxSpeed = 1;
+			FrameSpeed = 0.02f;
+		}
+			
+
+		
+
+		//MaxSpeed = 10;  // 최대 속도 조절
+
+		
 		if (FlashTime > 0)
 		{
 			FlashTime = 0.12f;
@@ -480,7 +566,6 @@ void GamePlayMonsterHPBar::SetHitDamage_InMember(unsigned int _CurrentHP)
 		else
 		{
 			FlashTime = 0.2f;
-	
 		}
 		DecreaseTime = 0.0f;
 		//if ()
@@ -492,7 +577,7 @@ void GamePlayMonsterHPBar::SetHitDamage_InMember(unsigned int _CurrentHP)
 		//	Monster_BeforeHPLine = static_cast<float>(BeforeHPLine);
 		//}
 		
-		
+		Texture_MonsterHP_Delete->Off();
 
 
 	}
@@ -506,6 +591,9 @@ bool GamePlayMonsterHPBar::SetHPBarRatioTexture_Front(int _Ratio)
 {
 	GameEngineUIRenderer* TargetRenderer_First = HP1Front ? Texture_HP1_Front : Texture_HP2_Front;
 	GameEngineUIRenderer* TargetRenderer_Second = HP1Front ? Texture_HP2_Front : Texture_HP1_Front;
+	GameEngineUIRenderer* TargetRenderer_White_First = HP1Front ? Texture_HP1_White : Texture_HP2_White;
+	GameEngineUIRenderer* TargetRenderer_White_Second = HP1Front ? Texture_HP2_White : Texture_HP1_White;
+	
 
 	GameEngineTexture* TargetTexture = Monster_Target->GetMonsterClass() == MonsterClass::Boss ? Vector_BossColor[0] : Vector_NomalColor[0];
 
@@ -521,6 +609,7 @@ bool GamePlayMonsterHPBar::SetHPBarRatioTexture_Front(int _Ratio)
 		if (100 - HPLineIndex <= _Ratio)
 		{
 			TargetRenderer_Second->GetTransform().SetLocalScale({ TargetTexture->GetScale().x * static_cast<float>(HPLineIndex) * 0.01f, TargetTexture->GetScale().y });
+		
 			TargetRenderer_First->GetTransform().SetLocalScale(float4::ZERO);
 		}
 		else
@@ -534,11 +623,13 @@ bool GamePlayMonsterHPBar::SetHPBarRatioTexture_Front(int _Ratio)
 			if (HP1Front)
 			{
 				Texture_HP1_Back->GetTransform().SetLocalScale({ TargetTexture->GetScale().x * static_cast<float>(HPLineIndex) * 0.01f, TargetTexture->GetScale().y });
+				Texture_HP1_Black->GetTransform().SetLocalScale({ TargetTexture->GetScale().x * static_cast<float>(HPLineIndex) * 0.01f, TargetTexture->GetScale().y });
 				Texture_HP1_White->GetTransform().SetLocalScale({ TargetTexture->GetScale().x * static_cast<float>(HPLineIndex) * 0.01f, TargetTexture->GetScale().y });
 			}
 			else
 			{
 				Texture_HP2_Back->GetTransform().SetLocalScale({ TargetTexture->GetScale().x * static_cast<float>(HPLineIndex) * 0.01f, TargetTexture->GetScale().y });
+				Texture_HP2_Black->GetTransform().SetLocalScale({ TargetTexture->GetScale().x * static_cast<float>(HPLineIndex) * 0.01f, TargetTexture->GetScale().y });
 				Texture_HP2_White->GetTransform().SetLocalScale({ TargetTexture->GetScale().x * static_cast<float>(HPLineIndex) * 0.01f, TargetTexture->GetScale().y });
 			}
 		}
@@ -547,6 +638,7 @@ bool GamePlayMonsterHPBar::SetHPBarRatioTexture_Front(int _Ratio)
 	if (Monster_BeforeHPLine < 100)
 	{
 		TargetRenderer_Second->GetTransform().SetLocalScale(float4::ZERO);
+		TargetRenderer_White_Second->GetTransform().SetLocalScale(float4::ZERO);
 	}
 
 	return true;
@@ -563,10 +655,12 @@ void GamePlayMonsterHPBar::SwitchingHP1and2()
 		Texture_HP1_Front->GetTransform().SetLocalMove({0, 0, 1.f});
 		Texture_HP1_Back->GetTransform().SetLocalMove({ 0, 0, 1.f });
 		Texture_HP1_White->GetTransform().SetLocalMove({ 0, 0, 1.f });
+		Texture_HP1_Black->GetTransform().SetLocalMove({ 0, 0, 1.f });
 
 		Texture_HP2_Front->GetTransform().SetLocalMove({ 0, 0, -1.f });
 		Texture_HP2_Back->GetTransform().SetLocalMove({ 0, 0,  -1.f });
 		Texture_HP2_White->GetTransform().SetLocalMove({ 0, 0,  -1.f });
+		Texture_HP2_Black->GetTransform().SetLocalMove({ 0, 0, -1.f });
 
 
 		HP1Front = false;
@@ -576,11 +670,13 @@ void GamePlayMonsterHPBar::SwitchingHP1and2()
 		Texture_HP2_Front->GetTransform().SetLocalMove({ 0, 0, 1.f });
 		Texture_HP2_Back->GetTransform().SetLocalMove({ 0, 0, 1.f });
 		Texture_HP2_White->GetTransform().SetLocalMove({ 0, 0, 1.f });
+		Texture_HP2_Black->GetTransform().SetLocalMove({ 0, 0, 1.f });
 
 
 		Texture_HP1_Front->GetTransform().SetLocalMove({ 0, 0, -1.f });
 		Texture_HP1_Back->GetTransform().SetLocalMove({ 0, 0, -1.f });
 		Texture_HP1_White->GetTransform().SetLocalMove({ 0, 0, -1.f });
+		Texture_HP1_Black->GetTransform().SetLocalMove({ 0, 0, -1.f });
 
 
 		HP1Front = true;
@@ -618,6 +714,8 @@ void GamePlayMonsterHPBar::LevelEndEvent()
 	DecreaseTime = 0.f;
 	Texture_MonsterHP_Delete->Off();
 	DeathBlink = 0.f;
+	MaxSpeed = 0;
+	FrameSpeed = 0;
 	for (auto& Iter : All_MonsterCategory)
 	{
 		Iter->Death();

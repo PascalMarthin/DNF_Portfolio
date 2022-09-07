@@ -63,7 +63,9 @@ private:
 	GameEngineUIRenderer* Texture_HP2_Back;
 
 	GameEngineUIRenderer* Texture_HP1_White;
+	GameEngineUIRenderer* Texture_HP1_Black;
 	GameEngineUIRenderer* Texture_HP2_White;
+	GameEngineUIRenderer* Texture_HP2_Black;
 
 	GameEngineUIRenderer* Texture_MonsterHP_Delete;
 
@@ -77,8 +79,11 @@ private:
 	unsigned int Monster_GoalHPLine;
 
 	float FlashTime;
+	int MaxSpeed;
+	float FrameSpeed;
 	float DecreaseTime;
 	float DeathBlink;
+
 
 	//
 

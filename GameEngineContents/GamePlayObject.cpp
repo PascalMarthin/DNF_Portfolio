@@ -69,7 +69,7 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitColli
 
 	
 	// 대미지 처리
-	SetDamage(1234567890);
+	SetDamage(500000);
 
 
 
