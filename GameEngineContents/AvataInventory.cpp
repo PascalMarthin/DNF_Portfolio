@@ -125,16 +125,18 @@ void AvataInventory::Start()
 
 void AvataInventory::Mouse_RClick(GamePlayItem* _Item)
 {
-	unsigned int Pos = FindGamePlayItem(_Item);
-	if (Pos == -1 )
-	{
-		MsgBoxAssert("아바타 인벤토리에 알수없는 형식의 아이템이 존재합니다")
-	}
-
-	Item_Avata* Avata = dynamic_cast<Item_Avata*>(Inventory_CurrentItem[Pos]);
-
+	//unsigned int Pos = FindGamePlayItem(_Item);
+	Item_Avata* Avata = dynamic_cast<Item_Avata*>(_Item);
 	GamePlayItem* FromItem = All_WearAvata_Texture[All_WearAvata_Type[Avata->Enum_AvataClass]];
-
+	///*if (Pos == -1 )
+	//{
+	//	{
+	//		if (FromItem == nullptr)
+	//		{
+	//			MsgBoxAssert("?????????????????!!??")
+	//		}
+	//	}
+	//}*/
 
 
 	if (FromItem == _Item) // 자기 자신 해제
@@ -152,6 +154,10 @@ void AvataInventory::Mouse_RClick(GamePlayItem* _Item)
 		{
 			FromItem->SetTransform(Inventory_Blank[FromPos].Collision_Blank);
 		}
+		else
+		{
+			Inventory_CurrentItem[FromPos] = nullptr;
+		}
 
 	}
 
@@ -168,6 +174,45 @@ void AvataInventory::LevelStartEvent()
 {
 	GamePlayInventory::LevelStartEvent();
 	SetLevelStartItem<Item_Avata>(GamePlayDataBase::GetCurrentCharacterData()->GetInventoryData(InventoryBag::Inventory_Avata));
-	//AvataInventory::OnEvent();
+
+	{
+		std::vector<InventoryData*>& WearingAvata = GamePlayDataBase::GetCurrentCharacterData()->GetInventoryData(InventoryBag::Inventory_Avata_Wear);
+		for (int i = 0; i < WearingAvata.size(); i++)
+		{
+			//
+			if (WearingAvata[i] == nullptr)
+			{
+				continue;
+			}
+
+			Item_Avata* Item = CreateComponent<Item_Avata>("GamePlayItem");
+			Item->SetDESC(WearingAvata[i]->Item_DESC);
+			Item->SetTransform(All_WearAvata_Type[static_cast<AllAvataClass>(i)]);
+			Inventory_CurrentData[Item] = WearingAvata[i];
+			All_WearAvata_Texture[All_WearAvata_Type[static_cast<AllAvataClass>(i)]] = Item;
+		}
+	}
+
+
+
+
 	Off();
+}
+
+void AvataInventory::LevelEndEvent()
+{
+	for (auto& GameItem : All_WearAvata_Texture)
+	{
+		if (GameItem.second != nullptr)
+		{
+			GameItem.second->Death();
+			GameItem.second = nullptr;
+		}
+	}
+
+	All_WearAvata_Texture.clear();
+
+
+	GamePlayInventory::LevelEndEvent();
+
 }

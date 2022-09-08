@@ -74,25 +74,23 @@ protected:
 
 
 	template<typename ItemType>
-	void SetLevelStartItem(std::vector<InventoryData*>& Inventory)
+	void SetLevelStartItem(std::vector<InventoryData*>& _Inventory)
 	{
-		for (int i = 0; i < Inventory.size(); i++)
+		for (int i = 0; i < _Inventory.size(); i++)
 		{
 			//
-			if (Inventory[i] == nullptr)
+			if (_Inventory[i] == nullptr)
 			{
 				continue;
 			}
 
 			ItemType* Item = CreateComponent<ItemType>("GamePlayItem");
-			Item->SetDESC(Inventory[i]->Item_DESC);
-			Item->SetTransform(Inventory_Blank[i].Texture_Blank);
-			Inventory_CurrentData[Item] = Inventory[i];
+			Item->SetDESC(_Inventory[i]->Item_DESC);
+			Item->SetTransform(Inventory_Blank[i].Collision_Blank);
+			Inventory_CurrentData[Item] = _Inventory[i];
 			Inventory_CurrentItem[i] = Item;
 		}
 	}
-
-
 	
 
 

@@ -27,7 +27,7 @@ protected:
 	// void OffEvent() override {}
 
 	void LevelStartEvent() override;
-	//void LevelEndEvent() override;
+	void LevelEndEvent() override;
 private:
 	std::map<AllAvataClass, GameEngineCollision*> All_WearAvata_Type;
 	std::map<GameEngineCollision*, GamePlayItem*> All_WearAvata_Texture;

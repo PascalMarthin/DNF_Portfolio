@@ -189,16 +189,16 @@ unsigned int GamePlayInventory::MoveItemToInventory(unsigned int _Pos, Inventory
 
 	if (_Pos == -1)
 	{
-		for (int i = 0; i < ToInventory.size() ; ++i)
+		for (; BeforePos < ToInventory.size() ; ++BeforePos)
 		{
-			if (ToInventory[i] == nullptr)
+			if (ToInventory[BeforePos] == nullptr)
 			{
-				for (; BeforePos < FromInventory.size(); ++BeforePos)
+				for (int i = 0; i < FromInventory.size(); ++i)
 				{
-					if (FromInventory[BeforePos] == _Item)
+					if (FromInventory[i] == _Item)
 					{
-						ToInventory[i] = _Item;
-						FromInventory[BeforePos] = nullptr;
+						ToInventory[BeforePos] = _Item;
+						FromInventory[i] = nullptr;
 						return BeforePos;
 					}
 				}
