@@ -34,7 +34,6 @@ enum class GamePlayItemRate
 };
 enum class AllAvataClass
 {
-	None,
 	Belt,
 	Cap,
 	Coat,
@@ -45,6 +44,7 @@ enum class AllAvataClass
 	Shoes,
 	Skin,
 	Weapon,
+	None,
 };
 
 enum class GamePlayItemCode

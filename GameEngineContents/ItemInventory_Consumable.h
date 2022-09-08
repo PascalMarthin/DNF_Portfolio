@@ -27,6 +27,7 @@ protected:
 	//void LevelEndEvent() override;
 private:
 
+
 	inline void MoveInventory(unsigned int _Pos, InventoryData* _Item) override
 	{
 		MoveItem(_Pos, _Item, InventoryBag::Inventory_ItemInventory_Consumable);

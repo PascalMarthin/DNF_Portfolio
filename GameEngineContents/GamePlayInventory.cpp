@@ -62,7 +62,15 @@ void GamePlayInventory::Update(float _DeltaTime)
 					MsgBoxAssert("예외 발생");
 				}
 			}
-
+		}
+		else if (GameEngineInput::GetInst()->IsUp("RMouseCLK"))
+		{
+			if (Component_MouseCursorComponent->GetUICamMouseCursor()->IsCollision(CollisionType::CT_AABB2D, CollisionOrder::UI_InventoryItem, CollisionType::CT_AABB2D,
+				std::bind(&GamePlayInventory::IsItemDrag, this, std::placeholders::_1, std::placeholders::_2)))
+			{
+				Mouse_RClick(Item_DragData);
+				Item_DragData = nullptr;
+			}
 		}
 	}
 	else
@@ -91,19 +99,13 @@ void GamePlayInventory::Update(float _DeltaTime)
 		}
 	}
 
+	
+
 	//else if (GameEngineInput::GetInst()->IsPress("MouseCLK"))
 	//{
 
 	//}
 }
-
-void GamePlayInventory::Mouse_RClick(GamePlayItem* _Item)
-{
-	MsgBoxAssert("인벤토리 가상함수 설정이 안되어있습니다")
-}
-
-
-
 
 
 
@@ -141,7 +143,7 @@ bool GamePlayInventory::CheckBlankCollision(GameEngineCollision* _This, GameEngi
 
 
 
-bool GamePlayInventory::MoveItem(unsigned int _Pos, InventoryData* _Item, InventoryBag _Bag)
+void GamePlayInventory::MoveItem(unsigned int _Pos, InventoryData* _Item, InventoryBag _Bag)
 {
 	std::vector<InventoryData*>& Inventory = GamePlayDataBase::GetCurrentCharacterData()->GetInventoryData(_Bag);
 	
@@ -155,7 +157,7 @@ bool GamePlayInventory::MoveItem(unsigned int _Pos, InventoryData* _Item, Invent
 			{
 				Inventory[_Pos] = _Item;
 				Inventory[BeforePos] = nullptr;
-				return true;
+				return;
 			}
 		}
 
@@ -169,13 +171,71 @@ bool GamePlayInventory::MoveItem(unsigned int _Pos, InventoryData* _Item, Invent
 			{
 				Inventory[BeforePos] = Inventory[_Pos];
 				Inventory[_Pos] = _Item;
-				return true;
+				return;
 			}
 		}
 		MsgBoxAssert("오류, 해당되는 아이템이 인벤토리 내에 없습니다")
 	}
-	MsgBoxAssert("오류, 해당되는 아이템이 인벤토리 내에 없습니다")
-	return false;
+
+}
+
+
+unsigned int GamePlayInventory::MoveItemToInventory(unsigned int _Pos, InventoryData* _Item, InventoryBag _ToBag, InventoryBag _FromBag)
+{
+	std::vector<InventoryData*>& ToInventory = GamePlayDataBase::GetCurrentCharacterData()->GetInventoryData(_ToBag);
+	std::vector<InventoryData*>& FromInventory = GamePlayDataBase::GetCurrentCharacterData()->GetInventoryData(_FromBag);
+
+	unsigned int BeforePos = 0;
+
+	if (_Pos == -1)
+	{
+		for (int i = 0; i < ToInventory.size() ; ++i)
+		{
+			if (ToInventory[i] == nullptr)
+			{
+				for (; BeforePos < FromInventory.size(); ++BeforePos)
+				{
+					if (FromInventory[BeforePos] == _Item)
+					{
+						ToInventory[i] = _Item;
+						FromInventory[BeforePos] = nullptr;
+						return BeforePos;
+					}
+				}
+			}
+		}
+	}
+	else
+	{
+		if (ToInventory[_Pos] == nullptr)
+		{
+			for (; BeforePos < FromInventory.size(); BeforePos++)
+			{
+				if (FromInventory[BeforePos] == _Item)
+				{
+					ToInventory[_Pos] = _Item;
+					FromInventory[BeforePos] = nullptr;
+					return BeforePos;
+				}
+			}
+
+			MsgBoxAssert("오류, 해당되는 아이템이 인벤토리 내에 없습니다")
+		}
+		else
+		{
+			for (; BeforePos < FromInventory.size(); BeforePos++)
+			{
+				if (FromInventory[BeforePos] == _Item)
+				{
+					FromInventory[BeforePos] = ToInventory[_Pos];
+					ToInventory[_Pos] = _Item;
+					return BeforePos;
+				}
+			}
+			MsgBoxAssert("오류, 해당되는 아이템이 인벤토리 내에 없습니다")
+		}
+	}
+	return BeforePos;
 }
 
 

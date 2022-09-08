@@ -33,6 +33,7 @@ void GamePlayItem::SetDESC(GamePlayItem_DESC* _DESC)
 {
 	Desc_ItemDesc = _DESC;
 	SetThumbnail();
+	AfterSetDesc();
 }
 
 void GamePlayItem::SetTransform(GameEngineTransformBase* _Parent)

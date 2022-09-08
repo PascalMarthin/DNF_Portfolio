@@ -133,13 +133,27 @@ void AvataInventory::Mouse_RClick(GamePlayItem* _Item)
 
 	Item_Avata* Avata = dynamic_cast<Item_Avata*>(Inventory_CurrentItem[Pos]);
 
+	GamePlayItem* FromItem = All_WearAvata_Texture[All_WearAvata_Type[Avata->Enum_AvataClass]];
 
-	if (All_WearAvata_Texture[All_WearAvata_Type[Avata->Enum_AvataClass]] == nullptr)
+
+
+	if (FromItem == _Item) // 자기 자신 해제
 	{
+		unsigned int FromPos = MoveItemToInventory(-1, Inventory_CurrentData[_Item], InventoryBag::Inventory_Avata, InventoryBag::Inventory_Avata_Wear);
+		All_WearAvata_Texture[All_WearAvata_Type[Avata->Enum_AvataClass]] = nullptr;
+		_Item->SetTransform(Inventory_Blank[FromPos].Collision_Blank);
+	}
+	else // 타 아바타
+	{
+		All_WearAvata_Texture[All_WearAvata_Type[Avata->Enum_AvataClass]] = Avata;
+		unsigned int FromPos = MoveItemToInventory(static_cast<int>(Avata->Enum_AvataClass), Inventory_CurrentData[_Item], InventoryBag::Inventory_Avata_Wear, InventoryBag::Inventory_Avata);
+		Avata->SetTransform(All_WearAvata_Type[Avata->Enum_AvataClass]);
+		if (FromItem != nullptr) // 빈칸 넣기 
+		{
+			FromItem->SetTransform(Inventory_Blank[FromPos].Collision_Blank);
+		}
 
 	}
-
-
 
 
 }

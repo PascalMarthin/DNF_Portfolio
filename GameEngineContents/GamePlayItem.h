@@ -70,7 +70,7 @@ protected:
 
 private:
 	void SetThumbnail();
-
+	virtual void AfterSetDesc() {}
 
 };
 

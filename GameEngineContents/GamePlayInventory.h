@@ -104,13 +104,14 @@ protected:
 	GamePlayItem* Item_DragData;
 
 
-	bool MoveItem(unsigned int _Pos, InventoryData* _Item, InventoryBag _Bag);
+	void MoveItem(unsigned int _Pos, InventoryData* _Item, InventoryBag _Bag);
+	unsigned int MoveItemToInventory(unsigned int _Pos, InventoryData* _Item, InventoryBag _ToBag, InventoryBag _FromBag);
 private:
 
 
 	virtual void MoveInventory(unsigned int _Pos, InventoryData* _Item) = 0;
 
-	virtual void Mouse_RClick(GamePlayItem* _Item);
+	virtual void Mouse_RClick(GamePlayItem* _Item) {}
 
 
 };

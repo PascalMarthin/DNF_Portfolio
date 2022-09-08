@@ -15,13 +15,12 @@ public:
 	Item_Avata(Item_Avata&& _Other) noexcept = delete;
 	Item_Avata& operator=(const Item_Avata& _Other) = delete;
 	Item_Avata& operator=(Item_Avata&& _Other) noexcept = delete;
-	inline void SetAvataClass(AllAvataClass _Class)
-	{
-		Enum_AvataClass = _Class;
-	}
+
+	static AllAvataClass FindAvataClass(GamePlayItemCode _Code);
 protected:
 	void Start() override;
 private:
 	AllAvataClass Enum_AvataClass;
+	void AfterSetDesc() override;
 };
 
