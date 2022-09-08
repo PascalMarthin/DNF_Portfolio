@@ -53,7 +53,42 @@ protected:
 	std::map<unsigned int, GamePlayItem*> Inventory_CurrentItem;
 	std::map<unsigned int, BlankInventory> Inventory_Blank;
 	//std::map<float4, >
-	void SetLevelStartItem(std::vector<InventoryData*>& Inventory);
+
+	inline unsigned int FindGamePlayItem(GamePlayItem* _Item) const
+	{
+		for (auto& Map : Inventory_CurrentItem)
+		{
+			if (Map.second == _Item)
+			{
+				return Map.first;
+			}
+		}
+		return -1;
+	}
+
+	template<typename ItemType>
+	void SetLevelStartItem(std::vector<InventoryData*>& Inventory)
+	{
+		for (int i = 0; i < Inventory.size(); i++)
+		{
+			//
+			if (Inventory[i] == nullptr)
+			{
+				continue;
+			}
+
+
+			ItemType* Item = CreateComponent<ItemType>("GamePlayItem");
+			Item->SetDESC(Inventory[i]->Item_DESC);
+			Item->SetTransform(Inventory_Blank[i].Texture_Blank);
+			//GameEngineDebug::OutPutString(std::to_string(Inventory_Blank[i].Texture_Blank->GetTransform().GetLocalPosition().x) + " / " + std::to_string(Inventory_Blank[i].Texture_Blank->GetTransform().GetLocalPosition().y));
+			Inventory_CurrentItem[i] = Item;
+		}
+
+	}
+
+
+
 	MouseCursorComponent* Component_MouseCursorComponent;
 
 	bool DragMode;

@@ -30,7 +30,7 @@ protected:
 	void LevelEndEvent() override;
 private:
 	std::map<AllAvataClass, GameEngineCollision*> All_WearAvata_Type;
-	std::map<GameEngineCollision*, Item_Avata*> All_WearAvata_Texture;
+	std::map<GameEngineCollision*, InventoryData*> All_WearAvata_Texture;
 
 };
 

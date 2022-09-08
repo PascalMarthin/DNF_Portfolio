@@ -124,12 +124,21 @@ void AvataInventory::Start()
 
 void AvataInventory::Mouse_RClick(GamePlayItem* _Item)
 {
-	if (_Item->GetItemDesc()->GetItemType() != GamePlayItemType::Avatar)
+	unsigned int Pos = FindGamePlayItem(_Item);
+	if (Pos == -1 )
 	{
 		MsgBoxAssert("아바타 인벤토리에 알수없는 형식의 아이템이 존재합니다")
 	}
 
-	Item_Avata* Avata = dynamic_cast<Item_Avata*>(_Item);
+	Item_Avata* Avata = dynamic_cast<Item_Avata*>(Inventory_CurrentItem[Pos]);
+
+
+	if (All_WearAvata_Texture[All_WearAvata_Type[Avata->Enum_AvataClass]] == nullptr)
+	{
+
+	}
+
+
 
 
 }
@@ -138,7 +147,7 @@ void AvataInventory::Mouse_RClick(GamePlayItem* _Item)
 
 void AvataInventory::LevelStartEvent()
 {
-	SetLevelStartItem(GamePlayDataBase::GetCurrentCharacterData()->GetInventoryData(InventoryBag::Inventory_Avata));
+	SetLevelStartItem<Item_Avata>(GamePlayDataBase::GetCurrentCharacterData()->GetInventoryData(InventoryBag::Inventory_Avata));
 	if (Component_MouseCursorComponent == nullptr)
 	{
 		const std::list<GameEngineActor*>& ActorList = GetLevel()->GetGroup(ActorOrder::Mouse);

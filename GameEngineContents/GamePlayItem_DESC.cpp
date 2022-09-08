@@ -50,7 +50,7 @@ void GamePlayItem_DESC::CreateALLItemData()
 	AllItem_DESC[GamePlayItemCode::Fighter_F_Coat_9st_Purple	 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Coat_9st_Purple, GamePlayItemRate::Rare, "Fighter_F_Coat_9st_Purple", "Fighter_F_Coat_9st_Purple.png");
 	AllItem_DESC[GamePlayItemCode::Fighter_F_Coat_Former_Striker ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Coat_Former_Striker, GamePlayItemRate::Rare, "Fighter_F_Coat_Former_Striker", "Fighter_F_Coat_Former_Striker.png");
 	AllItem_DESC[GamePlayItemCode::Fighter_F_Face_7st_Red		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Face_7st_Red, GamePlayItemRate::Rare, "Fighter_F_Face_7st_Red", "Fighter_F_Face_7st_Red.png");
-	AllItem_DESC[GamePlayItemCode::Fighter_F_Face_7st_Blue		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Face_7st_Blue, GamePlayItemRate::Rare, "Fighter_F_Face_7st_Blue", "Equipment_Upgrade12.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Face_7st_Blue		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Face_7st_Blue, GamePlayItemRate::Rare, "Fighter_F_Face_7st_Blue", "Fighter_F_Face_7st_Blue.png");
 	AllItem_DESC[GamePlayItemCode::Fighter_F_Face_7st_Gold		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Face_7st_Gold, GamePlayItemRate::Rare, "Fighter_F_Face_7st_Gold", "Fighter_F_Face_7st_Gold.png");
 	AllItem_DESC[GamePlayItemCode::Fighter_F_Face_4st_White		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Face_4st_White, GamePlayItemRate::Rare, "Fighter_F_Face_4st_White", "Fighter_F_Face_4st_White.png");
 	AllItem_DESC[GamePlayItemCode::Fighter_F_Face_4st_Gold		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Face_4st_Gold, GamePlayItemRate::Rare, "Fighter_F_Face_4st_Gold", "Fighter_F_Face_4st_Gold.png");
@@ -161,7 +161,7 @@ GamePlayItemType GamePlayItem_DESC::CheckItemType(GamePlayItemCode _Code)
 			{
 				IndexType = GamePlayItemType::Consumable;
 			}
-			if (3000 <= IntType && IntType < 500)
+			if (3000 <= IntType && IntType < 5000)
 			{
 				IndexType = GamePlayItemType::Avatar;
 			}

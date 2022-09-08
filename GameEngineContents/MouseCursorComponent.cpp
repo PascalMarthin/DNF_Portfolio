@@ -4,6 +4,9 @@
 #include "MouseCursorComponent.h"
 #include "GamePlayEnum.h"
 
+
+MouseCursorComponent* MouseCursorComponent::Inst = nullptr;
+
 MouseCursorComponent::MouseCursorComponent() 
 	: Texture_Cursor(nullptr)
 	, Collision_MainCam_MouseCursor(nullptr)
@@ -45,5 +48,10 @@ void MouseCursorComponent::Update(float _DeltaTime)
 
 void MouseCursorComponent::LevelStartEvent()
 {
+	MouseCursorComponent::Inst = this;
+}
 
+void MouseCursorComponent::LevelEndEvent()
+{
+	MouseCursorComponent::Inst = nullptr;
 }

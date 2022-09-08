@@ -118,21 +118,3 @@ bool GamePlayInventory::CheckBlankCollision(GameEngineCollision* _This, GameEngi
 }
 
 
-void GamePlayInventory::SetLevelStartItem(std::vector<InventoryData*>& Inventory)
-{
-	for (int i = 0 ; i < Inventory.size();i++)
-	{
-		//
-		if (Inventory[i] == nullptr)
-		{
-			continue;
-		}
-
-		GamePlayItem* Item = CreateComponent<GamePlayItem>("GamePlayItem");
-		Item->SetDESC(Inventory[i]->Item_DESC);
-		Item->SetTransform(Inventory_Blank[i].Texture_Blank);
-		//GameEngineDebug::OutPutString(std::to_string(Inventory_Blank[i].Texture_Blank->GetTransform().GetLocalPosition().x) + " / " + std::to_string(Inventory_Blank[i].Texture_Blank->GetTransform().GetLocalPosition().y));
-		Inventory_CurrentItem[i] = Item;
-	}
-	
-}

@@ -17,6 +17,11 @@ public:
 	MouseCursorComponent& operator=(const MouseCursorComponent& _Other) = delete;
 	MouseCursorComponent& operator=(MouseCursorComponent&& _Other) noexcept = delete;
 
+	static inline MouseCursorComponent* GetInst()
+	{
+		return MouseCursorComponent::Inst;
+	}
+
 	inline GameEngineCollision* GetMainCamMouseCursor() const
 	{
 		return Collision_MainCam_MouseCursor;
@@ -36,11 +41,14 @@ protected:
 	// void OffEvent() {}
 
 	void LevelStartEvent() override;
+	void LevelEndEvent() override;
 
 private:
 	GameEngineUIRenderer* Texture_Cursor;
 	GameEngineCollision* Collision_MainCam_MouseCursor;
 	GameEngineCollision* Collision_UICam_MouseCursor;
+
+	static MouseCursorComponent* Inst;
 
 };
 

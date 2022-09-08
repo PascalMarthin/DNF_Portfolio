@@ -128,6 +128,25 @@ GamePlayDataBase* GamePlayCharacter::CreateCharacterBase(CharacterFormerClass _C
 {
 	GamePlayDataBase* NewCharacter = new GamePlayDataBase(_Class , _NickName);
 	NewCharacter->CreateItem(GamePlayItemCode::Level1Up, 1);
+
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Belt_7st_Blue, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Cap_7st_Blue, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Coat_7st_Blue, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Face_7st_Blue, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Hair_7st_Blue, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Neck_7st_Blue, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Pants_7st_Blue, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Shoes_7st_Blue, 1);
+
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Belt_7st_Red, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Cap_7st_Red, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Coat_7st_Red, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Face_7st_Red, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Hair_7st_Red, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Neck_7st_Red, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Pants_7st_Red, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Shoes_7st_Red, 1);
+
 	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Belt_4st_Blue, 1);
 	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Cap_4st_Blue, 1);
 	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Coat_4st_Blue, 1);
@@ -136,6 +155,15 @@ GamePlayDataBase* GamePlayCharacter::CreateCharacterBase(CharacterFormerClass _C
 	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Neck_4st_Blue, 1);
 	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Pants_4st_Blue, 1);
 	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Shoes_4st_Blue, 1);
+
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Belt_4st_White, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Cap_4st_White, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Coat_4st_White, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Face_4st_White, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Hair_4st_White, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Neck_4st_White, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Pants_4st_White, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Shoes_4st_White, 1);
 
 	//NewCharacter->CreateItem(GamePlayItemCode::Level1Up);
 	AllCharacterData.push_back(NewCharacter);

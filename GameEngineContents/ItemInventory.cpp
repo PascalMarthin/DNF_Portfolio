@@ -3,6 +3,7 @@
 #include "GamePlayDataBase.h"
 #include "GamePlayItem.h"
 #include "MouseCursorComponent.h"
+#include "Item_Consumable.h"
 
 ItemInventory::ItemInventory()
 
@@ -44,7 +45,7 @@ void ItemInventory::Start()
 				Collision->SetDebugSetting(CollisionType::CT_AABB2D, {0.5f, 0.5f, 0, 0.5f});
 				Collision->ChangeOrder(CollisionOrder::UI_InventoryBlank);
 
-				Renderer->GetPixelData().MulColor = { 1, 1, 1, 0.5f };
+				//Renderer->GetPixelData().MulColor = { 1, 1, 1, 0.5f };
 				
 
 				Inventory_Blank[x + 3 + y * -8].Collision_Blank = Collision;
@@ -60,7 +61,7 @@ void ItemInventory::Start()
 
 void ItemInventory::LevelStartEvent()
 {
-	SetLevelStartItem(GamePlayDataBase::GetCurrentCharacterData()->GetInventoryData(InventoryBag::Inventory_ItemInventory_Consumable));
+	SetLevelStartItem<Item_Consumable>(GamePlayDataBase::GetCurrentCharacterData()->GetInventoryData(InventoryBag::Inventory_ItemInventory_Consumable));
 	if (Component_MouseCursorComponent == nullptr)
 	{
 		const std::list<GameEngineActor*>& ActorList = GetLevel()->GetGroup(ActorOrder::Mouse);
