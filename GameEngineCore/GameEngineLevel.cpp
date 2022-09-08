@@ -70,10 +70,10 @@ void GameEngineLevel::ActorLevelStartEvent()
 		float ScaleTime = GameEngineTime::GetInst()->GetDeltaTime(Group.first);
 		for (GameEngineActor* const Actor : Group.second)
 		{
-			if (false == Actor->IsUpdate())
-			{
-				continue;
-			}
+			//if (false == Actor->IsUpdate())
+			//{
+			//	continue;
+			//}
 			// 루트 액터만 뭔가를 하는거죠?
 			Actor->AllLevelStartEvent();
 		}
@@ -87,10 +87,10 @@ void GameEngineLevel::ActorLevelEndEvent()
 		float ScaleTime = GameEngineTime::GetInst()->GetDeltaTime(Group.first);
 		for (GameEngineActor* const Actor : Group.second)
 		{
-			if (false == Actor->IsUpdate())
-			{
-				continue;
-			}
+			//if (false == Actor->IsUpdate())
+			//{
+			//	continue;
+			//}
 			Actor->AllLevelEndEvent();
 		}
 	}

@@ -34,7 +34,7 @@ void GamePlayKeyManager::CheckKeyByInterface(float _DeltaTime, float _MoveSpeed)
 {
 	//if (GameEngineInput::GetInst()->IsDown("Inventory") == true)
 	//{
-	//	ItemInventory* Inventory = (*PlayerUserInterface)->GetUI_ItemBag()->GetItemInventory();
+	//	ItemInventory_Consumable* Inventory = (*PlayerUserInterface)->GetUI_ItemBag()->GetItemInventory();
 	//	if (Inventory->IsUpdate())
 	//	{
 	//		Inventory->Off();

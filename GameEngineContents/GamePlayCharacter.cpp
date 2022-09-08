@@ -9,7 +9,7 @@
 #include "AvataManager.h"
 #include "InterfaceHUD.h"
 #include "Skill_Fighter_F_BaseHit.h"
-#include "ItemInventory.h"
+#include "ItemInventory_Consumable.h"
 #include "MouseCursorComponent.h"
 #include "GamePlayDataBase.h"
 #include "MouseCursorComponent.h"
@@ -64,7 +64,7 @@ void GamePlayCharacter::Start()
 	PlayerUserInterface = GetLevel()->CreateActor<PlayerInterface>();
 	Function_BaseAtt = CreateComponent<Skill_Fighter_F_BaseHit>()->Get_SkillAction();
 	
-	Class_ItemInventory = GetLevel()->CreateActor<ItemInventory>();
+	Class_ItemInventory = GetLevel()->CreateActor<ItemInventory_Consumable>();
 	Class_AvataInventory = GetLevel()->CreateActor<AvataInventory>();
 
 	Component_MouseCursorComponent = GetLevel()->CreateActor<MouseCursorComponent>(ActorOrder::Mouse);

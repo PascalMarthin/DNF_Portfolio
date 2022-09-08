@@ -21,7 +21,7 @@ class AvataManager;
 class InterfaceHUD;
 class GamePlayDataBase;
 class CharacterSkillManager;
-class ItemInventory;
+class ItemInventory_Consumable;
 class AvataInventory;
 class GamePlayCharacter : public GamePlayObject
 {
@@ -178,7 +178,7 @@ public:
 
 private:
 	// -----------------Inventory------------------------------
-	ItemInventory* Class_ItemInventory;
+	ItemInventory_Consumable* Class_ItemInventory;
 	AvataInventory* Class_AvataInventory;
 
 	//------------------Mouse---------------------------------

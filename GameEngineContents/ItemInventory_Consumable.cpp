@@ -1,22 +1,22 @@
 #include "PreCompile.h"
-#include "ItemInventory.h"
+#include "ItemInventory_Consumable.h"
 #include "GamePlayDataBase.h"
 #include "GamePlayItem.h"
 #include "MouseCursorComponent.h"
 #include "Item_Consumable.h"
 
-ItemInventory::ItemInventory()
+ItemInventory_Consumable::ItemInventory_Consumable()
 
 {
 }
 
-ItemInventory::~ItemInventory() 
+ItemInventory_Consumable::~ItemInventory_Consumable() 
 {
 }
 
-void ItemInventory::Start()
+void ItemInventory_Consumable::Start()
 {
-	Texture_Inventory = CreateComponent<GameEngineUIRenderer>("ItemInventory");
+	Texture_Inventory = CreateComponent<GameEngineUIRenderer>("ItemInventory_Consumable");
 	Texture_Inventory->SetTexture("Window_Iteminventory.png");
 	Texture_Inventory->ScaleToTexture();
 	Texture_Inventory->GetTransform().SetLocalPosition({ 0, 0, 10 });
@@ -53,38 +53,17 @@ void ItemInventory::Start()
 			}
 		}
 	}
+}
 
+void ItemInventory_Consumable::OnEvent()
+{
+	
 }
 
 
-
-
-void ItemInventory::LevelStartEvent()
+void ItemInventory_Consumable::LevelStartEvent()
 {
+	GamePlayInventory::LevelStartEvent();
 	SetLevelStartItem<Item_Consumable>(GamePlayDataBase::GetCurrentCharacterData()->GetInventoryData(InventoryBag::Inventory_ItemInventory_Consumable));
-	if (Component_MouseCursorComponent == nullptr)
-	{
-		const std::list<GameEngineActor*>& ActorList = GetLevel()->GetGroup(ActorOrder::Mouse);
-		Component_MouseCursorComponent = dynamic_cast<MouseCursorComponent*>(ActorList.front());
-
-	}
-
-
-	if (Component_MouseCursorComponent == nullptr)
-	{
-		MsgBoxAssert("마우스포인터가 설정되지 않았습니다");
-	}
 	Off();
-}
-
-void ItemInventory::LevelEndEvent()
-{
-	for (auto& Blank : Inventory_CurrentItem)
-	{
-		Blank.second->Death();
-		Blank.second = nullptr;
-	}
-	DragMode = false;
-	Item_DragData = nullptr;
-	Item_DragDataIndex = -1;
 }

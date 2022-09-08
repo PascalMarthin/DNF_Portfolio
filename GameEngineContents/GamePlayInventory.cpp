@@ -78,8 +78,12 @@ void GamePlayInventory::Update(float _DeltaTime)
 		{
 			Item_DragData->GetCollision()->IsCollision(CollisionType::CT_AABB2D, CollisionOrder::UI_InventoryBlank, CollisionType::CT_AABB2D,
 				std::bind(&GamePlayInventory::CheckBlankCollision, this, std::placeholders::_1, std::placeholders::_2));
+
 			Item_DragData->SetTransform(Inventory_Blank[Item_DragDataIndex].Texture_Blank);
 			Inventory_CurrentItem[Item_DragDataIndex] = Item_DragData;
+			
+
+			MoveInventory(Item_DragDataIndex, Inventory_CurrentData[Item_DragData]);
 
 			DragMode = false;
 			Item_DragData = nullptr;
@@ -98,6 +102,11 @@ void GamePlayInventory::Mouse_RClick(GamePlayItem* _Item)
 	MsgBoxAssert("인벤토리 가상함수 설정이 안되어있습니다")
 }
 
+
+
+
+
+
 bool GamePlayInventory::IsItemDrag(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	Item_DragData = _Other->GetActor<GamePlayItem>();
@@ -110,11 +119,104 @@ bool GamePlayInventory::CheckBlankCollision(GameEngineCollision* _This, GameEngi
 	{
 		if (Blank.second.Collision_Blank == _Other)
 		{
-			Inventory_CurrentItem[Item_DragDataIndex] = nullptr;
+			if (Inventory_CurrentItem[Blank.first] == nullptr)
+			{
+				Inventory_CurrentItem[Item_DragDataIndex] = nullptr;
+
+			}
+			else
+			{
+				Inventory_CurrentItem[Item_DragDataIndex] = Inventory_CurrentItem[Blank.first];
+				Inventory_CurrentItem[Item_DragDataIndex]->SetTransform(Inventory_Blank[Item_DragDataIndex].Texture_Blank);
+				MoveInventory(Item_DragDataIndex, Inventory_CurrentData[Inventory_CurrentItem[Item_DragDataIndex]]);
+			}
 			Item_DragDataIndex = Blank.first;
+			return true;
 		}
+
 	}
-	return true;
+	return false;
 }
 
 
+
+
+bool GamePlayInventory::MoveItem(unsigned int _Pos, InventoryData* _Item, InventoryBag _Bag)
+{
+	std::vector<InventoryData*>& Inventory = GamePlayDataBase::GetCurrentCharacterData()->GetInventoryData(_Bag);
+	
+	unsigned int BeforePos = 0;
+
+	if (Inventory[_Pos] == nullptr)
+	{
+		for (; BeforePos < Inventory.size(); BeforePos++)
+		{
+			if (Inventory[BeforePos] == _Item)
+			{
+				Inventory[_Pos] = _Item;
+				Inventory[BeforePos] = nullptr;
+				return true;
+			}
+		}
+
+		MsgBoxAssert("오류, 해당되는 아이템이 인벤토리 내에 없습니다")
+	}
+	else
+	{
+		for (; BeforePos < Inventory.size(); BeforePos++)
+		{
+			if (Inventory[BeforePos] == _Item)
+			{
+				Inventory[BeforePos] = Inventory[_Pos];
+				Inventory[_Pos] = _Item;
+				return true;
+			}
+		}
+		MsgBoxAssert("오류, 해당되는 아이템이 인벤토리 내에 없습니다")
+	}
+	MsgBoxAssert("오류, 해당되는 아이템이 인벤토리 내에 없습니다")
+	return false;
+}
+
+
+// --------------------LevelEvent---------------
+
+void GamePlayInventory::OffEvent()
+{
+
+}
+
+
+
+void GamePlayInventory::LevelStartEvent()
+{
+	if (Component_MouseCursorComponent == nullptr)
+	{
+		const std::list<GameEngineActor*>& ActorList = GetLevel()->GetGroup(ActorOrder::Mouse);
+		Component_MouseCursorComponent = dynamic_cast<MouseCursorComponent*>(ActorList.front());
+	}
+
+
+	if (Component_MouseCursorComponent == nullptr)
+	{
+		MsgBoxAssert("마우스포인터가 설정되지 않았습니다");
+	}
+}
+
+
+void GamePlayInventory::LevelEndEvent()
+{
+	for (auto& Blank : Inventory_CurrentItem)
+	{
+		if (Blank.second != nullptr)
+		{
+			Blank.second->Death();
+			Blank.second = nullptr;
+		}
+	}
+	Inventory_CurrentItem.clear();
+	Inventory_CurrentData.clear();
+	DragMode = false;
+	Item_DragData = nullptr;
+	Item_DragDataIndex = -1;
+}

@@ -157,7 +157,6 @@ public:
 	}
 
 
-
 public:
 	inline CharacterAbilityStat* GetAbilityStat()
 	{

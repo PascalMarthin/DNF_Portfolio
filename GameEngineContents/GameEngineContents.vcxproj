@@ -291,7 +291,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ItemInventory.h">
+    <ClInclude Include="ItemInventory_Consumable.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -587,7 +587,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="ItemInventory.cpp">
+    <ClCompile Include="ItemInventory_Consumable.cpp">
       <SubType>
       </SubType>
     </ClCompile>

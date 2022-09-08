@@ -200,7 +200,7 @@
     <ClInclude Include="Skill_Fighter_F_ClosePunch.h">
       <Filter>Object\Character\Fighter</Filter>
     </ClInclude>
-    <ClInclude Include="ItemInventory.h">
+    <ClInclude Include="ItemInventory_Consumable.h">
       <Filter>Object\Character\Inventory</Filter>
     </ClInclude>
     <ClInclude Include="GamePlayInventory.h">
@@ -425,7 +425,7 @@
     <ClCompile Include="Skill_Fighter_F_ClosePunch.cpp">
       <Filter>Object\Character\Fighter</Filter>
     </ClCompile>
-    <ClCompile Include="ItemInventory.cpp">
+    <ClCompile Include="ItemInventory_Consumable.cpp">
       <Filter>Object\Character\Inventory</Filter>
     </ClCompile>
     <ClCompile Include="GamePlayInventory.cpp">

@@ -45,11 +45,17 @@ protected:
 
 
 	void Update(float _DeltaTime) override;
+	void OffEvent() override;
+
+
+	void LevelStartEvent() override;
+	void LevelEndEvent() override;
 
 	GameEngineUIRenderer* Texture_Inventory;
 
 	GameEngineCollision* Collision_WindowInventory;
 
+	std::map<GamePlayItem*, InventoryData*> Inventory_CurrentData;
 	std::map<unsigned int, GamePlayItem*> Inventory_CurrentItem;
 	std::map<unsigned int, BlankInventory> Inventory_Blank;
 	//std::map<float4, >
@@ -66,6 +72,7 @@ protected:
 		return -1;
 	}
 
+
 	template<typename ItemType>
 	void SetLevelStartItem(std::vector<InventoryData*>& Inventory)
 	{
@@ -77,15 +84,16 @@ protected:
 				continue;
 			}
 
-
 			ItemType* Item = CreateComponent<ItemType>("GamePlayItem");
 			Item->SetDESC(Inventory[i]->Item_DESC);
 			Item->SetTransform(Inventory_Blank[i].Texture_Blank);
-			//GameEngineDebug::OutPutString(std::to_string(Inventory_Blank[i].Texture_Blank->GetTransform().GetLocalPosition().x) + " / " + std::to_string(Inventory_Blank[i].Texture_Blank->GetTransform().GetLocalPosition().y));
+			Inventory_CurrentData[Item] = Inventory[i];
 			Inventory_CurrentItem[i] = Item;
 		}
-
 	}
+
+
+	
 
 
 
@@ -94,7 +102,13 @@ protected:
 	bool DragMode;
 	int Item_DragDataIndex;
 	GamePlayItem* Item_DragData;
+
+
+	bool MoveItem(unsigned int _Pos, InventoryData* _Item, InventoryBag _Bag);
 private:
+
+
+	virtual void MoveInventory(unsigned int _Pos, InventoryData* _Item) = 0;
 
 	virtual void Mouse_RClick(GamePlayItem* _Item);
 

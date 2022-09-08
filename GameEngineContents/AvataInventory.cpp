@@ -120,6 +120,7 @@ void AvataInventory::Start()
 
 	}
 
+
 }
 
 void AvataInventory::Mouse_RClick(GamePlayItem* _Item)
@@ -143,34 +144,16 @@ void AvataInventory::Mouse_RClick(GamePlayItem* _Item)
 
 }
 
+void AvataInventory::OnEvent()
+{
+	
+}
 
 
 void AvataInventory::LevelStartEvent()
 {
+	GamePlayInventory::LevelStartEvent();
 	SetLevelStartItem<Item_Avata>(GamePlayDataBase::GetCurrentCharacterData()->GetInventoryData(InventoryBag::Inventory_Avata));
-	if (Component_MouseCursorComponent == nullptr)
-	{
-		const std::list<GameEngineActor*>& ActorList = GetLevel()->GetGroup(ActorOrder::Mouse);
-		Component_MouseCursorComponent = dynamic_cast<MouseCursorComponent*>(ActorList.front());
-	}
-
-
-	if (Component_MouseCursorComponent == nullptr)
-	{
-		MsgBoxAssert("마우스포인터가 설정되지 않았습니다");
-	}
+	//AvataInventory::OnEvent();
 	Off();
-
-}
-
-void AvataInventory::LevelEndEvent()
-{
-	for (auto& Blank : Inventory_CurrentItem)
-	{
-		Blank.second->Death();
-		Blank.second = nullptr;
-	}
-	DragMode = false;
-	Item_DragData = nullptr;
-	Item_DragDataIndex = -1;
 }
