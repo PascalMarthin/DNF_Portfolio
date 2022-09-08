@@ -94,7 +94,7 @@ void GamePlayCharacter::Update(float _Delta)
 
 	if (GameEngineInput::GetInst()->IsDown("Avata"))
 	{
-		if (Class_ItemInventory->IsUpdate())
+		if (Class_AvataInventory->IsUpdate())
 		{
 			Class_AvataInventory->Off();
 		}
@@ -128,6 +128,14 @@ GamePlayDataBase* GamePlayCharacter::CreateCharacterBase(CharacterFormerClass _C
 {
 	GamePlayDataBase* NewCharacter = new GamePlayDataBase(_Class , _NickName);
 	NewCharacter->CreateItem(GamePlayItemCode::Level1Up, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Belt_4st_Blue, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Cap_4st_Blue, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Coat_4st_Blue, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Face_4st_Blue, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Hair_4st_Blue, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Neck_4st_Blue, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Pants_4st_Blue, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Shoes_4st_Blue, 1);
 
 	//NewCharacter->CreateItem(GamePlayItemCode::Level1Up);
 	AllCharacterData.push_back(NewCharacter);

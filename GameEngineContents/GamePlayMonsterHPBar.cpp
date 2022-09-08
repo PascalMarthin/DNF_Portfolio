@@ -534,13 +534,13 @@ void GamePlayMonsterHPBar::SetHitDamage_InMember(unsigned int _CurrentHP)
 
 		if ((Monster_BeforeHPLine - Monster_GoalHPLine) > 1000)
 		{
-			MaxSpeed = 95;
-			FrameSpeed = 0.09f;
+			MaxSpeed = 20;
+			FrameSpeed = 0;
 		}
 		else if ((Monster_BeforeHPLine - Monster_GoalHPLine) > 500)
 		{
-			MaxSpeed = 60;
-			FrameSpeed = 0.05f;
+			MaxSpeed = 10;
+			FrameSpeed = 0;
 		}
 		else if ((Monster_BeforeHPLine - Monster_GoalHPLine) > 100)
 		{

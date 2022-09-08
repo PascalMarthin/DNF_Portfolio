@@ -5,6 +5,7 @@
 #include "AvataManager.h"
 
 std::map<GamePlayItem_DESC*, std::map<char, GameEngineTexture*>> AvataManager::Static_AllAvataItemData;
+AvataManager* AvataManager::CurrentInst = nullptr;
 
 AvataManager::AvataManager() 
 	: Avata_Belt(nullptr)
@@ -275,4 +276,10 @@ void AvataManager::LevelStartEvent()
 	ShakeTime = 0.f;
 	ShakePower = 0.f;
 	CurrentShakeTime = 0.f;
+	AvataManager::CurrentInst = this;
+}
+
+void AvataManager::LevelEndEvent()
+{
+	AvataManager::CurrentInst = nullptr;
 }

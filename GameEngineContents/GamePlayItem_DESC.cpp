@@ -21,7 +21,79 @@ void GamePlayItem_DESC::CreateALLItemData()
 	AllItem_DESC[GamePlayItemCode::Level1Up] = new GamePlayItem_DESC(GamePlayItemCode::Level1Up, GamePlayItemRate::Rare, "Level1Up", "Item_Level1Up.png");
 
 	AllItem_DESC[GamePlayItemCode::Equipment_Upgrade12] = new GamePlayItem_DESC(GamePlayItemCode::Equipment_Upgrade12, GamePlayItemRate::Unique, "Equipment_Upgrade12", "Equipment_Upgrade12.png");
-
+	
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Belt_7st_Red		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Belt_7st_Red, GamePlayItemRate::Rare, "Fighter_F_Belt_7st_Red", "Fighter_F_Belt_7st_Red.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Belt_7st_Blue		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Belt_7st_Blue, GamePlayItemRate::Rare, "Fighter_F_Belt_7st_Blue", "Fighter_F_Belt_7st_Blue.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Belt_7st_Gold		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Belt_7st_Gold, GamePlayItemRate::Rare, "Fighter_F_Belt_7st_Gold", "Fighter_F_Belt_7st_Gold.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Belt_4st_White		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Belt_4st_White, GamePlayItemRate::Rare, "Fighter_F_Belt_4st_White", "Fighter_F_Belt_4st_White.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Belt_4st_Gold		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Belt_4st_Gold, GamePlayItemRate::Rare, "Fighter_F_Belt_4st_Gold", "Fighter_F_Belt_4st_Gold.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Belt_4st_Blue		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Belt_4st_Blue, GamePlayItemRate::Rare, "Fighter_F_Belt_4st_Blue", "Fighter_F_Belt_4st_Blue.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Belt_9st_Gold		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Belt_9st_Gold, GamePlayItemRate::Rare, "Fighter_F_Belt_9st_Gold", "Fighter_F_Belt_9st_Gold.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Belt_9st_Purple	 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Belt_9st_Purple, GamePlayItemRate::Rare, "Fighter_F_Belt_9st_Purple", "Fighter_F_Belt_9st_Purple.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Belt_Former_Striker ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Belt_Former_Striker, GamePlayItemRate::Rare, "Fighter_F_Belt_Former_Striker", "Fighter_F_Belt_Former_Striker.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Cap_7st_Red		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Cap_7st_Red, GamePlayItemRate::Rare, "Fighter_F_Cap_7st_Red", "Fighter_F_Cap_7st_Red.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Cap_7st_Blue		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Cap_7st_Blue, GamePlayItemRate::Rare, "Fighter_F_Cap_7st_Blue", "Fighter_F_Cap_7st_Blue.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Cap_7st_Gold		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Cap_7st_Gold, GamePlayItemRate::Rare, "Fighter_F_Cap_7st_Gold", "Fighter_F_Cap_7st_Gold.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Cap_4st_White		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Cap_4st_White, GamePlayItemRate::Rare, "Fighter_F_Cap_4st_White", "Fighter_F_Cap_4st_White.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Cap_4st_Gold		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Cap_4st_Gold, GamePlayItemRate::Rare, "Fighter_F_Cap_4st_Gold", "Fighter_F_Cap_4st_Gold.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Cap_4st_Blue		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Cap_4st_Blue, GamePlayItemRate::Rare, "Fighter_F_Cap_4st_Blue", "Fighter_F_Cap_4st_Blue.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Cap_9st_Gold		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Cap_9st_Gold, GamePlayItemRate::Rare, "Fighter_F_Cap_9st_Gold", "Fighter_F_Cap_9st_Gold.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Cap_9st_Purple		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Cap_9st_Purple, GamePlayItemRate::Rare, "Fighter_F_Cap_9st_Purple", "Fighter_F_Cap_9st_Purple.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Cap_Former_Striker	 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Cap_Former_Striker, GamePlayItemRate::Rare, "Fighter_F_Cap_Former_Striker", "Fighter_F_Cap_Former_Striker.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Coat_7st_Red		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Coat_7st_Red, GamePlayItemRate::Rare, "Fighter_F_Coat_7st_Red", "Fighter_F_Coat_7st_Red.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Coat_7st_Blue		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Coat_7st_Blue, GamePlayItemRate::Rare, "Fighter_F_Coat_7st_Blue", "Fighter_F_Coat_7st_Blue.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Coat_7st_Gold		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Coat_7st_Gold, GamePlayItemRate::Rare, "Fighter_F_Coat_7st_Gold", "Fighter_F_Coat_7st_Gold.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Coat_4st_White		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Coat_4st_White, GamePlayItemRate::Rare, "Fighter_F_Coat_4st_White", "Fighter_F_Coat_4st_White.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Coat_4st_Gold		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Coat_4st_Gold, GamePlayItemRate::Rare, "Fighter_F_Coat_4st_Gold", "Fighter_F_Coat_4st_Gold.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Coat_4st_Blue		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Coat_4st_Blue, GamePlayItemRate::Rare, "Fighter_F_Coat_4st_Blue", "Fighter_F_Coat_4st_Blue.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Coat_9st_Gold		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Coat_9st_Gold, GamePlayItemRate::Rare, "Fighter_F_Coat_9st_Gold", "Fighter_F_Coat_9st_Gold.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Coat_9st_Purple	 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Coat_9st_Purple, GamePlayItemRate::Rare, "Fighter_F_Coat_9st_Purple", "Fighter_F_Coat_9st_Purple.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Coat_Former_Striker ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Coat_Former_Striker, GamePlayItemRate::Rare, "Fighter_F_Coat_Former_Striker", "Fighter_F_Coat_Former_Striker.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Face_7st_Red		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Face_7st_Red, GamePlayItemRate::Rare, "Fighter_F_Face_7st_Red", "Fighter_F_Face_7st_Red.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Face_7st_Blue		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Face_7st_Blue, GamePlayItemRate::Rare, "Fighter_F_Face_7st_Blue", "Equipment_Upgrade12.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Face_7st_Gold		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Face_7st_Gold, GamePlayItemRate::Rare, "Fighter_F_Face_7st_Gold", "Fighter_F_Face_7st_Gold.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Face_4st_White		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Face_4st_White, GamePlayItemRate::Rare, "Fighter_F_Face_4st_White", "Fighter_F_Face_4st_White.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Face_4st_Gold		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Face_4st_Gold, GamePlayItemRate::Rare, "Fighter_F_Face_4st_Gold", "Fighter_F_Face_4st_Gold.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Face_4st_Blue		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Face_4st_Blue, GamePlayItemRate::Rare, "Fighter_F_Face_4st_Blue", "Fighter_F_Face_4st_Blue.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Face_9st_Gold		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Face_9st_Gold, GamePlayItemRate::Rare, "Fighter_F_Face_9st_Gold", "Fighter_F_Face_9st_Gold.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Face_9st_Purple	 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Face_9st_Purple, GamePlayItemRate::Rare, "Fighter_F_Face_9st_Purple", "Fighter_F_Face_9st_Purple.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Face_Former_Striker ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Face_Former_Striker, GamePlayItemRate::Rare, "Fighter_F_Face_Former_Striker", "Fighter_F_Face_Former_Striker.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Hair_7st_Red		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Hair_7st_Red, GamePlayItemRate::Rare, "Fighter_F_Hair_7st_Red", "Fighter_F_Hair_7st_Red.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Hair_7st_Blue		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Hair_7st_Blue, GamePlayItemRate::Rare, "Fighter_F_Hair_7st_Blue", "Fighter_F_Hair_7st_Blue.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Hair_7st_Gold		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Hair_7st_Gold, GamePlayItemRate::Rare, "Fighter_F_Hair_7st_Gold", "Fighter_F_Hair_7st_Gold.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Hair_4st_White		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Hair_4st_White, GamePlayItemRate::Rare, "Fighter_F_Hair_4st_White", "Fighter_F_Hair_4st_White.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Hair_4st_Gold		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Hair_4st_Gold, GamePlayItemRate::Rare, "Fighter_F_Hair_4st_Gold", "Fighter_F_Hair_4st_Gold.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Hair_4st_Blue		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Hair_4st_Blue, GamePlayItemRate::Rare, "Fighter_F_Hair_4st_Blue", "Fighter_F_Hair_4st_Blue.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Hair_9st_Gold		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Hair_9st_Gold, GamePlayItemRate::Rare, "Fighter_F_Hair_9st_Gold", "Fighter_F_Hair_9st_Gold.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Hair_9st_Purple	 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Hair_9st_Purple, GamePlayItemRate::Rare, "Fighter_F_Hair_9st_Purple", "Fighter_F_Hair_9st_Purple.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Hair_Former_Striker ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Hair_Former_Striker, GamePlayItemRate::Rare, "Fighter_F_Hair_Former_Striker", "Fighter_F_Hair_Former_Striker.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Neck_7st_Red		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Neck_7st_Red, GamePlayItemRate::Rare, "Fighter_F_Neck_7st_Red", "Fighter_F_Neck_7st_Red.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Neck_7st_Blue		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Neck_7st_Blue, GamePlayItemRate::Rare, "Fighter_F_Neck_7st_Blue", "Fighter_F_Neck_7st_Blue.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Neck_7st_Gold		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Neck_7st_Gold, GamePlayItemRate::Rare, "Fighter_F_Neck_7st_Gold", "Fighter_F_Neck_7st_Gold.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Neck_4st_White		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Neck_4st_White, GamePlayItemRate::Rare, "Fighter_F_Neck_4st_White", "Fighter_F_Neck_4st_White.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Neck_4st_Gold		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Neck_4st_Gold, GamePlayItemRate::Rare, "Fighter_F_Neck_4st_Gold", "Fighter_F_Neck_4st_Gold.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Neck_4st_Blue		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Neck_4st_Blue, GamePlayItemRate::Rare, "Fighter_F_Neck_4st_Blue", "Fighter_F_Neck_4st_Blue.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Neck_9st_Gold		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Neck_9st_Gold, GamePlayItemRate::Rare, "Fighter_F_Neck_9st_Gold", "Fighter_F_Neck_9st_Gold.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Neck_9st_Purple	 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Neck_9st_Purple, GamePlayItemRate::Rare, "Fighter_F_Neck_9st_Purple", "Fighter_F_Neck_9st_Purple.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Neck_Former_Striker ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Neck_Former_Striker, GamePlayItemRate::Rare, "Fighter_F_Neck_Former_Striker", "Fighter_F_Neck_Former_Striker.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Pants_7st_Red		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Pants_7st_Red, GamePlayItemRate::Rare, "Fighter_F_Pants_7st_Red", "Fighter_F_Pants_7st_Red.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Pants_7st_Blue		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Pants_7st_Blue, GamePlayItemRate::Rare, "Fighter_F_Pants_7st_Blue", "Fighter_F_Pants_7st_Blue.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Pants_7st_Gold		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Pants_7st_Gold, GamePlayItemRate::Rare, "Fighter_F_Pants_7st_Gold", "Fighter_F_Pants_7st_Gold.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Pants_4st_White	 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Pants_4st_White, GamePlayItemRate::Rare, "Fighter_F_Pants_4st_White", "Fighter_F_Pants_4st_White.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Pants_4st_Gold		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Pants_4st_Gold, GamePlayItemRate::Rare, "Fighter_F_Pants_4st_Gold", "Fighter_F_Pants_4st_Gold.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Pants_4st_Blue		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Pants_4st_Blue, GamePlayItemRate::Rare, "Fighter_F_Pants_4st_Blue", "Fighter_F_Pants_4st_Blue.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Pants_9st_Gold		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Pants_9st_Gold, GamePlayItemRate::Rare, "Fighter_F_Pants_9st_Gold", "Fighter_F_Pants_9st_Gold.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Pants_9st_Purple	 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Pants_9st_Purple, GamePlayItemRate::Rare, "Fighter_F_Pants_9st_Purple", "Fighter_F_Pants_9st_Purple.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Pants_Former_Striker]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Pants_Former_Striker, GamePlayItemRate::Rare, "Fighter_F_Pants_Former_Striker", "Fighter_F_Pants_Former_Striker.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Shoes_7st_Red 		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Shoes_7st_Red, GamePlayItemRate::Rare, "Fighter_F_Shoes_7st_Red", "Fighter_F_Shoes_7st_Red.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Shoes_7st_Blue		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Shoes_7st_Blue, GamePlayItemRate::Rare, "Fighter_F_Shoes_7st_Blue", "Fighter_F_Shoes_7st_Blue.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Shoes_7st_Gold		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Shoes_7st_Gold, GamePlayItemRate::Rare, "Fighter_F_Shoes_7st_Gold", "Fighter_F_Shoes_7st_Gold.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Shoes_4st_White	 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Shoes_4st_White, GamePlayItemRate::Rare, "Fighter_F_Shoes_4st_White", "Fighter_F_Shoes_4st_White.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Shoes_4st_Gold		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Shoes_4st_Gold, GamePlayItemRate::Rare, "Fighter_F_Shoes_4st_Gold", "Fighter_F_Shoes_4st_Gold.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Shoes_4st_Blue		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Shoes_4st_Blue, GamePlayItemRate::Rare, "Fighter_F_Shoes_4st_Blue", "Fighter_F_Shoes_4st_Blue.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Shoes_9st_Gold		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Shoes_9st_Gold, GamePlayItemRate::Rare, "Fighter_F_Shoes_9st_Gold", "Fighter_F_Shoes_9st_Gold.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Shoes_9st_Purple	 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Shoes_9st_Purple, GamePlayItemRate::Rare, "Fighter_F_Shoes_9st_Purple", "Fighter_F_Shoes_9st_Purple.png");
+	AllItem_DESC[GamePlayItemCode::Fighter_F_Shoes_Former_Striker]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Shoes_Former_Striker, GamePlayItemRate::Rare, "Fighter_F_Shoes_Former_Striker", "Fighter_F_Shoes_Former_Striker.png");
 //	AllItem_DESC[GamePlayItemCode::Equipment_Upgrade12] = new GamePlayItem_DESC(GamePlayItemCode::Equipment_Upgrade12, GamePlayItemRate::Unique, "Equipment_Upgrade12", "Equipment_Upgrade12.png");
 
 
@@ -89,14 +161,14 @@ GamePlayItemType GamePlayItem_DESC::CheckItemType(GamePlayItemCode _Code)
 			{
 				IndexType = GamePlayItemType::Consumable;
 			}
-			if (3000 <= IntType && IntType < 4000)
+			if (3000 <= IntType && IntType < 500)
 			{
 				IndexType = GamePlayItemType::Avatar;
 			}
-			if (4000 <= IntType && IntType < 5000)
-			{
-				IndexType = GamePlayItemType::Pet;
-			}
+			//if (4000 <= IntType && IntType < 5000)
+			//{
+			//	IndexType = GamePlayItemType::Pet;
+			//}
 
 		}
 	}

@@ -221,6 +221,9 @@
     <ClInclude Include="GamePlayMonsterHPBar.h">
       <Filter>Object\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="Item_Avata.h">
+      <Filter>UI\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -439,6 +442,9 @@
     </ClCompile>
     <ClCompile Include="GamePlayMonsterHPBar.cpp">
       <Filter>Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Item_Avata.cpp">
+      <Filter>UI\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

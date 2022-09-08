@@ -20,6 +20,11 @@ public:
 	AvataManager& operator=(const AvataManager& _Other) = delete;
 	AvataManager& operator=(AvataManager&& _Other) noexcept = delete;
 
+	static inline AvataManager* GetInst()
+	{
+		return CurrentInst;
+	}
+
 	inline std::vector<GameEnginePlusTextureRenderer*>& GetAllAvatas()
 	{
 		return AllAvatas;
@@ -97,6 +102,7 @@ protected:
 
 	// void End() override {}
 	void LevelStartEvent() override;
+	void LevelEndEvent() override;
 	// void OffEvent() {}
 private:
 	GameEnginePlusTextureRenderer* Avata_Belt;
@@ -125,6 +131,7 @@ private:
 	GamePlayDataBase* CurrentClassData;
 
 	static std::map<GamePlayItem_DESC*, std::map<char, GameEngineTexture*>> Static_AllAvataItemData;
+	static AvataManager* CurrentInst;
 public:
 	static void CreateAvataData();
 };

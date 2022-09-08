@@ -93,6 +93,11 @@ void GamePlayInventory::Update(float _DeltaTime)
 	//}
 }
 
+void GamePlayInventory::Mouse_RClick(GamePlayItem* _Item)
+{
+	MsgBoxAssert("인벤토리 가상함수 설정이 안되어있습니다")
+}
+
 bool GamePlayInventory::IsItemDrag(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	Item_DragData = _Other->GetActor<GamePlayItem>();

@@ -44,6 +44,7 @@ enum class AllAvataClass
 	Pants,
 	Shoes,
 	Skin,
+	Weapon,
 };
 
 enum class GamePlayItemCode
@@ -68,13 +69,138 @@ enum class GamePlayItemCode
 	Equipment_Upgrade12,
 
 
+
+	Fighter_F_Belt_7st_Red = 3000,
+	Fighter_F_Belt_7st_Blue,
+	Fighter_F_Belt_7st_Gold,
+
+	Fighter_F_Belt_4st_White,
+	Fighter_F_Belt_4st_Gold,
+	Fighter_F_Belt_4st_Blue,
+	//Fighter_F_Belt_4st_Purple,
+
+	Fighter_F_Belt_9st_Gold,
+	Fighter_F_Belt_9st_Purple,
+
+	Fighter_F_Belt_Former_Striker,
+
+
+	Fighter_F_Cap_7st_Red = 3200,
+	Fighter_F_Cap_7st_Blue,
+	Fighter_F_Cap_7st_Gold,
+
+	Fighter_F_Cap_4st_White,
+	Fighter_F_Cap_4st_Gold,
+	Fighter_F_Cap_4st_Blue,
+
+	Fighter_F_Cap_9st_Gold,
+	Fighter_F_Cap_9st_Purple,
+
+	Fighter_F_Cap_Former_Striker,
+
+
+	Fighter_F_Coat_7st_Red = 3400,
+	Fighter_F_Coat_7st_Blue,
+	Fighter_F_Coat_7st_Gold,
+
+	Fighter_F_Coat_4st_White,
+	Fighter_F_Coat_4st_Gold,
+	Fighter_F_Coat_4st_Blue,
+
+	Fighter_F_Coat_9st_Gold,
+	Fighter_F_Coat_9st_Purple,
+
+	Fighter_F_Coat_Former_Striker,
+
+
+	Fighter_F_Face_7st_Red = 3600,
+	Fighter_F_Face_7st_Blue,
+	Fighter_F_Face_7st_Gold,
+
+	Fighter_F_Face_4st_White,
+	Fighter_F_Face_4st_Gold,
+	Fighter_F_Face_4st_Blue,
+
+	Fighter_F_Face_9st_Gold,
+	Fighter_F_Face_9st_Purple,
+
+	Fighter_F_Face_Former_Striker,
+
+
+	Fighter_F_Hair_7st_Red = 3800,
+	Fighter_F_Hair_7st_Blue,
+	Fighter_F_Hair_7st_Gold,
+
+	Fighter_F_Hair_4st_White,
+	Fighter_F_Hair_4st_Gold,
+	Fighter_F_Hair_4st_Blue,
+
+	Fighter_F_Hair_9st_Gold,
+	Fighter_F_Hair_9st_Purple,
+
+	Fighter_F_Hair_Former_Striker,
+
+
+	Fighter_F_Neck_7st_Red = 4000,
+	Fighter_F_Neck_7st_Blue,
+	Fighter_F_Neck_7st_Gold,
+
+	Fighter_F_Neck_4st_White,
+	Fighter_F_Neck_4st_Gold,
+	Fighter_F_Neck_4st_Blue,
+
+	Fighter_F_Neck_9st_Gold,
+	Fighter_F_Neck_9st_Purple,
+
+	Fighter_F_Neck_Former_Striker,
+
+
+	Fighter_F_Pants_7st_Red = 4200,
+	Fighter_F_Pants_7st_Blue,
+	Fighter_F_Pants_7st_Gold,
+
+	Fighter_F_Pants_4st_White,
+	Fighter_F_Pants_4st_Gold,
+	Fighter_F_Pants_4st_Blue,
+
+	Fighter_F_Pants_9st_Gold,
+	Fighter_F_Pants_9st_Purple,
+
+	Fighter_F_Pants_Former_Striker,
+
+
+	Fighter_F_Shoes_7st_Red = 4400,
+	Fighter_F_Shoes_7st_Blue,
+	Fighter_F_Shoes_7st_Gold,
+
+	Fighter_F_Shoes_4st_White,
+	Fighter_F_Shoes_4st_Gold,
+	Fighter_F_Shoes_4st_Blue,
+
+	Fighter_F_Shoes_9st_Gold,
+	Fighter_F_Shoes_9st_Purple,
+
+	Fighter_F_Shoes_Former_Striker,
+
+
 };
 //    0 ~   99 디버그
 //  100 ~  999 장비
 // 1000 ~ 1999 재료
 // 2000 ~ 2999 소비
-// 3000 ~ 3999 아바타
-// 4000 ~ 4999 펫
+// 3000 ~ 4999 아바타
+// ~ 3199 벨트
+// ~ 3399 모자
+// ~ 3599 상의
+// ~ 3799 얼굴
+// ~ 3999 머리
+// ~ 4199 어깨 - 가슴 - 목
+// ~ 4399 하의
+// ~ 4599 신발
+// ~ 4799 피부
+// ~ 4999 무기
+
+
 
 enum CharacterStat
 {

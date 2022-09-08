@@ -60,5 +60,9 @@ protected:
 	int Item_DragDataIndex;
 	GamePlayItem* Item_DragData;
 private:
+
+	virtual void Mouse_RClick(GamePlayItem* _Item);
+
+
 };
 

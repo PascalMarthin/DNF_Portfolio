@@ -24,27 +24,27 @@ GamePlayDataBase::GamePlayDataBase(CharacterFormerClass _Class, const std::strin
 
 GamePlayDataBase::~GamePlayDataBase() 
 {
-	if (!DataBase_InventoryData.empty())
-	{
-		for (auto& ItemData : DataBase_InventoryData)
-		{
-			for (auto& InventoryDataIter : ItemData.second)
-			{
-				delete InventoryDataIter;
-				InventoryDataIter = nullptr;
-			}
-		}
-		DataBase_InventoryData.clear();
-	}
-
-	//for (auto* Data : All_ItemData)
+	//if (!DataBase_InventoryData.empty())
 	//{
-	//	if (Data != nullptr)
+	//	for (auto& ItemData : DataBase_InventoryData)
 	//	{
-	//		//delete Data;
+	//		for (auto& InventoryDataIter : ItemData.second)
+	//		{
+	//			delete InventoryDataIter;
+	//			InventoryDataIter = nullptr;
+	//		}
 	//	}
-	//	
+	//	DataBase_InventoryData.clear();
 	//}
+
+	for (auto* Data : All_ItemData)
+	{
+		if (Data != nullptr)
+		{
+			delete Data;
+		}
+		
+	}
 	
 }
 
@@ -241,5 +241,5 @@ bool GamePlayDataBase::PushInventoryToItem(InventoryData* _Data)
 	default:
 		break;
 	}
-
+	return false;
 }

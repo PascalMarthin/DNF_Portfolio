@@ -19,6 +19,8 @@ void ItemInventory::Start()
 	Texture_Inventory->SetTexture("Window_Iteminventory.png");
 	Texture_Inventory->ScaleToTexture();
 	Texture_Inventory->GetTransform().SetLocalPosition({ 0, 0, 10 });
+	//Texture_Inventory->GetPixelData().MulColor = { 1, 1, 1, 0.8f };
+
 
 	{
 		Collision_WindowInventory = CreateComponent<GameEngineCollision>();
@@ -41,6 +43,8 @@ void ItemInventory::Start()
 				Collision->GetTransform().SetLocalPosition(Renderer->GetTransform().GetLocalPosition());
 				Collision->SetDebugSetting(CollisionType::CT_AABB2D, {0.5f, 0.5f, 0, 0.5f});
 				Collision->ChangeOrder(CollisionOrder::UI_InventoryBlank);
+
+				Renderer->GetPixelData().MulColor = { 1, 1, 1, 0.5f };
 				
 
 				Inventory_Blank[x + 3 + y * -8].Collision_Blank = Collision;
