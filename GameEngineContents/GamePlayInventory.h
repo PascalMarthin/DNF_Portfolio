@@ -86,7 +86,7 @@ protected:
 
 			ItemType* Item = CreateComponent<ItemType>("GamePlayItem");
 			Item->SetDESC(_Inventory[i]->Item_DESC);
-			Item->SetTransform(Inventory_Blank[i].Collision_Blank);
+			Item->SetUITextureTransform(Inventory_Blank[i].Collision_Blank);
 			Inventory_CurrentData[Item] = _Inventory[i];
 			Inventory_CurrentItem[i] = Item;
 		}

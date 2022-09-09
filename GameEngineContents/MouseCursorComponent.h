@@ -32,6 +32,12 @@ public:
 		return Collision_UICam_MouseCursor;
 	}
 
+	inline GameEngineUIRenderer* GetUIMouseTexture() const
+	{
+		return Texture_Cursor;
+	}
+	
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;

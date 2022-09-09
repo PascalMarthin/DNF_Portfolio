@@ -43,8 +43,8 @@ public:
 
 
 	void SetDESC(GamePlayItem_DESC* _DESC);
-	void SetTransform(GameEngineTransformBase* _Parent);
-
+	void SetUITextureTransform(GameEngineTransformBase* _Parent);
+	
 
 	//void DestroyItem();
 

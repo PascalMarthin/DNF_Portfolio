@@ -14,7 +14,6 @@ class FrameAnimationForAvata : public GameEngineNameObject
 
 	GameEnginePlusTextureRenderer* ParentRenderer;
 	GameEngineFolderTexture** FolderTextureDouble;
-	GameEngineFolderTexture** DefaultCharacterAvataDouble;
 	GameEngineTexture* Texture;
 
 	bool bOnceStart;
@@ -41,7 +40,6 @@ public:
 		, bOnceEnd(false)
 		, FolderTextureDouble(nullptr)
 		, ParentRenderer(nullptr)
-		, DefaultCharacterAvataDouble(nullptr)
 		, Texture(nullptr)
 	{
 
@@ -75,8 +73,6 @@ public:
 		return CurrentAniPlus;
 	}
 
-	void SetDefaultCharacterAvata(const std::string& _TextureName);
-	void SetDefaultCharacterAvata(GameEngineFolderTexture* _FolderTexture);
 
 	void ChangeFolderTexturePlus(const std::string& _TextureName);
 	void ChangeFolderTexturePlus(GameEngineFolderTexture* _Texture);
@@ -162,22 +158,7 @@ protected:
 private:
 	GameEngineFolderTexture* CurrentAvata;
 
-	GameEngineFolderTexture* DefaultCharacterAvata;
-
 	std::map<std::string, FrameAnimationForAvata> FrameAniPlus;
 	FrameAnimationForAvata* CurrentAniPlus;
 
-};
-
-enum class AvataClass
-{
-	Belt,
-	Cap,
-	Coat,
-	Face,
-	Hair,
-	Neck,
-	Pants,
-	Shoes,
-	Skin
 };

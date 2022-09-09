@@ -36,12 +36,12 @@ void GamePlayItem::SetDESC(GamePlayItem_DESC* _DESC)
 	AfterSetDesc();
 }
 
-void GamePlayItem::SetTransform(GameEngineTransformBase* _Parent)
+void GamePlayItem::SetUITextureTransform(GameEngineTransformBase* _TextureParent)
 {
-	Texture_Item->GetTransform().SetLocalPosition(_Parent->GetTransform().GetLocalPosition());
+	Texture_Item->GetTransform().SetLocalPosition(_TextureParent->GetTransform().GetLocalPosition());
 	Texture_Item->ScaleToTexture();
-	Collision_Item->GetTransform().SetLocalPosition(_Parent->GetTransform().GetLocalPosition());
-	Collision_Item->GetTransform().SetLocalScale(Texture_Item->GetTransform().GetLocalScale());
+	Collision_Item->GetTransform().SetLocalPosition(_TextureParent->GetTransform().GetLocalPosition());
+	Collision_Item->GetTransform().SetLocalScale(_TextureParent->GetTransform().GetLocalScale());
 }
 
 void GamePlayItem::SetThumbnail()

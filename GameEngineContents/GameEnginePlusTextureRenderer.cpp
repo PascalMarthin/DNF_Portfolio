@@ -9,7 +9,6 @@
 GameEnginePlusTextureRenderer::GameEnginePlusTextureRenderer()
 	: CurrentAvata(nullptr)
 	, CurrentAniPlus(nullptr)
-	, DefaultCharacterAvata(nullptr)
 	, ManualControl(false)
 	, MC_CurFrame(0)
 	, EndFrame(false)
@@ -87,14 +86,7 @@ void FrameAnimationForAvata::Update(float _Delta)
 
 		if (nullptr == (*FolderTextureDouble))
 		{
-			if ((*DefaultCharacterAvataDouble) != nullptr)
-			{
-				ParentRenderer->SetTexture((*DefaultCharacterAvataDouble)->GetTexture(Info.Frames[Info.CurFrame]));
-			}
-			else
-			{
-				ParentRenderer->SetTexture(Texture);
-			}
+			ParentRenderer->SetTexture(Texture);
 		}
 		else
 		{
@@ -115,7 +107,12 @@ void GameEnginePlusTextureRenderer::Update(float _Delta)
 
 void GameEnginePlusTextureRenderer::ChangeFolderTexturePlus(const std::string& _TextureName)
 {
-	CurrentAvata = GameEngineFolderTexture::Find(_TextureName);
+	GameEngineFolderTexture* Texure = GameEngineFolderTexture::Find(_TextureName);
+	if (Texure == nullptr)
+	{
+		MsgBoxAssert("이름이 잘못된 아바타를 불러오려고 하였습니다")
+	}
+	CurrentAvata = Texure;
 }
 
 void GameEnginePlusTextureRenderer::ChangeFolderTexturePlus(GameEngineFolderTexture* _Texture)
@@ -134,14 +131,13 @@ void GameEnginePlusTextureRenderer::CreateFrameAnimationFolderPlus(const std::st
 		return;
 	}
 
-	CurrentAvata = GameEngineFolderTexture::Find(_Desc.TextureName);
+	//CurrentAvata = GameEngineFolderTexture::Find(_Desc.TextureName);
 
 	FrameAnimationForAvata& NewAni = FrameAniPlus[Name];
 	NewAni.Info = _Desc;
 	NewAni.ParentRenderer = this;
 	NewAni.Texture = GameEngineTexture::Find("Null.png");
 	NewAni.FolderTextureDouble = &CurrentAvata;
-	NewAni.DefaultCharacterAvataDouble = &DefaultCharacterAvata;
 }
 
 
@@ -171,31 +167,13 @@ void GameEnginePlusTextureRenderer::ChangeFrameAnimationPlus(const std::string& 
 		{
 			SetTexture(CurrentAvata->GetTexture(CurrentAniPlus->Info.Frames[0]));
 		}
-		else if (DefaultCharacterAvata != nullptr)
-		{
-			SetTexture(DefaultCharacterAvata->GetTexture(CurrentAniPlus->Info.Frames[0]));
-		}
 		else
 		{
 			SetTexture(CurrentAniPlus->Texture);
 		}
 	}
 }
-void GameEnginePlusTextureRenderer::SetDefaultCharacterAvata(const std::string& _TextureName)
-{
-	SetDefaultCharacterAvata(GameEngineFolderTexture::Find(_TextureName));
-}
 
-
-void GameEnginePlusTextureRenderer::SetDefaultCharacterAvata(GameEngineFolderTexture* _FolderTexture)
-{
-	if (DefaultCharacterAvata != nullptr)
-	{
-		return;
-		//MsgBoxAssert("이미 디폴트 아바타가 설정되어 있습니다")
-	}
-	DefaultCharacterAvata = _FolderTexture;
-}
 
 void GameEnginePlusTextureRenderer::SetManualControl()
 {
@@ -214,10 +192,6 @@ void GameEnginePlusTextureRenderer::SetAutoControl(bool _Reset)
 	if (CurrentAvata != nullptr)
 	{
 		SetTexture(CurrentAvata->GetTexture(CurrentAniPlus->Info.Frames[MC_CurFrame]));
-	}
-	else if (DefaultCharacterAvata != nullptr)
-	{
-		SetTexture(DefaultCharacterAvata->GetTexture(CurrentAniPlus->Info.Frames[MC_CurFrame]));
 	}
 	else
 	{
@@ -242,10 +216,6 @@ void GameEnginePlusTextureRenderer::SetFrame_Manual(int _Frame)
 	if (CurrentAvata != nullptr)
 	{
 		SetTexture(CurrentAvata->GetTexture(CurrentAniPlus->Info.Frames[MC_CurFrame]));
-	}
-	else if (DefaultCharacterAvata != nullptr)
-	{
-		SetTexture(DefaultCharacterAvata->GetTexture(CurrentAniPlus->Info.Frames[MC_CurFrame]));
 	}
 	else
 	{

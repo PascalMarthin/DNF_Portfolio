@@ -77,17 +77,19 @@ void GamePlayInventory::Update(float _DeltaTime)
 	{
 		if (GameEngineInput::GetInst()->IsPress("LMouseCLK"))
 		{
+			const float4& Pos = Item_DragData->GetTransform().GetLocalPosition();
 			if (Item_DragData != nullptr)
 			{
-				Item_DragData->SetTransform(Component_MouseCursorComponent->GetUICamMouseCursor());
+				Item_DragData->SetUITextureTransform(Component_MouseCursorComponent->GetUIMouseTexture());
 			}
+			int a = 0;
 		}
 		else if (GameEngineInput::GetInst()->IsUp("LMouseCLK"))
 		{
 			Item_DragData->GetCollision()->IsCollision(CollisionType::CT_AABB2D, CollisionOrder::UI_InventoryBlank, CollisionType::CT_AABB2D,
 				std::bind(&GamePlayInventory::CheckBlankCollision, this, std::placeholders::_1, std::placeholders::_2));
 
-			Item_DragData->SetTransform(Inventory_Blank[Item_DragDataIndex].Texture_Blank);
+			Item_DragData->SetUITextureTransform(Inventory_Blank[Item_DragDataIndex].Collision_Blank);
 			Inventory_CurrentItem[Item_DragDataIndex] = Item_DragData;
 			
 
@@ -129,7 +131,7 @@ bool GamePlayInventory::CheckBlankCollision(GameEngineCollision* _This, GameEngi
 			else
 			{
 				Inventory_CurrentItem[Item_DragDataIndex] = Inventory_CurrentItem[Blank.first];
-				Inventory_CurrentItem[Item_DragDataIndex]->SetTransform(Inventory_Blank[Item_DragDataIndex].Texture_Blank);
+				Inventory_CurrentItem[Item_DragDataIndex]->SetUITextureTransform(Inventory_Blank[Item_DragDataIndex].Collision_Blank);
 				MoveInventory(Item_DragDataIndex, Inventory_CurrentData[Inventory_CurrentItem[Item_DragDataIndex]]);
 			}
 			Item_DragDataIndex = Blank.first;

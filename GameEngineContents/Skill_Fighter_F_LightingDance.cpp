@@ -31,7 +31,7 @@ void Skill_Fighter_F_LightingDance::Start()
 		GameEngineCollision* Collision_HamerKick = GetActor()->CreateComponent<GameEngineCollision>("LightingDance");
 		Collision_HamerKick->GetTransform().SetLocalScale({ 100.f, 80.f, 40.f });
 		Collision_HamerKick->GetTransform().SetLocalPosition({ 30, -10.f, 0 });
-		Collision_HamerKick->SetDebugSetting(CollisionType::CT_AABB, { 0, 0 ,0, 0 });
+		//Collision_HamerKick->SetDebugSetting(CollisionType::CT_AABB, { 0, 0 ,0, 0 });
 		Collision_AllCollisionList.push_back(Collision_HamerKick);
 		Off();
 	}
@@ -39,7 +39,7 @@ void Skill_Fighter_F_LightingDance::Start()
 	{
 		Collision_CheckHitPos = GetActor()->CreateComponent<GameEngineCollision>("LightingDance_Pos");
 		Collision_CheckHitPos->GetTransform().SetLocalScale({ 500.f, 90.f, 400.f });
-		Collision_CheckHitPos->SetDebugSetting(CollisionType::CT_AABB, { 0, 1 ,1, 0.7f });
+		//Collision_CheckHitPos->SetDebugSetting(CollisionType::CT_AABB, { 0, 1 ,1, 0.7f });
 		Collision_CheckHitPos->GetTransform().SetLocalPosition({ -50.f , 0.f});
 		Off();
 	}
@@ -134,7 +134,7 @@ void Skill_Fighter_F_LightingDance::Start()
 
 		Texture_Illusion_2->ChangeFrameAnimation("Illusion_230");
 		Texture_Illusion_2->ScaleToTexture();
-		Texture_Illusion_2->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		//Texture_Illusion_2->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texture_Illusion_2->Off();
 	}
 

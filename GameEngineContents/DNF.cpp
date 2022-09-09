@@ -319,6 +319,7 @@ void DNF::BaseFolderTextureLoad()
 		Dir.Move("Resource");
 		Dir.Move("Texture");
 		Dir.Move("Object");
+
 		std::vector<GameEngineDirectory> AllTextureDir = Dir.GetRecursiveAllDirectory();
 
 		for (GameEngineDirectory& DirIter : AllTextureDir)

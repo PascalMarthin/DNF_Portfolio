@@ -59,7 +59,7 @@ void TitleCharacterSlot::CreateAvataData(GamePlayDataBase* _Data)
 		Manager_Avata->SetParent(this);
 		Manager_Avata->GetTransform().SetLocalPosition({ 0, 62.f });
 		Manager_Avata->SetAvataSetup(ObjectType::Character);
-		Manager_Avata->SetCharacterDefaultAvata(Data_Character->GetCharacterClass());
+		Manager_Avata->ReadCharacterDataBase(Data_Character);
 		std::vector<GameEnginePlusTextureRenderer*>& AllAvatas = Manager_Avata->GetAllAvatas();
 		switch (Data_Character->GetCharacterClass())
 		{

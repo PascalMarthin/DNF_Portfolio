@@ -5,6 +5,7 @@
 #include "MouseCursorComponent.h"
 #include "GamePlayItem_DESC.h"
 #include "Item_Avata.h"
+#include "AvataManager.h"
 
 AvataInventory::AvataInventory() 
 {
@@ -143,24 +144,27 @@ void AvataInventory::Mouse_RClick(GamePlayItem* _Item)
 	{
 		unsigned int FromPos = MoveItemToInventory(-1, Inventory_CurrentData[_Item], InventoryBag::Inventory_Avata, InventoryBag::Inventory_Avata_Wear);
 		All_WearAvata_Texture[All_WearAvata_Type[Avata->Enum_AvataClass]] = nullptr;
-		_Item->SetTransform(Inventory_Blank[FromPos].Collision_Blank);
+		Inventory_CurrentItem[FromPos] = _Item;
+		_Item->SetUITextureTransform(Inventory_Blank[FromPos].Collision_Blank);
+
 	}
 	else // Å¸ ¾Æ¹ÙÅ¸
 	{
 		All_WearAvata_Texture[All_WearAvata_Type[Avata->Enum_AvataClass]] = Avata;
 		unsigned int FromPos = MoveItemToInventory(static_cast<int>(Avata->Enum_AvataClass), Inventory_CurrentData[_Item], InventoryBag::Inventory_Avata_Wear, InventoryBag::Inventory_Avata);
-		Avata->SetTransform(All_WearAvata_Type[Avata->Enum_AvataClass]);
-		if (FromItem != nullptr) // ºóÄ­ ³Ö±â 
+
+		Avata->SetUITextureTransform(All_WearAvata_Type[Avata->Enum_AvataClass]);
+		if (FromItem != nullptr) // ¹Ù²ãÄ¡±â
 		{
-			FromItem->SetTransform(Inventory_Blank[FromPos].Collision_Blank);
+			Inventory_CurrentItem[FromPos] = FromItem;
+			FromItem->SetUITextureTransform(Inventory_Blank[FromPos].Collision_Blank);
 		}
-		else
+		else // ºóÄ­ ³Ö±â 
 		{
 			Inventory_CurrentItem[FromPos] = nullptr;
 		}
-
 	}
-
+	AvataManager::GetInst()->ReadCharacterDataBase(nullptr);
 
 }
 
@@ -187,7 +191,7 @@ void AvataInventory::LevelStartEvent()
 
 			Item_Avata* Item = CreateComponent<Item_Avata>("GamePlayItem");
 			Item->SetDESC(WearingAvata[i]->Item_DESC);
-			Item->SetTransform(All_WearAvata_Type[static_cast<AllAvataClass>(i)]);
+			Item->SetUITextureTransform(All_WearAvata_Type[static_cast<AllAvataClass>(i)]);
 			Inventory_CurrentData[Item] = WearingAvata[i];
 			All_WearAvata_Texture[All_WearAvata_Type[static_cast<AllAvataClass>(i)]] = Item;
 		}

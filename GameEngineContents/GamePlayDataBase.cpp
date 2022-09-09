@@ -18,7 +18,7 @@ GamePlayDataBase::GamePlayDataBase(CharacterFormerClass _Class, const std::strin
 	DataBase_InventoryData[InventoryBag::Inventory_ItemInventory_Stuff].resize(8 * 6);
 	DataBase_InventoryData[InventoryBag::Inventory_ItemInventory_Consumable].resize(8 * 6);
 	DataBase_InventoryData[InventoryBag::Inventory_Avata].resize(8 * 6);
-	DataBase_InventoryData[InventoryBag::Inventory_Avata_Wear].resize(8);
+	DataBase_InventoryData[InventoryBag::Inventory_Avata_Wear].resize(9);
 	//DataBase_InventoryData[InventoryBag::Inventory_Pet]
 }
 
