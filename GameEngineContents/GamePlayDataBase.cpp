@@ -92,7 +92,8 @@ void GamePlayDataBase::CreateFighter_F_Animation()
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_BasePunch3"] = new FrameAnimation_DESC("", 21, 25, 0.04f, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_BasePunch3_Delay"] = new FrameAnimation_DESC("", 26, 28, 0.1f, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_BaseKick"] = new FrameAnimation_DESC("", 29, 35, 0.06f, false);
-	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Move_QuickStand"] = new FrameAnimation_DESC("", 36, 38, 0.04f, false);
+	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_LightingDanceHit"] = new FrameAnimation_DESC("", 35, 35, 0.06f, false);
+	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Move_QuickStand"] = new FrameAnimation_DESC("", 36, 38, 0.2f, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Move_Dash"] = new FrameAnimation_DESC("", 39, 46, 0.07f, true);  // ´ë½¬
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Move_JumpReady"] = new FrameAnimation_DESC("", 47, 47, 0.08f, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Move_JumpUp"] = new FrameAnimation_DESC("", 48, 49, 0.09f, true);

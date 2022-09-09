@@ -84,11 +84,15 @@ public:
 
 	bool EndFrame;
 
+	// 잔상 관련
+	//void SetIllusionAvata();
+
 
 	// 수동 조작관련
 	void SetManualControl();
 	void SetAutoControl(bool _Reset);
 	void SetFrame_Manual(int _Frame);
+
 private:
 	bool ManualControl;
 	//
@@ -160,5 +164,9 @@ private:
 
 	std::map<std::string, FrameAnimationForAvata> FrameAniPlus;
 	FrameAnimationForAvata* CurrentAniPlus;
+
+
+	//std::vector<GameEnginePlusTextureRenderer*> Texture_IllusionAvatas;
+
 
 };

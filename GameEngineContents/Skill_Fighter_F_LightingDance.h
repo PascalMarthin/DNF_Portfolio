@@ -31,17 +31,16 @@ protected:
 	//void OffEvent() override;
 
 private:
-	float4 TargetPos;
-	bool FirstHit_Animation;
-	bool IsHitFloor;
-	bool DanceFrameEnd;
-	int DanceStuck;
-	GameEngineCollision* Collision_CheckHitPos;
+	float4 NextTargetPos;
+
+	GameEngineCollision* Collision_CheckHitArea;
 
 	GameEngineTextureRenderer* Texture_Kick;
 	GameEngineTextureRenderer* Texture_Illusion_1;
 	GameEngineTextureRenderer* Texture_Illusion_2;
 	GameEngineTextureRenderer* Texture_Flash;
+
+	float HitDelay;
 
 	void LightingAnimition(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata, float _DeltaTime);
 	

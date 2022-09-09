@@ -4,15 +4,13 @@
 #include "GamePlayCharacter.h"
 
 Skill_Fighter_F_LightingDance::Skill_Fighter_F_LightingDance()
-	: Collision_CheckHitPos(nullptr)
+	: Collision_CheckHitArea(nullptr)
 	, Texture_Kick(nullptr)
 	, Texture_Illusion_1(nullptr)
 	, Texture_Illusion_2(nullptr)
 	, Texture_Flash(nullptr)
-	, FirstHit_Animation(false)
-	, TargetPos(float4::ZERO)
-	, DanceStuck(12)
-	, IsHitFloor(false)
+	, NextTargetPos(float4::ZERO)
+	, HitDelay(0)
 {
 
 }
@@ -31,16 +29,16 @@ void Skill_Fighter_F_LightingDance::Start()
 		GameEngineCollision* Collision_HamerKick = GetActor()->CreateComponent<GameEngineCollision>("LightingDance");
 		Collision_HamerKick->GetTransform().SetLocalScale({ 100.f, 80.f, 40.f });
 		Collision_HamerKick->GetTransform().SetLocalPosition({ 30, -10.f, 0 });
-		//Collision_HamerKick->SetDebugSetting(CollisionType::CT_AABB, { 0, 0 ,0, 0 });
+		Collision_HamerKick->SetDebugSetting(CollisionType::CT_AABB, { 0, 0 ,0, 0 });
 		Collision_AllCollisionList.push_back(Collision_HamerKick);
 		Off();
 	}
 
 	{
-		Collision_CheckHitPos = GetActor()->CreateComponent<GameEngineCollision>("LightingDance_Pos");
-		Collision_CheckHitPos->GetTransform().SetLocalScale({ 500.f, 90.f, 400.f });
-		//Collision_CheckHitPos->SetDebugSetting(CollisionType::CT_AABB, { 0, 1 ,1, 0.7f });
-		Collision_CheckHitPos->GetTransform().SetLocalPosition({ -50.f , 0.f});
+		Collision_CheckHitArea = GetActor()->CreateComponent<GameEngineCollision>("LightingDance_Pos");
+		Collision_CheckHitArea->GetTransform().SetLocalScale({ 500.f, 90.f, 400.f });
+		Collision_CheckHitArea->SetDebugSetting(CollisionType::CT_AABB, { 0, 1 ,1, 0.7f });
+		Collision_CheckHitArea->GetTransform().SetLocalPosition({ -50.f , 0.f});
 		Off();
 	}
 
@@ -134,7 +132,7 @@ void Skill_Fighter_F_LightingDance::Start()
 
 		Texture_Illusion_2->ChangeFrameAnimation("Illusion_230");
 		Texture_Illusion_2->ScaleToTexture();
-		//Texture_Illusion_2->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texture_Illusion_2->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texture_Illusion_2->Off();
 	}
 
@@ -144,90 +142,185 @@ void Skill_Fighter_F_LightingDance::Start()
 
 bool Skill_Fighter_F_LightingDance::ActiveSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata, float _DeltaTime)
 {
-	if (Is_CollisionCheck == false && _Avata->GetAvata_Skin()->GetCurrentFrameStuck() == 1)
+	switch (int_ComboStuck)
 	{
-		//Texture_Punch00->On();
-		CheckCollision();
-		Is_CollisionCheck = true;
-		return false;
-
-	}
-	else if (_Avata->GetAvata_Skin()->IsEndFrame() && FirstHit_Animation == false)
+	case 0:
 	{
-		FirstHit_Animation = true;
-		DanceFrameEnd = true;
-		return false;
-	}
-
-	if (FirstHit_Animation == true && SomeOneHit == true )
-	{
-		if (DanceFrameEnd == true)
+		if (Is_CollisionCheck == false && _Avata->GetAvata_Skin()->GetCurrentFrameStuck() == 2)
 		{
-			if (DanceStuck > 0)
+			//Texture_Punch00->On();
+			Texture_Kick->On();
+			CheckCollision();
+			Is_CollisionCheck = true;
+			return false;
+		}
+		else if (_Avata->GetAvata_Skin()->IsEndFrame() && Is_CollisionCheck == true )
+		{
+			if (!Object_HitList.empty())
 			{
-				DanceFrameEnd = false;
-				if (Collision_CheckHitPos->IsCollision(CollisionType::CT_AABB, CollisionOrder::Monster, CollisionType::CT_AABB,
+				++int_ComboStuck;
+				Is_CollisionCheck = false;
+				if (Collision_CheckHitArea->IsCollision(CollisionType::CT_AABB, CollisionOrder::Monster, CollisionType::CT_AABB,
 					std::bind(&Skill_Fighter_F_LightingDance::GetTarget, this, std::placeholders::_1, std::placeholders::_2)))
 				{
-					_Avata->ChangeAvataAnimation("Att_BaseKick");
-					DanceStuck -= 1;
-					//GetActor()->GetTransform().SetWorldPosition(TargetPos);
+					_Avata->ChangeAvataAnimation("Att_LightingDanceHit");
+					return true;
 				}
 				else
 				{
-					GameEngineTextureRenderer* Renderer = nullptr;
-					if (DanceStuck % 2)
-					{
-						Renderer = Texture_Illusion_1;
-						Renderer->SetParent(Actor_DummyActor);
-					}
-					else
-					{
-						Renderer = Texture_Illusion_2;
-						Renderer->SetParent(Actor_DummyActor);
-					}
+					GameEngineTextureRenderer * Renderer = nullptr;
+
+					Renderer = Texture_Illusion_2;
+					Renderer->SetParent(Actor_DummyActor);
+
 					_Avata->ChangeAvataAnimation("Move_QuickStand");
-					float Move = (Collision_CheckHitPos->GetTransform().GetLocalScale().x - 200.f) * (GetActor<GamePlayObject>()->GetObjectDir() ? -1.f : 1.f);
+					
+					float4 BeforePos = GetActor()->GetTransform().GetWorldPosition();
 
-					GetActor()->GetTransform().SetLocalMove({ Move , 0 , 0 });
-					//	Renderer->GetTransform().SetLocalRotation({ 0, 0 , float4::VectorXYtoRadian(0, 0) });
+					float Dir = GetActor<GamePlayObject>()->GetObjectDir() ? 1.f : -1.f;
+					GetActor()->GetTransform().SetLocalMove({ 250.f * -(Dir) , -60 , -60});
 
+					float4 AfterPos = GetActor()->GetTransform().GetWorldPosition();
 
-					Renderer->GetTransform().SetLocalPosition({ GetActor()->GetTransform().GetLocalPosition().x + Collision_CheckHitPos->GetTransform().GetLocalScale().hx() * (GetActor<GamePlayObject>()->GetObjectDir() ? 1.f : -1.f) , GetActor()->GetTransform().GetLocalPosition().y });
+					Renderer->GetTransform().SetLocalRotation({ 0, 0 ,  float4::VectorXYtoRadian(BeforePos, AfterPos) * Dir });
+
+				
+					Renderer->GetTransform().SetLocalPosition({ AfterPos.x + (AfterPos.x - BeforePos.x) * -0.5f, AfterPos.y + (AfterPos.y - BeforePos.y) * -0.5f, -10.f });
 					Renderer->On();
-					if (Move >= 0)
-					{
-						GetActor<GamePlayObject>()->SetRightDir();
-					}
-					else
-					{
-						GetActor<GamePlayObject>()->SetLeftDir();
-					}
-					DanceStuck -= 1;
-					IsHitFloor = true;
+
+					GetActor<GamePlayObject>()->SetDirSwitch();
+
+		
 					Object_HitList.clear();
-					return false;
+					int_ComboStuck = 0;
+					return true;
 				}
 
 			}
 			else
 			{
-				Object_HitList.clear();
-				Off();
 				return true;
 			}
+	
+		}
+	}
+	break;
+	case 1:
+	{
+		HitDelay += _DeltaTime;
+		if (HitDelay > 0.3f)
+		{
+			if (Is_CollisionCheck == false && _Avata->GetAvata_Skin()->GetCurrentFrameStuck() == 1)
+			{
+				//Texture_Punch00->On();
+				CheckCollision();
+				Is_CollisionCheck = true;
+				return false;
+			}
+			else if (_Avata->GetAvata_Skin()->IsEndFrame() && Is_CollisionCheck == true)
+			{
+				if (!Object_HitList.empty())
+				{
+					++int_ComboStuck;
+					return false;
+				}
+				else
+				{
+					return true;
+				}
+
+			}
+			HitDelay = 0;
 		}
 
-
-		// 公利
-
 	}
-	else if(FirstHit_Animation == true && SomeOneHit == false)
-	{
-		Off();
-		return true;
+	break;
+	default:
+		break;
 	}
-	return false;
+	//if (Is_CollisionCheck == false && _Avata->GetAvata_Skin()->GetCurrentFrameStuck() == 1)
+	//{
+	//	//Texture_Punch00->On();
+	//	CheckCollision();
+	//	Is_CollisionCheck = true;
+	//	return false;
+	//}
+	//else if (_Avata->GetAvata_Skin()->IsEndFrame() && int_ComboStuck == 0 && Is_CollisionCheck == true)
+	//{
+	//	//FirstHit_Animation = true;
+	//	//DanceFrameEnd = true;
+	//	return false;
+	//}
+
+	//if (FirstHit_Animation == true && SomeOneHit == true )
+	//{
+	//	if (DanceFrameEnd == true)
+	//	{
+	//		if (DanceStuck > 0)
+	//		{
+	//			DanceFrameEnd = false;
+	//			if (Collision_CheckHitArea->IsCollision(CollisionType::CT_AABB, CollisionOrder::Monster, CollisionType::CT_AABB,
+	//				std::bind(&Skill_Fighter_F_LightingDance::GetTarget, this, std::placeholders::_1, std::placeholders::_2)))
+	//			{
+	//				_Avata->ChangeAvataAnimation("Att_BaseKick");
+	//				DanceStuck -= 1;
+	//				//GetActor()->GetTransform().SetWorldPosition(NextTargetPos);
+	//			}
+	//			else
+	//			{
+	//				GameEngineTextureRenderer* Renderer = nullptr;
+	//				if (DanceStuck % 2)
+	//				{
+	//					Renderer = Texture_Illusion_1;
+	//					Renderer->SetParent(Actor_DummyActor);
+	//				}
+	//				else
+	//				{
+	//					Renderer = Texture_Illusion_2;
+	//					Renderer->SetParent(Actor_DummyActor);
+	//				}
+	//				_Avata->ChangeAvataAnimation("Move_QuickStand");
+	//				float Move = (Collision_CheckHitArea->GetTransform().GetLocalScale().x - 200.f) * (GetActor<GamePlayObject>()->GetObjectDir() ? -1.f : 1.f);
+
+	//				GetActor()->GetTransform().SetLocalMove({ Move , 0 , 0 });
+	//				//	Renderer->GetTransform().SetLocalRotation({ 0, 0 , float4::VectorXYtoRadian(0, 0) });
+
+
+	//				Renderer->GetTransform().SetLocalPosition({ GetActor()->GetTransform().GetLocalPosition().x + Collision_CheckHitArea->GetTransform().GetLocalScale().hx() * (GetActor<GamePlayObject>()->GetObjectDir() ? 1.f : -1.f) , GetActor()->GetTransform().GetLocalPosition().y });
+	//				Renderer->On();
+	//				if (Move >= 0)
+	//				{
+	//					GetActor<GamePlayObject>()->SetRightDir();
+	//				}
+	//				else
+	//				{
+	//					GetActor<GamePlayObject>()->SetLeftDir();
+	//				}
+	//				DanceStuck -= 1;
+	//				IsHitFloor = true;
+	//				Object_HitList.clear();
+	//				return false;
+	//			}
+
+	//		}
+	//		else
+	//		{
+	//			Object_HitList.clear();
+	//			Off();
+	//			return true;
+	//		}
+	//	}
+
+
+	//	// 公利
+
+	//}
+	//else if(FirstHit_Animation == true && SomeOneHit == false)
+	//{
+	//	Off();
+	//	return true;
+	//}
+	//return false;
 }
 
 bool Skill_Fighter_F_LightingDance::TriggerSkill_ect(GameEngineCollision* _This, GameEngineCollision* _Other)
@@ -239,12 +332,14 @@ bool Skill_Fighter_F_LightingDance::TriggerSkill_ect(GameEngineCollision* _This,
 void Skill_Fighter_F_LightingDance::StartSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata)
 {
 	_Avata->ChangeAvataAnimation("Att_BaseKick");
-	Texture_Kick->On();
-	FirstHit_Animation = false;
-	TargetPos = float4::ZERO;
-	DanceStuck = 12;
-	IsHitFloor = false;
-	DanceFrameEnd = false;
+	Texture_Illusion_1->Off();
+	Texture_Illusion_2->Off();
+	HitDelay = 0;
+	//FirstHit_Animation = false;
+//	NextTargetPos = float4::ZERO;
+	//DanceStuck = 12;
+	//IsHitFloor = false;
+//	DanceFrameEnd = false;
 }
 bool Skill_Fighter_F_LightingDance::GetTarget(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
@@ -252,12 +347,12 @@ bool Skill_Fighter_F_LightingDance::GetTarget(GameEngineCollision* _This, GameEn
 	{
 		return false;
 	}
-	float4 PastPlayerPos = GetActor()->GetTransform().GetWorldPosition();
-	float4 CurrentPoePos = _Other->GetActor()->GetTransform().GetWorldPosition();
+	float4 PlayerPos = GetActor()->GetTransform().GetWorldPosition();
+	float4 PoePos = _Other->GetActor()->GetTransform().GetWorldPosition();
 	float Dir = GetActor<GamePlayObject>()->GetObjectDir() ? 1.f : -1.f;
 
 	GameEngineTextureRenderer* Renderer = nullptr;
-	if (DanceStuck % 2)
+	if (int_ComboStuck % 2)
 	{
 		Renderer = Texture_Illusion_1;
 		Renderer->SetParent(Actor_DummyActor);
@@ -268,13 +363,22 @@ bool Skill_Fighter_F_LightingDance::GetTarget(GameEngineCollision* _This, GameEn
 		Renderer->SetParent(Actor_DummyActor);
 	}
 
+	float PoeScale = _Other->GetActor()->GetTransform().GetLocalScale().hx();
+
+	float Range = PoePos.x - PlayerPos.x;
+
+	if (_Other->GetTransform().GetWorldPosition().x > _This->GetTransform().GetWorldPosition().x)
+	{
+		PoeScale = -PoeScale;
+	}
+	Range += PoeScale;
 
 
-	GetActor()->GetTransform().SetLocalMove({ _Other->GetActor()->GetTransform().GetLocalScale().hx() * Dir + (CurrentPoePos.x - PastPlayerPos.x), CurrentPoePos.y - PastPlayerPos.y });
-	Renderer->GetTransform().SetLocalRotation({ 0, 0 , float4::VectorXYtoRadian(CurrentPoePos, PastPlayerPos) });
-	Renderer->GetTransform().SetLocalPosition({ CurrentPoePos.x + (CurrentPoePos.x - PastPlayerPos.x) * 0.5f, CurrentPoePos.y + (CurrentPoePos.y - PastPlayerPos.y) * 0.5f, -10.f });
+	GetActor()->GetTransform().SetLocalMove({ Range, PoePos.y - PlayerPos.y });
+	Renderer->GetTransform().SetLocalRotation({ 0, 0 , float4::VectorXYtoRadian(PoePos, PlayerPos) });
+	Renderer->GetTransform().SetLocalPosition({ PoePos.x + (PoePos.x - PlayerPos.x) * 0.5f, PoePos.y + (PoePos.y - PlayerPos.y) * 0.5f, -10.f });
 
-	if ((CurrentPoePos.x - PastPlayerPos.x) >= 0)
+	if ((PoePos.x - PlayerPos.x) >= 0)
 	{
 		GetActor<GamePlayObject>()->SetRightDir();
 	}
@@ -284,22 +388,22 @@ bool Skill_Fighter_F_LightingDance::GetTarget(GameEngineCollision* _This, GameEn
 	}
 
 
-	//if (PastPlayerPos.x > CurrentPoePos.x)
+	//if (PastPlayerPos.x > PoePos.x)
 	//{
-	//	CurrentPoePos += _Other->GetActor()->GetTransform().GetLocalScale().hx();
-	//	GetActor()->GetTransform().SetLocalPosition(CurrentPoePos);
-	//	Renderer->GetTransform().SetLocalRotation({ 0, 0 , float4::VectorXYtoRadian(CurrentPoePos, PastPlayerPos) });
-	//	Renderer->GetTransform().SetLocalPosition({ CurrentPoePos.x + ((PastPlayerPos.x - CurrentPoePos.x) * 0.5f)
-	//												, PastPlayerPos.y > CurrentPoePos.y ? PastPlayerPos.y + (PastPlayerPos.y - CurrentPoePos.y) * 0.5f : CurrentPoePos.y + (CurrentPoePos.y - PastPlayerPos.y) * 0.5f, 100.f });
+	//	PoePos += _Other->GetActor()->GetTransform().GetLocalScale().hx();
+	//	GetActor()->GetTransform().SetLocalPosition(PoePos);
+	//	Renderer->GetTransform().SetLocalRotation({ 0, 0 , float4::VectorXYtoRadian(PoePos, PastPlayerPos) });
+	//	Renderer->GetTransform().SetLocalPosition({ PoePos.x + ((PastPlayerPos.x - PoePos.x) * 0.5f)
+	//												, PastPlayerPos.y > PoePos.y ? PastPlayerPos.y + (PastPlayerPos.y - PoePos.y) * 0.5f : PoePos.y + (PoePos.y - PastPlayerPos.y) * 0.5f, 100.f });
 	//	GetActor<GamePlayObject>()->SetDirSwitch();
 	//}
 	//else
 	//{
-	//	CurrentPoePos -= _Other->GetActor()->GetTransform().GetLocalScale().hx();
+	//	PoePos -= _Other->GetActor()->GetTransform().GetLocalScale().hx();
 	//}
-	IsHitFloor = false;
-	Object_HitList.clear();
-	Object_HitList[_Other->GetActor<GamePlayObject>()] = 1;
+	//IsHitFloor = false;
+	//Object_HitList.clear();
+	//Object_HitList[_Other->GetActor<GamePlayObject>()] = 1;
 	return true;
 }
 
@@ -311,13 +415,13 @@ void Skill_Fighter_F_LightingDance::LightingAnimition(CharacterStatManager* _Sta
 
 void Skill_Fighter_F_LightingDance::CheckEffectFrame(const FrameAnimation_DESC& _Desc)
 {
-	switch (_Desc.CurFrame)
-	{
-	case 2:
-		DanceFrameEnd = true;
-		break;
-	default:
-		break;
-	}
+	//switch (_Desc.CurFrame)
+	//{
+	//case 2:
+	//	DanceFrameEnd = true;
+	//	break;
+	//default:
+	//	break;
+	//}
 }
 
