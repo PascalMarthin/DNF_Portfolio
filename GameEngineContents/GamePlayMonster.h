@@ -89,6 +89,12 @@ public:
 	}
 
 
+	//inline float4 GetScale() override
+	//{
+	//	//return Texture_Monster->Get
+	//}
+
+
 protected:
 	MonsterAbilityStat MonsterAbilityStat;
 	void CreateMonsterStat(unsigned int _MAXHP, float Def, float _HPLine = -1.f);

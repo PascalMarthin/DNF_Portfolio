@@ -55,7 +55,7 @@ void MoveManager::Update(float _DeltaTime)
 	const float4& A = ParentCharacter->GetTransform().GetLocalPosition();
 	if (ManagerStat != nullptr )
 	{
-		if (!ManagerStat->IsHold())
+		if (!ManagerStat->IsHold() && !ManagerStat->IsDoSkill())
 		{
 			if (ManagerStat->IsJump() || ManagerStat->IsAerial())
 			{
@@ -269,6 +269,11 @@ void MoveManager::SetHit(const float4& _HitPower)
 void MoveManager::SetHold(float _HoldTime)
 {
 	BlowPower.w = _HoldTime;
+}
+
+void MoveManager::SetObjectPos(const float4& _Pos)
+{
+	ParentCharacter->GetTransform().SetLocalPosition({ _Pos.x , _Pos .y, _Pos.y});
 }
 
 

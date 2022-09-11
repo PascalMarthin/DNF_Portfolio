@@ -20,9 +20,8 @@ enum class HitType
 	Hit,
 	Slash,
 };
-class SkillComboPower
+struct SkillComboPower
 {
-public:
 	//SkillComboPower() {}
 
 	unsigned int int_SkillDamage;
@@ -32,7 +31,6 @@ public:
 
 	HitType Enum_HitType;
 	HitPostureType Enum_HitPostureType;
-public:
 	SkillComboPower(unsigned int _Damage, unsigned int _MaxHit, const float4& _Power, HitPostureType _Type, HitType _HitType)
 		: int_SkillDamage(_Damage), int_MaxHit(_MaxHit), float4_HitPhysicsPower(_Power), Enum_HitType(_HitType), Enum_HitPostureType(_Type)
 	{

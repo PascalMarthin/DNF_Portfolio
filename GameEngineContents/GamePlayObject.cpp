@@ -50,7 +50,7 @@ void GamePlayObject::Start()
 	}
 }
 
-void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitCollision , const GamePlayDataBase* _Character, int _Index)
+void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitCollision , const GamePlayDataBase* _Character, int _Index, unsigned int _Damage)
 {
 	if (Enum_UnitType == UnitType::None)
 	{
@@ -169,7 +169,7 @@ void GamePlayObject::HitEffect(GameEngineTextureRenderer* _Texture, GameEngineCo
 
 	_Texture->GetTransform().SetWorldPosition({ Postion.x + GameEngineRandom::MainRandom.RandomFloat(-Scale.x * 0.5f, Scale.x * 0.5f),
 											    Postion.y + GameEngineRandom::MainRandom.RandomFloat(-Scale.y * 0.5f, Scale.y * 0.5f),
-												0 });
+												Postion.y - 50.f });
 	_Texture->On();
 	_Texture->ChangeFrameAnimation(_AniName);
 	

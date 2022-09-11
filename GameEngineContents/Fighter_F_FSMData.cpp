@@ -447,6 +447,7 @@ void GamePlayCharacter::FSM_Att_Skill_Start(const StateInfo& _Info)
 	}
 	Skill_CurrentSkill->On();
 	Skill_CurrentSkill->StartSkill(Manager_StatManager, Manager_MoveManager, Manager_AvataManager);
+	Manager_StatManager->SetDoSkill();
 	Function_CurrentSkill = Skill_CurrentSkill->Get_SkillAction();
 
 }
@@ -461,6 +462,6 @@ void GamePlayCharacter::FSM_Att_Skill_Update(float _DeltaTime, const StateInfo& 
 }
 void GamePlayCharacter::FSM_Att_Skill_End(const StateInfo& _Info)
 {
-
+	Manager_StatManager->SetDoSkillEnd();
 }
 

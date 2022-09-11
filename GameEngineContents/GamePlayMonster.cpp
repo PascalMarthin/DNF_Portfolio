@@ -72,6 +72,6 @@ unsigned int GamePlayMonster::SetHPFromHit(unsigned int _Damage)
 
 void GamePlayMonster::LevelStartEvent()
 {
-	GetTransform().SetLocalMove({ 0 , 0 , GetTransform().GetLocalPosition().y });
+//	GetTransform().SetLocalMove({ 0 , 0 , GetTransform().GetLocalPosition().y });
 }
 

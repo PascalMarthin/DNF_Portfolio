@@ -86,13 +86,53 @@ void GamePlayDataBase::CreateFighter_F_Animation()
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_Dash_Delay"] = new FrameAnimation_DESC("", 3, 4, 0.1f, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_BasePunch1"] = new FrameAnimation_DESC("", 5, 6, 0.1f, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_OneinchPunch"] = new FrameAnimation_DESC("", 7, 9, 0.04f , false);
+	{
+		std::vector<unsigned int> RisingIndex;
+		RisingIndex.push_back(21);
+		RisingIndex.push_back(21);
+		RisingIndex.push_back(21);
+		RisingIndex.push_back(21);
+		RisingIndex.push_back(21);
+		RisingIndex.push_back(30);
+		RisingIndex.push_back(30);
+		RisingIndex.push_back(30);
+		RisingIndex.push_back(30);
+		RisingIndex.push_back(30);
+		RisingIndex.push_back(10);
+		RisingIndex.push_back(11);
+		RisingIndex.push_back(12);
+
+		CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_RisingUpper_Ready"] = new FrameAnimation_DESC("", RisingIndex, 0.0325f, false);
+
+		RisingIndex.clear();
+		RisingIndex.push_back(151);
+		CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_RisingUpper_Jump"] = new FrameAnimation_DESC("", RisingIndex, 0.25f, false);
+
+		RisingIndex.clear();
+		RisingIndex.push_back(152);
+		RisingIndex.push_back(151);
+		CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_RisingUpper_Spin"] = new FrameAnimation_DESC("", RisingIndex, 0.125f, true);
+
+
+		RisingIndex.clear();
+		RisingIndex.push_back(153);
+		RisingIndex.push_back(144);
+		RisingIndex.push_back(145);
+		//RisingIndex.push_back(146);
+		CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_RisingUpper_Down"] = new FrameAnimation_DESC("", RisingIndex, 0.125f, false);
+
+		RisingIndex.clear();
+		RisingIndex.push_back(146);
+		CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_RisingUpper_Landing"] = new FrameAnimation_DESC("", RisingIndex, 0.04f, true);
+
+	}
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_Upper"] = new FrameAnimation_DESC("", 10, 16, FighterAnimationInter, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_BasePunch2"] = new FrameAnimation_DESC("", 17, 19, 0.06f, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_BasePunch2_Delay"] = new FrameAnimation_DESC("", 20, 20, 0.08f, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_BasePunch3"] = new FrameAnimation_DESC("", 21, 25, 0.04f, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_BasePunch3_Delay"] = new FrameAnimation_DESC("", 26, 28, 0.1f, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_BaseKick"] = new FrameAnimation_DESC("", 29, 35, 0.06f, false);
-	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_LightingDanceHit"] = new FrameAnimation_DESC("", 35, 35, 0.06f, false);
+	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_LightingDanceHit"] = new FrameAnimation_DESC("", 31, 31, 0.04f, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Move_QuickStand"] = new FrameAnimation_DESC("", 36, 38, 0.2f, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Move_Dash"] = new FrameAnimation_DESC("", 39, 46, 0.07f, true);  // ´ë½¬
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Move_JumpReady"] = new FrameAnimation_DESC("", 47, 47, 0.08f, false);

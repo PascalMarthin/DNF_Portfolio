@@ -83,6 +83,10 @@ public:
 	{
 		return PlayerCurrentState & CharacterStat::Player_Character_BeDown;
 	}
+	inline bool IsDoSkill() const
+	{
+		return PlayerCurrentState & CharacterStat::Player_Character_DoSkill;
+	}
 	
 
 	//  Player_Character_ALive
@@ -122,6 +126,8 @@ public:
 	void SetHoldEnd();
 	void SetDown();
 	void SetDownEnd();
+	void SetDoSkill();
+	void SetDoSkillEnd();
 
 	inline void SetEngage()
 	{

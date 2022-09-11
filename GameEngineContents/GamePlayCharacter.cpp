@@ -36,6 +36,7 @@ GamePlayCharacter::GamePlayCharacter()
 	, Component_MouseCursorComponent(nullptr)
 	, Manager_SkillManager(nullptr)
 	, Class_AvataInventory(nullptr)
+	, HoldCam(false)
 {
 }
 
@@ -230,13 +231,14 @@ void GamePlayCharacter::LevelStartEvent()
 	MoveIndex = 0.f;
 
 
-	GetTransform().SetLocalMove({0 , 0 , GetTransform().GetLocalPosition().y });
+	//GetTransform().SetLocalMove({0 , 0 , GetTransform().GetLocalPosition().y });
 	//Class_ItemInventory->GetTransform().SetLocalPosition({ GetTransform().GetLocalPosition().x, GetTransform().GetLocalPosition().y, 0 });
 }
 
 void GamePlayCharacter::LevelEndEvent()
 {
 	JumpGoingDown = false;
+	HoldCam = false;
 }
 
 //void GamePlayCharacter::SkillCollisionActive(const std::string& _Name, int _Frame)

@@ -32,7 +32,7 @@ void Luke_Stage1::Start()
 
 void Luke_Stage1::Update(float _DeltaTime)
 {
-	if (!GetMainCameraActor()->IsFreeCameraMode())
+	if (!GetMainCameraActor()->IsFreeCameraMode() && Player_Character->GetHoldCam() == false)
 	{
 		float4 Pos = Player_Character->GetMoveManager()->GetMoveCollision()->GetTransform().GetWorldPosition();
 		if (Pos.x <= 705.f * MonitorX)
@@ -67,9 +67,11 @@ void Luke_Stage1::LevelStartEvent()
 	}
 	else
 	{
-		Player_Character->GetTransform().SetLocalPosition({500.f, -500.f, Hight });
+		Player_Character->GetMoveManager()->SetObjectPos({});
+		
+		Player_Character->GetTransform().SetLocalPosition({500.f, -500.f, -500.f });
 	}
-	Debug_Bale->GetTransform().SetLocalPosition({ 1000.f, -600.f, Hight });
+	Debug_Bale->GetTransform().SetLocalPosition({ 1000.f, -600.f, -600.f });
 	Debug_Bale->SetLeftDir();
 	Dungeon_Luke::SetStage(Luke_Stage::Stage_1);
 

@@ -58,6 +58,10 @@ public:
 		}
 	}
 	
+	virtual inline float4 GetScale()
+	{
+		return GetTransform().GetLocalScale();
+	}
 
 
 	//-------------------------
@@ -123,7 +127,7 @@ protected:
 
 	// -------------------Battle-------------------
 public:
-	virtual void BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitCollision, const GamePlayDataBase* _Character, int _Index);
+	virtual void BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitCollision, const GamePlayDataBase* _Character, int _Index, unsigned int _Damage);
 	virtual void BeHitHold();
 	virtual void BeHitEnd();
 	// virtual void BeHit(적 대미지);

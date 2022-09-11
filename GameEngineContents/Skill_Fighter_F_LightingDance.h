@@ -22,6 +22,8 @@ public:
 
 	bool GetTarget(GameEngineCollision* _This, GameEngineCollision* _Other);
 	void CheckEffectFrame(const FrameAnimation_DESC& _Desc);
+
+	void EndSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata) override;
 protected:
 	void Start() override;
 	//void Update(float _DeltaTime) override;
@@ -31,7 +33,7 @@ protected:
 	//void OffEvent() override;
 
 private:
-	float4 NextTargetPos;
+	//GamePlayObject* HitTarget;
 
 	GameEngineCollision* Collision_CheckHitArea;
 
@@ -39,9 +41,16 @@ private:
 	GameEngineTextureRenderer* Texture_Illusion_1;
 	GameEngineTextureRenderer* Texture_Illusion_2;
 	GameEngineTextureRenderer* Texture_Flash;
+	GameEngineTextureRenderer* Texture_Apply;
+	GameEngineTextureRenderer* Texture_Shock;
+
+
 
 	float HitDelay;
+	int LightingStuck;
 
+
+	void NoHitFunction();
 	void LightingAnimition(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata, float _DeltaTime);
 	
 };

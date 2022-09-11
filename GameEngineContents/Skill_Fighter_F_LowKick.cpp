@@ -40,6 +40,7 @@ void Skill_Fighter_F_LowKick::Start()
 			});
 		Texture_LowKick->ChangeFrameAnimation("Lowkick");
 		Texture_LowKick->ScaleToTexture();
+		Texture_LowKick->GetPixelData().MulColor = { 1.2f, 1.2f, 1.2f, 1.2f };
 		Texture_LowKick->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texture_LowKick->Off();
 	}

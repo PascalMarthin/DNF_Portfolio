@@ -44,7 +44,9 @@ void CharacterSkillManager::Start()
 	Staic_CoolTime["Fighter_ClosePunch"] = 0.f;
 	List_AllSkill["Fighter_LightingDance"] = GetActor()->CreateComponent<Skill_Fighter_F_LightingDance>();
 	Staic_CoolTime["Fighter_LightingDance"] = 0.f;
-	
+	List_AllSkill["Fighter_F_Rising"] = GetActor()->CreateComponent<Skill_Fighter_F_Rising>();
+	Staic_CoolTime["Fighter_F_Rising"] = 0.f;
+
 	
 
 	map_SkillSlot['Q'] = nullptr;
@@ -110,7 +112,7 @@ void CharacterSkillManager::LevelStartEvent()
 	map_SkillSlot['A'] = List_AllSkill["Fighter_ClosePunch"];
 	map_SkillSlot['S'] = List_AllSkill["Fighter_Upper"];
 	map_SkillSlot['D'] = List_AllSkill["Fighter_Bungwon"];
-	map_SkillSlot['F'] = nullptr;
+	map_SkillSlot['F'] = List_AllSkill["Fighter_F_Rising"];
 	map_SkillSlot['G'] = List_AllSkill["Fighter_LowKick"];
 	map_SkillSlot['H'] = List_AllSkill["Fighter_CrashLowKick"];
 

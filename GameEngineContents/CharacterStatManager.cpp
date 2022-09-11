@@ -240,6 +240,16 @@ void CharacterStatManager::SetDownEnd()
 	SetCanAction();
 }
 
+void CharacterStatManager::SetDoSkill()
+{
+	PlayerCurrentState |= CharacterStat::Player_Character_DoSkill;
+}
+void CharacterStatManager::SetDoSkillEnd()
+{
+	PlayerCurrentState &= ~CharacterStat::Player_Character_DoSkill;
+}
+
+
 
 
 

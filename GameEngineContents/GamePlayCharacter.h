@@ -52,8 +52,19 @@ public:
 	{
 		return 	CurrentCharacterData;
 	}
+	inline void SetCamHoldOn()
+	{
+		HoldCam = true;
+	}
+	inline void SetCamHoldOff()
+	{
+		HoldCam = false;
+	}
 
-
+	inline bool GetHoldCam() const
+	{
+		return HoldCam;
+	}
 
 	static void SetPlayerCharacter();
 
@@ -87,6 +98,11 @@ protected:
 
 
 private:
+	// ------------Cam--------------------
+
+	bool HoldCam;
+
+
 	// ----------GameCharacterData---------------
 	static GamePlayDataBase* CurrentCharacterData;
 	static std::list<GamePlayDataBase*> AllCharacterData;

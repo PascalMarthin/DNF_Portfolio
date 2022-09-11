@@ -38,6 +38,7 @@ public:
 
 	//void SetBeAir();
 
+	void SetObjectPos(const float4& _Pos);
 
 protected:
 	void Start() override;
