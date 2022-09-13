@@ -4,6 +4,7 @@
 #include "GamePlayItem.h"
 #include "MouseCursorComponent.h"
 #include "Item_Consumable.h"
+#include "CharacterStatManager.h"
 
 ItemInventory_Consumable::ItemInventory_Consumable()
 
@@ -53,6 +54,26 @@ void ItemInventory_Consumable::Start()
 			}
 		}
 	}
+}
+
+void ItemInventory_Consumable::Mouse_RClick(GamePlayItem* _Item)
+{
+	//unsigned int Pos = FindGamePlayItem(_Item);
+	Item_Consumable* Consumable = dynamic_cast<Item_Consumable*>(_Item);
+	Consumable->Item_Effect(CharacterStatManager::GetInst());
+	///*if (Pos == -1 )
+	//{
+	//	{
+	//		if (FromItem == nullptr)
+	//		{
+	//			MsgBoxAssert("?????????????????!!??")
+	//		}
+	//	}
+	//}*/
+
+
+
+
 }
 
 void ItemInventory_Consumable::OnEvent()

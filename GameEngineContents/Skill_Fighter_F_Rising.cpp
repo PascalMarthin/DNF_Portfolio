@@ -2,6 +2,7 @@
 #include "Skill_Fighter_F_Rising.h"
 #include "GamePlayObject.h"
 #include "GamePlayCharacter.h"
+#include "DummyActor.h"
 
 
 GameEngineFolderTexture* Skill_Fighter_F_Rising::FolderTexture_Rising_spin = nullptr;
@@ -11,10 +12,7 @@ GameEngineFolderTexture* Skill_Fighter_F_Rising::FolderTexture_Tigerstrike_00 = 
 
 
 Skill_Fighter_F_Rising::Skill_Fighter_F_Rising() 
-	: Texture_Wind_0(nullptr)
-	, Texture_Wind_2(nullptr)
-	, Texture_Wind_5(nullptr)
-	, JumpTime(0)
+	: JumpTime(0)
 	, LandPos(float4::ZERO)
 {
 }
@@ -27,6 +25,7 @@ void Skill_Fighter_F_Rising::Start()
 {
 	Class_Power.push_back(SkillComboPower(200, 1, { 700.f, 0.f, 0, 0.f }, HitPostureType::Aerial, HitType::Hit));
 
+	Actor_DummyActor = GetActor()->GetLevel()->CreateActor<DummyActor>();
 	{
 		GameEngineCollision* Rising = GetActor()->CreateComponent<GameEngineCollision>("Rising_Up_1");
 		Rising->GetTransform().SetLocalScale({ 120.f, 40.f, 30.f });
@@ -58,7 +57,7 @@ void Skill_Fighter_F_Rising::Start()
 
 	{
 		GameEngineTextureRenderer* Texture_Rising_Spin = GetActor()->CreateComponent<GameEngineTextureRenderer>("Texture_Rising_spin");
-		Texture_Rising_Spin->CreateFrameAnimationFolder("Texture_Rising_spin", FrameAnimation_DESC("Rising_spin", 0.05f, false));
+		Texture_Rising_Spin->CreateFrameAnimationFolder("Texture_Rising_spin", FrameAnimation_DESC("Rising_spin",1, 9, 0.04f, false));
 		Texture_Rising_Spin->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_spin", 0.04f, false));
 
 		Texture_Rising_Spin->AnimationBindEnd("Texture_Rising_spin",
@@ -70,16 +69,16 @@ void Skill_Fighter_F_Rising::Start()
 		Texture_Rising_Spin->ScaleToTexture();
 		Texture_Rising_Spin->GetTransform().SetLocalScale({ Texture_Rising_Spin->GetTransform().GetLocalScale().x * 0.8f, Texture_Rising_Spin->GetTransform().GetLocalScale().y * 0.5f });
 		Texture_Rising_Spin->GetTransform().SetLocalRotate({ 0, 0 , 90});
-		Texture_Rising_Spin->GetTransform().SetLocalPosition({ -5 , 25.f, -90.f });
+		Texture_Rising_Spin->GetTransform().SetLocalPosition({ -5 , 25.f, -20.f });
 		Texture_Rising_Spin->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
-		Texture_Rising_Spin->GetPixelData().MulColor = { 2.3f, 2.3f , 2.3f , 1.5f };
-		//Texture_Rising_Spin->GetPixelData().PlusColor = { 0, 0 ,0 , 0.9f };
+		Texture_Rising_Spin->GetPixelData().MulColor = { 4.f, 2.0f , 0.9f , 1.5f };
+		Texture_Rising_Spin->GetPixelData().PlusColor = { 0, 0 ,0 , 1 };
 		Texture_Rising_Spin->Off();
 		Texture_Rising_spin.push_back(Texture_Rising_Spin); // Small
-
+		
 
 		Texture_Rising_Spin = GetActor()->CreateComponent<GameEngineTextureRenderer>("Texture_Rising_spin");
-		Texture_Rising_Spin->CreateFrameAnimationFolder("Texture_Rising_spin", FrameAnimation_DESC("Rising_spin", 0.0625f, true));
+		Texture_Rising_Spin->CreateFrameAnimationFolder("Texture_Rising_spin", FrameAnimation_DESC("Rising_spin", 2, 9, 0.055f, true));
 		Texture_Rising_Spin->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_spin", 3, 9, 0.04f, false));
 
 		Texture_Rising_Spin->AnimationBindEnd("Texture_Rising_spin",
@@ -88,21 +87,21 @@ void Skill_Fighter_F_Rising::Start()
 				_Desc.Renderer->Off();
 			});
 		Texture_Rising_Spin->ChangeFrameAnimation("Texture_Rising_spin");
-		//Texture_Rising_Spin->SetScaleRatio(1.2f);
+		Texture_Rising_Spin->SetScaleRatio(1.2f);
 		Texture_Rising_Spin->ScaleToTexture();
 		Texture_Rising_Spin->GetTransform().SetLocalScale({ Texture_Rising_Spin->GetTransform().GetLocalScale().x , Texture_Rising_Spin->GetTransform().GetLocalScale().y * 0.8f });
 		Texture_Rising_Spin->GetTransform().SetLocalRotate({ 0, 0 , 90 });
-		Texture_Rising_Spin->GetTransform().SetLocalPosition({ -10 , -30.f, -10.f });
+		Texture_Rising_Spin->GetTransform().SetLocalPosition({ -10 , -30.f, -20.f });
 		Texture_Rising_Spin->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
-		Texture_Rising_Spin->GetPixelData().MulColor = { 2.3f, 2.3f , 2.3f , 1.5f };
-		//Texture_Rising_Spin->GetPixelData().PlusColor = { 0, 0 ,0 , 0.9f };
+		Texture_Rising_Spin->GetPixelData().MulColor = { 4.f, 2.0f , 0.9f , 1.5f };
+		Texture_Rising_Spin->GetPixelData().PlusColor = { 0, 0 ,0 , 1 };
 		Texture_Rising_Spin->Off();
 		Texture_Rising_spin.push_back(Texture_Rising_Spin); // Big
 	}
 
 	{
 		GameEngineTextureRenderer* RisingEffect = GetActor()->CreateComponent<GameEngineTextureRenderer>("RisingEffect");
-		RisingEffect->CreateFrameAnimationFolder("RisingEffect", FrameAnimation_DESC("Tigerstrike_00", 0, 4, 0.075f, true));
+		RisingEffect->CreateFrameAnimationFolder("RisingEffect", FrameAnimation_DESC("Tigerstrike_00", 1, 4, 0.1f, true));
 		RisingEffect->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_spin", 3, 9, 0.04f, false));
 
 		RisingEffect->AnimationBindEnd("RisingEffect",
@@ -113,30 +112,177 @@ void Skill_Fighter_F_Rising::Start()
 		RisingEffect->ChangeFrameAnimation("RisingEffect");
 		RisingEffect->SetScaleRatio(0.8f);
 		RisingEffect->ScaleToTexture();
-		RisingEffect->GetTransform().SetLocalRotate({ 0, 0 , 90 });
-		RisingEffect->GetTransform().SetLocalPosition({ -10 , -30.f, -10.f });
-		RisingEffect->GetPixelData().MulColor = { 1.f, 1.f, 1.f, 0.8f };
+		RisingEffect->GetTransform().SetLocalRotate({ 0, 0  , 105 });
+		RisingEffect->GetTransform().SetLocalPosition({ -8.f , 20.f, -10.f });
+		RisingEffect->GetPixelData().MulColor = { 1.8f, 1.8f, 3.f, 0.5f };
 		RisingEffect->Off();
+
+		Texture_RisingEffect.push_back(RisingEffect);
+
+
+		RisingEffect = GetActor()->CreateComponent<GameEngineTextureRenderer>("RisingEffect");
+		RisingEffect->CreateFrameAnimationFolder("RisingEffect", FrameAnimation_DESC("Tigerstrike_00", 1, 4, 0.1f, true));
+		RisingEffect->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_spin", 3, 9, 0.04f, false));
+
+		RisingEffect->AnimationBindEnd("RisingEffect",
+			[](const FrameAnimation_DESC& _Desc)
+			{
+				_Desc.Renderer->Off();
+			});
+		RisingEffect->ChangeFrameAnimation("RisingEffect");
+		RisingEffect->SetScaleRatio(0.9f);
+		RisingEffect->ScaleToTexture();
+		RisingEffect->GetTransform().SetLocalRotate({ 0, 0  , -90 });
+		RisingEffect->GetTransform().SetLocalPosition({ 20.f , 15.f, -11.f });
+		RisingEffect->GetPixelData().MulColor = { 1.8f, 1.8f, 3.f, 0.5f };
+		RisingEffect->GetTransform().PixLocalNegativeX();
+		RisingEffect->Off();
+
 		Texture_RisingEffect.push_back(RisingEffect); 
 
+		RisingEffect = GetActor()->CreateComponent<GameEngineTextureRenderer>("RisingEffect");
+		RisingEffect->CreateFrameAnimationFolder("RisingEffect", FrameAnimation_DESC("Tigerstrike_00", 1, 4, 0.1f, true));
+		RisingEffect->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_spin", 3, 9, 0.04f, false));
+
+		RisingEffect->AnimationBindEnd("RisingEffect",
+			[](const FrameAnimation_DESC& _Desc)
+			{
+				_Desc.Renderer->Off();
+			});
+		RisingEffect->ChangeFrameAnimation("RisingEffect");
+		RisingEffect->SetScaleRatio(0.7f);
+		RisingEffect->ScaleToTexture();
+		RisingEffect->GetTransform().SetLocalRotate({ 0, 0  , -110 });
+		RisingEffect->GetTransform().SetLocalPosition({ 5.f , 25.f, -9.f });
+		RisingEffect->GetPixelData().MulColor = { 1.8f, 1.8f, 3.f, 0.5f };
+		RisingEffect->GetTransform().PixLocalNegativeX();
+		RisingEffect->Off();
+		Texture_RisingEffect.push_back(RisingEffect);
 	}
 	{
+		GameEngineTextureRenderer* RisingEffect = GetActor()->CreateComponent<GameEngineTextureRenderer>("RisingEffect");
+		RisingEffect->CreateFrameAnimationFolder("RisingEffect", FrameAnimation_DESC("Tigerstrike_00", 5, 9, 0.085f, true));
+		RisingEffect->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_spin", 3, 9, 0.04f, false));
+
+		RisingEffect->AnimationBindEnd("RisingEffect",
+			[](const FrameAnimation_DESC& _Desc)
+			{
+				_Desc.Renderer->Off();
+			});
+		RisingEffect->ChangeFrameAnimation("RisingEffect");
+		RisingEffect->SetScaleRatio(0.75f);
+		RisingEffect->ScaleToTexture();
+		RisingEffect->GetTransform().SetLocalRotate({ 0, 0  , 85 });
+		RisingEffect->GetTransform().SetLocalPosition({ 60.f , 25.f, -8.f });
+		RisingEffect->GetPixelData().MulColor = { 0.8f, 0.8f, 1.1f, 0.45f };
+		RisingEffect->Off();
+
+		Texture_RisingEffect.push_back(RisingEffect);
+
+		RisingEffect = GetActor()->CreateComponent<GameEngineTextureRenderer>("RisingEffect");
+		RisingEffect->CreateFrameAnimationFolder("RisingEffect", FrameAnimation_DESC("Tigerstrike_00", 5, 9, 0.075f, true));
+		RisingEffect->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_spin", 3, 9, 0.04f, false));
+
+		RisingEffect->AnimationBindEnd("RisingEffect",
+			[](const FrameAnimation_DESC& _Desc)
+			{
+				_Desc.Renderer->Off();
+			});
+		RisingEffect->ChangeFrameAnimation("RisingEffect");
+		RisingEffect->SetScaleRatio(0.95f);
+		RisingEffect->ScaleToTexture();
+		RisingEffect->GetTransform().SetLocalRotate({ 0, 0  , -80 });
+		RisingEffect->GetTransform().SetLocalPosition({ -58.f , 10, -8.f });
+		RisingEffect->GetTransform().PixLocalNegativeX();
+		RisingEffect->GetPixelData().MulColor = { 0.8f, 0.8f, 1.1f, 0.45f };
+		RisingEffect->Off();
+
+		Texture_RisingEffect.push_back(RisingEffect);
+
+	}
+
+	{
 		
-	//	Texture_Wind_0 = GetActor()->CreateComponent<GameEngineTextureRenderer>("Texture_Wind_0");
-	//	Texture_Wind_0->CreateFrameAnimationFolder("Texture_Wind_0", FrameAnimation_DESC("Texture_Wind_0", 0.04f, false));
-	//	Texture_Wind_0->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Texture_Wind_0", 0.04f, false));
-	//	Texture_Wind_0->AnimationBindEnd("Texture_Rising_spin",
-	//		[](const FrameAnimation_DESC& _Desc)
-	//		{
-	//			_Desc.Renderer->Off();
-	//		});
-	//	Texture_Wind_0->ChangeFrameAnimation("Texture_Rising_spin");
-	//	Texture_Wind_0->ScaleToTexture();
-	////	Texture_Wind_0->GetTransform().SetLocalScale({ Texture_Rising_Spin->GetTransform().GetLocalScale().x * 0.8f, Texture_Rising_Spin->GetTransform().GetLocalScale().y * 0.5f });
-	//	//Texture_Wind_0->GetTransform().SetLocalRotate({ 0, 0 , 90 });
-	//	Texture_Wind_0->GetTransform().SetLocalPosition({ -20 , 50.f, -90.f });
-	//	Texture_Wind_0->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
-	//	Texture_Wind_0->Off();
+		GameEngineTextureRenderer* Texture_Wind_0 = Actor_DummyActor->CreateComponent<GameEngineTextureRenderer>("Texture_Wind_0");
+		Texture_Wind_0->CreateFrameAnimationFolder("Texture_Wind_5", FrameAnimation_DESC("Rising_wind5", 5, 10, 0.2f, false));
+		Texture_Wind_0->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_wind", 0.04f, false));
+		Texture_Wind_0->AnimationBindEnd("Texture_Wind_5",
+			[](const FrameAnimation_DESC& _Desc)
+			{
+				_Desc.Renderer->Off();
+			});
+		Texture_Wind_0->ChangeFrameAnimation("Texture_Wind_5");
+		Texture_Wind_0->SetScaleRatio(1.2f);
+		Texture_Wind_0->ScaleToTexture();
+	//	Texture_Wind_0->GetTransform().SetLocalScale({ Texture_Rising_Spin->GetTransform().GetLocalScale().x * 0.8f, Texture_Rising_Spin->GetTransform().GetLocalScale().y * 0.5f });
+		//Texture_Wind_0->GetTransform().SetLocalRotate({ 0, 0 , 90 });
+		Texture_Wind_0->GetTransform().SetLocalPosition({ 0 , 0, -20.f });
+		Texture_Wind_0->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texture_Wind_0->GetPixelData().MulColor.a = 0.9f;
+		Texture_Wind_0->Off();
+		Texture_Wind.push_back(Texture_Wind_0);
+
+		Texture_Wind_0 = Actor_DummyActor->CreateComponent<GameEngineTextureRenderer>("Texture_Wind_0");
+		Texture_Wind_0->CreateFrameAnimationFolder("Texture_Wind_5", FrameAnimation_DESC("Rising_wind5", 5, 10, 0.2f, false));
+		Texture_Wind_0->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_wind", 0.04f, false));
+		Texture_Wind_0->AnimationBindEnd("Texture_Wind_5",
+			[](const FrameAnimation_DESC& _Desc)
+			{
+				_Desc.Renderer->Off();
+			});
+		Texture_Wind_0->ChangeFrameAnimation("Texture_Wind_5");
+		Texture_Wind_0->SetScaleRatio(1.8f);
+		Texture_Wind_0->ScaleToTexture();
+		//	Texture_Wind_0->GetTransform().SetLocalScale({ Texture_Rising_Spin->GetTransform().GetLocalScale().x * 0.8f, Texture_Rising_Spin->GetTransform().GetLocalScale().y * 0.5f });
+			//Texture_Wind_0->GetTransform().SetLocalRotate({ 0, 0 , 90 });
+		Texture_Wind_0->GetTransform().SetLocalPosition({ 0 , 0, -20.f });
+		Texture_Wind_0->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texture_Wind_0->GetTransform().PixLocalNegativeX();
+		Texture_Wind_0->GetPixelData().MulColor.a = 0.9f;
+		Texture_Wind_0->Off();
+		Texture_Wind.push_back(Texture_Wind_0);
+
+		Texture_Wind_0 = Actor_DummyActor->CreateComponent<GameEngineTextureRenderer>("Texture_Wind_0");
+		Texture_Wind_0->CreateFrameAnimationFolder("Texture_Wind_5", FrameAnimation_DESC("Rising_wind5", 0, 4, 0.2f, false));
+		Texture_Wind_0->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_wind", 0.04f, false));
+		Texture_Wind_0->AnimationBindEnd("Texture_Wind_5",
+			[](const FrameAnimation_DESC& _Desc)
+			{
+				_Desc.Renderer->Off();
+			});
+		Texture_Wind_0->ChangeFrameAnimation("Texture_Wind_5");
+		Texture_Wind_0->SetScaleRatio(1.2f);
+		Texture_Wind_0->ScaleToTexture();
+		//	Texture_Wind_0->GetTransform().SetLocalScale({ Texture_Rising_Spin->GetTransform().GetLocalScale().x * 0.8f, Texture_Rising_Spin->GetTransform().GetLocalScale().y * 0.5f });
+			//Texture_Wind_0->GetTransform().SetLocalRotate({ 0, 0 , 90 });
+		Texture_Wind_0->GetTransform().SetLocalPosition({ 0 , 50, -20.f });
+		Texture_Wind_0->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texture_Wind_0->GetTransform().PixLocalNegativeX();
+		Texture_Wind_0->GetPixelData().MulColor.a = 0.9f;
+		Texture_Wind_0->Off();
+		Texture_Wind.push_back(Texture_Wind_0);
+
+		Texture_Wind_0 = Actor_DummyActor->CreateComponent<GameEngineTextureRenderer>("Texture_Wind_0");
+		Texture_Wind_0->CreateFrameAnimationFolder("Texture_Wind", FrameAnimation_DESC("Rising_wind", 0, 11, 0.05f, false));
+		Texture_Wind_0->CreateFrameAnimationFolder("Texture_Wind_2", FrameAnimation_DESC("Rising_wind", 12, 16, 0.125f, false));
+		Texture_Wind_0->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_wind", 0.04f, false));
+		Texture_Wind_0->AnimationBindEnd("Texture_Wind",
+			[](const FrameAnimation_DESC& _Desc)
+			{
+				_Desc.Renderer->Off();
+			});
+		Texture_Wind_0->ChangeFrameAnimation("Texture_Wind");
+		Texture_Wind_0->SetScaleRatio(1.2f);
+		Texture_Wind_0->ScaleToTexture();
+		//	Texture_Wind_0->GetTransform().SetLocalScale({ Texture_Rising_Spin->GetTransform().GetLocalScale().x * 0.8f, Texture_Rising_Spin->GetTransform().GetLocalScale().y * 0.5f });
+			//Texture_Wind_0->GetTransform().SetLocalRotate({ 0, 0 , 90 });
+		Texture_Wind_0->GetTransform().SetLocalPosition({ 0 , 70, -20.f });
+		Texture_Wind_0->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texture_Wind_0->GetTransform().PixLocalNegativeX();
+		Texture_Wind_0->GetPixelData().MulColor = {1.2f,1.2f,1.2f, 0.7f };
+		Texture_Wind_0->Off();
+		Texture_Wind.push_back(Texture_Wind_0);
+		
 	}
 
 	//{
@@ -161,7 +307,7 @@ bool Skill_Fighter_F_Rising::ActiveSkill(CharacterStatManager* _Stat, MoveManage
 	switch (int_ComboStuck)
 	{
 	case 0:
-		if (_Avata->GetAvata_Skin()->EndFrame)
+		if (_Avata->GetAvata_Skin()->IsEndFrame())
 		{
 			_Stat->SetJump();
 			_Avata->ChangeAvataAnimation("Att_RisingUpper_Jump");
@@ -170,30 +316,74 @@ bool Skill_Fighter_F_Rising::ActiveSkill(CharacterStatManager* _Stat, MoveManage
 			int_ComboStuck = 1;
 
 			{
-				//Texture_Rising_spin[0]->ChangeFrameAnimation("None");
-				//Texture_Rising_spin[0]->ChangeFrameAnimation("Texture_Rising_spin");
+				Texture_Rising_spin[0]->ChangeFrameAnimation("None");
+				Texture_Rising_spin[0]->ChangeFrameAnimation("Texture_Rising_spin");
 				//Texture_Rising_spin[0]->On();
 			}
 			{
-				//Texture_Rising_spin[1]->ChangeFrameAnimation("None");
-				//Texture_Rising_spin[1]->ChangeFrameAnimation("Texture_Rising_spin");
+				Texture_Rising_spin[1]->ChangeFrameAnimation("None");
+				Texture_Rising_spin[1]->ChangeFrameAnimation("Texture_Rising_spin");
 				//Texture_Rising_spin[1]->On();
 			}
 			{
 				Texture_RisingEffect[0]->ChangeFrameAnimation("None");
 				Texture_RisingEffect[0]->ChangeFrameAnimation("RisingEffect");
-				Texture_RisingEffect[0]->On();
+				//Texture_RisingEffect[0]->On();
 
 			}
+			{
+				Texture_RisingEffect[1]->ChangeFrameAnimation("None");
+				Texture_RisingEffect[1]->ChangeFrameAnimation("RisingEffect");
+				//Texture_RisingEffect[1]->On();
+
+			}
+			{
+				Texture_RisingEffect[2]->ChangeFrameAnimation("None");
+				Texture_RisingEffect[2]->ChangeFrameAnimation("RisingEffect");
+				//Texture_RisingEffect[2]->On();
+
+			}
+			{
+				 Texture_RisingEffect[3]->ChangeFrameAnimation("None");
+				 Texture_RisingEffect[3]->ChangeFrameAnimation("RisingEffect");
+				 //Texture_RisingEffect[3]->On();
+			}
+			{
+				Texture_RisingEffect[4]->ChangeFrameAnimation("None");
+				Texture_RisingEffect[4]->ChangeFrameAnimation("RisingEffect");
+				//Texture_RisingEffect[4]->On();
+			}
+
 
 			return false;
+		}
+		else if (_Avata->GetAvata_Skin()->GetCurrentFrameStuck() == 12 && Is_CollisionCheck ==false)
+		{
+			Texture_Wind[0]->ChangeFrameAnimation("None");
+			Texture_Wind[0]->ChangeFrameAnimation("Texture_Wind_5");
+			Texture_Wind[0]->On();
+
+			Texture_Wind[1]->ChangeFrameAnimation("None");
+			Texture_Wind[1]->ChangeFrameAnimation("Texture_Wind_5");
+			Texture_Wind[1]->On();
+
+
+			Texture_Wind[2]->ChangeFrameAnimation("None");
+			Texture_Wind[2]->ChangeFrameAnimation("Texture_Wind_5");
+			Texture_Wind[2]->On();
+
+			Texture_Wind[3]->ChangeFrameAnimation("None");
+			Texture_Wind[3]->ChangeFrameAnimation("Texture_Wind");
+			Texture_Wind[3]->On();
+
+			Is_CollisionCheck = true;
 		}
 		break;
 	case 1:
 	{
 		JumpTime += _DeltaTime;
-
-		if (JumpTime * 7.5f >= 1.f)
+		GetActor()->GetTransform().SetLocalMove({ 0, Skill_Rising_High * (JumpTime - _DeltaTime), 0 });
+		if (GetActor()->GetTransform().GetWorldPosition().y >= LandPos.y + Skill_Rising_High) //(JumpTime * 7.5f >= 1.f)
 		{
 			GetActor()->GetTransform().SetLocalPosition({ LandPos.x, LandPos.y + Skill_Rising_High, LandPos.z });
 			_Avata->ChangeAvataAnimation("Att_RisingUpper_Spin");
@@ -203,9 +393,9 @@ bool Skill_Fighter_F_Rising::ActiveSkill(CharacterStatManager* _Stat, MoveManage
 		}
 		else
 		{
-			GetActor()->GetTransform().SetLocalPosition(float4::LerpLimit(LandPos, { LandPos.x, LandPos.y + Skill_Rising_High, LandPos.z }, JumpTime * 7.5f));
-			return false;
+			CheckCollision(0);
 		}
+		return false;
 	}
 
 		break;
@@ -234,7 +424,7 @@ bool Skill_Fighter_F_Rising::ActiveSkill(CharacterStatManager* _Stat, MoveManage
 		break;
 	case 4:
 		JumpTime += _DeltaTime;
-		GetActor()->GetTransform().SetLocalMove({ 0, -Skill_Rising_High * JumpTime, 0 });
+		GetActor()->GetTransform().SetLocalMove({ 0, -Skill_Rising_High * (JumpTime - _DeltaTime), 0 });
 		if (GetActor()->GetTransform().GetWorldPosition().y <= LandPos.y)
 		{
 			_Stat->SetJumpEnd();
@@ -242,6 +432,10 @@ bool Skill_Fighter_F_Rising::ActiveSkill(CharacterStatManager* _Stat, MoveManage
 			_Avata->ChangeAvataAnimation("Att_RisingUpper_Landing");
 			int_ComboStuck = 5;
 			JumpTime = 0;
+
+			Texture_Wind[3]->ChangeFrameAnimation("Texture_Wind_2");
+			Texture_Wind[3]->On();
+			return false;
 		}
 
 
@@ -330,7 +524,8 @@ void Skill_Fighter_F_Rising::StartSkill(CharacterStatManager* _Stat, MoveManager
 	_Avata->ChangeAvataAnimation("Att_RisingUpper_Ready");
 	int_ComboStuck = 0;
 	JumpTime = 0;
-	LandPos = float4::ZERO;
+	LandPos = GetActor()->GetTransform().GetWorldPosition();
+	Actor_DummyActor->GetTransform().SetLocalPosition(LandPos);
 	_Avata->SetShake(2.f, 0.2f);
 
 

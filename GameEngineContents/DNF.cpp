@@ -20,6 +20,7 @@
 #include "DungeonSelect.h"
 #include "DungeonLoding.h"
 #include "GamePlayItem_DESC.h"
+#include <GameEngineCore/GameEngineFont.h>
 
 //#pragma comment(lib, "GameEngineBase.lib")
 
@@ -86,6 +87,7 @@ void DNF::BaseSoundLoad()
 
 void DNF::BaseTextureLoad()
 {
+	GameEngineFont::Load("±¼¸²");
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExitsChildDirectory("Resource");
@@ -433,6 +435,23 @@ void DNF::BaseFolderTextureLoad()
 
 		for (GameEngineDirectory& DirIter : AllTextureDir)
 		{
+			GameEngineFolderTexture::Load(DirIter.GetFullPath());
+		}
+	}
+
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resource");
+		Dir.Move("Resource");
+		Dir.Move("Texture");
+		Dir.Move("UI");
+		Dir.Move("LevelUp");
+
+		std::vector<GameEngineDirectory> AllTextureDir = Dir.GetRecursiveAllDirectory();
+
+		for (GameEngineDirectory& DirIter : AllTextureDir)
+		{
+
 			GameEngineFolderTexture::Load(DirIter.GetFullPath());
 		}
 	}

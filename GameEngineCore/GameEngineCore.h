@@ -1,11 +1,9 @@
 #pragma once
 #include <GameEngineBase/GameEngineString.h>
 #include <GameEngineBase/GameEngineDebug.h>
-#include <GameEngineBase/GameEngineMath.h>
 #include <map>
 
 // Ό³Έν :
-class GameEngineLevel;
 class GameEngineCore
 {
 	friend class GEngine;

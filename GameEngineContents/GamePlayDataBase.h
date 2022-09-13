@@ -21,13 +21,43 @@ enum class InventoryBag
 	, Inventory_Avata_Wear
 	, Inventory_Pet
 };
+
+enum class StatClass
+{
+	  Level
+	, MaxEXP
+	, EXP
+	, MoveSpeed
+	, AttSpeed
+	, CastSpeed
+	, MAXHP
+	, MAXMP
+	, HP
+	, MP
+	, Physical_Armor
+	, Magcial_Armor
+	, STR
+	, INT
+	, Health
+	, SPI
+	, Physical_Damage
+	, Magcial_Damage
+	, Independent_Damage
+	, Physical_Critical
+	, Magcial_Critical
+	, Accuracy
+	, Evasion
+	, Hit_Stun
+	, Hit_Recovery
+	, JumpPower
+};
 class CharacterAbilityStat
 {
 	friend class CharacterStatManager;
 	friend class GamePlayCharacter;
 public:
 	CharacterAbilityStat()
-		: Level(0)
+		: Level(1)
 		, MaxEXP(1000)
 		, EXP(0)
 		, MoveSpeed(2.0f)
@@ -58,10 +88,15 @@ public:
 
 	}
 
+	inline void SetMaxEXPbyLevel()
+	{
+		MaxEXP = Level * 10000;
+	}
+
 private:
 	unsigned int Level;
-	unsigned int MaxEXP;
-	int EXP;
+	unsigned __int64 MaxEXP;
+	unsigned __int64 EXP;
 
 	unsigned int MAXHP;
 	int HP;
@@ -165,6 +200,9 @@ public:
 
 	void CreateItem(GamePlayItemCode _Code, int _Stack);
 	bool PushInventoryToItem(InventoryData* _Data);
+
+
+
 protected:
 
 private:

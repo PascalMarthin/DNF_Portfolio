@@ -25,6 +25,8 @@ protected:
 
 	void LevelStartEvent() override;
 	//void LevelEndEvent() override;
+
+	void Mouse_RClick(GamePlayItem* _Item) override;
 private:
 
 

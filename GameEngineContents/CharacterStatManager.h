@@ -26,7 +26,10 @@ public:
 	{
 		return FSMManager;
 	}
-
+	static CharacterStatManager* GetInst()
+	{
+		return CharacterStatManager::Inst;
+	}
 
 
 public:
@@ -142,7 +145,7 @@ public:
 		return CurrentPlayerAbilityStat->MoveSpeed;
 	}
 
-
+	void LevelUp();
 
 protected:
 	void Start() override;
@@ -163,8 +166,15 @@ private:
 private:
 	GameEngineStateManager FSMManager;
 	CharacterAbilityStat* CurrentPlayerAbilityStat;
+
+	static CharacterStatManager* Inst;
+
+
 	MonsterAbilityStat* CurrentMonsterAbilityStat;
 private:
 	float Time_CurrentEngage;
+
+	std::vector<GameEngineTextureRenderer*> Texture_LevelUp;
+	float LevelUpTime;
 };
 

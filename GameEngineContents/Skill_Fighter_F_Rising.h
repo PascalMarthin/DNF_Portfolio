@@ -1,6 +1,6 @@
 #pragma once
 #include "GamePlaySkill.h"
-#define Skill_Rising_High 200.f
+#define Skill_Rising_High 180.f
 
 // Ό³Έν :
 class Skill_Fighter_F_Rising : public GamePlaySkill
@@ -31,14 +31,16 @@ protected:
 private:
 	float JumpTime;
 	float4 LandPos;
-	GameEngineTextureRenderer* Texture_Wind_0;
-	GameEngineTextureRenderer* Texture_Wind_2;
-	GameEngineTextureRenderer* Texture_Wind_5;
+	std::vector<GameEngineTextureRenderer*> Texture_Wind;
+	//GameEngineTextureRenderer* Texture_Wind_0;
+	//GameEngineTextureRenderer* Texture_Wind_2;
+	//GameEngineTextureRenderer* Texture_Wind_5;
 
 	std::vector<GameEngineTextureRenderer*> Texture_Rising_spin;
 	std::vector<GameEngineTextureRenderer*> Texture_RisingEffect;
-	GameEngineTextureRenderer* Texture_EffectAir_1;
-	GameEngineTextureRenderer* Texture_EffectAir_2;
+
+	//GameEngineTextureRenderer* Texture_EffectAir_1;
+	//GameEngineTextureRenderer* Texture_EffectAir_2;
 
 	static GameEngineFolderTexture* FolderTexture_Rising_spin;
 	static GameEngineFolderTexture* FolderTexture_Tigerstrike_00;

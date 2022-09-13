@@ -5,14 +5,16 @@
 #include "GamePlayEnum.h"
 #include "GamePlayCharacter.h"
 #include "GamePlayMonster.h"
+#include "StatWindow.h"
 
 
-
+CharacterStatManager* CharacterStatManager::Inst = nullptr;
 CharacterStatManager::CharacterStatManager() 
 	: PlayerCurrentState(0x0)
 	, Time_CurrentEngage(0.f)
 	, CurrentPlayerAbilityStat(nullptr)
 	, CurrentMonsterAbilityStat(nullptr)
+	, LevelUpTime(0)
 {
 }
 
@@ -24,6 +26,7 @@ CharacterStatManager::~CharacterStatManager()
 void CharacterStatManager::Start()
 {
 	SettingFirstTime();
+
 }
 
 void CharacterStatManager::SettingFirstTime()
@@ -34,6 +37,90 @@ void CharacterStatManager::SettingFirstTime()
 	{
 	case ObjectType::Character:
 		SetCharacter_Fighter_F();
+		{
+			GameEngineTextureRenderer* LevelUp = Object->CreateComponent<GameEngineTextureRenderer>();
+			LevelUp->CreateFrameAnimationFolder("LevelEffect", FrameAnimation_DESC("Level_grounda",0.125f ,false));
+			LevelUp->ChangeFrameAnimation("LevelEffect");
+			LevelUp->ScaleToTexture();
+			LevelUp->GetTransform().SetLocalPosition({0, -50, 5});
+			LevelUp->AnimationBindEnd("LevelEffect", 
+				[](const FrameAnimation_DESC& _Desc)
+				{
+					_Desc.Renderer->Off();
+				});
+			LevelUp->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+			LevelUp->GetPixelData().MulColor.a = 1.f;
+			LevelUp->Off();
+			Texture_LevelUp.push_back(LevelUp);
+
+			LevelUp = Object->CreateComponent<GameEngineTextureRenderer>();
+			LevelUp->CreateFrameAnimationFolder("LevelEffect", FrameAnimation_DESC("Level_groundb", 0.125f, false));
+			LevelUp->ChangeFrameAnimation("LevelEffect");
+			LevelUp->ScaleToTexture();
+			LevelUp->GetTransform().SetLocalPosition({ 0, -50, 5 });
+			LevelUp->GetPixelData().MulColor = { 0.9f, 0.9f, 1.5f, 1.f };
+			LevelUp->GetPixelData().PlusColor.a = 1.f;
+			LevelUp->AnimationBindEnd("LevelEffect",
+				[](const FrameAnimation_DESC& _Desc)
+				{
+					_Desc.Renderer->Off();
+				});
+			LevelUp->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+			LevelUp->Off();
+			Texture_LevelUp.push_back(LevelUp);
+
+			LevelUp = Object->CreateComponent<GameEngineTextureRenderer>();
+			LevelUp->CreateFrameAnimationFolder("LevelEffect", FrameAnimation_DESC("Level_lighta", 0.125f, false));
+			LevelUp->ChangeFrameAnimation("LevelEffect");
+			LevelUp->GetTransform().SetLocalPosition({ 0, 280 });
+			LevelUp->ScaleToTexture();
+			LevelUp->AnimationBindEnd("LevelEffect",
+				[](const FrameAnimation_DESC& _Desc)
+				{
+					_Desc.Renderer->Off();
+				});
+			LevelUp->Off();
+			LevelUp->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+			Texture_LevelUp.push_back(LevelUp);
+
+			LevelUp = Object->CreateComponent<GameEngineTextureRenderer>();
+			LevelUp->CreateFrameAnimationFolder("LevelEffect", FrameAnimation_DESC("Level_particle", 0.125f, false));
+			LevelUp->ChangeFrameAnimation("LevelEffect");
+			LevelUp->ScaleToTexture();
+			LevelUp->AnimationBindEnd("LevelEffect",
+				[](const FrameAnimation_DESC& _Desc)
+				{
+					_Desc.Renderer->Off();
+				});
+			LevelUp->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+			LevelUp->Off();
+			Texture_LevelUp.push_back(LevelUp);
+
+			LevelUp = Object->CreateComponent<GameEngineTextureRenderer>();
+			LevelUp->CreateFrameAnimationFolder("LevelEffect", FrameAnimation_DESC("Level_shock", 0.15f, false));
+			LevelUp->ChangeFrameAnimation("LevelEffect");
+			LevelUp->ScaleToTexture();
+			LevelUp->AnimationBindEnd("LevelEffect",
+				[](const FrameAnimation_DESC& _Desc)
+				{
+					_Desc.Renderer->Off();
+				});
+			LevelUp->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+			LevelUp->Off();
+			Texture_LevelUp.push_back(LevelUp);
+
+			LevelUp = Object->CreateComponent<GameEngineTextureRenderer>();
+			LevelUp->SetFolderTextureToIndex("Levelup_Font", 0);
+			LevelUp->GetTransform().SetLocalPosition({0, 40});
+			LevelUp->ScaleToTexture();
+			LevelUp->Off();
+			Texture_LevelUp.push_back(LevelUp);
+
+		}
+		{
+			Object->GetLevel()->CreateActor<StatWindow>();
+		}
+
 		break;
 	case ObjectType::Monster:
 
@@ -74,6 +161,23 @@ void CharacterStatManager::Update(float _DeltaTime)
 	Time_CurrentEngage -= _DeltaTime;
 
 	FSMManager.Update(_DeltaTime);
+
+	if (Texture_LevelUp[5]->IsUpdate())
+	{
+		LevelUpTime += _DeltaTime;
+		if (LevelUpTime > 3.f)
+		{
+			Texture_LevelUp[5]->Off();
+		}
+
+
+		Texture_LevelUp[5]->GetPixelData().MulColor.a += _DeltaTime;
+		if (Texture_LevelUp[5]->GetPixelData().MulColor.a > 1.f)
+		{
+			Texture_LevelUp[5]->GetPixelData().MulColor.a = 1.f;
+		}
+		//float4::LerpLimit()
+	}
 
 	if (!IsLive() || CurrentPlayerAbilityStat->HP < 0.f)
 	{
@@ -250,12 +354,38 @@ void CharacterStatManager::SetDoSkillEnd()
 }
 
 
+void CharacterStatManager::LevelUp()
+{
+	CurrentPlayerAbilityStat->Level += 1;
+	CurrentPlayerAbilityStat->EXP = 0;
+	CurrentPlayerAbilityStat->SetMaxEXPbyLevel();
+	LevelUpTime = 0;
+
+	Texture_LevelUp[0]->ChangeFrameAnimation("LevelEffect", true);
+	Texture_LevelUp[0]->On();
+
+	Texture_LevelUp[1]->ChangeFrameAnimation("LevelEffect", true);
+	Texture_LevelUp[1]->On();
+
+	Texture_LevelUp[2]->ChangeFrameAnimation("LevelEffect", true);
+	Texture_LevelUp[2]->On();
+
+	Texture_LevelUp[3]->ChangeFrameAnimation("LevelEffect", true);
+	Texture_LevelUp[3]->On();
+
+	Texture_LevelUp[4]->ChangeFrameAnimation("LevelEffect", true);
+	Texture_LevelUp[4]->On();
+
+	Texture_LevelUp[5]->GetPixelData().MulColor.a = 0.f;
+	Texture_LevelUp[5]->On();
+}
+
 
 
 
 void CharacterStatManager::LevelStartEvent()
 {
-	;
+	
 	switch (GetParent<GamePlayObject>()->GetObjectType())
 	{
 	case ObjectType::Character:
@@ -279,7 +409,7 @@ void CharacterStatManager::LevelStartEvent()
 		break;
 	}
 
-
+	CharacterStatManager::Inst = this;
 
 }
 
@@ -289,4 +419,6 @@ void CharacterStatManager::LevelEndEvent()
 
 	PlayerCurrentState = 0x0;
 	Time_CurrentEngage = 0.f;
+
+	CharacterStatManager::Inst = nullptr;
 }

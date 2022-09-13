@@ -227,6 +227,9 @@
     <ClInclude Include="Item_Consumable.h">
       <Filter>UI\Item</Filter>
     </ClInclude>
+    <ClInclude Include="StatWindow.h">
+      <Filter>Object\Character\Inventory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -451,6 +454,9 @@
     </ClCompile>
     <ClCompile Include="Item_Consumable.cpp">
       <Filter>UI\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="StatWindow.cpp">
+      <Filter>Object\Character\Inventory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
