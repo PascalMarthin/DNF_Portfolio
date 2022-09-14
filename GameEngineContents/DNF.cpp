@@ -539,7 +539,7 @@ void DNF::BaseKeySetting()
 		GameEngineInput::GetInst()->CreateKey("Inventory", 'I');
 		GameEngineInput::GetInst()->CreateKey("Avata", 'U');
 		GameEngineInput::GetInst()->CreateKey("Skill", 'K');
-		GameEngineInput::GetInst()->CreateKey("MyStat", 'P');
+		GameEngineInput::GetInst()->CreateKey("MyProfile", 'M');
 	}
 	{
 		GameEngineInput::GetInst()->CreateKey("LMouseCLK", MK_LBUTTON);

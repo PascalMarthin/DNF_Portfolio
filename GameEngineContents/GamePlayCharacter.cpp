@@ -106,6 +106,19 @@ void GamePlayCharacter::Update(float _Delta)
 		}
 	}
 
+	if (GameEngineInput::GetInst()->IsDown("MyProfile"))
+	{
+		if (Manager_StatManager->StatWindowIsUpdate())
+		{
+			Manager_StatManager->StatWindowOff();
+		}
+		else
+		{
+			Manager_StatManager->StatWindowOn();
+		}
+		
+	}
+
 	
 }
 

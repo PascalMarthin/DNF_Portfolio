@@ -17,6 +17,9 @@ public:
 	StatWindow& operator=(const StatWindow& _Other) = delete;
 	StatWindow& operator=(StatWindow&& _Other) noexcept = delete;
 
+
+	void RefreshStat();
+	void SetClone();
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -30,8 +33,10 @@ protected:
 private:
 	void SetFontPos();
 
+	std::vector<GameEngineUIRenderer*> Avata_Clone;
+
 	GameEngineUIRenderer* Texture_Profile;
 	std::map<StatClass ,GameEngineFontRenderer*> Font_Renderer;
-
+	
 };
 

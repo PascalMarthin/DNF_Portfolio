@@ -3,6 +3,7 @@
 #include <GameEngineCore/GameEngineStateManager.h>
 #include "GamePlayEnum.h"
 #include "GamePlayDataBase.h"
+#include "StatWindow.h"
 
 
 // 설명 : 상태를 체크하고 업데이트마다 정리하는 클래스
@@ -31,6 +32,18 @@ public:
 		return CharacterStatManager::Inst;
 	}
 
+	inline void StatWindowOn()
+	{
+		Window_Stat->On();
+	}
+	inline void StatWindowOff()
+	{
+		Window_Stat->Off();
+	}
+	inline bool StatWindowIsUpdate()
+	{
+		return Window_Stat->IsUpdate();
+	}
 
 public:
 	inline CharacterAbilityStat* GetAbilityStat() const
@@ -166,6 +179,7 @@ private:
 private:
 	GameEngineStateManager FSMManager;
 	CharacterAbilityStat* CurrentPlayerAbilityStat;
+	StatWindow* Window_Stat;
 
 	static CharacterStatManager* Inst;
 

@@ -55,6 +55,7 @@ class CharacterAbilityStat
 {
 	friend class CharacterStatManager;
 	friend class GamePlayCharacter;
+	friend class StatWindow;
 public:
 	CharacterAbilityStat()
 		: Level(1)
@@ -65,19 +66,19 @@ public:
 		, CastSpeed(1.f)
 		, MAXHP(1000)
 		, MAXMP(1000)
-		, HP(0)
-		, MP(0)
-		, Physical_Armor(0.f)
-		, Magcial_Armor(0.f)
-		, STR(0)
-		, INT(0)
-		, Health(0)
-		, SPI(0)
-		, Physical_Damage(0)
-		, Magcial_Damage(0)
-		, Independent_Damage(0)
-		, Physical_Critical(0.f)
-		, Magcial_Critical(0.f)
+		, HP(1000)
+		, MP(1000)
+		, Physical_Armor(10)
+		, Magcial_Armor(10)
+		, STR(10)
+		, INT(10)
+		, Health(10)
+		, SPI(10)
+		, Physical_Damage(1)
+		, Magcial_Damage(1)
+		, Independent_Damage(1)
+		, Physical_Critical(0)
+		, Magcial_Critical(0)
 		, Accuracy(0.f)
 		, Evasion(0.f)
 		, Hit_Stun(0)
@@ -88,9 +89,20 @@ public:
 
 	}
 
-	inline void SetMaxEXPbyLevel()
+	inline void SetRefreshbyLevel()
 	{
-		MaxEXP = Level * 10000;
+		MaxEXP = Level * 1000;
+		MAXHP = Level * 1520;
+		MAXMP = Level * 300;
+		STR = Level * 31;
+		INT = Level * 31;
+		Health = Level * 30;
+		SPI = Level * 30;
+		Physical_Damage = Level * 112;
+		Magcial_Damage = Level * 112;
+		Independent_Damage = Level * 87;
+		Physical_Armor = Level * 7;
+		Magcial_Armor = Level * 7;
 	}
 
 private:
@@ -103,8 +115,8 @@ private:
 	unsigned int MAXMP;
 	int MP;
 
-	float Physical_Armor; //              방어력
-	float Magcial_Armor; //               마법 방어력
+	unsigned int Physical_Armor; //              방어력
+	unsigned int Magcial_Armor; //               마법 방어력
 	unsigned int STR; // Strength         힘
 	unsigned int INT; // Intelligence     지능
 

@@ -25,6 +25,7 @@ CharacterStatManager::~CharacterStatManager()
 
 void CharacterStatManager::Start()
 {
+	//SetOrder(static_cast<int>(ActorOrder::Manager));
 	SettingFirstTime();
 
 }
@@ -118,7 +119,7 @@ void CharacterStatManager::SettingFirstTime()
 
 		}
 		{
-			Object->GetLevel()->CreateActor<StatWindow>();
+			Window_Stat = Object->GetLevel()->CreateActor<StatWindow>(ActorOrder::Window);
 		}
 
 		break;
@@ -358,7 +359,8 @@ void CharacterStatManager::LevelUp()
 {
 	CurrentPlayerAbilityStat->Level += 1;
 	CurrentPlayerAbilityStat->EXP = 0;
-	CurrentPlayerAbilityStat->SetMaxEXPbyLevel();
+	CurrentPlayerAbilityStat->SetRefreshbyLevel();
+	Window_Stat->RefreshStat();
 	LevelUpTime = 0;
 
 	Texture_LevelUp[0]->ChangeFrameAnimation("LevelEffect", true);
@@ -393,6 +395,8 @@ void CharacterStatManager::LevelStartEvent()
 		SetCharacter_Fighter_F();
 		CurrentPlayerAbilityStat = GamePlayCharacter::GetCurrentCharacterData()->GetAbilityStat();
 		CurrentMonsterAbilityStat = nullptr;
+		
+
 	}
 		break;
 	case ObjectType::Monster:

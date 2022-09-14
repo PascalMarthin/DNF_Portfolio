@@ -76,6 +76,7 @@ public:
 	}
 
 
+
 	void SetAvataSetup(ObjectType _Type);
 	void SetCharacterDefaultAvata(AllCharacterClass _Class, AllAvataClass _Avata);
 

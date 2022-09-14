@@ -364,4 +364,6 @@ enum class ActorOrder
 {
 	None,
 	Mouse = 1,
+	Manager = 2,
+	Window = 3,
 };

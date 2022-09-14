@@ -72,6 +72,10 @@ public:
 	{
 		return CurrentAniPlus;
 	}
+	inline GameEngineFolderTexture* GetFolderTexture() const
+	{
+		return CurrentAvata;
+	}
 
 
 	void ChangeFolderTexturePlus(const std::string& _TextureName);
