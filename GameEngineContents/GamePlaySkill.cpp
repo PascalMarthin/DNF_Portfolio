@@ -11,6 +11,10 @@ GamePlaySkill::GamePlaySkill()
 	, CurrentCoolTime(0.f)
 	, SomeOneHit(false)
 	, Actor_DummyActor(nullptr)
+	, Texture_Thumbnail(nullptr)
+	, CastingTime(0)
+	, CurrentCastingTime(0)
+	, int_SkillLevel(1)
 {
 }
 
@@ -122,6 +126,103 @@ float GamePlaySkill::FSM_Move_Helper()
 	}
 	return MoveIndex;
 }
+void GamePlaySkill::CreateCastingTexture(float _CastingTime)
+{
+	CastingTime = _CastingTime;
+	CurrentCastingTime = 0;
+	GameEngineFolderTexture* Texture = GameEngineFolderTexture::Find("Casting");
+	GameEngineTextureRenderer* Casting = GetActor()->CreateComponent<GameEngineTextureRenderer>();
+	Casting->SetTexture(Texture->GetTexture(0));
+	Casting->ScaleToTexture();
+	Casting->GetTransform().SetLocalPosition({ 0, 55, -100});
+	Vector_CastingTexture.push_back(Casting);
+	Casting->Off();
+
+	Casting = GetActor()->CreateComponent<GameEngineTextureRenderer>();
+	Casting->SetTexture(Texture->GetTexture(1));
+	Casting->ScaleToTexture();
+	Casting->GetTransform().SetLocalPosition({ 0, 55, -100});
+	Casting->GetTransform().PixLocalNegativeX();
+	Vector_CastingTexture.push_back(Casting);
+	Casting->Off();
+
+	Casting = GetActor()->CreateComponent<GameEngineTextureRenderer>();
+	Casting->SetTexture(Texture->GetTexture(2));
+	Casting->ScaleToTexture();
+	Casting->GetTransform().SetLocalPosition({ 0, 55, -100 });
+	Vector_CastingTexture.push_back(Casting);
+	Casting->Off();
+
+	Casting = GetActor()->CreateComponent<GameEngineTextureRenderer>();
+	//Casting->SetTexture(Texture->GetTexture(2));
+	Casting->CreateFrameAnimationFolder("CastingEnd", FrameAnimation_DESC("Casting",4, 9, 0.1f, false));
+	Casting->ChangeFrameAnimation("CastingEnd");
+	Casting->AnimationBindEnd("CastingEnd",
+		[](const FrameAnimation_DESC& _DESC)
+		{
+			_DESC.Renderer->Off();
+		});
+	Casting->ScaleToTexture();
+	Casting->GetTransform().SetLocalPosition({ 0, 55, -100 });
+	Vector_CastingTexture.push_back(Casting);
+	Casting->Off();
+
+	//Casting = GetActor()->CreateComponent<GameEngineTextureRenderer>();
+	//Casting->SetTexture(Texture->GetTexture(4));
+	//Casting->ScaleToTexture();
+	//Casting->GetTransform().SetLocalPosition({ 0, 55, -100 });
+	//Vector_CastingTexture.push_back(Casting);
+	//Casting->Off();
+}
+
+
+void GamePlaySkill::Casting(CharacterStatManager* _Stat, AvataManager* _Avata)
+{
+	int_ComboStuck = 1;
+	CurrentCastingTime = 0;
+	_Stat->SetCasting();
+	_Avata->ChangeAvataAnimation("Att_Casting");
+	for (size_t i = 0; i < Vector_CastingTexture.size() - 1; i++)
+	{
+		Vector_CastingTexture[i]->On();
+	}
+
+	//Vector_CastingTexture[1]->GetTransform().SetLocalScale({0, Vector_CastingTexture[2]->GetTransform().GetLocalScale().y});
+	Vector_CastingTexture[1]->GetPixelData().Slice.x = 1;
+}
+
+void GamePlaySkill::Update(float _DeltaTime)
+{
+	if (CastingTime != 0)
+	{
+		if (CastingTime > CurrentCastingTime && int_ComboStuck == 1)
+		{
+			CurrentCastingTime += _DeltaTime;
+			
+			Vector_CastingTexture[1]->GetPixelData().Slice.x = (1 - (CurrentCastingTime / CastingTime));
+
+			if (CastingTime <= CurrentCastingTime)
+			{
+				int_ComboStuck = 2;
+			}
+		}
+	}
+
+
+}
+
+void GamePlaySkill::CastingEnd(CharacterStatManager* _Stat, AvataManager* _Avata)
+{
+	_Stat->SetCastingEnd();
+	Vector_CastingTexture[1]->GetPixelData().Slice.x = 0;
+	Vector_CastingTexture[3]->ChangeFrameAnimation("CastingEnd", true);
+	Vector_CastingTexture[3]->On();
+	//CastingTime = 0;
+	for (size_t i = 0; i < Vector_CastingTexture.size() - 1; i++)
+	{
+		Vector_CastingTexture[i]->Off();
+	}
+}
 
 void GamePlaySkill::OnEvent()
 {
@@ -138,4 +239,9 @@ void GamePlaySkill::OffEvent()
 {
 	int_ComboStuck = 0;
 	TimePass = 0.f;
+}
+
+void GamePlaySkill::LevelStartEvent()
+{
+	//int_SkillLevel
 }

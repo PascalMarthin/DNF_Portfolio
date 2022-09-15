@@ -4,6 +4,7 @@
 #include "GamePlayCharacter.h"
 #include "AvataManager.h"
 #include "GamePlayItem_DESC.h"
+#include "GameSkillBuff.h"
 #include "Item_Avata.h"
 
 std::map<GamePlayItem_DESC*, std::map<char, GameEngineTexture*>> AvataManager::Static_AllAvataItemData;
@@ -350,6 +351,27 @@ void AvataManager::ReadCharacterDataBase(GamePlayDataBase* _Data)
 	}
 
 }
+void AvataManager::CreateEctAvata(const std::string& _Name, const std::string& _TextureName)
+{
+	std::map<std::string, FrameAnimation_DESC*>& DESC = GamePlayDataBase::GetClassAnimation_DESC(GamePlayDataBase::GetCurrentCharacterData()->GetCharacterClass());
+	GameEnginePlusTextureRenderer* Texture = CreateComponent<GameEnginePlusTextureRenderer>();
+	Texture->GetTransform().SetLocalScale({ 500, 500, 0 });
+	for (auto& Iter : DESC)
+	{
+		Texture->CreateFrameAnimationFolderPlus(Iter.first, (*Iter.second));
+	}
+	Texture_ect[_Name] = Texture;
+}
+
+void AvataManager::DestroyEctAvata(const std::string& _Name)
+{
+	if (Texture_ect.end() != Texture_ect.find(_Name))
+	{
+		Texture_ect[_Name]->Death();
+		Texture_ect.erase(_Name);
+	}
+}
+
 
 void AvataManager::ReadAvataCodeandApply(GamePlayItemCode _Code)
 {
@@ -694,6 +716,11 @@ void AvataManager::ChangeAvataAnimation(const std::string& _AnimationName) const
 	for (GameEnginePlusTextureRenderer* Avata : AllAvatas)
 	{
 		Avata->ChangeFrameAnimationPlus(_AnimationName);
+	}
+
+	for (GameEnginePlusTextureRenderer* ect : Texture_ect)
+	{
+		ect->ChangeFrameAnimationPlus(_AnimationName);
 	}
 }
 

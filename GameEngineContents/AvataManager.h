@@ -76,6 +76,9 @@ public:
 	}
 
 
+	void CreateEctAvata(const std::string& _Name, const std::string& _TextureName);
+	void DestroyEctAvata(const std::string& _Name);
+
 
 	void SetAvataSetup(ObjectType _Type);
 	void SetCharacterDefaultAvata(AllCharacterClass _Class, AllAvataClass _Avata);
@@ -141,6 +144,9 @@ private:
 	GameEnginePlusTextureRenderer* Avata_Skin;
 	GameEnginePlusTextureRenderer* Avata_Neck_k;
 	std::vector<GameEnginePlusTextureRenderer*> AllAvatas;
+
+	std::map<std::string, GameEnginePlusTextureRenderer*> Texture_ect;
+
 
 	std::map<AllAvataClass, std::vector<GameEnginePlusTextureRenderer*>> Map_AllAvatas;
 

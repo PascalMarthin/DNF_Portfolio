@@ -76,6 +76,9 @@ void DNF::AllResourceLoad()
 	BaseSoundLoad();
 	BaseTextureLoad();
 	BaseFolderTextureLoad();
+	BaseShaderLoad();
+
+
 	BaseKeySetting();
 	GamePlayItem_DESC::CreateALLItemData();
 }
@@ -503,6 +506,32 @@ void DNF::BaseFolderTextureLoad()
 	//}
 }
 
+void DNF::BaseShaderLoad()
+{
+	//{
+	//	GameEngineDirectory Dir;
+
+	//	Dir.MoveParentToExitsChildDirectory("Shader");
+	//	Dir.Move("Shader");
+
+	//	std::vector<GameEngineFile> Shaders = Dir.GetAllFile("hlsl");
+
+	//	for (size_t i = 0; i < Shaders.size(); i++)
+	//	{
+	//		GameEngineShader::AutoCompile(Shaders[i].GetFullPath());
+	//	}
+
+	//}
+
+	//{
+	//	GameEngineRenderingPipeLine* NewPipe = GameEngineRenderingPipeLine::Create("Texture_HP");
+	//	NewPipe->SetInputAssembler1VertexBuffer("FullRect");
+	//	NewPipe->SetInputAssembler2IndexBuffer("FullRect");
+	//	NewPipe->SetVertexShader("Texture_HP.hlsl");
+	//	NewPipe->SetPixelShader("Texture_HP.hlsl");
+	//}
+}
+
 void DNF::BaseKeySetting()
 {
 	{
@@ -516,6 +545,8 @@ void DNF::BaseKeySetting()
 		GameEngineInput::GetInst()->CreateKey("Key_W", 'W');
 		GameEngineInput::GetInst()->CreateKey("Key_E", 'E');
 		GameEngineInput::GetInst()->CreateKey("Key_R", 'R');
+		GameEngineInput::GetInst()->CreateKey("Key_T", 'T');
+		GameEngineInput::GetInst()->CreateKey("Key_Y", 'Y');
 	}
 	{
 		GameEngineInput::GetInst()->CreateKey("BaseAtt", 'X');

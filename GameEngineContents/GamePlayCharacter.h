@@ -38,7 +38,10 @@ public:
 	GamePlayCharacter& operator=(GamePlayCharacter&& _Other) noexcept = delete;
 
 	
-
+	inline AvataManager* GetAvataManager() const
+	{
+		return Manager_AvataManager;
+	}
 
 	inline PlayerInterface* GetInterface() const
 	{

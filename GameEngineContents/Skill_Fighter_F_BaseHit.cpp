@@ -61,10 +61,6 @@ void Skill_Fighter_F_BaseHit::Start()
 
 }
 
-void Skill_Fighter_F_BaseHit::Update(float _DeltaTime)
-{
-
-}
 
 bool Skill_Fighter_F_BaseHit::ActiveSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata, float _DeltaTime)
 {

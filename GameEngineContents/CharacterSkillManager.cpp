@@ -46,6 +46,9 @@ void CharacterSkillManager::Start()
 	Staic_CoolTime["Fighter_LightingDance"] = 0.f;
 	List_AllSkill["Fighter_F_Rising"] = GetActor()->CreateComponent<Skill_Fighter_F_Rising>();
 	Staic_CoolTime["Fighter_F_Rising"] = 0.f;
+	List_AllSkill["Fighter_F_KaiKen"] = GetActor()->CreateComponent<Skill_Fighter_F_KaiKen>();
+	Staic_CoolTime["Fighter_F_KaiKen"] = 0.f;
+	
 
 	
 
@@ -102,13 +105,12 @@ void CharacterSkillManager::LevelStartEvent()
 		Skill.second->CurrentCoolTime = Staic_CoolTime[Skill.first];
 	}	
 
-
 	map_SkillSlot['Q'] = nullptr;
 	map_SkillSlot['W'] = nullptr;
 	map_SkillSlot['E'] = List_AllSkill["Fighter_LightingDance"];
 	map_SkillSlot['R'] = nullptr;
 	map_SkillSlot['T'] = nullptr;
-	map_SkillSlot['Y'] = nullptr; 
+	map_SkillSlot['Y'] = List_AllSkill["Fighter_F_KaiKen"];
 	map_SkillSlot['A'] = List_AllSkill["Fighter_ClosePunch"];
 	map_SkillSlot['S'] = List_AllSkill["Fighter_Upper"];
 	map_SkillSlot['D'] = List_AllSkill["Fighter_Bungwon"];

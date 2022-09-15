@@ -15,7 +15,7 @@ InterfaceHUD::InterfaceHUD()
 	, EXPBar(nullptr)
 	, SkillPage(nullptr)
 	, HUDBasePivot({0, 0, ZSortOrder::HUD_Base })
-	, HPBarPivot({ -146 , -6 , 8 })
+	, HPBarPivot({ -146 , -6 , -10 })
 	, MPBarPivot({  146 , -6 , 8 })
 	, SkillInterfacePivot({-88 , -24  })
 	, EXPBarPivot({0, -33  })
@@ -56,13 +56,21 @@ void InterfaceHUD::Start()
 		HUDBase->ScaleToTexture();
 		HUDBase->GetTransform().SetLocalPosition(HUDBasePivot);
 
+		//HPBar->SetPipeLine("Texture_HP");
+		//HPBar->ShaderResources.SetSampler("Smp", "EngineSamplerPoint");
+		//HPBar->ShaderResources.SetConstantBufferLink("HPScaleData", float4{ 0.5f ,0 ,0, 0 });
+		//HPBar->ShaderResources.SetConstantBufferLink("PixelData", HPBar->PixelDataInst);
 		HPBar->SetTexture("HUD_HPBar.png");
 		HPBar->ScaleToTexture();
 		HPBar->GetTransform().SetLocalPosition(HPBarPivot);
+		//HPBar->ShaderResources.SetConstantBufferLink("HPScaleData", float4{ 0.5f,0 ,0, 0 });
 
 		HPBar_Hit->SetTexture("HUD_HPBarHit.png");
 		HPBar_Hit->ScaleToTexture();
 		HPBar_Hit->GetTransform().SetLocalPosition(HPBarPivot);
+
+
+
 
 		MPBar->SetTexture("HUD_MPBar.png");
 		MPBar->ScaleToTexture();

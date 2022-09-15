@@ -56,7 +56,10 @@ public:
 	GamePlaySkill& operator=(GamePlaySkill&& _Other) noexcept = delete;
 
 
-
+	inline unsigned int GetSkillLevel()
+	{
+		return int_SkillLevel;
+	}
 
 	inline int GetCollisionIndex() const
 	{
@@ -92,7 +95,20 @@ protected:
 	bool IsHitObject(GamePlayObject* _Object, int _HitOrder);
 
 	bool Is_CollisionCheck;
+
+
+	// Casting---------
+	void CreateCastingTexture(float _CastingTime);;
+	void Casting(CharacterStatManager* _Stat, AvataManager* _Avata);
+	void CastingEnd(CharacterStatManager* _Stat, AvataManager* _Avata);
+	float CastingTime;
+	float CurrentCastingTime;
+	void Update(float _DeltaTime) override;
+
+	void LevelStartEvent() override;
 	//
+
+
 	void OnEvent() override;
 	void OffEvent() override;
 
@@ -110,8 +126,16 @@ protected:
 	{
 		CoolTime = _Time;
 	}
+	//------Casting-------------
+	std::vector<GameEngineTextureRenderer*> Vector_CastingTexture;
 private:
 	float CoolTime;
 	float CurrentCoolTime;
+
+	GameEngineTexture* Texture_Thumbnail;
+
+
+	//------SkillLevel----
+	unsigned int int_SkillLevel;
 };
 

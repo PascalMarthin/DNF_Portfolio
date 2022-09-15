@@ -6,6 +6,7 @@
 #include "GamePlayCharacter.h"
 #include "GamePlayMonster.h"
 #include "StatWindow.h"
+#include "GameSkillBuff.h"
 
 
 CharacterStatManager* CharacterStatManager::Inst = nullptr;
@@ -179,6 +180,28 @@ void CharacterStatManager::Update(float _DeltaTime)
 		}
 		//float4::LerpLimit()
 	}
+
+
+	if (!List_ActiveBuff.empty())
+	{
+		std::list<GameSkillBuff*>::iterator StartIter = List_ActiveBuff.begin();
+		std::list<GameSkillBuff*>::iterator EndIter = List_ActiveBuff.end();
+
+		for (; StartIter != EndIter;)
+		{
+			if ((*StartIter)->BuffCurrentTime(_DeltaTime))
+			{
+				List_ActiveBuff.erase(StartIter);
+			}
+			else
+			{
+				(*StartIter)->BuffUpdate(this);
+				++StartIter;
+			}
+		}
+		
+	}
+
 
 	if (!IsLive() || CurrentPlayerAbilityStat->HP < 0.f)
 	{
@@ -354,6 +377,15 @@ void CharacterStatManager::SetDoSkillEnd()
 	PlayerCurrentState &= ~CharacterStat::Player_Character_DoSkill;
 }
 
+void CharacterStatManager::SetCasting()
+{
+	PlayerCurrentState |= CharacterStat::Player_Character_Casting;
+}
+
+void CharacterStatManager::SetCastingEnd()
+{
+	PlayerCurrentState &= ~CharacterStat::Player_Character_Casting;
+}
 
 void CharacterStatManager::LevelUp()
 {

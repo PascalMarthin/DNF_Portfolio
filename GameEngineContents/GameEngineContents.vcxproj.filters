@@ -230,6 +230,12 @@
     <ClInclude Include="StatWindow.h">
       <Filter>Object\Character\Inventory</Filter>
     </ClInclude>
+    <ClInclude Include="Skill_Fighter_F_KaiKen.h">
+      <Filter>Object\Character\Fighter</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSkillBuff.h">
+      <Filter>Object\Character\SkillTemp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -457,6 +463,12 @@
     </ClCompile>
     <ClCompile Include="StatWindow.cpp">
       <Filter>Object\Character\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill_Fighter_F_KaiKen.cpp">
+      <Filter>Object\Character\Fighter</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSkillBuff.cpp">
+      <Filter>Object\Character\SkillTemp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

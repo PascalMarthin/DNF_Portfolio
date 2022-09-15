@@ -21,7 +21,7 @@ public:
 	void StartSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata) override;
 protected:
 	void Start() override;
-	void Update(float _DeltaTime) override;
+	//void Update(float _DeltaTime) override;
 
 	// void End() override {}
 	//void OnEvent() override;

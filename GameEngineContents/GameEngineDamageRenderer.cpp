@@ -9,7 +9,7 @@ GameEngineFolderTexture* GameEngineDamageRenderer::Folder_NumberTexture_Nomal = 
 std::list<GameEngineDamageRenderer*> GameEngineDamageRenderer::Static_AllDamageRenderer;
 GameEngineDamageRenderer::GameEngineDamageRenderer()
 	: Critical(false)
-	, CurrentTime(1.5f)
+	, CurrentCastingTime(1.5f)
 	, MaxDamage(false)
 	, CheckTimeEvent(0b0)
 	, FontSize(1.f)
@@ -130,31 +130,31 @@ void GameEngineDamageRenderer::SetPrintingFont(GameEngineDamageRenderer* _FontRe
 
 void GameEngineDamageRenderer::Update(float _Delta)
 {
-	CurrentTime -= _Delta;
+	CurrentCastingTime -= _Delta;
 	//Interval -= _Delta;
-	if (CurrentTime <= 0.f) // AccDeath를 안쓰는 이유 : 죽는 시간을 내가 원할때 하고 싶어서
+	if (CurrentCastingTime <= 0.f) // AccDeath를 안쓰는 이유 : 죽는 시간을 내가 원할때 하고 싶어서
 	{
 		FontEnd();
 	}
-	else if (CurrentTime <= 0.25f) // Disappear
+	else if (CurrentCastingTime <= 0.25f) // Disappear
 	{
 		LastTime();
 	}
-	else if (CurrentTime <= 1.25f) // 크기 조절
+	else if (CurrentCastingTime <= 1.25f) // 크기 조절
 	{
 		SecondTime();
 
 	}
-	else if (CurrentTime <= 1.5f) // 흰색 바탕에 커짐
+	else if (CurrentCastingTime <= 1.5f) // 흰색 바탕에 커짐
 	{
 		FirstTime();
 		if (MaxDamage == true)
 		{
-			if (CurrentTime <= 1.35f)
+			if (CurrentCastingTime <= 1.35f)
 			{
 				All_Font[2]->GetTransform().SetLocalPosition({ 0, 0, -3.f });
 			}
-			float LerpTime = ((1.5f - CurrentTime) / 0.25f);
+			float LerpTime = ((1.5f - CurrentCastingTime) / 0.25f);
 
 			{
 				All_Font[0]->SetScaleRatio(5.f * (1 - LerpTime) + 1.f * LerpTime);
@@ -171,7 +171,7 @@ void GameEngineDamageRenderer::Update(float _Delta)
 		}
 		else
 		{
-			GetTransform().SetLocalScale(FontSize * 0.5f * (1.0f - ((1.5f - CurrentTime) * 4.f)) + FontSize * ((1.5f - CurrentTime) * 5.f)); // Lerp
+			GetTransform().SetLocalScale(FontSize * 0.5f * (1.0f - ((1.5f - CurrentCastingTime) * 4.f)) + FontSize * ((1.5f - CurrentCastingTime) * 5.f)); // Lerp
 		}
 		
 	}

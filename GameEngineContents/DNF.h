@@ -53,6 +53,7 @@ private:
 	void BaseTextureLoad();
 	void BaseFolderTextureLoad();
 	void BaseKeySetting();
+	void BaseShaderLoad();
 	
 
 	// ------------Static----------

@@ -21,6 +21,7 @@ void StatWindow::Start()
 	Texture_Profile = CreateComponent<GameEngineUIRenderer>();
 	Texture_Profile->SetTexture("Window_Stat.png");
 	Texture_Profile->ScaleToTexture();
+	//Texture_Profile->SetPipeLine
 	//(Texture_Profile->)
 
 	{
@@ -262,6 +263,10 @@ void StatWindow::SetFontPos()
 }
 void StatWindow::RefreshStat()
 {
+	if (CharacterStatManager::GetInst() == nullptr)
+	{
+		return;
+	}
 	CharacterAbilityStat* Stat = CharacterStatManager::GetInst()->GetAbilityStat();
 	Font_Renderer[StatClass::MAXHP]->SetText(std::to_string(Stat->HP) +"/"+ std::to_string(Stat->MAXHP), "±¼¸²");
 	Font_Renderer[StatClass::MAXMP]->SetText(std::to_string(Stat->MP) + "/" + std::to_string(Stat->MAXMP), "±¼¸²");

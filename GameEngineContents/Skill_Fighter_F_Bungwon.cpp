@@ -79,11 +79,6 @@ void Skill_Fighter_F_Bungwon::Start()
 
 }
 
-void Skill_Fighter_F_Bungwon::Update(float _DeltaTime)
-{
-
-}
-
 bool Skill_Fighter_F_Bungwon::ActiveSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata, float _DeltaTime)
 {
 	if (_Avata->GetAvata_Skin()->GetCurrentFrameStuck() == 1)

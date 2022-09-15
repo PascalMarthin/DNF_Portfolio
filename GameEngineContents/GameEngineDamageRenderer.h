@@ -47,7 +47,7 @@ private:
 	int CheckTimeEvent;
 
 	float FontSize;
-	float CurrentTime;
+	float CurrentCastingTime;
 	//float Interval;
 
 private:
