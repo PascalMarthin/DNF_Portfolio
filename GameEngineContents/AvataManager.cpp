@@ -9,6 +9,7 @@
 
 std::map<GamePlayItem_DESC*, std::map<char, GameEngineTexture*>> AvataManager::Static_AllAvataItemData;
 AvataManager* AvataManager::CurrentInst = nullptr;
+AvataManager* AvataManager::BeforeAvata = nullptr;
 
 AvataManager::AvataManager() 
 	: CurrentClassData(nullptr)
@@ -351,24 +352,59 @@ void AvataManager::ReadCharacterDataBase(GamePlayDataBase* _Data)
 	}
 
 }
-void AvataManager::CreateEctAvata(const std::string& _Name, const std::string& _TextureName)
+GameEnginePlusTextureRenderer* AvataManager::CreateEctAvata(AllSkillEnum _Enum, const std::string& _TextureName , const float4& _Color)
 {
 	std::map<std::string, FrameAnimation_DESC*>& DESC = GamePlayDataBase::GetClassAnimation_DESC(GamePlayDataBase::GetCurrentCharacterData()->GetCharacterClass());
-	GameEnginePlusTextureRenderer* Texture = CreateComponent<GameEnginePlusTextureRenderer>();
-	Texture->GetTransform().SetLocalScale({ 500, 500, 0 });
-	for (auto& Iter : DESC)
+	if (Texture_ect.find(_Enum) == Texture_ect.end())
 	{
-		Texture->CreateFrameAnimationFolderPlus(Iter.first, (*Iter.second));
+		GameEnginePlusTextureRenderer* Texture = CreateComponent<GameEnginePlusTextureRenderer>();
+		Texture->GetTransform().SetLocalScale({ 500, 500, 0});
+		for (auto& Iter : DESC)
+		{
+			Texture->CreateFrameAnimationFolderPlus(Iter.first, (*Iter.second));
+		}
+		Texture->GetTransform().SetLocalPosition({ 0, 0, Avata_Skin->GetTransform().GetLocalPosition().z - 0.001f});
+		Texture->ChangeFolderTexturePlus(_TextureName);
+		Texture->GetPixelData().MulColor = _Color;
+		Texture_ect[_Enum] = Texture;
+		return Texture;
 	}
-	Texture_ect[_Name] = Texture;
+	else
+	{
+		return Texture_ect.find(_Enum)->second;
+	}
 }
 
-void AvataManager::DestroyEctAvata(const std::string& _Name)
+GameEnginePlusTextureRenderer* AvataManager::CreateEctAvata(AllSkillEnum _Enum, GameEnginePlusTextureRenderer* _Texture)
 {
-	if (Texture_ect.end() != Texture_ect.find(_Name))
+	std::map<std::string, FrameAnimation_DESC*>& DESC = GamePlayDataBase::GetClassAnimation_DESC(GamePlayDataBase::GetCurrentCharacterData()->GetCharacterClass());
+	if (Texture_ect.find(_Enum) == Texture_ect.end())
 	{
-		Texture_ect[_Name]->Death();
-		Texture_ect.erase(_Name);
+		GameEnginePlusTextureRenderer* Texture = CreateComponent<GameEnginePlusTextureRenderer>();
+		Texture->GetTransform().SetLocalScale({ 500, 500, 0 });
+		for (auto& Iter : DESC)
+		{
+			Texture->CreateFrameAnimationFolderPlus(Iter.first, (*Iter.second));
+		}
+		Texture->GetTransform().SetLocalPosition({ 0, 0, Avata_Skin->GetTransform().GetLocalPosition().z - 0.001f });
+		Texture->ChangeFolderTexturePlus(_Texture->GetFolderTexture());
+		Texture->GetPixelData().MulColor = _Texture->GetPixelData().MulColor;
+		Texture_ect[_Enum] = Texture;
+		return Texture;
+	}
+	else
+	{
+		return Texture_ect.find(_Enum)->second;
+	}
+
+}
+
+void AvataManager::DestroyEctAvata(AllSkillEnum _Enum)
+{
+	if (Texture_ect.end() != Texture_ect.find(_Enum))
+	{
+		Texture_ect[_Enum]->Death();
+		Texture_ect.erase(_Enum);
 	}
 }
 
@@ -718,9 +754,9 @@ void AvataManager::ChangeAvataAnimation(const std::string& _AnimationName) const
 		Avata->ChangeFrameAnimationPlus(_AnimationName);
 	}
 
-	for (GameEnginePlusTextureRenderer* ect : Texture_ect)
+	for (auto& ect : Texture_ect)
 	{
-		ect->ChangeFrameAnimationPlus(_AnimationName);
+		ect.second->ChangeFrameAnimationPlus(_AnimationName);
 	}
 }
 
@@ -730,6 +766,11 @@ void AvataManager::ChangeFrame_Manual(int _Frame) const
 	{
 		Avata->SetFrame_Manual(_Frame);
 	}
+
+	for (auto& ect : Texture_ect)
+	{
+		ect.second->SetFrame_Manual(_Frame);
+	}
 }
 
 void AvataManager::SetAllAvataManualControl()
@@ -738,12 +779,22 @@ void AvataManager::SetAllAvataManualControl()
 	{
 		Avata->SetManualControl();
 	}
+
+	for (auto& ect : Texture_ect)
+	{
+		ect.second->SetManualControl();
+	}
 }
 void AvataManager::SetAllAvataAutoControl(bool _Reset)
 {
 	for (GameEnginePlusTextureRenderer* Avata : AllAvatas)
 	{
 		Avata->SetAutoControl(_Reset);
+	}
+
+	for (auto& ect : Texture_ect)
+	{
+		ect.second->SetAutoControl(_Reset);
 	}
 }
 
@@ -788,8 +839,8 @@ void AvataManager::LevelStartEvent()
 						ZSort += 0.001f;
 					}
 				}
-
 			}
+
 			break;
 			case ObjectType::NPC:
 				break;
@@ -807,6 +858,30 @@ void AvataManager::LevelStartEvent()
 	ShakePower = 0.f;
 	CurrentShakeTime = 0.f;
 	AvataManager::CurrentInst = this;
+
+	{
+		if (BeforeAvata != nullptr)
+		{
+			if (!BeforeAvata->Texture_ect.empty())
+			{
+				for (auto& Ect : BeforeAvata->Texture_ect)
+				{
+					CreateEctAvata(Ect.first, Ect.second);
+				}
+			}
+		}
+
+		if (BeforeAvata != nullptr)
+		{
+			for (auto& Ect : BeforeAvata->Texture_ect)
+			{
+				Ect.second->Death();
+			}
+			BeforeAvata->Texture_ect.clear();
+		}
+
+		BeforeAvata = nullptr;
+	}
 }
 
 void AvataManager::LevelEndEvent()
@@ -816,4 +891,5 @@ void AvataManager::LevelEndEvent()
 	{
 		Avata->ChangeFolderTexturePlus(nullptr);
 	}
+	BeforeAvata = this;
 }

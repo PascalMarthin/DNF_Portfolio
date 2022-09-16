@@ -10,6 +10,7 @@
 class CharacterAbilityStat;
 class MonsterAbilityStat;
 class GameSkillBuff;
+class CharacterSkillManager;
 class CharacterStatManager : public GameEngineComponent
 {
 public:
@@ -44,17 +45,6 @@ public:
 	inline bool StatWindowIsUpdate()
 	{
 		return Window_Stat->IsUpdate();
-	}
-
-	inline void SetBuff(GameSkillBuff* _Buff, StatClass _Class, const std::string& _SkillName, __int64 _Int)
-	{
-		List_ActiveBuff.push_back(_Buff);
-		StatBuff[_Class][_SkillName] = _Int;
-	}
-
-	inline void DestroyBuffStat()
-	{
-
 	}
 
 public:
@@ -193,6 +183,8 @@ private:
 private:
 	GameEngineStateManager FSMManager;
 	CharacterAbilityStat* CurrentPlayerAbilityStat;
+	CharacterSkillManager* Manager_SkillManager;
+
 	StatWindow* Window_Stat;
 
 
@@ -206,9 +198,6 @@ private:
 	std::vector<GameEngineTextureRenderer*> Texture_LevelUp;
 	float LevelUpTime;
 
-
-	std::map<StatClass, std::map<std::string, __int64>> StatBuff;
-	std::list<GameSkillBuff*> List_ActiveBuff;
 
 	float Time_CurrentEngage;
 };

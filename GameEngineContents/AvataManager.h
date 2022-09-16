@@ -76,8 +76,9 @@ public:
 	}
 
 
-	void CreateEctAvata(const std::string& _Name, const std::string& _TextureName);
-	void DestroyEctAvata(const std::string& _Name);
+	GameEnginePlusTextureRenderer* CreateEctAvata(AllSkillEnum _Enum, const std::string& _TextureName, const float4& _Color);
+	GameEnginePlusTextureRenderer* CreateEctAvata(AllSkillEnum _Enum, GameEnginePlusTextureRenderer* _Texture);
+	void DestroyEctAvata(AllSkillEnum _Enum);
 
 
 	void SetAvataSetup(ObjectType _Type);
@@ -107,6 +108,8 @@ protected:
 	// void End() override {}
 	void LevelStartEvent() override;
 	void LevelEndEvent() override;
+
+	static AvataManager* BeforeAvata;
 	// void OffEvent() {}
 private:
 	GameEnginePlusTextureRenderer* Avata_Neck_f;
@@ -145,7 +148,7 @@ private:
 	GameEnginePlusTextureRenderer* Avata_Neck_k;
 	std::vector<GameEnginePlusTextureRenderer*> AllAvatas;
 
-	std::map<std::string, GameEnginePlusTextureRenderer*> Texture_ect;
+	std::map<AllSkillEnum, GameEnginePlusTextureRenderer*> Texture_ect;
 
 
 	std::map<AllAvataClass, std::vector<GameEnginePlusTextureRenderer*>> Map_AllAvatas;

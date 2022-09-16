@@ -367,3 +367,16 @@ enum class ActorOrder
 	Manager = 2,
 	Window = 3,
 };
+
+enum class AllSkillEnum
+{
+		Fighter_HamKick
+	 , Fighter_LightingDance
+	 , Fighter_F_KaiKen
+	 , Fighter_ClosePunch
+	 , Fighter_Upper
+	 , Fighter_Bungwon
+	 , Fighter_F_Rising
+	 , Fighter_LowKick
+	 , Fighter_CrashLowKick
+};

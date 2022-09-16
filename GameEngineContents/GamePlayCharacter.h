@@ -42,6 +42,11 @@ public:
 	{
 		return Manager_AvataManager;
 	}
+	inline CharacterSkillManager* GetSkillManager() const
+	{
+		return Manager_SkillManager;
+	}
+	
 
 	inline PlayerInterface* GetInterface() const
 	{

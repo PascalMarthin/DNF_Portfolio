@@ -7,6 +7,7 @@
 #include "GamePlayMonster.h"
 #include "StatWindow.h"
 #include "GameSkillBuff.h"
+#include "CharacterSkillManager.h"
 
 
 CharacterStatManager* CharacterStatManager::Inst = nullptr;
@@ -16,6 +17,7 @@ CharacterStatManager::CharacterStatManager()
 	, CurrentPlayerAbilityStat(nullptr)
 	, CurrentMonsterAbilityStat(nullptr)
 	, LevelUpTime(0)
+	, Manager_SkillManager(nullptr)
 {
 }
 
@@ -181,27 +183,69 @@ void CharacterStatManager::Update(float _DeltaTime)
 		//float4::LerpLimit()
 	}
 
-
-	if (!List_ActiveBuff.empty())
+	CurrentPlayerAbilityStat->SetRefreshbyLevel();
+	std::map<AllSkillEnum, std::map<StatClass, int>>& StatBuff = Manager_SkillManager->Static_StatBuff;
+	if (!StatBuff.empty())
 	{
-		std::list<GameSkillBuff*>::iterator StartIter = List_ActiveBuff.begin();
-		std::list<GameSkillBuff*>::iterator EndIter = List_ActiveBuff.end();
-
-		for (; StartIter != EndIter;)
+		
+		for (auto& Buff : StatBuff)
 		{
-			if ((*StartIter)->BuffCurrentTime(_DeltaTime))
+			for (auto& Stat : Buff.second)
 			{
-				List_ActiveBuff.erase(StartIter);
-			}
-			else
-			{
-				(*StartIter)->BuffUpdate(this);
-				++StartIter;
+				switch (Stat.first)
+				{
+				case StatClass::MAXHP:
+					CurrentPlayerAbilityStat->MAXHP += Stat.second;
+					break;
+				case StatClass::MAXMP:
+					CurrentPlayerAbilityStat->MAXMP += Stat.second;
+					break;
+				case StatClass::Physical_Armor:
+					CurrentPlayerAbilityStat->Physical_Armor += Stat.second;
+					break;
+				case StatClass::Magcial_Armor:
+					CurrentPlayerAbilityStat->Magcial_Armor += Stat.second;
+					break;
+				case StatClass::STR:
+					CurrentPlayerAbilityStat->STR += Stat.second;
+					break;
+				case StatClass::INT:
+					CurrentPlayerAbilityStat->INT += Stat.second;
+					break;
+				case StatClass::Health:
+					CurrentPlayerAbilityStat->Health += Stat.second;
+					break;
+				case StatClass::SPI:
+					CurrentPlayerAbilityStat->SPI += Stat.second;
+					break;
+				case StatClass::Physical_Damage:
+					CurrentPlayerAbilityStat->Physical_Damage += Stat.second;
+					break;
+				case StatClass::Magcial_Damage:
+					CurrentPlayerAbilityStat->Magcial_Damage += Stat.second;
+					break;
+				case StatClass::Independent_Damage:
+					CurrentPlayerAbilityStat->Independent_Damage += Stat.second;
+					break;
+				case StatClass::Physical_Critical:
+					CurrentPlayerAbilityStat->Physical_Critical += Stat.second;
+					break;
+				case StatClass::Magcial_Critical:
+					CurrentPlayerAbilityStat->Magcial_Critical += Stat.second;
+					break;
+				case StatClass::Accuracy:
+					CurrentPlayerAbilityStat->Accuracy += Stat.second;
+					break;
+				case StatClass::Evasion:
+					CurrentPlayerAbilityStat->Evasion += Stat.second;
+					break;
+				default:
+					break;
+				}
 			}
 		}
-		
 	}
-
+	Window_Stat->RefreshStat();
 
 	if (!IsLive() || CurrentPlayerAbilityStat->HP < 0.f)
 	{
@@ -427,8 +471,9 @@ void CharacterStatManager::LevelStartEvent()
 		SetCharacter_Fighter_F();
 		CurrentPlayerAbilityStat = GamePlayCharacter::GetCurrentCharacterData()->GetAbilityStat();
 		CurrentMonsterAbilityStat = nullptr;
-		
 
+
+		Manager_SkillManager = GetParent<GamePlayCharacter>()->GetSkillManager();
 	}
 		break;
 	case ObjectType::Monster:
@@ -455,6 +500,7 @@ void CharacterStatManager::LevelEndEvent()
 
 	PlayerCurrentState = 0x0;
 	Time_CurrentEngage = 0.f;
+	//List_ActiveBuff.clear();
 
 	CharacterStatManager::Inst = nullptr;
 }

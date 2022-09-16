@@ -184,6 +184,7 @@ void GamePlaySkill::Casting(CharacterStatManager* _Stat, AvataManager* _Avata)
 	_Avata->ChangeAvataAnimation("Att_Casting");
 	for (size_t i = 0; i < Vector_CastingTexture.size() - 1; i++)
 	{
+		Vector_CastingTexture[i]->SetParent(Actor_DummyActor);
 		Vector_CastingTexture[i]->On();
 	}
 
@@ -197,6 +198,7 @@ void GamePlaySkill::Update(float _DeltaTime)
 	{
 		if (CastingTime > CurrentCastingTime && int_ComboStuck == 1)
 		{
+			Actor_DummyActor->GetTransform().SetLocalPosition(GetActor()->GetTransform().GetLocalPosition());
 			CurrentCastingTime += _DeltaTime;
 			
 			Vector_CastingTexture[1]->GetPixelData().Slice.x = (1 - (CurrentCastingTime / CastingTime));
@@ -205,6 +207,7 @@ void GamePlaySkill::Update(float _DeltaTime)
 			{
 				int_ComboStuck = 2;
 			}
+
 		}
 	}
 
@@ -242,6 +245,11 @@ void GamePlaySkill::OffEvent()
 }
 
 void GamePlaySkill::LevelStartEvent()
+{
+	//int_SkillLevel
+}
+
+void GamePlaySkill::LevelEndEvent()
 {
 	//int_SkillLevel
 }

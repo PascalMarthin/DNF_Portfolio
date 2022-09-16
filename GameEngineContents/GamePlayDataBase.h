@@ -106,6 +106,8 @@ public:
 	}
 
 private:
+
+
 	unsigned int Level;
 	unsigned __int64 MaxEXP;
 	unsigned __int64 EXP;
@@ -227,7 +229,13 @@ private:
 
 	TownMap CurrentMap;
 
+	//---------------Skill---------------
+	
+	//std::map<std::string, >
 
+
+
+	// ----------------------------------
 
 
 
@@ -251,6 +259,10 @@ private:
 	static GamePlayDataBase* CurrentCharacterData;
 	static std::map<AllCharacterClass, std::map<std::string, FrameAnimation_DESC*>> CharacterAnimation_DESCs;
 	static void CreateFighter_F_Animation();
+
+
+
+
 
 
 };

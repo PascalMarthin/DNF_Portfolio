@@ -3,7 +3,10 @@
 #include "GamePlayDataBase.h"
 #include "SkillHeader.h"
 
-std::map <std::string, float> CharacterSkillManager::Staic_CoolTime;
+std::map<AllSkillEnum, float> CharacterSkillManager::Staic_CoolTime;
+std::map<AllSkillEnum, float> CharacterSkillManager::Staic_BuffTime;
+std::map<AllSkillEnum, std::map<StatClass, int>> CharacterSkillManager::Static_StatBuff;
+CharacterSkillManager* CharacterSkillManager::Inst = nullptr;
 
 CharacterSkillManager::CharacterSkillManager() 
 	/*Input_SkillSlot_01(nullptr)
@@ -30,24 +33,24 @@ CharacterSkillManager::~CharacterSkillManager()
 void CharacterSkillManager::Start()
 {
 	// Debug
-	List_AllSkill["Fighter_HamKick"] = GetActor()->CreateComponent<Skill_Fighter_F_Ham_Kick>();
-	Staic_CoolTime["Fighter_HamKick"] = 0.f;
-	List_AllSkill["Fighter_Upper"] = GetActor()->CreateComponent<Skill_Fighter_F_Upper>();
-	Staic_CoolTime["Fighter_Upper"] = 0.f;
-	List_AllSkill["Fighter_Bungwon"] = GetActor()->CreateComponent<Skill_Fighter_F_Bungwon>();
-	Staic_CoolTime["Fighter_Bungwon"] = 0.f;
-	List_AllSkill["Fighter_LowKick"] = GetActor()->CreateComponent<Skill_Fighter_F_LowKick>();
-	Staic_CoolTime["Fighter_LowKick"] = 0.f;
-	List_AllSkill["Fighter_CrashLowKick"] = GetActor()->CreateComponent<Skill_Fighter_F_CrashLowKick>();
-	Staic_CoolTime["Fighter_CrashLowKick"] = 0.f;
-	List_AllSkill["Fighter_ClosePunch"] = GetActor()->CreateComponent<Skill_Fighter_F_ClosePunch>();
-	Staic_CoolTime["Fighter_ClosePunch"] = 0.f;
-	List_AllSkill["Fighter_LightingDance"] = GetActor()->CreateComponent<Skill_Fighter_F_LightingDance>();
-	Staic_CoolTime["Fighter_LightingDance"] = 0.f;
-	List_AllSkill["Fighter_F_Rising"] = GetActor()->CreateComponent<Skill_Fighter_F_Rising>();
-	Staic_CoolTime["Fighter_F_Rising"] = 0.f;
-	List_AllSkill["Fighter_F_KaiKen"] = GetActor()->CreateComponent<Skill_Fighter_F_KaiKen>();
-	Staic_CoolTime["Fighter_F_KaiKen"] = 0.f;
+	List_AllSkill[AllSkillEnum::Fighter_HamKick] = GetActor()->CreateComponent<Skill_Fighter_F_Ham_Kick>();
+	Staic_CoolTime[AllSkillEnum::Fighter_HamKick] = 0.f;
+	List_AllSkill[AllSkillEnum::Fighter_Upper] = GetActor()->CreateComponent<Skill_Fighter_F_Upper>();
+	Staic_CoolTime[AllSkillEnum::Fighter_Upper] = 0.f;
+	List_AllSkill[AllSkillEnum::Fighter_Bungwon] = GetActor()->CreateComponent<Skill_Fighter_F_Bungwon>();
+	Staic_CoolTime[AllSkillEnum::Fighter_Bungwon] = 0.f;
+	List_AllSkill[AllSkillEnum::Fighter_LowKick] = GetActor()->CreateComponent<Skill_Fighter_F_LowKick>();
+	Staic_CoolTime[AllSkillEnum::Fighter_LowKick] = 0.f;
+	List_AllSkill[AllSkillEnum::Fighter_CrashLowKick] = GetActor()->CreateComponent<Skill_Fighter_F_CrashLowKick>();
+	Staic_CoolTime[AllSkillEnum::Fighter_CrashLowKick] = 0.f;
+	List_AllSkill[AllSkillEnum::Fighter_ClosePunch] = GetActor()->CreateComponent<Skill_Fighter_F_ClosePunch>();
+	Staic_CoolTime[AllSkillEnum::Fighter_ClosePunch] = 0.f;
+	List_AllSkill[AllSkillEnum::Fighter_LightingDance] = GetActor()->CreateComponent<Skill_Fighter_F_LightingDance>();
+	Staic_CoolTime[AllSkillEnum::Fighter_LightingDance] = 0.f;
+	List_AllSkill[AllSkillEnum::Fighter_F_Rising] = GetActor()->CreateComponent<Skill_Fighter_F_Rising>();
+	Staic_CoolTime[AllSkillEnum::Fighter_F_Rising] = 0.f;
+	List_AllSkill[AllSkillEnum::Fighter_F_KaiKen] = GetActor()->CreateComponent<Skill_Fighter_F_KaiKen>();
+	Staic_CoolTime[AllSkillEnum::Fighter_F_KaiKen] = 0.f;
 	
 
 	
@@ -95,32 +98,56 @@ void CharacterSkillManager::Update(float _DeltaTime)
 			CoolTime.second->CurrentCoolTime -= _DeltaTime;
 		}
 	}
+
+	std::map<AllSkillEnum, float>::iterator StartIter = Staic_BuffTime.begin();
+	std::map<AllSkillEnum, float>::iterator EndIter = Staic_BuffTime.end();
+
+	for (; StartIter != EndIter;)
+	{
+		(*StartIter).second -= _DeltaTime;
+		if ((*StartIter).second <= 0)
+		{
+			dynamic_cast<GameSkillBuff*>(List_AllSkill[(*StartIter).first])->BuffEnd();
+			Static_StatBuff.erase((*StartIter).first);
+			StartIter = Staic_BuffTime.erase(StartIter);
+			continue;
+		}
+		else
+		{
+			//dynamic_cast<GameSkillBuff*>(List_AllSkill[(*StartIter).first])->BuffUpdate()
+			StartIter++;
+		}
+		
+	}
 	
 }
 
 void CharacterSkillManager::LevelStartEvent()
 {
+	map_SkillSlot['Q'] = nullptr;
+	map_SkillSlot['W'] = nullptr;
+	map_SkillSlot['E'] = List_AllSkill[AllSkillEnum::Fighter_LightingDance];
+	map_SkillSlot['R'] = nullptr;
+	map_SkillSlot['T'] = nullptr;
+	map_SkillSlot['Y'] = List_AllSkill[AllSkillEnum::Fighter_F_KaiKen];
+	map_SkillSlot['A'] = List_AllSkill[AllSkillEnum::Fighter_ClosePunch];
+	map_SkillSlot['S'] = List_AllSkill[AllSkillEnum::Fighter_Upper];
+	map_SkillSlot['D'] = List_AllSkill[AllSkillEnum::Fighter_Bungwon];
+	map_SkillSlot['F'] = List_AllSkill[AllSkillEnum::Fighter_F_Rising];
+	map_SkillSlot['G'] = List_AllSkill[AllSkillEnum::Fighter_LowKick];
+	map_SkillSlot['H'] = List_AllSkill[AllSkillEnum::Fighter_CrashLowKick];
+
+
 	for (auto& Skill : List_AllSkill)
 	{
 		Skill.second->CurrentCoolTime = Staic_CoolTime[Skill.first];
 	}	
 
-	map_SkillSlot['Q'] = nullptr;
-	map_SkillSlot['W'] = nullptr;
-	map_SkillSlot['E'] = List_AllSkill["Fighter_LightingDance"];
-	map_SkillSlot['R'] = nullptr;
-	map_SkillSlot['T'] = nullptr;
-	map_SkillSlot['Y'] = List_AllSkill["Fighter_F_KaiKen"];
-	map_SkillSlot['A'] = List_AllSkill["Fighter_ClosePunch"];
-	map_SkillSlot['S'] = List_AllSkill["Fighter_Upper"];
-	map_SkillSlot['D'] = List_AllSkill["Fighter_Bungwon"];
-	map_SkillSlot['F'] = List_AllSkill["Fighter_F_Rising"];
-	map_SkillSlot['G'] = List_AllSkill["Fighter_LowKick"];
-	map_SkillSlot['H'] = List_AllSkill["Fighter_CrashLowKick"];
+
+	CharacterSkillManager::Inst = this;
 
 	GamePlayDataBase::GetCurrentCharacterData();
 }
-
 
 void CharacterSkillManager::LevelEndEvent()
 {
@@ -129,6 +156,7 @@ void CharacterSkillManager::LevelEndEvent()
 		Staic_CoolTime[CoolTime.first] = CoolTime.second->CurrentCoolTime;
 	}
 
+	CharacterSkillManager::Inst = nullptr;
 	GamePlayDataBase::GetCurrentCharacterData();
 }
 
