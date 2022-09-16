@@ -422,7 +422,9 @@ void GamePlayCharacter::FSM_Att_BaseHit_Update(float _DeltaTime, const StateInfo
 	if (Skill_CurrentSkill = PlayerUserInterface->GetUI_KeyManager()->Input_SkillKeyCheck(Manager_SkillManager))
 	{
 		Skill_BaseHit->Off();
+		Manager_AvataManager->CreateVision();
 		Manager_StatManager->GetFSMManager().ChangeState("Att_Skill");
+		
 		return;
 	}
 

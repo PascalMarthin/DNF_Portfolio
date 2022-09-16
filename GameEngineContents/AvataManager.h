@@ -1,11 +1,13 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
+#include "GameEnginePlusTextureRenderer.h"
 #include "GamePlayEnum.h"
+#include <queue>
 
 // Ό³Έν :
 class GamePlayItem_DESC;
-class GameEnginePlusTextureRenderer;
 class GamePlayDataBase;
+class Avata_Vision;
 class AvataManager : public GameEngineActor
 {
 	friend class GamePlayCharacter;
@@ -74,6 +76,8 @@ public:
 	{ 
 		return Avata_Skin;
 	}
+
+	void CreateVision();
 
 
 	GameEnginePlusTextureRenderer* CreateEctAvata(AllSkillEnum _Enum, const std::string& _TextureName, const float4& _Color);
@@ -150,6 +154,12 @@ private:
 
 	std::map<AllSkillEnum, GameEnginePlusTextureRenderer*> Texture_ect;
 
+	std::vector<GameEngineTextureRenderer*> vector_SuperArmor;
+
+
+
+	//std::map<std::vector<GameEngineTextureRenderer*>> vector_Vision;
+
 
 	std::map<AllAvataClass, std::vector<GameEnginePlusTextureRenderer*>> Map_AllAvatas;
 
@@ -174,3 +184,43 @@ public:
 	static void CreateAvataData();
 };
 
+class Avata_Vision : public GameEngineActor
+{
+public:
+	void Start() override
+	{
+		Death(0.5f);
+		//GetTransform().SetLocalPosition({ 0, 72.f, 0 });
+	}
+
+	void CreateVision(const std::vector<GameEnginePlusTextureRenderer*>& _Avata)
+	{
+		for (size_t i = 0; i < _Avata.size(); i++)
+		{
+			GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
+			Renderer->GetTransform().SetLocalScale({ 500, 500 });
+			Renderer->GetTransform().SetLocalPosition({ 0, 0, 0.1f });
+			Renderer->GetPixelData().MulColor = float4::ZERO;
+			Renderer->GetPixelData().PlusColor = {1,1,1,0.9f};
+			Renderer->SetTexture(_Avata[i]->GetCurTexture());
+			vector_AvataVision.push_back(Renderer);
+			//Renderer->SetPipeLine("Outline");
+			//Renderer->ShaderResources.SetConstantBufferLink("PixelData", Renderer->GetPixelData());
+
+			//Renderer->ShaderResources.SetConstantBufferLink("AtlasData", Renderer->Geta);
+
+		}
+	}
+	void Update(float _DeltaTime) override
+	{
+		Dealy += _DeltaTime;
+		for (auto* Renderer : vector_AvataVision)
+		{
+			float Lerp = 0.9f - (Dealy / 0.5f);
+			Renderer->GetPixelData().PlusColor = { 1 , 1 , 1 , Lerp };
+		}
+		
+	}
+	float Dealy;
+	std::vector<GameEngineTextureRenderer*> vector_AvataVision;
+};

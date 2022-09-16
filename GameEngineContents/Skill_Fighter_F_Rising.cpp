@@ -318,40 +318,40 @@ bool Skill_Fighter_F_Rising::ActiveSkill(CharacterStatManager* _Stat, MoveManage
 			{
 				Texture_Rising_spin[0]->ChangeFrameAnimation("None");
 				Texture_Rising_spin[0]->ChangeFrameAnimation("Texture_Rising_spin");
-				//Texture_Rising_spin[0]->On();
+				Texture_Rising_spin[0]->On();
 			}
 			{
 				Texture_Rising_spin[1]->ChangeFrameAnimation("None");
 				Texture_Rising_spin[1]->ChangeFrameAnimation("Texture_Rising_spin");
-				//Texture_Rising_spin[1]->On();
+				Texture_Rising_spin[1]->On();
 			}
 			{
 				Texture_RisingEffect[0]->ChangeFrameAnimation("None");
 				Texture_RisingEffect[0]->ChangeFrameAnimation("RisingEffect");
-				//Texture_RisingEffect[0]->On();
+				Texture_RisingEffect[0]->On();
 
 			}
 			{
 				Texture_RisingEffect[1]->ChangeFrameAnimation("None");
 				Texture_RisingEffect[1]->ChangeFrameAnimation("RisingEffect");
-				//Texture_RisingEffect[1]->On();
+				Texture_RisingEffect[1]->On();
 
 			}
 			{
 				Texture_RisingEffect[2]->ChangeFrameAnimation("None");
 				Texture_RisingEffect[2]->ChangeFrameAnimation("RisingEffect");
-				//Texture_RisingEffect[2]->On();
+				Texture_RisingEffect[2]->On();
 
 			}
 			{
 				 Texture_RisingEffect[3]->ChangeFrameAnimation("None");
 				 Texture_RisingEffect[3]->ChangeFrameAnimation("RisingEffect");
-				 //Texture_RisingEffect[3]->On();
+				 Texture_RisingEffect[3]->On();
 			}
 			{
 				Texture_RisingEffect[4]->ChangeFrameAnimation("None");
 				Texture_RisingEffect[4]->ChangeFrameAnimation("RisingEffect");
-				//Texture_RisingEffect[4]->On();
+				Texture_RisingEffect[4]->On();
 			}
 
 

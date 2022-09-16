@@ -159,6 +159,23 @@ void AvataManager::Start()
 	}
 
 
+	for (size_t i = 0; i < AllAvatas.size(); i++)
+	{
+		GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
+		Renderer->GetTransform().SetLocalScale({ 520, 520 });
+		Renderer->GetTransform().SetLocalPosition({ 0, 0, 0.1f });
+		Renderer->GetPixelData().MulColor = float4::ZERO;
+		Renderer->GetPixelData().PlusColor = float4::YELLOW;
+		//Renderer->SetPipeLine("Outline");
+		//Renderer->ShaderResources.SetConstantBufferLink("PixelData", Renderer->GetPixelData());
+
+		//Renderer->ShaderResources.SetConstantBufferLink("AtlasData", Renderer->Geta);
+
+	
+		vector_SuperArmor.push_back(Renderer);
+	}
+
+
 	for (GameEnginePlusTextureRenderer* Iter : AllAvatas)
 	{
 		Iter->GetTransform().SetLocalScale({ 500.f, 500.f });
@@ -176,6 +193,23 @@ void AvataManager::CreateAvataData()
 {
 
 }
+
+void AvataManager::CreateVision()
+{
+	Avata_Vision* Vision = GetLevel()->CreateActor<Avata_Vision>();
+	Vision->GetTransform().SetLocalPosition(GetTransform().GetWorldPosition());
+	Vision->GetTransform().SetLocalMove({0, 0, 10});
+	Vision->GetTransform().SetLocalScale({ MonitorX, MonitorY });
+	if (GetParent<GameEngineActor>()->GetTransform().GetLocalScale().x < 0)
+	{
+		Vision->GetTransform().PixLocalNegativeX();
+	}
+	
+	Vision->CreateVision(AllAvatas);
+}
+
+
+
 
 void AvataManager::SetAvataSetup(ObjectType _Type)
 {
@@ -302,6 +336,11 @@ void AvataManager::CreateCustomAvata()
 //----------------- Update-------------------
 void AvataManager::Update(float _DeltaTime)
 {
+	for (size_t i = 0; i < AllAvatas.size(); i++)
+	{
+		vector_SuperArmor[i]->SetTexture(AllAvatas[i]->GetCurTexture());
+	}
+
 	if (ShakePower != 0.f)
 	{
 		CurrentShakeTime += _DeltaTime;

@@ -508,6 +508,10 @@ void DNF::BaseFolderTextureLoad()
 
 void DNF::BaseShaderLoad()
 {
+
+	GameEngineRenderingPipeLine* NewPipe = GameEngineRenderingPipeLine::Create("Outline");
+	NewPipe->SetVertexShader("Outline.hlsl");
+	NewPipe->SetPixelShader("Outline.hlsl");
 	//{
 	//	GameEngineDirectory Dir;
 
