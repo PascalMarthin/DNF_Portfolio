@@ -203,6 +203,7 @@ public:
 			Renderer->GetPixelData().MulColor = float4::ZERO;
 			Renderer->GetPixelData().PlusColor = {1,1,1,0.9f};
 			Renderer->SetTexture(_Avata[i]->GetCurTexture());
+			Renderer->SetPivot(PIVOTMODE::BOT);
 			vector_AvataVision.push_back(Renderer);
 			//Renderer->SetPipeLine("Outline");
 			//Renderer->ShaderResources.SetConstantBufferLink("PixelData", Renderer->GetPixelData());

@@ -159,34 +159,24 @@ void AvataManager::Start()
 	}
 
 
-	for (size_t i = 0; i < AllAvatas.size(); i++)
-	{
-		GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
-		Renderer->GetTransform().SetLocalScale({ 520, 520 });
-		Renderer->GetTransform().SetLocalPosition({ 0, 0, 0.1f });
-		Renderer->GetPixelData().MulColor = float4::ZERO;
-		Renderer->GetPixelData().PlusColor = float4::YELLOW;
-		//Renderer->SetPipeLine("Outline");
-		//Renderer->ShaderResources.SetConstantBufferLink("PixelData", Renderer->GetPixelData());
 
-		//Renderer->ShaderResources.SetConstantBufferLink("AtlasData", Renderer->Geta);
-
-	
-		vector_SuperArmor.push_back(Renderer);
-	}
 
 
 	for (GameEnginePlusTextureRenderer* Iter : AllAvatas)
 	{
 		Iter->GetTransform().SetLocalScale({ 500.f, 500.f });
+		Iter->SetPivot(PIVOTMODE::BOT);
+		//Iter->SetPivotToVector({ 0, 72.f });
 	}
-
 	float ZSort = 0;
 	for (size_t i = 0; i < AllAvatas.size(); i++)
 	{
-		AllAvatas[i]->GetTransform().SetLocalPosition({ 0, 0, ZSort });
+		AllAvatas[i]->GetTransform().SetLocalMove({ 0, 0, ZSort });
 		ZSort += 0.001f;
 	}
+
+
+
 }
 
 void AvataManager::CreateAvataData()
@@ -336,10 +326,10 @@ void AvataManager::CreateCustomAvata()
 //----------------- Update-------------------
 void AvataManager::Update(float _DeltaTime)
 {
-	for (size_t i = 0; i < AllAvatas.size(); i++)
-	{
-		vector_SuperArmor[i]->SetTexture(AllAvatas[i]->GetCurTexture());
-	}
+	//for (size_t i = 0; i < AllAvatas.size(); i++)
+	//{
+	//	vector_SuperArmor[i]->SetTexture(AllAvatas[i]->GetCurTexture());
+	//}
 
 	if (ShakePower != 0.f)
 	{
@@ -398,6 +388,9 @@ GameEnginePlusTextureRenderer* AvataManager::CreateEctAvata(AllSkillEnum _Enum, 
 	{
 		GameEnginePlusTextureRenderer* Texture = CreateComponent<GameEnginePlusTextureRenderer>();
 		Texture->GetTransform().SetLocalScale({ 500, 500, 0});
+		Texture->SetPivot(PIVOTMODE::BOT);
+		Texture->SetOutLineDeath();
+
 		for (auto& Iter : DESC)
 		{
 			Texture->CreateFrameAnimationFolderPlus(Iter.first, (*Iter.second));
@@ -870,14 +863,14 @@ void AvataManager::LevelStartEvent()
 					Avata->ChangeFrameAnimationPlus("Move_Stand");
 				}
 
-				{
-					float ZSort = 0;
-					for (size_t i = 0; i < AllAvatas.size(); i++)
-					{
-						AllAvatas[i]->GetTransform().SetLocalPosition({ 0, 0, ZSort });
-						ZSort += 0.001f;
-					}
-				}
+				//{
+				//	float ZSort = 0;
+				//	for (size_t i = 0; i < AllAvatas.size(); i++)
+				//	{
+				//		AllAvatas[i]->GetTransform().SetLocalPosition({ 0, 0, ZSort });
+				//		ZSort += 0.001f;
+				//	}
+				//}
 			}
 
 			break;
@@ -890,7 +883,7 @@ void AvataManager::LevelStartEvent()
 			}
 		}
 	}
-	GetTransform().SetLocalPosition({ 0, 72.f, 0 });
+	GetTransform().SetLocalPosition({ 0, -188.f, 0 });
 
 	CurrentClassData = GamePlayCharacter::GetCurrentCharacterData();
 	ShakeTime = 0.f;

@@ -166,86 +166,90 @@ void CharacterStatManager::Update(float _DeltaTime)
 
 	FSMManager.Update(_DeltaTime);
 
-	if (Texture_LevelUp[5]->IsUpdate())
+	if (!Texture_LevelUp.empty())
 	{
-		LevelUpTime += _DeltaTime;
-		if (LevelUpTime > 3.f)
+		if (Texture_LevelUp[5]->IsUpdate())
 		{
-			Texture_LevelUp[5]->Off();
-		}
-
-
-		Texture_LevelUp[5]->GetPixelData().MulColor.a += _DeltaTime;
-		if (Texture_LevelUp[5]->GetPixelData().MulColor.a > 1.f)
-		{
-			Texture_LevelUp[5]->GetPixelData().MulColor.a = 1.f;
-		}
-		//float4::LerpLimit()
-	}
-
-	CurrentPlayerAbilityStat->SetRefreshbyLevel();
-	std::map<AllSkillEnum, std::map<StatClass, int>>& StatBuff = Manager_SkillManager->Static_StatBuff;
-	if (!StatBuff.empty())
-	{
-		
-		for (auto& Buff : StatBuff)
-		{
-			for (auto& Stat : Buff.second)
+			LevelUpTime += _DeltaTime;
+			if (LevelUpTime > 3.f)
 			{
-				switch (Stat.first)
+				Texture_LevelUp[5]->Off();
+			}
+
+
+			Texture_LevelUp[5]->GetPixelData().MulColor.a += _DeltaTime;
+			if (Texture_LevelUp[5]->GetPixelData().MulColor.a > 1.f)
+			{
+				Texture_LevelUp[5]->GetPixelData().MulColor.a = 1.f;
+			}
+			//float4::LerpLimit()
+		}
+
+		CurrentPlayerAbilityStat->SetRefreshbyLevel();
+		std::map<AllSkillEnum, std::map<StatClass, int>>& StatBuff = Manager_SkillManager->Static_StatBuff;
+		if (!StatBuff.empty())
+		{
+
+			for (auto& Buff : StatBuff)
+			{
+				for (auto& Stat : Buff.second)
 				{
-				case StatClass::MAXHP:
-					CurrentPlayerAbilityStat->MAXHP += Stat.second;
-					break;
-				case StatClass::MAXMP:
-					CurrentPlayerAbilityStat->MAXMP += Stat.second;
-					break;
-				case StatClass::Physical_Armor:
-					CurrentPlayerAbilityStat->Physical_Armor += Stat.second;
-					break;
-				case StatClass::Magcial_Armor:
-					CurrentPlayerAbilityStat->Magcial_Armor += Stat.second;
-					break;
-				case StatClass::STR:
-					CurrentPlayerAbilityStat->STR += Stat.second;
-					break;
-				case StatClass::INT:
-					CurrentPlayerAbilityStat->INT += Stat.second;
-					break;
-				case StatClass::Health:
-					CurrentPlayerAbilityStat->Health += Stat.second;
-					break;
-				case StatClass::SPI:
-					CurrentPlayerAbilityStat->SPI += Stat.second;
-					break;
-				case StatClass::Physical_Damage:
-					CurrentPlayerAbilityStat->Physical_Damage += Stat.second;
-					break;
-				case StatClass::Magcial_Damage:
-					CurrentPlayerAbilityStat->Magcial_Damage += Stat.second;
-					break;
-				case StatClass::Independent_Damage:
-					CurrentPlayerAbilityStat->Independent_Damage += Stat.second;
-					break;
-				case StatClass::Physical_Critical:
-					CurrentPlayerAbilityStat->Physical_Critical += Stat.second;
-					break;
-				case StatClass::Magcial_Critical:
-					CurrentPlayerAbilityStat->Magcial_Critical += Stat.second;
-					break;
-				case StatClass::Accuracy:
-					CurrentPlayerAbilityStat->Accuracy += Stat.second;
-					break;
-				case StatClass::Evasion:
-					CurrentPlayerAbilityStat->Evasion += Stat.second;
-					break;
-				default:
-					break;
+					switch (Stat.first)
+					{
+					case StatClass::MAXHP:
+						CurrentPlayerAbilityStat->MAXHP += Stat.second;
+						break;
+					case StatClass::MAXMP:
+						CurrentPlayerAbilityStat->MAXMP += Stat.second;
+						break;
+					case StatClass::Physical_Armor:
+						CurrentPlayerAbilityStat->Physical_Armor += Stat.second;
+						break;
+					case StatClass::Magcial_Armor:
+						CurrentPlayerAbilityStat->Magcial_Armor += Stat.second;
+						break;
+					case StatClass::STR:
+						CurrentPlayerAbilityStat->STR += Stat.second;
+						break;
+					case StatClass::INT:
+						CurrentPlayerAbilityStat->INT += Stat.second;
+						break;
+					case StatClass::Health:
+						CurrentPlayerAbilityStat->Health += Stat.second;
+						break;
+					case StatClass::SPI:
+						CurrentPlayerAbilityStat->SPI += Stat.second;
+						break;
+					case StatClass::Physical_Damage:
+						CurrentPlayerAbilityStat->Physical_Damage += Stat.second;
+						break;
+					case StatClass::Magcial_Damage:
+						CurrentPlayerAbilityStat->Magcial_Damage += Stat.second;
+						break;
+					case StatClass::Independent_Damage:
+						CurrentPlayerAbilityStat->Independent_Damage += Stat.second;
+						break;
+					case StatClass::Physical_Critical:
+						CurrentPlayerAbilityStat->Physical_Critical += Stat.second;
+						break;
+					case StatClass::Magcial_Critical:
+						CurrentPlayerAbilityStat->Magcial_Critical += Stat.second;
+						break;
+					case StatClass::Accuracy:
+						CurrentPlayerAbilityStat->Accuracy += Stat.second;
+						break;
+					case StatClass::Evasion:
+						CurrentPlayerAbilityStat->Evasion += Stat.second;
+						break;
+					default:
+						break;
+					}
 				}
 			}
 		}
+		Window_Stat->RefreshStat();
 	}
-	Window_Stat->RefreshStat();
+
 
 	if (!IsLive() || CurrentPlayerAbilityStat->HP < 0.f)
 	{

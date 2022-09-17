@@ -158,6 +158,15 @@ public:
 		FrameAniPlus[Name].Time = _Function;
 	}
 
+	inline void SetOutLineDeath()
+	{
+		if (Texture_OutLine != nullptr)
+		{
+			Texture_OutLine->Death();
+			Texture_OutLine = nullptr;
+		}
+	}
+
 protected:
 	void Start() override;
 	void Update(float _Delta) override;
@@ -169,6 +178,7 @@ private:
 	std::map<std::string, FrameAnimationForAvata> FrameAniPlus;
 	FrameAnimationForAvata* CurrentAniPlus;
 
+	GameEngineTextureRenderer* Texture_OutLine;
 
 	//std::vector<GameEnginePlusTextureRenderer*> Texture_IllusionAvatas;
 

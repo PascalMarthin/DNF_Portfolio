@@ -5,6 +5,7 @@
 #include "CharacterStatManager.h"
 #include "AvataManager.h"
 #include "GameEnginePlusTextureRenderer.h"
+#include "GamePlayCharacter.h"
 
 StatWindow::StatWindow() 
 	: Texture_Profile(nullptr)
@@ -263,11 +264,7 @@ void StatWindow::SetFontPos()
 }
 void StatWindow::RefreshStat()
 {
-	if (CharacterStatManager::GetInst() == nullptr)
-	{
-		return;
-	}
-	CharacterAbilityStat* Stat = CharacterStatManager::GetInst()->GetAbilityStat();
+	CharacterAbilityStat* Stat = GamePlayCharacter::GetCurrentCharacterData()->GetAbilityStat();
 	Font_Renderer[StatClass::MAXHP]->SetText(std::to_string(Stat->HP) +"/"+ std::to_string(Stat->MAXHP), "±¼¸²");
 	Font_Renderer[StatClass::MAXMP]->SetText(std::to_string(Stat->MP) + "/" + std::to_string(Stat->MAXMP), "±¼¸²");
 	Font_Renderer[StatClass::Physical_Armor]->SetText(std::to_string(Stat->Physical_Armor), "±¼¸²");

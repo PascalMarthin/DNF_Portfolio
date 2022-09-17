@@ -12,6 +12,7 @@ GameEnginePlusTextureRenderer::GameEnginePlusTextureRenderer()
 	, ManualControl(false)
 	, MC_CurFrame(0)
 	, EndFrame(false)
+	, Texture_OutLine(nullptr)
 {
 
 }
@@ -26,6 +27,18 @@ GameEnginePlusTextureRenderer::~GameEnginePlusTextureRenderer()
 void GameEnginePlusTextureRenderer::Start()
 {
 	GameEngineTextureRenderer::Start();
+
+	//Texture_OutLine = GetActor()->CreateComponent<GameEngineTextureRenderer>();
+	//Texture_OutLine->GetTransform().SetLocalScale({ 530, 512 });
+	//Texture_OutLine->SetPivot(PIVOTMODE::BOT);
+	//Texture_OutLine->SetPivotToVector({ 0, -4.f , 0.1f });
+	//Texture_OutLine->GetTransform().SetLocalMove({ 0, 0, 0.1f });
+	//Texture_OutLine->GetPixelData().MulColor = float4::ZERO;
+	//Texture_OutLine->GetPixelData().PlusColor = float4::YELLOW;
+	//Renderer->SetPipeLine("Outline");
+	//Renderer->ShaderResources.SetConstantBufferLink("PixelData", Renderer->GetPixelData());
+
+	//Renderer->ShaderResources.SetConstantBufferLink("AtlasData", Renderer->Geta);
 }
 
 void FrameAnimationForAvata::Reset()
@@ -103,7 +116,15 @@ void GameEnginePlusTextureRenderer::Update(float _Delta)
 	{
 		CurrentAniPlus->Update(_Delta);
 	}
+	
+	if (Texture_OutLine != nullptr)
+	{
+		Texture_OutLine->SetTexture(GetCurTexture());
+	}
+	
 }
+
+
 
 void GameEnginePlusTextureRenderer::ChangeFolderTexturePlus(const std::string& _TextureName)
 {

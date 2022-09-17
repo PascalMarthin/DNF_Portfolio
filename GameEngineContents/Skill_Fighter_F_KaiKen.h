@@ -1,5 +1,6 @@
 #pragma once
 #include "GameSkillBuff.h"
+#define Keiken_CastingTime 0.8f
 // Ό³Έν :
 class Skill_Fighter_F_KaiKen : public GameSkillBuff
 {
@@ -29,5 +30,6 @@ protected:
 	//void OnEvent() override;
 	//void OffEvent() override;
 private:
+	GameEngineTextureRenderer* Texture_Casting;
 };
 
