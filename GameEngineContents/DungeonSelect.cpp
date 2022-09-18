@@ -70,7 +70,9 @@ void DungeonSelect::LevelStartEvent()
 		break;
 	case WorldDungeon::None:
 	default:
-		MsgBoxAssert("아직 설정 되지 않은 월드던전입니다")
+
+		SetLukeDungeon();
+		//MsgBoxAssert("아직 설정 되지 않은 월드던전입니다")
 		break;
 	}
 }

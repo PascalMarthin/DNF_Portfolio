@@ -31,12 +31,22 @@ private:
 	std::map<std::string, GameEngineCollision*> AllCollision;
 
 
+	// ---------Dummy------------------
+
+	GameEngineActor* Dummy;
+
 	// ---------FSM-------------
+
+	float4 BeforePos;
 	void SetFSManager() override;
+
+	void Bale_BackToNone(const FrameAnimation_DESC& _DESC);
 
 	void FSM_Move_Stand_Start(const StateInfo& _Info);
 	void FSM_Move_Stand_Update(float _DeltaTime, const StateInfo& _Info);
 	void FSM_Move_Stand_End(const StateInfo& _Info);
+
+	float StayStandDelay;
 
 	void FSM_Hit_Stand_Start(const StateInfo& _Info);
 	void FSM_Hit_Stand_Update(float _DeltaTime, const StateInfo& _Info);
@@ -86,9 +96,13 @@ private:
 	void FSM_Att_Dash_Start(const StateInfo& _Info);
 	void FSM_Att_Dash_Update(float _DeltaTime, const StateInfo& _Info);
 	void FSM_Att_Dash_End(const StateInfo& _Info);
+	bool DashUpdate;
+
+	GameEngineCollision* Collision_ect;
 
 
-
+	void Bale_DashStart(const FrameAnimation_DESC& _DESC);
+	
 
 	//void FSM_Move_Walk_Start(const StateInfo& _Info);
 	//void FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _Info);

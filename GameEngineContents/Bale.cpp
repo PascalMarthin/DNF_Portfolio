@@ -10,7 +10,10 @@ Bale::Bale()
 	: MoveDelay(0)
 	//, TrackerPos(float4::ZERO)
 	, Collision_TargetPos(nullptr)
-
+	, Collision_ect(nullptr)
+	, DashUpdate(false)
+	, StayStandDelay(0)
+	, BeforePos(float4::ZERO)
 {
 }
 
@@ -21,6 +24,8 @@ Bale::~Bale()
 void Bale::Start()
 {
 	GamePlayMonster::Start();
+
+	Dummy = GetLevel()->CreateActor<DummyActor>();
 	Enum_UnitType = UnitType::Unit;
 	CreateMonsterStat(1115180000, 50, 301.4f); //1,115,180,000
 
@@ -54,9 +59,17 @@ void Bale::Start()
 	Texture_Monster->CreateFrameAnimationFolder("Bale_Grap", FrameAnimation_DESC("Bale", 37, 38, 0.08f, false));
 	Texture_Monster->CreateFrameAnimationFolder("Bale_Hold", FrameAnimation_DESC("Bale", 39, 39, 0.15f, false));
 	Texture_Monster->CreateFrameAnimationFolder("Bale_Press", FrameAnimation_DESC("Bale", 40, 45, 0.08f, false));
-	Texture_Monster->CreateFrameAnimationFolder("Bale_RunReady", FrameAnimation_DESC("Bale", 46, 47, 0.2f, false));
-	Texture_Monster->CreateFrameAnimationFolder("Bale_Running", FrameAnimation_DESC("Bale", 48, 49, 0.1f));
-	Texture_Monster->CreateFrameAnimationFolder("Bale_RunEnd", FrameAnimation_DESC("Bale", 50, 50, 0.1f, false));
+
+
+	{
+		Texture_Monster->CreateFrameAnimationFolder("Bale_RunReady", FrameAnimation_DESC("Bale", 46, 46, 0.25f, false));
+		Texture_Monster->CreateFrameAnimationFolder("Bale_Running", FrameAnimation_DESC("Bale", 47, 48, 0.1f));
+		Texture_Monster->CreateFrameAnimationFolder("Bale_RunEnd", FrameAnimation_DESC("Bale", 49, 50, 0.25f, false));
+
+		Texture_Monster->AnimationBindEnd("Bale_RunReady", std::bind(&Bale::Bale_DashStart, this, std::placeholders::_1));
+		Texture_Monster->AnimationBindEnd("Bale_RunEnd", std::bind(&Bale::Bale_BackToNone, this, std::placeholders::_1));
+
+	}
 
 
 	Texture_Monster->GetTransform().SetLocalPosition({ 72, 12, 10 }); // 중앙 기준
@@ -101,7 +114,7 @@ void Bale::Start()
 		AllCollision["Att_Sting"] = Collision;
 
 		Collision = CreateComponent<GameEngineCollision>("Dash_Area");
-		Collision->GetTransform().SetLocalScale({ 550, 300, 250 });
+		Collision->GetTransform().SetLocalScale({ 550, 300, 200 });
 		Collision->ChangeOrder(CollisionOrder::Monster_Area);
 		Collision->SetDebugSetting(CollisionType::CT_SPHERE, { 0, 0.8f , 0.8f, 0.3f });
 
@@ -115,6 +128,11 @@ void Bale::Start()
 		AllCollision["Att_Stamping"] = Collision;
 
 
+	}
+
+
+	{
+		//Collision_ect
 	}
 
 	{
@@ -137,7 +155,7 @@ void Bale::Start()
 
 	{
 		All_CollTime["Att_Sting"] = 0;
-		//All_CollTime["Att_Dash"] = 0;
+		All_CollTime["Att_Dash"] = 0;
 		All_CollTime["Att_Stamping"] = 0;
 	}
 	SetMonsterClass(MonsterClass::Named);
@@ -267,6 +285,11 @@ void Bale::SetFSManager()
 	Manager_StatManager->GetFSMManager().ChangeState("None");
 }
 
+void Bale::Bale_BackToNone(const FrameAnimation_DESC& _DESC)
+{
+	Manager_StatManager->GetFSMManager().ChangeState("None");
+}
+
 
 void Bale::FSM_Move_Stand_Start(const StateInfo& _Info)
 {
@@ -278,6 +301,15 @@ void Bale::FSM_Move_Stand_Start(const StateInfo& _Info)
 	{
 		Texture_Monster->ChangeFrameAnimation("Bale_Standing");
 	}
+
+	if (GameEngineRandom::MainRandom.RandomInt(0, 3) > 2)
+	{
+		Collision_TargetPos->SetParent(Dummy);
+		const float4& Pos = GamePlayCharacter::GetInst()->GetTransform().GetWorldPosition();
+		Collision_TargetPos->GetTransform().SetWorldPosition({ Pos.x , Pos.z, Pos.z });
+	}
+	
+	StayStandDelay = 1.5f;
 }
 void Bale::FSM_Move_Stand_Update(float _DeltaTime, const StateInfo& _Info)
 {
@@ -287,7 +319,19 @@ void Bale::FSM_Move_Stand_Update(float _DeltaTime, const StateInfo& _Info)
 	//}
 	//else
 	//{
+	StayStandDelay -= _DeltaTime;
+	if (StayStandDelay <= 0)
+	{
 		Manager_StatManager->GetFSMManager().ChangeState("Move_Walk");
+		return;
+	}
+
+	if (!Collision_TargetPos->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Player, CollisionType::CT_SPHERE))
+	{
+		Manager_StatManager->GetFSMManager().ChangeState("Move_Walk"); // 중단점 용
+		return;
+	}
+		
 	//}
 }
 void Bale::FSM_Move_Stand_End(const StateInfo& _Info)
@@ -409,8 +453,16 @@ void Bale::FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _Info)
 {
 
 	MoveDelay -= _DeltaTime;
-	if (MoveDelay <= 0 || Collision_TargetPos->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Monster, CollisionType::CT_SPHERE) )
+	bool IsArrive = false;
+	if (MoveDelay <= 0 || (IsArrive = Collision_TargetPos->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Monster, CollisionType::CT_SPHERE)))
 	{
+		if (IsArrive == true)
+		{
+			if (Collision_TargetPos->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Player, CollisionType::CT_SPHERE))
+			{
+				Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
+			}
+		}
 		float4 Pos = float4::ZERO;
 		Pos.x += GameEngineRandom::MainRandom.RandomFloat(-2.f, 2.f) * 25.f ;
 		//Pos.y += GameEngineRandom::MainRandom.RandomFloat(-2.f, 2.f) * 15.f ;
@@ -467,21 +519,21 @@ void Bale::FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _Info)
 		Dir.x = -180.f;
 	}
 
-	if (Collision_TargetPos->GetTransform().GetWorldPosition().y - GetTransform().GetWorldPosition().y > 0)
+	if (Collision_TargetPos->GetTransform().GetWorldPosition().z - GetTransform().GetWorldPosition().z > 0)
 	{
-		Dir.y = 180.f;
+		Dir.z = 180.f;
 	}
 	else
 	{
-		Dir.y = -180.f;
+		Dir.z = -180.f;
 	}
 	
-	Manager_MoveManager->SetCharacterMove({ Dir.x * _DeltaTime, Dir.y * _DeltaTime });
+	Manager_MoveManager->SetCharacterMove({ Dir.x * _DeltaTime, Dir.z * _DeltaTime });
 	
 }
 void Bale::FSM_Move_Walk_End(const StateInfo& _Info)
 {
-
+	MoveDelay = 0;
 }
 
 void Bale::FSM_Att_Sting_Start(const StateInfo& _Info)
@@ -524,13 +576,88 @@ void Bale::Bale_Stamping(const FrameAnimation_DESC& _DESC)
 
 void Bale::FSM_Att_Dash_Start(const StateInfo& _Info)
 {
+	Texture_Monster->ChangeFrameAnimation("Bale_RunReady");
+
+	Collision_ect = CreateComponent<GameEngineCollision>("Dash");
+	Collision_ect->SetParent(Dummy);
+	Collision_ect->GetTransform().SetLocalScale({ 25, 25, 25 });
+
+	//const float4& Pos = GamePlayCharacter::GetInst()->GetTransform().GetWorldPosition();
+
+	float4 Dir = GamePlayCharacter::GetInst()->GetTransform().GetWorldPosition() - GetTransform().GetWorldPosition();
+
+	if (Dir.x <= 600.f && Dir.x > 0)
+	{
+		Dir.x = 600.f;
+	}
+	else if (Dir.x > -600.f && Dir.x < 0)
+	{
+		Dir.x = -600.f;
+	}
+
+	if (Dir.z > 100.f)
+	{
+		Dir.z = 100.f;
+	}
+	else if (Dir.z < -100.f)
+	{
+		Dir.z = -100.f;
+	}
+
+	if (Dir.z > 0 && Dir.z < 20.f)
+	{
+		Dir.z = 20.f;
+	}
+	else if (Dir.z < 0 && Dir.z > -20.f)
+	{
+		Dir.z = -20.f;
+	}
+
+	Collision_ect->GetTransform().SetWorldPosition({ Dir.x + GetTransform().GetWorldPosition().x, Dir.z + GetTransform().GetWorldPosition().y, Dir.z + GetTransform().GetWorldPosition().z });
+	DashUpdate = false;
+	MoveDelay = 0;
 
 }
+
+
+void Bale::Bale_DashStart(const FrameAnimation_DESC& _DESC)
+{
+	Texture_Monster->ChangeFrameAnimation("Bale_Running");
+	DashUpdate = true;
+	BeforePos = GetTransform().GetWorldPosition();
+	// 마구 베면서 전진
+}
+
+
+
 void Bale::FSM_Att_Dash_Update(float _DeltaTime, const StateInfo& _Info)
 {
 
+	if (DashUpdate == true)
+	{
+		MoveDelay += _DeltaTime * 1.5f;
+		float4 Move = float4::LerpLimit(BeforePos, Collision_ect->GetTransform().GetWorldPosition(), MoveDelay);
+		Move -= GetTransform().GetWorldPosition();
+		Manager_MoveManager->SetCharacterMove({ Move.x, Move.y });
+	}
+
+	if (Collision_ect->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Monster, CollisionType::CT_SPHERE))
+	{
+		Texture_Monster->ChangeFrameAnimation("Bale_RunEnd");
+	}
+	//Bale_RunReady
+	//	Bale_Running"
+	//	Bale_RunEnd",
 }
+
 void Bale::FSM_Att_Dash_End(const StateInfo& _Info)
 {
 	All_CollTime["Att_Dash"] = 10.f;
+	DashUpdate = false;
+	BeforePos = float4::ZERO;
+	{
+		Collision_ect->Death();
+		Collision_ect = nullptr;
+	}
+
 }
