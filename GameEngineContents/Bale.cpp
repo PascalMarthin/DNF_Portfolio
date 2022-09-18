@@ -8,6 +8,8 @@
 
 Bale::Bale() 
 	: MoveDelay(0)
+	//, TrackerPos(float4::ZERO)
+	, Collision_TargetPos(nullptr)
 
 {
 }
@@ -117,7 +119,7 @@ void Bale::Start()
 
 	{
 		Collision_TargetPos = CreateComponent<GameEngineCollision>("TargetPos");
-		Collision_TargetPos->GetTransform().SetLocalScale({ 150, 100, 100 });
+		Collision_TargetPos->GetTransform().SetLocalScale({ 25, 10, 10 });
 		Collision_TargetPos->ChangeOrder(CollisionOrder::Monster_Tarcking);
 		Collision_TargetPos->SetDebugSetting(CollisionType::CT_SPHERE, { 0.5f, 0 , 0.8f, 0.3f });
 	}
@@ -134,9 +136,9 @@ void Bale::Start()
 
 
 	{
-		//All_CollTime["Att_Sting"] = 0;
-		////All_CollTime["Att_Dash"] = 0;
-		//All_CollTime["Att_Stamping"] = 0;
+		All_CollTime["Att_Sting"] = 0;
+		//All_CollTime["Att_Dash"] = 0;
+		All_CollTime["Att_Stamping"] = 0;
 	}
 	SetMonsterClass(MonsterClass::Named);
 }
@@ -222,8 +224,6 @@ void Bale::SetFSManager()
 	("Hit_Stand", std::bind(&Bale::FSM_Hit_Stand_Update, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&Bale::FSM_Hit_Stand_Start, this, std::placeholders::_1)
 		, std::bind(&Bale::FSM_Hit_Stand_End, this, std::placeholders::_1));
-
-
 	Manager_StatManager->GetFSMManager().CreateStateMember
 	("Hit_Aerial", std::bind(&Bale::FSM_Hit_Aerial_Update, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&Bale::FSM_Hit_Aerial_Start, this, std::placeholders::_1)
@@ -239,6 +239,12 @@ void Bale::SetFSManager()
 		, std::bind(&Bale::FSM_Hit_Down_Start, this, std::placeholders::_1)
 		, std::bind(&Bale::FSM_Hit_Down_End, this, std::placeholders::_1));
 
+
+	Manager_StatManager->GetFSMManager().CreateStateMember
+	("Move_Walk", std::bind(&Bale::FSM_Move_Walk_Update, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&Bale::FSM_Move_Walk_Start, this, std::placeholders::_1)
+		, std::bind(&Bale::FSM_Move_Walk_End, this, std::placeholders::_1));
+
 	Manager_StatManager->GetFSMManager().CreateStateMember
 	("Att_Sting", std::bind(&Bale::FSM_Att_Sting_Update, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&Bale::FSM_Att_Sting_Start, this, std::placeholders::_1)
@@ -253,6 +259,9 @@ void Bale::SetFSManager()
 	("Att_Dash", std::bind(&Bale::FSM_Att_Dash_Update, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&Bale::FSM_Att_Dash_Start, this, std::placeholders::_1)
 		, std::bind(&Bale::FSM_Att_Dash_End, this, std::placeholders::_1));
+
+
+	
 
 	
 	Manager_StatManager->GetFSMManager().ChangeState("None");
@@ -272,10 +281,14 @@ void Bale::FSM_Move_Stand_Start(const StateInfo& _Info)
 }
 void Bale::FSM_Move_Stand_Update(float _DeltaTime, const StateInfo& _Info)
 {
-	if (Texture_Monster)
-	{
+	//if (Collision_TargetPos->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Monster, CollisionType::CT_SPHERE))
+	//{
 
-	}
+	//}
+	//else
+	//{
+		Manager_StatManager->GetFSMManager().ChangeState("Move_Walk");
+	//}
 }
 void Bale::FSM_Move_Stand_End(const StateInfo& _Info)
 {
@@ -296,7 +309,6 @@ void Bale::FSM_Hit_Stand_Start(const StateInfo& _Info)
 }
 void Bale::FSM_Hit_Stand_Update(float _DeltaTime, const StateInfo& _Info)
 {
-
 	if (Manager_StatManager->IsAction())
 	{
 		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
@@ -390,40 +402,81 @@ void Bale::FSM_Move_Walk_Start(const StateInfo& _Info)
 {
 	MoveDelay = 0;
 	Texture_Monster->ChangeFrameAnimation("Bale_Walk", true);
-	Collision_TargetPos->GetTransform().SetWorldPosition(float4::ZERO);
+	Collision_TargetPos->SetParent(GamePlayCharacter::GetInst());
+	Collision_TargetPos->GetTransform().SetLocalPosition(float4::ZERO);
 }
 void Bale::FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _Info)
 {
 
 	MoveDelay -= _DeltaTime;
-	if (MoveDelay <= 0)
+	if (MoveDelay <= 0 || Collision_TargetPos->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Monster, CollisionType::CT_SPHERE) )
 	{
-		Collision_TargetPos->GetTransform().SetWorldPosition(GamePlayCharacter::GetInst()->GetTransform().GetWorldPosition());
+		float4 Pos = float4::ZERO;
+		Pos.x += GameEngineRandom::MainRandom.RandomFloat(-2.f, 2.f) * 25.f ;
+		//Pos.y += GameEngineRandom::MainRandom.RandomFloat(-2.f, 2.f) * 15.f ;
+
+
+		
+
+		if (Pos.x >= 0)
+		{
+			Pos.x += 200.f;
+		}
+		else
+		{
+			Pos.x -= 200.f;
+		}
+
+		//if (Pos.y >= 0)
+		//{
+		//	Pos.y += 25.f;
+		//}
+		//else
+		//{
+		//	Pos.y -= 25.f;
+		//}
+
+
+		Collision_TargetPos->GetTransform().SetLocalPosition(Pos);
 		MoveDelay = 2.f;
 	}
 
 
-	if (GamePlayCharacter::GetInst()->GetTransform().GetWorldPosition().z <= GetTransform().GetWorldPosition().z)
-	{
-		GetTransform().PixLocalPositiveX();
-	}
-	else 
-	{
-		GetTransform().PixLocalNegativeX();
-	}
-	
+	//if (GamePlayCharacter::GetInst()->GetTransform().GetWorldPosition().z <= GetTransform().GetWorldPosition().z)
+	//{
+	//	GetTransform().PixLocalPositiveX();
+	//}
+	//else 
+	//{
+	//	GetTransform().PixLocalNegativeX();
+	//}
+	//
 	// 마주보기
 
+	
+	const float4& Collision = Collision_TargetPos->GetTransform().GetWorldPosition();
+	const float4& Monster = GetTransform().GetWorldPosition();
 
-
-
-	if (Collision_TargetPos->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Monster, CollisionType::CT_SPHERE))
+	float4 Dir = 0;
+	if (Collision_TargetPos->GetTransform().GetWorldPosition().x - GetTransform().GetWorldPosition().x > 0)
 	{
-		int a = 0;
+		Dir.x = 180.f;
+	}
+	else
+	{
+		Dir.x = -180.f;
+	}
+
+	if (Collision_TargetPos->GetTransform().GetWorldPosition().y - GetTransform().GetWorldPosition().y > 0)
+	{
+		Dir.y = 180.f;
+	}
+	else
+	{
+		Dir.y = -180.f;
 	}
 	
-	float4 Move = (Collision_TargetPos->GetTransform().GetWorldPosition() - GetTransform().GetWorldPosition()).NormalizeReturn();
-	Manager_MoveManager->SetCharacterMove({ (80 * Move.x) * _DeltaTime, Move.y * _DeltaTime });
+	Manager_MoveManager->SetCharacterMove({ Dir.x * _DeltaTime, Dir.y * _DeltaTime });
 	
 }
 void Bale::FSM_Move_Walk_End(const StateInfo& _Info)

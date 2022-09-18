@@ -166,14 +166,19 @@ void MoveManager::Update(float _DeltaTime)
 
 float4 MoveManager::SetCharacterMove(const float4& _Move)
 {
-	if (_Move.x > 0.f)
+	if (ParentCharacter->GetObjectType() == ObjectType::Character)
 	{
-		ParentCharacter->SetRightDir();
+		if (_Move.x > 0.f)
+		{
+			ParentCharacter->SetRightDir();
+		}
+		else if (_Move.x < 0.f)
+		{
+			ParentCharacter->SetLeftDir();
+		}
 	}
-	else if (_Move.x < 0.f)
-	{
-		ParentCharacter->SetLeftDir();
-	}
+
+
 	// 이동 가능 여부 확인
 	const float4& Pos = Collision_Move->GetTransform().GetWorldPosition();
 	const float4& Scale = Collision_Move->GetTransform().GetLocalScale();
