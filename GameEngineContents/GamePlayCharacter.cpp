@@ -17,6 +17,7 @@
 
 GamePlayDataBase* GamePlayCharacter::CurrentCharacterData = nullptr;
 std::list<GamePlayDataBase*> GamePlayCharacter::AllCharacterData;
+GamePlayCharacter* GamePlayCharacter::Inst = nullptr;
 
 GamePlayCharacter::GamePlayCharacter()
 	: Manager_AvataManager(nullptr)
@@ -69,6 +70,13 @@ void GamePlayCharacter::Start()
 	Class_AvataInventory = GetLevel()->CreateActor<AvataInventory>();
 
 	Component_MouseCursorComponent = GetLevel()->CreateActor<MouseCursorComponent>(ActorOrder::Mouse);
+
+
+
+	Collision_Body = CreateComponent<GameEngineCollision>("Hit_Collision");
+	Collision_Body->GetTransform().SetLocalScale({ 48, 110 });
+	Collision_Body->ChangeOrder(CollisionOrder::Player);
+	Collision_Body->SetDebugSetting(CollisionType::CT_SPHERE, { 0, 0, 1, 0.7f });
 
 	//Collision_HitBody_Top = CreateComponent<GameEngineCollision>("Hit_Collision");
 	//Collision_HitBody_Top->ChangeOrder(CollisionOrder::Player);
@@ -244,6 +252,8 @@ void GamePlayCharacter::LevelStartEvent()
 	MoveIndex = 0.f;
 
 
+	GamePlayCharacter::Inst = this;
+
 	//GetTransform().SetLocalMove({0 , 0 , GetTransform().GetLocalPosition().y });
 	//Class_ItemInventory->GetTransform().SetLocalPosition({ GetTransform().GetLocalPosition().x, GetTransform().GetLocalPosition().y, 0 });
 }
@@ -252,6 +262,7 @@ void GamePlayCharacter::LevelEndEvent()
 {
 	JumpGoingDown = false;
 	HoldCam = false;
+	GamePlayCharacter::Inst = nullptr;
 }
 
 //void GamePlayCharacter::SkillCollisionActive(const std::string& _Name, int _Frame)

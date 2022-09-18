@@ -25,6 +25,7 @@ Skill_Fighter_F_LightingDance::~Skill_Fighter_F_LightingDance()
 
 void Skill_Fighter_F_LightingDance::Start()
 {
+	GamePlaySkill::Start();
 	SetCoolTime(5.f);
 	Class_Power.push_back(SkillComboPower(1500, 1, { 20.f, 20.f, 0, 0.5f }, HitPostureType::Standing, HitType::Hit));
 	Class_Power.push_back(SkillComboPower(1200, 1, { 10.f, 20.f, 0, 0.2f }, HitPostureType::Standing, HitType::Hit));
@@ -40,7 +41,7 @@ void Skill_Fighter_F_LightingDance::Start()
 	{
 		Collision_CheckHitArea = GetActor()->CreateComponent<GameEngineCollision>("LightingDance_Pos");
 		Collision_CheckHitArea->GetTransform().SetLocalScale({ 700.f, 90.f, 400.f });
-		Collision_CheckHitArea->SetDebugSetting(CollisionType::CT_AABB, { 0, 1 ,1, 0.7f });
+		Collision_CheckHitArea->SetDebugSetting(CollisionType::CT_AABB, { 0, 1 ,1, 0.0f });
 		Collision_CheckHitArea->GetTransform().SetLocalPosition({ -200.f , 0.f});
 		Off();
 	}
@@ -65,44 +66,40 @@ void Skill_Fighter_F_LightingDance::Start()
 
 		Texture_Illusion_1 = GetActor()->CreateComponent<GameEngineTextureRenderer>("Illusion_1");
 		Texture_Illusion_1->GetTransform().SetLocalPosition({ 0, 0, -100.f });
-		Texture_Illusion_1->CreateFrameAnimationFolder("Illusion_70", FrameAnimation_DESC("Illusion_70", 0.04f, true));
+		Texture_Illusion_1->CreateFrameAnimationFolder("Illusion_70", FrameAnimation_DESC("Illusion_70", 0.0625f, true));
 		Texture_Illusion_1->AnimationBindFrame("Illusion_70", std::bind(&Skill_Fighter_F_LightingDance::CheckEffectFrame, this, std::placeholders::_1));
 		Texture_Illusion_1->AnimationBindEnd("Illusion_70",
 			[](const FrameAnimation_DESC& _Desc)
 			{
-				_Desc.Renderer->ChangeFrameAnimation("None");
 				_Desc.Renderer->Off();
 			});
-		Texture_Illusion_1->CreateFrameAnimationFolder("Illusion_150", FrameAnimation_DESC("Illusion_150", 0.04f, true));
+		Texture_Illusion_1->CreateFrameAnimationFolder("Illusion_150", FrameAnimation_DESC("Illusion_150", 0.0625f, true));
 		Texture_Illusion_1->AnimationBindFrame("Illusion_150", std::bind(&Skill_Fighter_F_LightingDance::CheckEffectFrame, this, std::placeholders::_1));
 		Texture_Illusion_1->AnimationBindEnd("Illusion_150",
 			[](const FrameAnimation_DESC& _Desc)
 			{
-				_Desc.Renderer->ChangeFrameAnimation("None");
 				_Desc.Renderer->Off();
 			});
-		Texture_Illusion_1->CreateFrameAnimationFolder("Illusion_230", FrameAnimation_DESC("Illusion_230", 0.04f, true));
+		Texture_Illusion_1->CreateFrameAnimationFolder("Illusion_230", FrameAnimation_DESC("Illusion_230", 0.0625f, true));
 		Texture_Illusion_1->AnimationBindFrame("Illusion_230", std::bind(&Skill_Fighter_F_LightingDance::CheckEffectFrame, this , std::placeholders::_1));
 		Texture_Illusion_1->AnimationBindEnd("Illusion_230",
 			[](const FrameAnimation_DESC& _Desc)
 			{
-				_Desc.Renderer->ChangeFrameAnimation("None");
 				_Desc.Renderer->Off();
 			});
-		Texture_Illusion_1->CreateFrameAnimationFolder("Illusion_310", FrameAnimation_DESC("Illusion_310", 0.04f, true));
+		Texture_Illusion_1->CreateFrameAnimationFolder("Illusion_310", FrameAnimation_DESC("Illusion_310", 0.0625f, true));
 		//Texture_Illusion_1->AnimationBindFrame("Illusion_310", std::bind(&Skill_Fighter_F_LightingDance::CheckEffectFrame, this, std::placeholders::_1));
 		Texture_Illusion_1->AnimationBindEnd("Illusion_310",
 			[](const FrameAnimation_DESC& _Desc)
 			{
-				_Desc.Renderer->ChangeFrameAnimation("None");
 				_Desc.Renderer->Off();
 			});
 
-		Texture_Illusion_1->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Illusion_310", 0.04f, true));
-		Texture_Illusion_1->ChangeFrameAnimation("Illusion_230");
+		Texture_Illusion_1->ChangeFrameAnimation("Illusion_310");
 		Texture_Illusion_1->ScaleToTexture();
 		Texture_Illusion_1->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texture_Illusion_1->GetPixelData().MulColor = { 2.f, 2.f , 2.f , 1.2f };
+		Texture_Illusion_1->SetParent(Actor_DummyActor);
 		Texture_Illusion_1->Off();
 	}
 
@@ -110,44 +107,40 @@ void Skill_Fighter_F_LightingDance::Start()
 
 		Texture_Illusion_2 = GetActor()->CreateComponent<GameEngineTextureRenderer>("Illusion_2");
 		Texture_Illusion_2->GetTransform().SetLocalPosition({ 0, 0, -100.f });
-		Texture_Illusion_2->CreateFrameAnimationFolder("Illusion_70", FrameAnimation_DESC("Illusion_70", 0.04f, true));
+		Texture_Illusion_2->CreateFrameAnimationFolder("Illusion_70", FrameAnimation_DESC("Illusion_70", 0.0625f, true));
 		//Texture_Illusion_2->AnimationBindFrame("Illusion_70", std::bind(&Skill_Fighter_F_LightingDance::CheckEffectFrame, this, std::placeholders::_1));
 		Texture_Illusion_2->AnimationBindEnd("Illusion_70",
 			[](const FrameAnimation_DESC& _Desc)
 			{
-				_Desc.Renderer->ChangeFrameAnimation("None");
 				_Desc.Renderer->Off();
 			});
-		Texture_Illusion_2->CreateFrameAnimationFolder("Illusion_150", FrameAnimation_DESC("Illusion_150", 0.04f, true));
+		Texture_Illusion_2->CreateFrameAnimationFolder("Illusion_150", FrameAnimation_DESC("Illusion_150", 0.0625f, true));
 		//Texture_Illusion_2->AnimationBindFrame("Illusion_150", std::bind(&Skill_Fighter_F_LightingDance::CheckEffectFrame, this, std::placeholders::_1));
 		Texture_Illusion_2->AnimationBindEnd("Illusion_150",
 			[](const FrameAnimation_DESC& _Desc)
 			{
-				_Desc.Renderer->ChangeFrameAnimation("None");
 				_Desc.Renderer->Off();
 			});
-		Texture_Illusion_2->CreateFrameAnimationFolder("Illusion_230", FrameAnimation_DESC("Illusion_230", 0.04f, true));
+		Texture_Illusion_2->CreateFrameAnimationFolder("Illusion_230", FrameAnimation_DESC("Illusion_230", 0.0625f, true));
 		//Texture_Illusion_2->AnimationBindFrame("Illusion_230", std::bind(&Skill_Fighter_F_LightingDance::CheckEffectFrame, this, std::placeholders::_1));
 		Texture_Illusion_2->AnimationBindEnd("Illusion_230",
 			[](const FrameAnimation_DESC& _Desc)
 			{
-				_Desc.Renderer->ChangeFrameAnimation("None");
 				_Desc.Renderer->Off();
 			});
-		Texture_Illusion_2->CreateFrameAnimationFolder("Illusion_310", FrameAnimation_DESC("Illusion_310", 0.04f, true));
+		Texture_Illusion_2->CreateFrameAnimationFolder("Illusion_310", FrameAnimation_DESC("Illusion_310", 0.0625f, true));
 		//Texture_Illusion_2->AnimationBindFrame("Illusion_310", std::bind(&Skill_Fighter_F_LightingDance::CheckEffectFrame, this, std::placeholders::_1));
 		Texture_Illusion_2->AnimationBindEnd("Illusion_310",
 			[](const FrameAnimation_DESC& _Desc)
 			{
-				_Desc.Renderer->ChangeFrameAnimation("None");
 				_Desc.Renderer->Off();
 			});
 
-		Texture_Illusion_2->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Illusion_310", 0.04f, true));
-		Texture_Illusion_2->ChangeFrameAnimation("Illusion_230");
+		Texture_Illusion_2->ChangeFrameAnimation("Illusion_310");
 		Texture_Illusion_2->ScaleToTexture();
 		Texture_Illusion_2->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texture_Illusion_2->GetPixelData().MulColor = { 2.f, 2.f , 2.f , 1.2f };
+		Texture_Illusion_2->SetParent(Actor_DummyActor);
 		Texture_Illusion_2->Off();
 	}
 
@@ -166,6 +159,7 @@ void Skill_Fighter_F_LightingDance::Start()
 		Texture_Flash->ScaleToTexture();
 		Texture_Flash->GetTransform().SetLocalPosition({-50.f, 10.f});
 		Texture_Flash->GetPixelData().MulColor = { 1, 1, 1, 0.8f };
+		Texture_Flash->SetParent(Actor_DummyActor);
 		Texture_Flash->Off();
 	}
 	{
@@ -183,6 +177,7 @@ void Skill_Fighter_F_LightingDance::Start()
 		Texture_Shock->SetScaleRatio(1.2f);
 		Texture_Shock->ScaleToTexture();
 		Texture_Shock->GetTransform().SetLocalPosition({ -50.f, 10.f });
+		Texture_Shock->SetParent(Actor_DummyActor);
 		//Texture_Shock->GetPixelData().MulColor = { 1, 1, 1, 0.9f };
 		Texture_Shock->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texture_Shock->Off();
@@ -191,17 +186,16 @@ void Skill_Fighter_F_LightingDance::Start()
 		Texture_Apply = GetActor()->CreateComponent<GameEngineTextureRenderer>("Lighting_Apply");
 		Texture_Apply->GetTransform().SetLocalPosition({ 0, 0, -100.f });
 		Texture_Apply->CreateFrameAnimationFolder("Lighting_Apply", FrameAnimation_DESC("Lighting_Apply", 0.08f, true));
-		Texture_Apply->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Lighting_Apply", 0.02f, true));
 		Texture_Apply->AnimationBindEnd("Lighting_Apply",
 			[](const FrameAnimation_DESC& _Desc)
 			{
-				_Desc.Renderer->ChangeFrameAnimation("None");
 				_Desc.Renderer->Off();
 			});
 		Texture_Apply->ChangeFrameAnimation("Lighting_Apply");
 		Texture_Apply->SetScaleRatio(1.2f);
 		Texture_Apply->ScaleToTexture();
-		Texture_Apply->GetTransform().SetLocalPosition({ -50.f, 10.f });
+		Texture_Apply->SetParent(Actor_DummyActor);
+		Texture_Apply->GetTransform().SetLocalPosition({ -180.f, 80.f });
 		//Texture_Shock->GetPixelData().MulColor = { 1, 1, 1, 0.9f };
 		//Texture_Apply->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texture_Apply->Off();
@@ -390,8 +384,7 @@ void Skill_Fighter_F_LightingDance::NoHitFunction()
 		Renderer = Texture_Illusion_2;
 	}
 	Renderer->On();
-	Renderer->SetParent(Actor_DummyActor);
-	Renderer->ChangeFrameAnimation("Illusion_230");
+	Renderer->ChangeFrameAnimation("Illusion_310", true);
 
 
 	float4 BeforePos = GetActor()->GetTransform().GetWorldPosition();
@@ -400,7 +393,6 @@ void Skill_Fighter_F_LightingDance::NoHitFunction()
 	GetActor()->GetTransform().SetLocalMove({ 300.f * -(Dir) , -50, -50 });
 
 	float4 AfterPos = GetActor()->GetTransform().GetWorldPosition();
-
 
 	if (BeforePos.x - AfterPos.x > 0)
 	{
@@ -426,8 +418,10 @@ void Skill_Fighter_F_LightingDance::NoHitFunction()
 	}
 
 
-	Renderer->GetTransform().SetLocalPosition({ AfterPos.x + (AfterPos.x - BeforePos.x) * -0.5f, AfterPos.y + (AfterPos.y - BeforePos.y) * -0.5f, -10.f });
+	Renderer->GetTransform().SetWorldPosition({ AfterPos.x + (AfterPos.x - BeforePos.x) * -0.5f, (AfterPos.y + (AfterPos.y - BeforePos.y) * -0.5f), -10.f });
 	Renderer->On();
+
+	GetActor()->GetTransform().SetLocalMove({ 0 , 20  });
 
 	GetActor<GamePlayObject>()->SetDirSwitch();
 	Object_HitList.clear();
@@ -478,16 +472,15 @@ bool Skill_Fighter_F_LightingDance::GetTarget(GameEngineCollision* _This, GameEn
 	if (LightingStuck % 2)
 	{
 		Renderer = Texture_Illusion_1;
-		Renderer->SetParent(Actor_DummyActor);
+
 	}
 	else
 	{
 		Renderer = Texture_Illusion_2;
-		Renderer->SetParent(Actor_DummyActor);
 
 	}
 	Renderer->On();
-	Renderer->ChangeFrameAnimation("Illusion_230");
+	Renderer->ChangeFrameAnimation("Illusion_310", true);
 
 
 	float PoeScale = 80.f;
@@ -506,14 +499,15 @@ bool Skill_Fighter_F_LightingDance::GetTarget(GameEngineCollision* _This, GameEn
 	{
 		PlayerPos.y -= 50.f;
 		PoePos.y -= 50.f;
-		Renderer->GetTransform().PixLocalPositiveX();
+		Renderer->GetTransform().PixLocalNegativeX();
+
 		Renderer->GetTransform().SetLocalRotation({ 0, 0 , float4::VectorXYtoRadian(PoePos, PlayerPos) });
 	}
 	else
 	{
 		PoePos.y -= 50.f;
 		PlayerPos.y -= 50.f;
-		Renderer->GetTransform().PixLocalNegativeX();
+		Renderer->GetTransform().PixLocalPositiveX();
 		Renderer->GetTransform().SetLocalRotation({ 0, 0 , -float4::VectorXYtoRadian(PoePos, PlayerPos) });
 	}
 	//if (Range > 0)
@@ -528,7 +522,7 @@ bool Skill_Fighter_F_LightingDance::GetTarget(GameEngineCollision* _This, GameEn
 	//}
 
 
-	Renderer->GetTransform().SetLocalPosition({ PoePos.x - (PoePos.x - PlayerPos.x) * 0.5f, PoePos.y - 25.f + (PoePos.y - PlayerPos.y) * 0.5f, -10.f });
+	Renderer->GetTransform().SetWorldPosition({ PoePos.x - (PoePos.x - PlayerPos.x) * 0.5f, PoePos.y - 25.f + (PoePos.y - PlayerPos.y) * 0.5f, -10.f });
 
 	if (Range > 0)
 	{
@@ -544,8 +538,7 @@ bool Skill_Fighter_F_LightingDance::GetTarget(GameEngineCollision* _This, GameEn
 	Object_HitList[_Other->GetActor<GamePlayObject>()] = 1;
 
 
-	Texture_Flash->ChangeFrameAnimation("None");
-	Texture_Flash->ChangeFrameAnimation("Lighting_Flash");
+	Texture_Flash->ChangeFrameAnimation("Lighting_Flash", true);
 	Texture_Flash->On();
 
 
@@ -560,22 +553,20 @@ bool Skill_Fighter_F_LightingDance::GetTarget(GameEngineCollision* _This, GameEn
 	}
 	Texture_Flash->GetTransform().SetWorldPosition({GetActor()->GetTransform().GetWorldPosition().x, GetActor()->GetTransform().GetWorldPosition().y + 20.f });
 
-	Texture_Shock->ChangeFrameAnimation("None");
-	Texture_Shock->ChangeFrameAnimation("Lighting_Shock");
+	Texture_Shock->ChangeFrameAnimation("Lighting_Shock", true);
 	Texture_Shock->On();
 
 	PoePos.y += 50.f;
-	Texture_Shock->SetParent(Actor_DummyActor);
-	Texture_Shock->GetTransform().SetWorldPosition(PoePos);
+	//Texture_Shock->SetParent(Actor_DummyActor);
+	//Texture_Shock->GetTransform().SetWorldPosition(PoePos);
 
 
 	
-	Texture_Apply->ChangeFrameAnimation("None");
-	Texture_Apply->ChangeFrameAnimation("Lighting_Apply");
+	Texture_Apply->ChangeFrameAnimation("Lighting_Apply", true);
 	Texture_Apply->On();
 
-	Texture_Apply->SetParent(Actor_DummyActor);
-	Texture_Apply->GetTransform().SetWorldPosition(PoePos);
+	//
+	Actor_DummyActor->GetTransform().SetLocalPosition(PoePos);
 
 	//if (PastPlayerPos.x > PoePos.x)
 	//{

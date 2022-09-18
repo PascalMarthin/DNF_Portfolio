@@ -47,7 +47,7 @@ void GameEngineDamageRenderer::SetDamage(unsigned int _Damage)
 	{
 		MaxDamage = true;
 		{
-			GetTransform().SetLocalMove({ 0, 0, -100.f });
+			GetTransform().SetLocalMove({ 0, 0, -1000.f });
 			All_Font[0]->SetFolderTextureToIndex("MaxDamageFont", 0);
 			All_Font[0]->GetTransform().SetLocalPosition({0, 0, -2});
 			All_Font[1]->SetFolderTextureToIndex("MaxDamageFont", 1);
@@ -123,6 +123,10 @@ void GameEngineDamageRenderer::SetPrintingFont(GameEngineDamageRenderer* _FontRe
 	for (GameEngineDamageRenderer* Renderer : Static_AllDamageRenderer)
 	{
 		Renderer->GetTransform().SetLocalMove({ 0, Hight, 0 });
+		if (_FontRenderer->GetTransform().GetWorldPosition().y - Renderer->GetTransform().GetWorldPosition().y > -8.f)
+		{
+			Renderer->GetTransform().SetLocalMove({ 0, 5.f, 0 });
+		}
 	}
 }
 

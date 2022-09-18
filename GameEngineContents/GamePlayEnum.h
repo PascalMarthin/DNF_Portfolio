@@ -328,6 +328,8 @@ enum class CollisionOrder
 	Player_Att = 4,
 	Monster = 10,
 	Monster_Att = 11,
+	Monster_Area,
+	Monster_Tarcking,
 	UI_MainMouse = 20,
 	UI_UIMouse = 21,
 	ChangeMap = 22,

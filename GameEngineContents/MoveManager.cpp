@@ -263,6 +263,11 @@ inline void MoveManager::HitDir(float _Dir)
 void MoveManager::SetHit(const float4& _HitPower)
 {
 	BlowPower = _HitPower;
+	//if (!ManagerStat->IsAerial())
+	//{
+	//	BlowPower.y = 0;
+	//}
+
 	HitTime = 0.f;
 }
 

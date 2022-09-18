@@ -36,4 +36,5 @@ private:
 
 	float MoveDistance;
 	float Att_Bungwon_Delay;
+	float Coefficient;
 };

@@ -239,6 +239,9 @@
     <ClInclude Include="Skill_Fighter_F_SuperArmor.h">
       <Filter>Object\Character\Fighter</Filter>
     </ClInclude>
+    <ClInclude Include="Skill_Fighter_F_StrongLowKick.h">
+      <Filter>Object\Character\Fighter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -474,6 +477,9 @@
       <Filter>Object\Character\SkillTemp</Filter>
     </ClCompile>
     <ClCompile Include="Skill_Fighter_F_SuperArmor.cpp">
+      <Filter>Object\Character\Fighter</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill_Fighter_F_StrongLowKick.cpp">
       <Filter>Object\Character\Fighter</Filter>
     </ClCompile>
   </ItemGroup>

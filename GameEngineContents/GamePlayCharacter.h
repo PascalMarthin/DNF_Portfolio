@@ -115,11 +115,21 @@ private:
 	static GamePlayDataBase* CurrentCharacterData;
 	static std::list<GamePlayDataBase*> AllCharacterData;
 
+
+	static GamePlayCharacter* Inst;
+
 public:
 	static GamePlayDataBase* CreateCharacterBase(CharacterFormerClass _Class, const std::string& _NickName = "Debug");
 
+	static GamePlayCharacter* GetInst()
+	{
+		return Inst;
+	}
+
 	//---------------------------------------
 	void SetFSManager() override;
+
+	GameEngineCollision* Collision_Body;
 	//void SetCollisionManager();
 
 	//------FSM--------------

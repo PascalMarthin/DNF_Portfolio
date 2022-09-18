@@ -103,6 +103,7 @@ protected:
 	float GoingDownTime;
 
 	void Start() override;
+	void Update(float _Delta) override;
 	void LevelStartEvent() override;
 	//--------------------Collision---------------
 	GameEngineCollision* Collision_HitBody_Top;
@@ -130,6 +131,11 @@ protected:
 	{
 		All_MonsterCategory.push_back(_Category);
 	}
+
+
+	// --------CoolTime-----------------
+	std::map<std::string, float> All_CollTime;
+
 
 private:
 	std::string String_MonsterName;

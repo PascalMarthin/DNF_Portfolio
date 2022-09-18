@@ -76,21 +76,26 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitColli
 	switch (_Skill->Class_Power[_Skill->int_ComboStuck].Enum_HitPostureType)
 	{
 	case HitPostureType::Standing:
+	{
+		Manager_StatManager->SetHit_Stand();
+		Manager_MoveManager->SetHit(Power);
+	}
+	break;
 	case HitPostureType::Aerial:
 	{
-
-		if (Power.x != 0 && Power.y != 0 && Power.w == 0)
-		{
-			Manager_StatManager->SetHit_BlowUp();
-		}
-		else if (Power.x != 0 && Power.w != 0)
-		{
-			Manager_StatManager->SetHit_Stand();
-		}
-		else
-		{
-			MsgBoxAssert("예외발생_ 확인후 추가")
-		}
+		Manager_StatManager->SetHit_BlowUp();
+		//if (Power.x != 0 && Power.y != 0 && Power.w == 0)
+		//{
+		//
+		//}
+		//else if (Power.x != 0 && Power.w != 0)
+		//{
+	
+		//}
+		//else
+		//{
+		//	MsgBoxAssert("예외발생_ 확인후 추가")
+		//}
 
 		Manager_MoveManager->SetHit(Power);
 	}

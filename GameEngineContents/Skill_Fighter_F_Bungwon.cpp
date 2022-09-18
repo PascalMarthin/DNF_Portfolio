@@ -10,6 +10,7 @@ Skill_Fighter_F_Bungwon::Skill_Fighter_F_Bungwon()
 	, Texture_Dashpunch(nullptr)
 	, Texture_Dashpunchdust(nullptr)
 	, Texture_Dashpunchsub(nullptr)
+	, Coefficient(0)
 {
 }
 
@@ -101,9 +102,17 @@ bool Skill_Fighter_F_Bungwon::ActiveSkill(CharacterStatManager* _Stat, MoveManag
 		}
 		else
 		{
-			float4 Pos = GetActor()->GetTransform().GetWorldPosition();
-			Pos -= float4::LerpLimit(Pos, { Pos.x + (MoveDistance * DefaultMove * 0.035f), Pos.y, Pos.z }, Att_Bungwon_Delay * 50.f );
-			_Move->SetCharacterMove({ -Pos.x, 0 });
+
+			float Range = (700.f + Coefficient - (Coefficient * Coefficient));
+			Coefficient += Att_Bungwon_Delay + Coefficient ;
+			if (Range < 0)
+			{
+				Range = 0;
+			}
+
+			//float4 Pos = GetActor()->GetTransform().GetWorldPosition();
+			//Pos -= float4::Lerp(Pos, { Pos.x + (MoveDistance * DefaultMove * 0.035f), Pos.y, Pos.z }, Att_Bungwon_Delay * 10.f );
+			_Move->SetCharacterMove({ (Range * MoveDistance) * _DeltaTime, 0 });
 		}
 	}
 
@@ -131,6 +140,7 @@ void Skill_Fighter_F_Bungwon::StartSkill(CharacterStatManager* _Stat, MoveManage
 	MoveDistance = FSM_Move_Helper();
 	MoveDistance *= 0.5f;
 	Att_Bungwon_Delay = 0.f;
+	Coefficient = 0;
 
 }
 

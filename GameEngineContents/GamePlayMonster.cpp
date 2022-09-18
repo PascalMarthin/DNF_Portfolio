@@ -65,8 +65,19 @@ unsigned int GamePlayMonster::SetHPFromHit(unsigned int _Damage)
 		GamePlayMonsterHPBar::SetHitDamage(MonsterAbilityStat.HP);
 	}
 
-
 	return Damage;
+}
+
+
+void GamePlayMonster::Update(float _Delta)
+{
+	for (auto& Time : All_CollTime)
+	{
+		if (Time.second > 0)
+		{
+			Time.second -= _Delta;
+		}	
+	}
 }
 
 

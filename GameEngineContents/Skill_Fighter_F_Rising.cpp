@@ -14,6 +14,9 @@ GameEngineFolderTexture* Skill_Fighter_F_Rising::FolderTexture_Tigerstrike_00 = 
 Skill_Fighter_F_Rising::Skill_Fighter_F_Rising() 
 	: JumpTime(0)
 	, LandPos(float4::ZERO)
+	, AttDealy(0)
+	, DelayPunch(false)
+	, HitCount(0)
 {
 }
 
@@ -23,7 +26,10 @@ Skill_Fighter_F_Rising::~Skill_Fighter_F_Rising()
 
 void Skill_Fighter_F_Rising::Start()
 {
-	Class_Power.push_back(SkillComboPower(200, 1, { 700.f, 0.f, 0, 0.f }, HitPostureType::Aerial, HitType::Hit));
+	Class_Power.push_back(SkillComboPower(200, 1, { 0, 0.f, 0, 0.f }, HitPostureType::Aerial, HitType::Hit));
+	Class_Power.push_back(SkillComboPower(200, 1, { 0, 500.f, 0, 0.f }, HitPostureType::Aerial, HitType::Hit));
+	//Class_Power.push_back(SkillComboPower(300, 1, { 700.f, 0.f, 0, 0.f }, HitPostureType::Aerial, HitType::Hit));
+	//Class_Power.push_back(SkillComboPower(400, 1, { 700.f, 0.f, 0, 0.f }, HitPostureType::Aerial, HitType::Hit));
 
 	Actor_DummyActor = GetActor()->GetLevel()->CreateActor<DummyActor>();
 	{
@@ -57,7 +63,7 @@ void Skill_Fighter_F_Rising::Start()
 
 	{
 		GameEngineTextureRenderer* Texture_Rising_Spin = GetActor()->CreateComponent<GameEngineTextureRenderer>("Texture_Rising_spin");
-		Texture_Rising_Spin->CreateFrameAnimationFolder("Texture_Rising_spin", FrameAnimation_DESC("Rising_spin",1, 9, 0.04f, false));
+		Texture_Rising_Spin->CreateFrameAnimationFolder("Texture_Rising_spin", FrameAnimation_DESC("Rising_spin",1, 9, 0.075f, false));
 		Texture_Rising_Spin->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_spin", 0.04f, false));
 
 		Texture_Rising_Spin->AnimationBindEnd("Texture_Rising_spin",
@@ -78,7 +84,7 @@ void Skill_Fighter_F_Rising::Start()
 		
 
 		Texture_Rising_Spin = GetActor()->CreateComponent<GameEngineTextureRenderer>("Texture_Rising_spin");
-		Texture_Rising_Spin->CreateFrameAnimationFolder("Texture_Rising_spin", FrameAnimation_DESC("Rising_spin", 2, 9, 0.055f, true));
+		Texture_Rising_Spin->CreateFrameAnimationFolder("Texture_Rising_spin", FrameAnimation_DESC("Rising_spin", 2, 9, 0.08f, true));
 		Texture_Rising_Spin->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_spin", 3, 9, 0.04f, false));
 
 		Texture_Rising_Spin->AnimationBindEnd("Texture_Rising_spin",
@@ -101,7 +107,7 @@ void Skill_Fighter_F_Rising::Start()
 
 	{
 		GameEngineTextureRenderer* RisingEffect = GetActor()->CreateComponent<GameEngineTextureRenderer>("RisingEffect");
-		RisingEffect->CreateFrameAnimationFolder("RisingEffect", FrameAnimation_DESC("Tigerstrike_00", 1, 4, 0.1f, true));
+		RisingEffect->CreateFrameAnimationFolder("RisingEffect", FrameAnimation_DESC("Tigerstrike_00", 1, 4, 0.125f, true));
 		RisingEffect->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_spin", 3, 9, 0.04f, false));
 
 		RisingEffect->AnimationBindEnd("RisingEffect",
@@ -121,7 +127,7 @@ void Skill_Fighter_F_Rising::Start()
 
 
 		RisingEffect = GetActor()->CreateComponent<GameEngineTextureRenderer>("RisingEffect");
-		RisingEffect->CreateFrameAnimationFolder("RisingEffect", FrameAnimation_DESC("Tigerstrike_00", 1, 4, 0.1f, true));
+		RisingEffect->CreateFrameAnimationFolder("RisingEffect", FrameAnimation_DESC("Tigerstrike_00", 1, 4, 0.125f, true));
 		RisingEffect->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_spin", 3, 9, 0.04f, false));
 
 		RisingEffect->AnimationBindEnd("RisingEffect",
@@ -141,7 +147,7 @@ void Skill_Fighter_F_Rising::Start()
 		Texture_RisingEffect.push_back(RisingEffect); 
 
 		RisingEffect = GetActor()->CreateComponent<GameEngineTextureRenderer>("RisingEffect");
-		RisingEffect->CreateFrameAnimationFolder("RisingEffect", FrameAnimation_DESC("Tigerstrike_00", 1, 4, 0.1f, true));
+		RisingEffect->CreateFrameAnimationFolder("RisingEffect", FrameAnimation_DESC("Tigerstrike_00", 1, 4, 0.125f, true));
 		RisingEffect->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_spin", 3, 9, 0.04f, false));
 
 		RisingEffect->AnimationBindEnd("RisingEffect",
@@ -161,7 +167,7 @@ void Skill_Fighter_F_Rising::Start()
 	}
 	{
 		GameEngineTextureRenderer* RisingEffect = GetActor()->CreateComponent<GameEngineTextureRenderer>("RisingEffect");
-		RisingEffect->CreateFrameAnimationFolder("RisingEffect", FrameAnimation_DESC("Tigerstrike_00", 5, 9, 0.085f, true));
+		RisingEffect->CreateFrameAnimationFolder("RisingEffect", FrameAnimation_DESC("Tigerstrike_00", 5, 9, 0.135f, true));
 		RisingEffect->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_spin", 3, 9, 0.04f, false));
 
 		RisingEffect->AnimationBindEnd("RisingEffect",
@@ -180,7 +186,7 @@ void Skill_Fighter_F_Rising::Start()
 		Texture_RisingEffect.push_back(RisingEffect);
 
 		RisingEffect = GetActor()->CreateComponent<GameEngineTextureRenderer>("RisingEffect");
-		RisingEffect->CreateFrameAnimationFolder("RisingEffect", FrameAnimation_DESC("Tigerstrike_00", 5, 9, 0.075f, true));
+		RisingEffect->CreateFrameAnimationFolder("RisingEffect", FrameAnimation_DESC("Tigerstrike_00", 5, 9, 0.125f, true));
 		RisingEffect->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_spin", 3, 9, 0.04f, false));
 
 		RisingEffect->AnimationBindEnd("RisingEffect",
@@ -359,21 +365,16 @@ bool Skill_Fighter_F_Rising::ActiveSkill(CharacterStatManager* _Stat, MoveManage
 		}
 		else if (_Avata->GetAvata_Skin()->GetCurrentFrameStuck() == 12 && Is_CollisionCheck ==false)
 		{
-			Texture_Wind[0]->ChangeFrameAnimation("None");
-			Texture_Wind[0]->ChangeFrameAnimation("Texture_Wind_5");
+			Texture_Wind[0]->ChangeFrameAnimation("Texture_Wind_5", true);
 			Texture_Wind[0]->On();
 
-			Texture_Wind[1]->ChangeFrameAnimation("None");
-			Texture_Wind[1]->ChangeFrameAnimation("Texture_Wind_5");
+			Texture_Wind[1]->ChangeFrameAnimation("Texture_Wind_5", true);
 			Texture_Wind[1]->On();
 
-
-			Texture_Wind[2]->ChangeFrameAnimation("None");
-			Texture_Wind[2]->ChangeFrameAnimation("Texture_Wind_5");
+			Texture_Wind[2]->ChangeFrameAnimation("Texture_Wind_5", true);
 			Texture_Wind[2]->On();
 
-			Texture_Wind[3]->ChangeFrameAnimation("None");
-			Texture_Wind[3]->ChangeFrameAnimation("Texture_Wind");
+			Texture_Wind[3]->ChangeFrameAnimation("Texture_Wind", true);
 			Texture_Wind[3]->On();
 
 			Is_CollisionCheck = true;
@@ -381,8 +382,9 @@ bool Skill_Fighter_F_Rising::ActiveSkill(CharacterStatManager* _Stat, MoveManage
 		break;
 	case 1:
 	{
+		AttDealy += _DeltaTime;
 		JumpTime += _DeltaTime;
-		GetActor()->GetTransform().SetLocalMove({ 0, Skill_Rising_High * (JumpTime - _DeltaTime), 0 });
+		GetActor()->GetTransform().SetLocalMove({ 0, Skill_Rising_High * (JumpTime - _DeltaTime) * 0.7f, 0 });
 		if (GetActor()->GetTransform().GetWorldPosition().y >= LandPos.y + Skill_Rising_High) //(JumpTime * 7.5f >= 1.f)
 		{
 			GetActor()->GetTransform().SetLocalPosition({ LandPos.x, LandPos.y + Skill_Rising_High, LandPos.z });
@@ -391,9 +393,13 @@ bool Skill_Fighter_F_Rising::ActiveSkill(CharacterStatManager* _Stat, MoveManage
 			int_ComboStuck = 2;
 			return false;
 		}
-		else
+
+		if(AttDealy > 0.0125f && HitCount < 3)
 		{
 			CheckCollision(0);
+			Object_HitList.clear();
+			++HitCount;
+			AttDealy = 0;
 		}
 		return false;
 	}
@@ -527,7 +533,8 @@ void Skill_Fighter_F_Rising::StartSkill(CharacterStatManager* _Stat, MoveManager
 	LandPos = GetActor()->GetTransform().GetWorldPosition();
 	Actor_DummyActor->GetTransform().SetLocalPosition(LandPos);
 	_Avata->SetShake(2.f, 0.2f);
-
+	AttDealy = 0;
+	HitCount = 0;
 
 
 }

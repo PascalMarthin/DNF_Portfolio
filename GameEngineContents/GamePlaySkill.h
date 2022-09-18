@@ -103,6 +103,7 @@ protected:
 	void CastingEnd(CharacterStatManager* _Stat, AvataManager* _Avata);
 	float CastingTime;
 	float CurrentCastingTime;
+	void Start() override;
 	void Update(float _DeltaTime) final;
 
 	void LevelStartEvent() override;

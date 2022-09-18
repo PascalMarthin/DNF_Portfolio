@@ -23,6 +23,13 @@ GamePlaySkill::~GamePlaySkill()
 }
 
 
+void GamePlaySkill::Start()
+{
+	Actor_DummyActor = GetActor()->GetLevel()->CreateActor<DummyActor>();
+
+}
+
+
 void GamePlaySkill::CheckCollision()
 {
 	Collision_AllCollisionList[int_ComboStuck]->IsCollision(CollisionType::CT_AABB, CollisionOrder::Monster, CollisionType::CT_AABB,

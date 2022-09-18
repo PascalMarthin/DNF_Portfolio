@@ -24,7 +24,7 @@ void Skill_Fighter_F_LowKick::Start()
 		GameEngineCollision* LowKick = GetActor()->CreateComponent<GameEngineCollision>("LowKick");
 		LowKick->GetTransform().SetLocalScale({ 70.f, 40.f, 20.f });
 		LowKick->GetTransform().SetLocalPosition({ 30, -50.f, 0 });
-		LowKick->SetDebugSetting(CollisionType::CT_AABB, { 0, 0 ,1.f, 1.f });
+		LowKick->SetDebugSetting(CollisionType::CT_AABB, { 0, 0 , 0, 0 });
 		Collision_AllCollisionList.push_back(LowKick);
 	}
 

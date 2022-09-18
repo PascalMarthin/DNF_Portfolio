@@ -64,6 +64,4 @@ void Skill_Fighter_F_KaiKen::StartSkill(CharacterStatManager* _Stat, MoveManager
 {
 	int_ComboStuck = 0;
 	Casting(_Stat, _Avata);
-
-
 }

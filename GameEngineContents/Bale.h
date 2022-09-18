@@ -23,6 +23,13 @@ protected:
 	//void OnEvent();
 	// void OffEvent() override {}
 private:
+	// ---------Dir-------------
+	void CheckDir();
+
+
+	// ---------Collision-------
+	std::map<std::string, GameEngineCollision*> AllCollision;
+
 
 	// ---------FSM-------------
 	void SetFSManager() override;
@@ -54,10 +61,34 @@ private:
 	void FSM_Hit_Down_End(const StateInfo& _Info);
 
 
-	void FSM_Hit_Walk_Start(const StateInfo& _Info);
-	void FSM_Hit_Walk_Update(float _DeltaTime, const StateInfo& _Info);
-	void FSM_Hit_Walk_End(const StateInfo& _Info);
+	void FSM_Move_Walk_Start(const StateInfo& _Info);
+	void FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Move_Walk_End(const StateInfo& _Info);
+
+	float MoveDelay;
+	//float4 TrackerPos;
+	GameEngineCollision* Collision_TargetPos;
 	
+	void FSM_Att_Sting_Start(const StateInfo& _Info);
+	void FSM_Att_Sting_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Att_Sting_End(const StateInfo& _Info);
+
+	void Sting_End(const FrameAnimation_DESC& _DESC);
+
+
+	void FSM_Att_Stamping_Start(const StateInfo& _Info);
+	void FSM_Att_Stamping_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Att_Stamping_End(const StateInfo& _Info);
+
+	void Bale_Stamping(const FrameAnimation_DESC& _DESC);
+	
+
+	void FSM_Att_Dash_Start(const StateInfo& _Info);
+	void FSM_Att_Dash_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Att_Dash_End(const StateInfo& _Info);
+
+
+
 
 	//void FSM_Move_Walk_Start(const StateInfo& _Info);
 	//void FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _Info);

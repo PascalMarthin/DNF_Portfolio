@@ -30,6 +30,8 @@ protected:
 
 private:
 	float JumpTime;
+	float AttDealy;
+	int HitCount;
 	float4 LandPos;
 	std::vector<GameEngineTextureRenderer*> Texture_Wind;
 	//GameEngineTextureRenderer* Texture_Wind_0;
