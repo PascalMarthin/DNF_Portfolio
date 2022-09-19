@@ -34,6 +34,7 @@ void Bale::Start()
 	Texture_Monster = CreateComponent<GameEngineTextureRenderer>();
 	Texture_Monster->CreateFrameAnimationFolder("Bale_Standing", FrameAnimation_DESC("Bale", 0, 5, 0.15f));
 	Texture_Monster->CreateFrameAnimationFolder("Bale_Walk", FrameAnimation_DESC("Bale", 6, 13, 0.15f));
+	Texture_Monster->ChangeCamera(CAMERAORDER::Object);
 	
 	{
 		Texture_Monster->CreateFrameAnimationFolder("Bale_Sting", FrameAnimation_DESC("Bale", 14, 23, 0.1f, false));
@@ -58,16 +59,25 @@ void Bale::Start()
 
 	Texture_Monster->CreateFrameAnimationFolder("Bale_Grap", FrameAnimation_DESC("Bale", 37, 38, 0.08f, false));
 	Texture_Monster->CreateFrameAnimationFolder("Bale_Hold", FrameAnimation_DESC("Bale", 39, 39, 0.15f, false));
-	Texture_Monster->CreateFrameAnimationFolder("Bale_Press", FrameAnimation_DESC("Bale", 40, 45, 0.08f, false));
+	Texture_Monster->CreateFrameAnimationFolder("Bale_Press", FrameAnimation_DESC("Bale", 40, 44, 0.08f, false));
 
 
 	{
-		Texture_Monster->CreateFrameAnimationFolder("Bale_RunReady", FrameAnimation_DESC("Bale", 46, 46, 0.25f, false));
+		Texture_Monster->CreateFrameAnimationFolder("Bale_RunReady", FrameAnimation_DESC("Bale", 45, 46, 0.125f, false));
 		Texture_Monster->CreateFrameAnimationFolder("Bale_Running", FrameAnimation_DESC("Bale", 47, 48, 0.1f));
 		Texture_Monster->CreateFrameAnimationFolder("Bale_RunEnd", FrameAnimation_DESC("Bale", 49, 50, 0.25f, false));
 
 		Texture_Monster->AnimationBindEnd("Bale_RunReady", std::bind(&Bale::Bale_DashStart, this, std::placeholders::_1));
 		Texture_Monster->AnimationBindEnd("Bale_RunEnd", std::bind(&Bale::Bale_BackToNone, this, std::placeholders::_1));
+
+	}
+
+	{
+		Texture_Monster->CreateFrameAnimationFolder("Bale_Teleport_Before", FrameAnimation_DESC("Bale", 45, 47, 0.1f, false));
+		Texture_Monster->CreateFrameAnimationFolder("Bale_Teleport_After", FrameAnimation_DESC("Bale", 48, 50, 0.1f, false));
+
+		Texture_Monster->AnimationBindEnd("Bale_Teleport_Before", std::bind(&Bale::Bale_TeleportStart, this, std::placeholders::_1));
+		Texture_Monster->AnimationBindEnd("Bale_Teleport_After", std::bind(&Bale::Bale_BackToNone, this, std::placeholders::_1));
 
 	}
 
@@ -128,6 +138,14 @@ void Bale::Start()
 		AllCollision["Att_Stamping"] = Collision;
 
 
+
+		Collision = CreateComponent<GameEngineCollision>("Teleport_Area");
+		Collision->GetTransform().SetLocalScale({ 400, 150, 200 });
+		Collision->ChangeOrder(CollisionOrder::Monster_Area);
+		Collision->SetDebugSetting(CollisionType::CT_SPHERE, { 0.2f, 0.5f , 0.6f, 0.3f });
+
+		AllCollision["Move_Teleport"] = Collision;
+
 	}
 
 
@@ -157,6 +175,7 @@ void Bale::Start()
 		All_CollTime["Att_Sting"] = 0;
 		All_CollTime["Att_Dash"] = 0;
 		All_CollTime["Att_Stamping"] = 0;
+		All_CollTime["Move_Teleport"] = 0;
 	}
 	SetMonsterClass(MonsterClass::Named);
 }
@@ -278,7 +297,10 @@ void Bale::SetFSManager()
 		, std::bind(&Bale::FSM_Att_Dash_Start, this, std::placeholders::_1)
 		, std::bind(&Bale::FSM_Att_Dash_End, this, std::placeholders::_1));
 
-
+	Manager_StatManager->GetFSMManager().CreateStateMember
+	("Move_Teleport", std::bind(&Bale::FSM_Move_Teleport_Update, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&Bale::FSM_Move_Teleport_Start, this, std::placeholders::_1)
+		, std::bind(&Bale::FSM_Move_Teleport_End, this, std::placeholders::_1));
 	
 
 	
@@ -660,4 +682,49 @@ void Bale::FSM_Att_Dash_End(const StateInfo& _Info)
 		Collision_ect = nullptr;
 	}
 
+}
+
+
+void Bale::FSM_Move_Teleport_Start(const StateInfo& _Info)
+{
+
+	AllCollision["Move_Teleport"]->SetParent(GamePlayCharacter::GetInst());
+
+	if (AllCollision["Move_Teleport"]->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Monster, CollisionType::CT_SPHERE))
+	{
+		Manager_StatManager->GetFSMManager().ChangeState("None");
+		All_CollTime["Move_Teleport"] = 2.f;
+	}
+	else
+	{
+		Texture_Monster->ChangeFrameAnimation("Bale_Teleport_Before"); // 중단점용
+	}
+}
+void Bale::Bale_TeleportStart(const FrameAnimation_DESC& _DESC)
+{
+	Texture_Monster->ChangeFrameAnimation("Bale_Teleport_After");
+
+	const float4& PlayerPos = GamePlayCharacter::GetInst()->GetTransform().GetWorldPosition();
+	float4 Pos = 0;
+	Pos.x += GameEngineRandom::MainRandom.RandomFloat(-2.f, 2.f) * 25.f;
+	Pos.z += GameEngineRandom::MainRandom.RandomFloat(-2.f, 2.f) * 15.f;
+
+	GetTransform().SetLocalPosition({ GamePlayCharacter::GetInst()->GetTransform().GetWorldPosition().x + Pos.x , PlayerPos.z + Pos.z, PlayerPos.z + Pos.z});
+
+}
+
+void Bale::FSM_Move_Teleport_Update(float _DeltaTime, const StateInfo& _Info)
+{
+
+}
+void Bale::FSM_Move_Teleport_End(const StateInfo& _Info)
+{
+	All_CollTime["Move_Teleport"] = 10.f;
+	All_CollTime["Att_Dash"] += 5.f;
+
+
+}
+void Bale::LevelStartEvent()
+{
+	All_CollTime["Move_Teleport"] = 10.f;
 }

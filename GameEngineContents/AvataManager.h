@@ -95,6 +95,10 @@ public:
 	void SetAllAvataAutoControl(bool _Reset = true);
 	void ChangeFrame_Manual(int _Frame = -1) const;
 
+	// ------SuperArmor-----------
+	void SetSuperArmor();
+	bool StartSuperArmor;
+
 	// ------Shake--------------
 	void SetShake(float _Power ,float _Time);
 
@@ -154,7 +158,7 @@ private:
 
 	std::map<AllSkillEnum, GameEnginePlusTextureRenderer*> Texture_ect;
 
-	std::vector<GameEngineTextureRenderer*> vector_SuperArmor;
+	//std::vector<GameEngineTextureRenderer*> vector_SuperArmor;
 
 
 

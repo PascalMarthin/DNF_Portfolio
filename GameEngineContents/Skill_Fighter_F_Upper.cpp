@@ -70,6 +70,7 @@ bool Skill_Fighter_F_Upper::ActiveSkill(CharacterStatManager* _Stat, MoveManager
 void Skill_Fighter_F_Upper::StartSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata)
 {
 	_Avata->ChangeAvataAnimation("Att_Upper");
+	_Avata->SetSuperArmor();
 }
 
 bool Skill_Fighter_F_Upper::TriggerSkill_ect(GameEngineCollision* _This, GameEngineCollision* _Other)

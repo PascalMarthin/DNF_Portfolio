@@ -77,6 +77,11 @@ public:
 		return CurrentAvata;
 	}
 
+	inline 	GameEngineTextureRenderer* GetOutLine() const
+	{
+		return Texture_OutLine;
+	}
+
 
 	void ChangeFolderTexturePlus(const std::string& _TextureName);
 	void ChangeFolderTexturePlus(GameEngineFolderTexture* _Texture);

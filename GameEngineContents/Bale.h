@@ -22,6 +22,7 @@ protected:
 	// void End() override {}
 	//void OnEvent();
 	// void OffEvent() override {}
+	void LevelStartEvent() override;
 private:
 	// ---------Dir-------------
 	void CheckDir();
@@ -102,6 +103,17 @@ private:
 
 
 	void Bale_DashStart(const FrameAnimation_DESC& _DESC);
+
+	void FSM_Move_Teleport_Start(const StateInfo& _Info);
+	void FSM_Move_Teleport_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Move_Teleport_End(const StateInfo& _Info);
+
+
+	void Bale_TeleportStart(const FrameAnimation_DESC& _DESC);
+
+	//void FSM_Att_TrackingPlayer_Start(const StateInfo& _Info);
+	//void FSM_Att_TrackingPlayer_Update(float _DeltaTime, const StateInfo& _Info);
+	//void FSM_Att_TrackingPlayer_End(const StateInfo& _Info);
 	
 
 	//void FSM_Move_Walk_Start(const StateInfo& _Info);

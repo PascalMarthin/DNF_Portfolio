@@ -37,10 +37,10 @@ void GameEnginePlusTextureRenderer::Start()
 	Texture_OutLine->GetTransform().SetLocalScale({ 500, 500 });
 	Texture_OutLine->SetPipeLine("OutLine");
 	Texture_OutLine->ShaderResources.SetConstantBufferLink("PixelData", Texture_OutLine->GetPixelData());
-	Texture_OutLine->GetTransform().SetLocalMove({ 0, 0, 0.1f });
+	Texture_OutLine->GetTransform().SetLocalMove({ 0, 0, 0.01f });
 	Texture_OutLine->GetPixelData().MulColor = float4::ZERO;
 	Texture_OutLine->GetPixelData().PlusColor = float4::YELLOW;
-	Texture_OutLine->ChangeCamera(CAMERAORDER::Object_OutLine);
+	Texture_OutLine->ChangeCamera(CAMERAORDER::Object);
 	//Renderer->SetPipeLine("Outline");
 	//Renderer->ShaderResources.SetConstantBufferLink("PixelData", Renderer->GetPixelData());
 

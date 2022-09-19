@@ -51,6 +51,7 @@ AvataManager::AvataManager()
 	, Avata_Hair_b(nullptr)
 	, Avata_Hair_d(nullptr)
 	, Avata_Neck_k(nullptr)
+	, StartSuperArmor(false)
 {
 }
 
@@ -184,7 +185,7 @@ void AvataManager::Start()
 	for (size_t i = 0; i < AllAvatas.size(); i++)
 	{
 		AllAvatas[i]->GetTransform().SetLocalMove({ 0, 0, ZSort });
-		ZSort += 0.001f;
+		ZSort += 0.0001f;
 	}
 
 
@@ -343,31 +344,73 @@ void AvataManager::Update(float _DeltaTime)
 	//	vector_SuperArmor[i]->SetTexture(AllAvatas[i]->GetCurTexture());
 	//}
 
-	if (ShakePower != 0.f)
 	{
-		CurrentShakeTime += _DeltaTime;
-	}
-	if (CurrentShakeTime < ShakeTime)
-	{
-		if (CurrentShakeTime > 0.1f)
+		if (ShakePower != 0.f)
 		{
-			ShakeTime -= 0.1f;
-			CurrentShakeTime -= 0.1f;
-			ShakePower *= -1.f;
-			const float4& Pos = GetTransform().GetLocalPosition();
-			GetTransform().SetLocalPosition({ ShakePower * (ShakeTime - CurrentShakeTime) + 0 * CurrentShakeTime , Pos.y , Pos.z });
+			CurrentShakeTime += _DeltaTime;
 		}
+		if (CurrentShakeTime < ShakeTime)
+		{
+			if (CurrentShakeTime > 0.1f)
+			{
+				ShakeTime -= 0.1f;
+				CurrentShakeTime -= 0.1f;
+				ShakePower *= -1.f;
+				const float4& Pos = GetTransform().GetLocalPosition();
+				GetTransform().SetLocalPosition({ ShakePower * (ShakeTime - CurrentShakeTime) + 0 * CurrentShakeTime , Pos.y , Pos.z });
+			}
 
+		}
+		else if (ShakePower != 0.f)
+		{
+			const float4& Pos = GetTransform().GetLocalPosition();
+			GetTransform().SetLocalPosition({ 0.f, Pos.y, Pos.z });
+			ShakeTime = 0.f;
+			ShakePower = 0.f;
+			CurrentShakeTime = 0.f;
+		}
 	}
-	else if (ShakePower != 0.f)
+
 	{
-		const float4& Pos = GetTransform().GetLocalPosition();
-		GetTransform().SetLocalPosition({ 0.f, Pos.y, Pos.z });
-		ShakeTime = 0.f;
-		ShakePower = 0.f;
-		CurrentShakeTime = 0.f;
+		if (StartSuperArmor == true)
+		{
+			bool Stop = false;
+			float Scale = 0;
+			for (auto& Avata : AllAvatas)
+			{
+				Scale = Avata->GetOutLine()->GetScaleRatio() - _DeltaTime * 2.f;
+				if (Scale <= 1.f)
+				{
+					Stop = true;
+					Scale = 1.f;
+				}
+				Avata->GetOutLine()->SetPivotToVector({ 0, 116.f - (Scale * 116.f), 0.01f });
+				Avata->GetOutLine()->SetScaleRatio(Scale);
+				Avata->GetOutLine()->ScaleToTexture();
+			}
+			
+			if (Stop == true)
+			{
+				StartSuperArmor = false;
+			}
+
+		}
 	}
 }
+
+void AvataManager::SetSuperArmor()
+{
+	StartSuperArmor = true;
+	for (auto& Avata : AllAvatas)
+	{
+		Avata->GetOutLine()->SetPivotToVector({ 0, 116.f - (1.5f * 116.f), 0.01f });
+		Avata->GetOutLine()->SetScaleRatio(1.5f);
+		Avata->GetOutLine()->ScaleToTexture();
+	}
+
+}
+
+
 
 void AvataManager::ReadCharacterDataBase(GamePlayDataBase* _Data)
 {
@@ -903,6 +946,7 @@ void AvataManager::LevelStartEvent()
 	ShakePower = 0.f;
 	CurrentShakeTime = 0.f;
 	AvataManager::CurrentInst = this;
+	StartSuperArmor = false;
 
 	{
 		if (BeforeAvata != nullptr)
