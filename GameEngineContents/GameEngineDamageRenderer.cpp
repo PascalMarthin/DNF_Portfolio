@@ -27,8 +27,10 @@ void GameEngineDamageRenderer::Start()
 {
 	for (size_t i = 0; i < 10; i++)
 	{
-		GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>("DamageFont");
+		GameEngineUIRenderer* Renderer = CreateComponent<GameEngineUIRenderer>("DamageFont");
 		Renderer->GetTransform().SetLocalPosition({0, 0, -10.f - i});
+		Renderer->ChangeCamera(CAMERAORDER::UIFont);
+		Renderer->Off();
 		All_Font.push_back(Renderer);
 			
 	}
@@ -47,7 +49,7 @@ void GameEngineDamageRenderer::SetDamage(unsigned int _Damage)
 	{
 		MaxDamage = true;
 		{
-			GetTransform().SetLocalMove({ 0, 0, -1000.f });
+			GetTransform().SetLocalMove({ 0, 0, -100.f });
 			All_Font[0]->SetFolderTextureToIndex("MaxDamageFont", 0);
 			All_Font[0]->GetTransform().SetLocalPosition({0, 0, -2});
 			All_Font[1]->SetFolderTextureToIndex("MaxDamageFont", 1);
@@ -58,6 +60,9 @@ void GameEngineDamageRenderer::SetDamage(unsigned int _Damage)
 			All_Font[0]->ScaleToTexture();
 			All_Font[1]->ScaleToTexture();
 			All_Font[2]->ScaleToTexture();
+			All_Font[0]->On();
+			All_Font[1]->On();
+			All_Font[2]->On();
 
 			for (size_t i = 3; i < 8; i++)
 			{
@@ -110,6 +115,7 @@ void GameEngineDamageRenderer::SetDamage(unsigned int _Damage)
 			XPos -= All_Font[i]->GetTransform().GetLocalScale().x - 5;
 			All_Font[i]->GetTransform().SetLocalPosition({ XPos, 0 , 0 });
 			All_Font[i]->SetPivot(PIVOTMODE::LEFTTOP);
+			All_Font[i]->On();
 		}
 	}
 

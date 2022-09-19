@@ -17,6 +17,7 @@ Jelva_2F01::~Jelva_2F01()
 
 void Jelva_2F01::Start()
 {
+	GamePlayLevelTemplate::Start();
 	Texture_Jelva2F01 = CreateActor<Jelva2F01_BackGround>();
 	Texture_Jelva2F01_Wave = CreateActor<Jelva2F01_WaveBackGround>();
 
@@ -57,6 +58,9 @@ void Jelva_2F01::Update(float _DeltaTime)
 		Pos.y += 100.f;
 
 		GetMainCameraActor()->GetTransform().SetWorldPosition(Pos);
+		GetAvataCamera()->GetTransform().SetWorldPosition(Pos);
+		GetOutLineCamera()->GetTransform().SetWorldPosition(Pos);
+		GetUIFontCamera()->GetTransform().SetWorldPosition(Pos);
 
 	}
 	{

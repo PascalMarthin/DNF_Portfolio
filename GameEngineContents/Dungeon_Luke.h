@@ -1,5 +1,6 @@
 #pragma once
 #include "BattleLevel.h"
+#include "GamePlayLevelTemplate.h"
 
 // Ό³Έν :
 class GamePlayMonsterHPBar;
@@ -13,7 +14,7 @@ enum class Luke_Stage
 	Stage_4,
 	Stage_Boss
 };
-class Dungeon_Luke : public GameEngineLevel ,public BattleLevel
+class Dungeon_Luke : public GamePlayLevelTemplate, public BattleLevel
 {
 public:
 	// constrcuter destructer

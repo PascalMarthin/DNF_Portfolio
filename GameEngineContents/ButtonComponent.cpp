@@ -112,9 +112,9 @@ bool ButtonComponent::UpdateButtonPush()
 		{
 			if (_Other->GetNameConstRef() == "Collision_MainCam_MouseCursor")
 			{
-				return true;
+				return CollisionReturn::Break;
 			}
-			return false;
+			return CollisionReturn::ContinueCheck;
 		}))
 	{
 		if (Enum_ButtonCondition == ButtonCondition::Off)

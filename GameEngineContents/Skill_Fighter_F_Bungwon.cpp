@@ -103,7 +103,7 @@ bool Skill_Fighter_F_Bungwon::ActiveSkill(CharacterStatManager* _Stat, MoveManag
 		else
 		{
 
-			float Range = (700.f + Coefficient - (Coefficient * Coefficient));
+			float Range = (1000.f + Coefficient - (Coefficient * Coefficient));
 			Coefficient += Att_Bungwon_Delay + Coefficient ;
 			if (Range < 0)
 			{

@@ -91,7 +91,7 @@ public:
 
 	inline void SetRefreshbyLevel()
 	{
-		MaxEXP = Level * 1000;
+		MaxEXP = static_cast<unsigned long long>(Level * 1000);
 		MAXHP = Level * 1520;
 		MAXMP = Level * 300;
 		STR = Level * 31;

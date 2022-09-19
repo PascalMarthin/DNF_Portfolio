@@ -1,3 +1,4 @@
+
 // #include "myshader.hlsli"
 
 // SV_POSITION 시맨틱
@@ -13,6 +14,9 @@ struct Input
 {
     float4 Pos : POSITION;
     float4 Tex : TEXCOORD;
+    
+    // 인스턴싱 데이터
+    uint Index : ROWINDEX;
 };
 
 struct Output
@@ -32,36 +36,33 @@ struct Output
 // 0010
 // 0001
 
-cbuffer AtlasData : register(b1)
-{
-    float2 TextureFramePos;
-    float2 TextureFrameSize;
-    float4 PivotPos;
-};
 
 Output TextureAtlas_VS(Input _Input)
 {
-    // -0.5, 0.5,     0.5 0.5
-    // 0.5, 0.5,     0.5 0.5
-    
-    Output NewOutPut = (Output)0;
-    _Input.Pos += PivotPos;
-    NewOutPut.Pos = mul(_Input.Pos, AllTransformData[0].WorldViewProjection);
+
+    Output NewOutPut = (Output) 0;
+    _Input.Pos += float4(0.0f, 0.5f, 0.0f, 0.0f);
+
+    NewOutPut.Pos = mul(_Input.Pos, WorldViewProjection);
     NewOutPut.PosLocal = _Input.Pos;
     
-    // 버텍스가 몇번째 버텍스 인지 알수가 없다.
-    // NewOutPut.Tex
-    // 00    10
     
-    //// 10    11
+    NewOutPut.Tex = _Input.Tex;
     
-    //TextureFrameSize.x -= 0.5f;
-    //TextureFrameSize.y -= 0.5f;
-    //TextureFramePos.x -= 0.5f;
-    //TextureFramePos.y -= 0.5f;
+    return NewOutPut;
+}
+
+
+Output TextureAtlas_VSINST(Input _Input)
+{
+    Output NewOutPut = (Output) 0;
+    _Input.Pos += float4(0.0f, 0.5f, 0.0f, 0.0f);
+
+    NewOutPut.Pos = mul(_Input.Pos, WorldViewProjection);
+    NewOutPut.PosLocal = _Input.Pos;
     
-    NewOutPut.Tex.x = (_Input.Tex.x * TextureFrameSize.x) + TextureFramePos.x;
-    NewOutPut.Tex.y = (_Input.Tex.y * TextureFrameSize.y) + TextureFramePos.y;
+    
+    NewOutPut.Tex = _Input.Tex;
     
     return NewOutPut;
 }
@@ -77,10 +78,7 @@ Texture2D Tex : register(t0);
 SamplerState Smp : register(s0);
 float4 TextureAtlas_PS(Output _Input) : SV_Target0
 {
-    if (_Input.Tex.x < Slice.x)
-    {
-        clip(-1);
-    }
+
     
     float4 TexColor = Tex.Sample(Smp, _Input.Tex.xy);
     
@@ -88,7 +86,6 @@ float4 TextureAtlas_PS(Output _Input) : SV_Target0
     {
         clip(-1);
     }
-
     
     return (Tex.Sample(Smp, _Input.Tex.xy) * MulColor) + PlusColor;
 }

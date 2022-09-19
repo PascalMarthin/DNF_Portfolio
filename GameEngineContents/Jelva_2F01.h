@@ -1,12 +1,12 @@
 #pragma once
-#include <GameEngineCore/GameEngineLevel.h>
+#include "GamePlayLevelTemplate.h"
 #include "GamePlayCharacter.h"
 #include "TownLevel.h"
 #include "Jelva2F01_BackGround.h"
 #include "Jelva2F01_WaveBackGround.h"
 
 // Ό³Έν :
-class Jelva_2F01 : public GameEngineLevel, public TownLevel
+class Jelva_2F01 : public GamePlayLevelTemplate, public TownLevel
 {
 public:
 	// constrcuter destructer

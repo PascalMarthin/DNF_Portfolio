@@ -1,11 +1,11 @@
 #pragma once
-#include <GameEngineCore/GameEngineLevel.h>
+#include "GamePlayLevelTemplate.h"
 #include "TownLevel.h"
 #include "Seria_NPC.h"
 #include "SeriaRoomBackground.h"
 
 class GamePlayCharacter;
-class SeriaRoom_Level : public GameEngineLevel, public TownLevel
+class SeriaRoom_Level : public GamePlayLevelTemplate, public TownLevel
 {
 public:
 	// constrcuter destructer

@@ -29,6 +29,7 @@ CharacterCreateLevel::~CharacterCreateLevel()
 
 void CharacterCreateLevel::Start()
 {
+
 	CreateActor<MouseCursorComponent>();
 	Actor_BackGround = CreateActor<TitleCreateCharacterBackGround>();
 	Actor_ThumbnailManager = CreateActor<TitleCreateCharacter_ThumbnailManager>();

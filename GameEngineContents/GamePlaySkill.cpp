@@ -42,20 +42,20 @@ void GamePlaySkill::CheckCollision(int _Combo)
 		std::bind(&GamePlaySkill::CollsionHitFunction, this, std::placeholders::_1, std::placeholders::_2));
 }
 
-bool GamePlaySkill::CollsionHitFunction(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn GamePlaySkill::CollsionHitFunction(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	GamePlayObject* Actor = _Other->GetActor<GamePlayObject>();
 
 	if (GamePlaySkill::IsHitObject(Actor, Class_Power[int_ComboStuck].int_MaxHit))
 	{
-		return false;
+		return CollisionReturn::ContinueCheck;
 	}
 	TriggerSkill_ect(_This, _Other);
 	SomeOneHit = true;
 	Object_HitList[Actor] += 1;
 	Actor->BeHit(this, _Other, GamePlayCharacter::GetCurrentCharacterData(), CheckDir(_This, _Other), Class_Power[int_ComboStuck].int_SkillDamage); //
 
-	return false;
+	return CollisionReturn::ContinueCheck;
 }
 
 

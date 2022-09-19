@@ -49,11 +49,11 @@ void DungeonSelect_Slot::Update(float _DeltaTime)
 		{
 			if (_Other->GetNameConstRef() == "Collision_MainCam_MouseCursor")
 			{
-				return true;
+				return CollisionReturn::Break;
 			}
 			else
 			{
-				return false;
+				return CollisionReturn::ContinueCheck;
 			}
 	
 		}))

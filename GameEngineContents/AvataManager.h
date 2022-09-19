@@ -169,6 +169,7 @@ private:
 
 
 private:
+
 	void CreateCharacterAvata();
 	void CreateNPCAvata();
 	void CreateCustomAvata();
@@ -187,6 +188,12 @@ public:
 class Avata_Vision : public GameEngineActor
 {
 public:
+	Avata_Vision()
+		: Dealy(0)
+	{
+
+	}
+
 	void Start() override
 	{
 		Death(0.5f);

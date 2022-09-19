@@ -90,7 +90,7 @@ protected:
 	 
 	virtual void CheckCollision();
 	virtual void CheckCollision(int _Combo);
-	virtual bool CollsionHitFunction(GameEngineCollision* _This, GameEngineCollision* _Other);
+	virtual CollisionReturn CollsionHitFunction(GameEngineCollision* _This, GameEngineCollision* _Other);
 	virtual bool TriggerSkill_ect(GameEngineCollision* _This, GameEngineCollision* _Other) { return false; };
 	bool IsHitObject(GamePlayObject* _Object, int _HitOrder);
 

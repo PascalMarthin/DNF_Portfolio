@@ -28,13 +28,19 @@ void GameEnginePlusTextureRenderer::Start()
 {
 	GameEngineTextureRenderer::Start();
 
-	//Texture_OutLine = GetActor()->CreateComponent<GameEngineTextureRenderer>();
-	//Texture_OutLine->GetTransform().SetLocalScale({ 530, 512 });
-	//Texture_OutLine->SetPivot(PIVOTMODE::BOT);
-	//Texture_OutLine->SetPivotToVector({ 0, -4.f , 0.1f });
-	//Texture_OutLine->GetTransform().SetLocalMove({ 0, 0, 0.1f });
-	//Texture_OutLine->GetPixelData().MulColor = float4::ZERO;
-	//Texture_OutLine->GetPixelData().PlusColor = float4::YELLOW;
+	SetPipeLine("Texture_Avata");
+
+	ChangeCamera(CAMERAORDER::Object);
+	ShaderResources.SetConstantBufferLink("PixelData", GetPixelData());
+
+	Texture_OutLine = GetActor()->CreateComponent<GameEngineTextureRenderer>();
+	Texture_OutLine->GetTransform().SetLocalScale({ 500, 500 });
+	Texture_OutLine->SetPipeLine("OutLine");
+	Texture_OutLine->ShaderResources.SetConstantBufferLink("PixelData", Texture_OutLine->GetPixelData());
+	Texture_OutLine->GetTransform().SetLocalMove({ 0, 0, 0.1f });
+	Texture_OutLine->GetPixelData().MulColor = float4::ZERO;
+	Texture_OutLine->GetPixelData().PlusColor = float4::YELLOW;
+	Texture_OutLine->ChangeCamera(CAMERAORDER::Object_OutLine);
 	//Renderer->SetPipeLine("Outline");
 	//Renderer->ShaderResources.SetConstantBufferLink("PixelData", Renderer->GetPixelData());
 
@@ -117,11 +123,31 @@ void GameEnginePlusTextureRenderer::Update(float _Delta)
 		CurrentAniPlus->Update(_Delta);
 	}
 	
-	if (Texture_OutLine != nullptr)
+	//if (Texture_OutLine != nullptr)
+	//{
+	//	Texture_OutLine->SetTexture(GetCurTexture());
+	//}
+	//
+}
+
+
+
+void GameEnginePlusTextureRenderer::SetTexture(GameEngineTexture* _Texture)
+{
+	if (nullptr == _Texture)
 	{
-		Texture_OutLine->SetTexture(GetCurTexture());
+		MsgBoxAssert("존재하지 않는 텍스처를 사용하려고 했습니다.");
+		return;
 	}
-	
+
+	GameEngineTextureRenderer::SetTexture(_Texture);
+	Texture_OutLine->SetTexture(_Texture);
+}
+
+void GameEnginePlusTextureRenderer::SetTexture(const std::string& _Name)
+{
+	GameEngineTextureRenderer::SetTexture(_Name);
+	Texture_OutLine->SetTexture(_Name);
 }
 
 

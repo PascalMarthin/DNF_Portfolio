@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineBase/GameEngineDebug.h>
+#include "AvataManager.h"
 
 // 설명 : Town에 해당되는 레벨의 템플릿
 class TownLevel

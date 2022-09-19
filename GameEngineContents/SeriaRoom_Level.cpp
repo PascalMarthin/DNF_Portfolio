@@ -6,6 +6,7 @@
 #include "SeriaRoom_Level.h"
 #include "SeriaRoomBackground.h"
 #include "GamePlayCharacter.h"
+#include "AvataManager.h"
 
 SeriaRoom_Level::SeriaRoom_Level() 
 	: NPCSeria(nullptr)
@@ -22,6 +23,7 @@ SeriaRoom_Level::~SeriaRoom_Level()
 
 void SeriaRoom_Level::Start()
 {
+	GamePlayLevelTemplate::Start();
 	Texture_SeriaRoom = CreateActor<SeriaRoomBackground>();
 	//Texture_SeriaRoom->GetTransform().SetLocalScale({MonitorX, MonitorY});
 	float Hight = Texture_SeriaRoom->GetBackGroundTextureScale().y;
@@ -34,7 +36,9 @@ void SeriaRoom_Level::Start()
 	Fighter = CreateActor<GamePlayCharacter>();
 	NPCSeria->GetTransform().SetLocalPosition({ GameEngineWindow::GetScale().hx(), -GameEngineWindow::GetScale().hy() - 200.f , Hight - GameEngineWindow::GetScale().hy() - 200.f});
 	GetMainCameraActor()->GetTransform().SetWorldMove({ Width / 2, -Hight / 2 });
-
+	GetAvataCamera()->GetTransform().SetWorldPosition({ Width / 2, -Hight / 2 });
+	GetOutLineCamera()->GetTransform().SetWorldPosition({ Width / 2, -Hight / 2 });
+	GetUIFontCamera()->GetTransform().SetWorldPosition({ Width / 2, -Hight / 2 });
 
 
 }

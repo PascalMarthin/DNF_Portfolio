@@ -167,6 +167,9 @@ public:
 		}
 	}
 
+	void SetTexture(GameEngineTexture* _Texture);
+	void SetTexture(const std::string& _Name);
+
 protected:
 	void Start() override;
 	void Update(float _Delta) override;

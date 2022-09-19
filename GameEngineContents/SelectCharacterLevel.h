@@ -22,6 +22,22 @@ public:
 	{
 		return DataBase_SelectCharacter;
 	}
+	inline GameEngineCameraActor* GetAvataCamera() const
+	{
+		return Camera_MainAvata;
+	}
+
+	inline GameEngineCameraActor* GetOutLineCamera() const
+	{
+		return Camera_OutLine;
+	}
+
+	inline GameEngineCameraActor* GetUIFontCamera() const
+	{
+		return Camera_UIFont;
+	}
+
+
 
 protected:
 	void Start() override;
@@ -51,5 +67,9 @@ public:
 		return CurrentCharacterSlotData;
 	}
 
+private:
+	GameEngineCameraActor* Camera_MainAvata;
+	GameEngineCameraActor* Camera_OutLine;
+	GameEngineCameraActor* Camera_UIFont;
 };
 

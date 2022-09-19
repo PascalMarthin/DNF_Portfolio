@@ -453,13 +453,13 @@ void Skill_Fighter_F_LightingDance::StartSkill(CharacterStatManager* _Stat, Move
 	//IsHitFloor = false;
 //	DanceFrameEnd = false;
 }
-bool Skill_Fighter_F_LightingDance::GetTarget(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn Skill_Fighter_F_LightingDance::GetTarget(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 
 	GamePlayObject* PoeObject = _Other->GetActor<GamePlayObject>();
 	if (Object_HitList[PoeObject] == 1)
 	{
-		return false;
+		return CollisionReturn::ContinueCheck;
 	}
 	float4 PlayerPos = GetActor()->GetTransform().GetWorldPosition();
 	float4 PoePos = _Other->GetActor()->GetTransform().GetWorldPosition();
@@ -584,7 +584,7 @@ bool Skill_Fighter_F_LightingDance::GetTarget(GameEngineCollision* _This, GameEn
 	//IsHitFloor = false;
 	//Object_HitList.clear();
 	//Object_HitList[_Other->GetActor<GamePlayObject>()] = 1;
-	return true;
+	return CollisionReturn::Break;
 }
 
 

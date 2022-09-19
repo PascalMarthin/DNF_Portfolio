@@ -3,6 +3,7 @@
 #include "GamePlayCharacter.h"
 #include "Luke_Stage1_BackGround.h"
 #include "MoveManager.h"
+#include "AvataManager.h"
 #include "Bale.h"
 
 Luke_Stage1::Luke_Stage1() 
@@ -17,6 +18,7 @@ Luke_Stage1::~Luke_Stage1()
 
 void Luke_Stage1::Start()
 {
+	GamePlayLevelTemplate::Start();
 	Texture_Luke_Stage1 = CreateActor<Luke_Stage1_BackGround>();
 	Player_Character = CreateActor<GamePlayCharacter>();
 
@@ -55,6 +57,9 @@ void Luke_Stage1::Update(float _DeltaTime)
 		Pos.y += 80.f;
 
 		GetMainCameraActor()->GetTransform().SetWorldPosition(Pos);
+		GetAvataCamera()->GetTransform().SetWorldPosition(Pos);
+		GetOutLineCamera()->GetTransform().SetWorldPosition(Pos);
+		GetUIFontCamera()->GetTransform().SetWorldPosition(Pos);
 	}
 }
 

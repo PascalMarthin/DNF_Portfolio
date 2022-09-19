@@ -15,6 +15,7 @@ Jelva_1F::~Jelva_1F()
 
 void Jelva_1F::Start()
 {
+	GamePlayLevelTemplate::Start();
 	Texture_Jelva1F = CreateActor<Jelva1F_BackGround>();
 
 	float Hight = Texture_Jelva1F->GetBackGroundTextureScale().y;
@@ -51,6 +52,9 @@ void Jelva_1F::Update(float _DeltaTime)
 		Pos.y += 100.f;
 
 		GetMainCameraActor()->GetTransform().SetWorldPosition(Pos);
+		GetAvataCamera()->GetTransform().SetWorldPosition(Pos);
+		GetOutLineCamera()->GetTransform().SetWorldPosition(Pos);
+		GetUIFontCamera()->GetTransform().SetWorldPosition(Pos);
 	}
 }
 

@@ -40,7 +40,7 @@ private:
 	static std::list<GameEngineDamageRenderer*> Static_AllDamageRenderer;
 	static void SetPrintingFont(GameEngineDamageRenderer* _FontRenderer);
 
-	std::vector<GameEngineTextureRenderer*> All_Font;
+	std::vector<GameEngineUIRenderer*> All_Font;
 	bool Critical;
 	bool MaxDamage;
 

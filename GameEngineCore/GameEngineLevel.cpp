@@ -114,7 +114,7 @@ void GameEngineLevel::PushRenderer(GameEngineRenderer* _Renderer, int _CameraOrd
 
 void GameEngineLevel::PushCamera(GameEngineCamera* _Camera, int _CameraOrder)
 {
-	Cameras.resize(_CameraOrder + 1);
+	Cameras.resize(10);
 
 	Cameras[_CameraOrder] = _Camera;
 }
@@ -380,7 +380,7 @@ void GameEngineLevel::OverChildMove(GameEngineLevel* _NextLevel)
 			continue;
 		}
 
-		Cameras[i]->OverRenderer(_NextLevel->Cameras[i]);
+		//Cameras[i]->OverRenderer(_NextLevel->Cameras[i]);
 	}
 
 	{

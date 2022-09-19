@@ -104,9 +104,9 @@ void TitleCharacterSlot::Update(float _DeltaTime)
 		{
 			if (_Other->GetNameConstRef() == "Collision_MainCam_MouseCursor")
 			{
-				return true;
+				return CollisionReturn::Break;
 			}
-			return false;
+			return CollisionReturn::ContinueCheck;
 		}))
 	{
 		Texture_SlotBorder->On();

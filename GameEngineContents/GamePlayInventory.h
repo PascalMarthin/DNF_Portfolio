@@ -37,8 +37,8 @@ public:
 	GamePlayInventory& operator=(GamePlayInventory&& _Other) noexcept = delete;
 
 
-	bool IsItemDrag(GameEngineCollision* _This, GameEngineCollision* _Other);
-	bool CheckBlankCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn IsItemDrag(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn CheckBlankCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
 
 protected:
 	//void Update(float _DeltaTime) override;

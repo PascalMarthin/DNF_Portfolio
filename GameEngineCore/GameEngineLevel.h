@@ -7,13 +7,13 @@
 enum class CAMERAORDER
 {
 	MAINCAMERA,
-	USER0,
-	USER1,
+	Object_OutLine,
+	Object,
 	USER2,
 	USER3,
 	USER4,
 	USER5,
-	USER6,
+	UIFont,
 	USER7,
 	UICAMERA,
 };

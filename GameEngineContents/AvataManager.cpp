@@ -51,7 +51,6 @@ AvataManager::AvataManager()
 	, Avata_Hair_b(nullptr)
 	, Avata_Hair_d(nullptr)
 	, Avata_Neck_k(nullptr)
-
 {
 }
 
@@ -62,6 +61,16 @@ AvataManager::~AvataManager()
 //----------------- Start-------------------
 void AvataManager::Start()
 {
+
+
+
+
+	//float4x4 A = Camera_MainAvata->GetProjectionMatrix();
+	//float4x4 B = GetLevel()->GetMainCamera()->GetProjectionMatrix();
+
+
+	//float4x4 C = Camera_MainAvata->GetView();
+	//float4x4 D = GetLevel()->GetMainCamera()->GetView();
 
 	AllAvatas.push_back(Avata_Neck_f = CreateComponent<GameEnginePlusTextureRenderer>());
 	AllAvatas.push_back(Avata_Face_a = CreateComponent<GameEnginePlusTextureRenderer>());
@@ -166,8 +175,11 @@ void AvataManager::Start()
 	{
 		Iter->GetTransform().SetLocalScale({ 500.f, 500.f });
 		Iter->SetPivot(PIVOTMODE::BOT);
+		//Iter->ChangeCamera(CAMERAORDER::USER0);
+		//Iter->SetPipeLine();
 		//Iter->SetPivotToVector({ 0, 72.f });
 	}
+
 	float ZSort = 0;
 	for (size_t i = 0; i < AllAvatas.size(); i++)
 	{
@@ -399,6 +411,7 @@ GameEnginePlusTextureRenderer* AvataManager::CreateEctAvata(AllSkillEnum _Enum, 
 		Texture->ChangeFolderTexturePlus(_TextureName);
 		Texture->GetPixelData().MulColor = _Color;
 		Texture_ect[_Enum] = Texture;
+		Texture->ChangeCamera(CAMERAORDER::Object);
 		return Texture;
 	}
 	else

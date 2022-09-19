@@ -23,6 +23,21 @@ SelectCharacterLevel::~SelectCharacterLevel()
 
 void SelectCharacterLevel::Start()
 {
+	Camera_OutLine = CreateActor<GameEngineCameraActor>();
+	Camera_OutLine->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -100.0f });
+	Camera_OutLine->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
+	Camera_OutLine->GetCameraComponent()->SetCameraOrder(CAMERAORDER::Object_OutLine);
+
+	Camera_MainAvata = CreateActor<GameEngineCameraActor>();
+	Camera_MainAvata->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -100.0f });
+	Camera_MainAvata->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
+	Camera_MainAvata->GetCameraComponent()->SetCameraOrder(CAMERAORDER::Object);
+
+	Camera_UIFont = CreateActor<GameEngineCameraActor>();
+	Camera_UIFont->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -100.0f });
+	Camera_UIFont->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
+	Camera_UIFont->GetCameraComponent()->SetCameraOrder(CAMERAORDER::UIFont);
+
 	if (SelectCharacterLevel::DataBase_SelectCharacter.size() < 7)
 	{
 		DataBase_SelectCharacter.resize(7);

@@ -509,9 +509,15 @@ void DNF::BaseFolderTextureLoad()
 void DNF::BaseShaderLoad()
 {
 
-	GameEngineRenderingPipeLine* NewPipe = GameEngineRenderingPipeLine::Create("Outline");
+	GameEngineRenderingPipeLine* NewPipe = GameEngineRenderingPipeLine::Create("Texture_Avata");
+	NewPipe->SetVertexShader("Texture_Avata.hlsl");
+	NewPipe->SetPixelShader("Texture_Avata.hlsl");
+
+	NewPipe = GameEngineRenderingPipeLine::Create("Outline");
 	NewPipe->SetVertexShader("Outline.hlsl");
 	NewPipe->SetPixelShader("Outline.hlsl");
+
+	
 	//{
 	//	GameEngineDirectory Dir;
 

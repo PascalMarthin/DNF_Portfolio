@@ -51,11 +51,11 @@ void Jelva1F_BackGround::Update(float _DeltaTime)
 		{
 			if (_Other->GetNameConstRef() == "Character_Map_Collision")
 			{
-				return true;
+				return CollisionReturn::Break;
 			}
 			else
 			{
-				return false;
+				return CollisionReturn::ContinueCheck;
 			}
 		}))
 	{
@@ -67,11 +67,11 @@ void Jelva1F_BackGround::Update(float _DeltaTime)
 			{
 				if (_Other->GetNameConstRef() == "Character_Map_Collision")
 				{
-					return true;
+					return CollisionReturn::Break;
 				}
 				else
 				{
-					return false;
+					return CollisionReturn::ContinueCheck;
 				}
 			}))
 		{

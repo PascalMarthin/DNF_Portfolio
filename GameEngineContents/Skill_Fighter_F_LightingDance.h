@@ -20,7 +20,7 @@ public:
 
 	void StartSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata) override;
 
-	bool GetTarget(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn GetTarget(GameEngineCollision* _This, GameEngineCollision* _Other);
 	void CheckEffectFrame(const FrameAnimation_DESC& _Desc);
 
 	void EndSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata) override;

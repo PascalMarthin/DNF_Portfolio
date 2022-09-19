@@ -28,11 +28,11 @@ void GamePlayInventory::Update(float _DeltaTime)
 			{
 				if (_Other->GetNameConstRef() == "Collision_UICam_MouseCursor")
 				{
-					return true;
+					return CollisionReturn::Break;
 				}
 				else
 				{
-					return false;
+					return CollisionReturn::ContinueCheck;
 				}
 
 			}))
@@ -111,13 +111,13 @@ void GamePlayInventory::Update(float _DeltaTime)
 
 
 
-bool GamePlayInventory::IsItemDrag(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn GamePlayInventory::IsItemDrag(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	Item_DragData = _Other->GetActor<GamePlayItem>();
 
-	return true;
+	return CollisionReturn::Break;
 }
-bool GamePlayInventory::CheckBlankCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn GamePlayInventory::CheckBlankCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	for (auto& Blank : Inventory_Blank)
 	{
@@ -135,11 +135,11 @@ bool GamePlayInventory::CheckBlankCollision(GameEngineCollision* _This, GameEngi
 				MoveInventory(Item_DragDataIndex, Inventory_CurrentData[Inventory_CurrentItem[Item_DragDataIndex]]);
 			}
 			Item_DragDataIndex = Blank.first;
-			return true;
+			return CollisionReturn::Break;
 		}
 
 	}
-	return false;
+	return CollisionReturn::ContinueCheck;
 }
 
 

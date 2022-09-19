@@ -25,10 +25,12 @@ public:
 	{
 		return Texture_BackGround->GetTransform().GetWorldScale();
 	}
+
+
 	
 
 protected:
-	//void Start() override
+	void Start() override;
 
 	inline void SetBackGroundZOrder()
 	{
@@ -38,5 +40,6 @@ protected:
 
 	GameEngineTexture* Texture_MapCollision;
 private:
+
 };
 

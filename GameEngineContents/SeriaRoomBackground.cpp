@@ -47,11 +47,11 @@ void SeriaRoomBackground::Update(float _DeltaTime)
 		{
 			if (_Other->GetNameConstRef() == "Character_Map_Collision")
 			{
-				return true;
+				return CollisionReturn::Break;
 			}
 			else
 			{
-				return false;
+				return CollisionReturn::ContinueCheck;
 			}
 		}))
 	{

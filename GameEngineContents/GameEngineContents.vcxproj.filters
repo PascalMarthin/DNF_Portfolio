@@ -242,6 +242,9 @@
     <ClInclude Include="Skill_Fighter_F_StrongLowKick.h">
       <Filter>Object\Character\Fighter</Filter>
     </ClInclude>
+    <ClInclude Include="GamePlayLevelTemplate.h">
+      <Filter>Level\Play</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -481,6 +484,9 @@
     </ClCompile>
     <ClCompile Include="Skill_Fighter_F_StrongLowKick.cpp">
       <Filter>Object\Character\Fighter</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlayLevelTemplate.cpp">
+      <Filter>Level\Play</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
