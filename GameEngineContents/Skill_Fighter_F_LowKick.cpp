@@ -30,9 +30,9 @@ void Skill_Fighter_F_LowKick::Start()
 
 
 	{
-		Texture_LowKick = GetActor()->CreateComponent<GameEngineTextureRenderer>("Lowkick");
+		Texture_LowKick = GetActor()->CreateComponent<GameEngineEffectRenderer>("Lowkick");
 		Texture_LowKick->GetTransform().SetLocalPosition({ 70.f, 75.f, -0.01f });
-		Texture_LowKick->CreateFrameAnimationFolder("Lowkick", FrameAnimation_DESC("Lowkick", 0.05f, true));
+		Texture_LowKick->CreateFrameAnimationFolder("Lowkick", FrameAnimation_DESC("Lowkick", 0.05f));
 		Texture_LowKick->AnimationBindEnd("Lowkick",
 			[](const FrameAnimation_DESC& _Desc)
 			{
@@ -121,5 +121,6 @@ void Skill_Fighter_F_LowKick::StartSkill(CharacterStatManager* _Stat, MoveManage
 {
 	_Avata->ChangeAvataAnimation("Att_LowKick1");
 	Texture_LowKick->On();
+	Texture_LowKick->ChangeFrameAnimation("Lowkick", true);
 	IsReady = false;
 }

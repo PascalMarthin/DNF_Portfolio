@@ -245,6 +245,12 @@
     <ClInclude Include="GamePlayLevelTemplate.h">
       <Filter>Level\Play</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineEffectRenderer.h">
+      <Filter>CorePlus</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineUIFontRenderer.h">
+      <Filter>CorePlus</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -487,6 +493,12 @@
     </ClCompile>
     <ClCompile Include="GamePlayLevelTemplate.cpp">
       <Filter>Level\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineEffectRenderer.cpp">
+      <Filter>CorePlus</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineUIFontRenderer.cpp">
+      <Filter>CorePlus</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

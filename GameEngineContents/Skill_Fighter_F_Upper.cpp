@@ -26,7 +26,7 @@ void Skill_Fighter_F_Upper::Start()
 
 
 	{
-		Texture_Upper = GetActor()->CreateComponent<GameEngineTextureRenderer>("Upper");
+		Texture_Upper = GetActor()->CreateComponent<GameEngineEffectRenderer>("Upper");
 		Texture_Upper->GetTransform().SetLocalPosition({ 0, 72.f, -0.01f });
 		Texture_Upper->CreateFrameAnimationFolder("Upper", FrameAnimation_DESC("Upper", FighterAnimationInter, true));
 		Texture_Upper->AnimationBindEnd("Upper",
@@ -36,7 +36,7 @@ void Skill_Fighter_F_Upper::Start()
 			});
 		Texture_Upper->ChangeFrameAnimation("Upper");
 		Texture_Upper->ScaleToTexture();
-		Texture_Upper->GetPixelData().MulColor = { 1 , 1 , 1 , 0.65f };
+		Texture_Upper->GetPixelData().MulColor = { 1.5f , 1.5f , 1.5f , 0.65f };
 		//Texture_Upper->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texture_Upper->Off();
 	

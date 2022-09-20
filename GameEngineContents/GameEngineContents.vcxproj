@@ -237,11 +237,19 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameEngineEffectRenderer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="GameEnginePlusCharacterStatWindow.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="GameEnginePlusTextureRenderer.h" />
+    <ClInclude Include="GameEngineUIFontRenderer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="GamePlayCharacter.h">
       <SubType>
       </SubType>
@@ -558,11 +566,19 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineEffectRenderer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GameEnginePlusCharacterStatWindow.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="GameEnginePlusTextureRenderer.cpp" />
+    <ClCompile Include="GameEngineUIFontRenderer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GamePlayCharacter.cpp">
       <SubType>
       </SubType>

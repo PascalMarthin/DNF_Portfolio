@@ -26,7 +26,7 @@ void SelectCharacterLevel::Start()
 	Camera_OutLine = CreateActor<GameEngineCameraActor>();
 	Camera_OutLine->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -100.0f });
 	Camera_OutLine->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
-	Camera_OutLine->GetCameraComponent()->SetCameraOrder(CAMERAORDER::Object_OutLine);
+	Camera_OutLine->GetCameraComponent()->SetCameraOrder(CAMERAORDER::Object);
 
 	Camera_MainAvata = CreateActor<GameEngineCameraActor>();
 	Camera_MainAvata->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -100.0f });

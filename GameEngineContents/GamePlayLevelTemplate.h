@@ -2,6 +2,7 @@
 #include <GameEngineCore/GameEngineLevel.h>
 
 // Ό³Έν :
+class GamePlayComboSystem;
 class GamePlayLevelTemplate : public GameEngineLevel
 {
 public:
@@ -31,13 +32,22 @@ public:
 		return Camera_UIFont;
 	}
 
+	inline GameEngineCameraActor* GetEffectCamera() const
+	{
+		return Camera_Effect;
+	}
+	
 
 protected:
 	void Start() override;
 
+
+	GamePlayComboSystem* Actor_SystemCombo;
 private:
 	GameEngineCameraActor* Camera_MainAvata;
 	GameEngineCameraActor* Camera_OutLine;
 	GameEngineCameraActor* Camera_UIFont;
+	GameEngineCameraActor* Camera_Effect;
+
 };
 

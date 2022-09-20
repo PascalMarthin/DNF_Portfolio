@@ -52,6 +52,7 @@ AvataManager::AvataManager()
 	, Avata_Hair_d(nullptr)
 	, Avata_Neck_k(nullptr)
 	, StartSuperArmor(false)
+	, SuperArmorColorIndex(0)
 {
 }
 
@@ -378,7 +379,7 @@ void AvataManager::Update(float _DeltaTime)
 			float Scale = 0;
 			for (auto& Avata : AllAvatas)
 			{
-				Scale = Avata->GetOutLine()->GetScaleRatio() - _DeltaTime * 2.f;
+				Scale = Avata->GetOutLine()->GetScaleRatio() - _DeltaTime * 2.5f;
 				if (Scale <= 1.f)
 				{
 					Stop = true;
@@ -395,6 +396,10 @@ void AvataManager::Update(float _DeltaTime)
 			}
 
 		}
+		else
+		{
+			SetSuperArmorUpdate(_DeltaTime);
+		}
 	}
 }
 
@@ -403,12 +408,33 @@ void AvataManager::SetSuperArmor()
 	StartSuperArmor = true;
 	for (auto& Avata : AllAvatas)
 	{
-		Avata->GetOutLine()->SetPivotToVector({ 0, 116.f - (1.5f * 116.f), 0.01f });
+		Avata->GetOutLine()->SetPivotToVector({ 0, 116.f - (1.7f * 116.f), 0.01f });
 		Avata->GetOutLine()->SetScaleRatio(1.5f);
 		Avata->GetOutLine()->ScaleToTexture();
+		Avata->GetOutLine()->GetPixelData().PlusColor = { 1, 1, 0, 1 };
+		SuperArmorColorIndex = -1.f;
 	}
 
 }
+void AvataManager::SetSuperArmorUpdate(float _DeltaTime)
+{
+	if (AllAvatas[0]->GetOutLine()->GetPixelData().PlusColor.y <= 0 )
+	{
+		SuperArmorColorIndex = 1.f;
+	}
+	else if (AllAvatas[0]->GetOutLine()->GetPixelData().PlusColor.y >= 1.f)
+	{
+		SuperArmorColorIndex = -1.f;
+	}
+
+	float Time = (_DeltaTime * 1.2f) * SuperArmorColorIndex;
+
+	for (auto& Avata : AllAvatas)
+	{
+		Avata->GetOutLine()->GetPixelData().PlusColor.y += Time;
+	}
+}
+
 
 
 
@@ -947,6 +973,7 @@ void AvataManager::LevelStartEvent()
 	CurrentShakeTime = 0.f;
 	AvataManager::CurrentInst = this;
 	StartSuperArmor = false;
+	SuperArmorColorIndex = -1.f;
 
 	{
 		if (BeforeAvata != nullptr)

@@ -23,7 +23,7 @@ void Skill_Fighter_F_Bungwon::Start()
 {
 	Class_Power.push_back(SkillComboPower(180, 1, { 50.f, 0.f, 0, 70.f }, HitPostureType::Standing, HitType::Hit));
 	{
-		Texture_Dashpunch = GetActor()->CreateComponent<GameEngineTextureRenderer>("Dashpunch");
+		Texture_Dashpunch = GetActor()->CreateComponent<GameEngineEffectRenderer>("Dashpunch");
 		Texture_Dashpunch->GetTransform().SetLocalPosition({ 56, -12, -0.01f });
 		Texture_Dashpunch->CreateFrameAnimationFolder("Dashpunch", FrameAnimation_DESC("Dashpunch", FighterAnimationInter, true));
 		Texture_Dashpunch->AnimationBindEnd("Dashpunch",
@@ -38,7 +38,7 @@ void Skill_Fighter_F_Bungwon::Start()
 		//Texture_Dashpunch->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
 	}
 	{
-		Texture_Dashpunchdust = GetActor()->CreateComponent<GameEngineTextureRenderer>("Dashpunchdust");
+		Texture_Dashpunchdust = GetActor()->CreateComponent<GameEngineEffectRenderer>("Dashpunchdust");
 		Texture_Dashpunchdust->GetTransform().SetLocalPosition({ 56, -12, -0.01f });
 		Texture_Dashpunchdust->CreateFrameAnimationFolder("Dashpunchdust", FrameAnimation_DESC("Dashpunchdust", FighterAnimationInter, true));
 		Texture_Dashpunchdust->AnimationBindEnd("Dashpunchdust",
@@ -51,7 +51,7 @@ void Skill_Fighter_F_Bungwon::Start()
 		Texture_Dashpunchdust->Off();
 	}
 	{
-		Texture_Dashpunchsub = GetActor()->CreateComponent<GameEngineTextureRenderer>("Dashpunchsub");
+		Texture_Dashpunchsub = GetActor()->CreateComponent<GameEngineEffectRenderer>("Dashpunchsub");
 		Texture_Dashpunchsub->GetTransform().SetLocalPosition({ 56, -12, -0.015f });
 		Texture_Dashpunchsub->CreateFrameAnimationFolder("Dashpunchsub", FrameAnimation_DESC("Dashpunchsub", 0.05f, true));
 		Texture_Dashpunchsub->AnimationBindEnd("Dashpunchsub",

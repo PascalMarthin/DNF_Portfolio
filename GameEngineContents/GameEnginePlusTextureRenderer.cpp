@@ -141,13 +141,21 @@ void GameEnginePlusTextureRenderer::SetTexture(GameEngineTexture* _Texture)
 	}
 
 	GameEngineTextureRenderer::SetTexture(_Texture);
-	Texture_OutLine->SetTexture(_Texture);
+	if (Texture_OutLine != nullptr)
+	{
+		Texture_OutLine->SetTexture(_Texture);
+	}
+
 }
 
 void GameEnginePlusTextureRenderer::SetTexture(const std::string& _Name)
 {
 	GameEngineTextureRenderer::SetTexture(_Name);
-	Texture_OutLine->SetTexture(_Name);
+	if (Texture_OutLine != nullptr)
+	{
+		Texture_OutLine->SetTexture(_Name);
+	}
+
 }
 
 

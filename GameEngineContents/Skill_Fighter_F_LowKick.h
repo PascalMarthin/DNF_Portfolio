@@ -27,9 +27,9 @@ protected:
 	//void OnEvent() override;
 	//void OffEvent() override;
 private:
-	GameEngineTextureRenderer* Texture_LowKick;
-	GameEngineTextureRenderer* Texture_LowKick_WaveEffect09;
-	GameEngineTextureRenderer* Texture_LowKick_WaveEffect06;
+	GameEngineEffectRenderer* Texture_LowKick;
+	GameEngineEffectRenderer* Texture_LowKick_WaveEffect09;
+	GameEngineEffectRenderer* Texture_LowKick_WaveEffect06;
 	bool IsReady;
 };
 

@@ -32,7 +32,7 @@ void Skill_Fighter_F_CrashLowKick::Start()
 
 
 	{
-		Texture_CrashLowKick = GetActor()->CreateComponent<GameEngineTextureRenderer>("CrashLowKick");
+		Texture_CrashLowKick = GetActor()->CreateComponent<GameEngineEffectRenderer>("CrashLowKick");
 		Texture_CrashLowKick->GetTransform().SetLocalPosition({ 35.f, -45.f, -0.001f });
 		Texture_CrashLowKick->CreateFrameAnimationFolder("CrashLowKick_Base", FrameAnimation_DESC("CrashLowKick", 0, 10 ,0.04f, true));
 		Texture_CrashLowKick->CreateFrameAnimationFolder("CrashLowKick_Hit", FrameAnimation_DESC("CrashLowKick", 11, 14, 0.04f, true));
@@ -53,7 +53,7 @@ void Skill_Fighter_F_CrashLowKick::Start()
 	}
 
 	{
-		Texture_CrashLowKick_Hit1 = GetActor()->CreateComponent<GameEngineTextureRenderer>("CrashLowKick_Hit1");
+		Texture_CrashLowKick_Hit1 = GetActor()->CreateComponent<GameEngineEffectRenderer>("CrashLowKick_Hit1");
 		Texture_CrashLowKick_Hit1->GetTransform().SetLocalPosition({ 75 , -55.f, 100.f });
 		Texture_CrashLowKick_Hit1->GetTransform().SetLocalRotate({ 0 , 0 , 45.f });
 		Texture_CrashLowKick_Hit1->CreateFrameAnimationFolder("CrashLowKick_Hit1", FrameAnimation_DESC("CrashLowKick_Hit1", 0.04f, true));
@@ -70,7 +70,7 @@ void Skill_Fighter_F_CrashLowKick::Start()
 
 
 	{
-		Texture_CrashLowKick_Hit3 = GetActor()->CreateComponent<GameEngineTextureRenderer>("CrashLowKick_Hit3");
+		Texture_CrashLowKick_Hit3 = GetActor()->CreateComponent<GameEngineEffectRenderer>("CrashLowKick_Hit3");
 		Texture_CrashLowKick_Hit3->GetTransform().SetLocalPosition({ 80.f, -55.f, -0.001f });
 		Texture_CrashLowKick_Hit3->CreateFrameAnimationFolder("CrashLowKick_Hit3", FrameAnimation_DESC("CrashLowKick_Hit3", 0.04f, true));
 		Texture_CrashLowKick_Hit3->AnimationBindEnd("CrashLowKick_Hit3",
@@ -85,7 +85,7 @@ void Skill_Fighter_F_CrashLowKick::Start()
 	}
 
 	{
-		Texture_CrashLowKick_Bone = GetActor()->CreateComponent<GameEngineTextureRenderer>("CrashLowKick_Bone");
+		Texture_CrashLowKick_Bone = GetActor()->CreateComponent<GameEngineEffectRenderer>("CrashLowKick_Bone");
 		Texture_CrashLowKick_Bone->GetTransform().SetLocalPosition({ 0, -40, -10.f });
 		Texture_CrashLowKick_Bone->CreateFrameAnimationFolder("CrashLowKick_Bone", FrameAnimation_DESC("CrashLowKick_Bone", 0.1f, true));
 		Texture_CrashLowKick_Bone->AnimationBindEnd("CrashLowKick_Bone",

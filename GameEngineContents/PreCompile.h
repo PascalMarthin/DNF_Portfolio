@@ -34,3 +34,4 @@
 // contents
 #include "GamePlayEnum.h"
 #include "DummyActor.h"
+#include "GameEngineEffectRenderer.h"

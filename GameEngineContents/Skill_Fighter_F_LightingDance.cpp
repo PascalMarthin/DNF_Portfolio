@@ -48,7 +48,7 @@ void Skill_Fighter_F_LightingDance::Start()
 
 	{
 		
-		Texture_Kick = GetActor()->CreateComponent<GameEngineTextureRenderer>("Kick");
+		Texture_Kick = GetActor()->CreateComponent<GameEngineEffectRenderer>("Kick");
 		Texture_Kick->GetTransform().SetLocalPosition({ -20, 70, -100.f });
 		Texture_Kick->CreateFrameAnimationFolder("Kick", FrameAnimation_DESC("Kick", 0.06f, true));
 		Texture_Kick->AnimationBindEnd("Kick",
@@ -64,7 +64,7 @@ void Skill_Fighter_F_LightingDance::Start()
 
 	{
 
-		Texture_Illusion_1 = GetActor()->CreateComponent<GameEngineTextureRenderer>("Illusion_1");
+		Texture_Illusion_1 = GetActor()->CreateComponent<GameEngineEffectRenderer>("Illusion_1");
 		Texture_Illusion_1->GetTransform().SetLocalPosition({ 0, 0, -100.f });
 		Texture_Illusion_1->CreateFrameAnimationFolder("Illusion_70", FrameAnimation_DESC("Illusion_70", 0.0625f, true));
 		Texture_Illusion_1->AnimationBindFrame("Illusion_70", std::bind(&Skill_Fighter_F_LightingDance::CheckEffectFrame, this, std::placeholders::_1));
@@ -105,7 +105,7 @@ void Skill_Fighter_F_LightingDance::Start()
 
 	{
 
-		Texture_Illusion_2 = GetActor()->CreateComponent<GameEngineTextureRenderer>("Illusion_2");
+		Texture_Illusion_2 = GetActor()->CreateComponent<GameEngineEffectRenderer>("Illusion_2");
 		Texture_Illusion_2->GetTransform().SetLocalPosition({ 0, 0, -100.f });
 		Texture_Illusion_2->CreateFrameAnimationFolder("Illusion_70", FrameAnimation_DESC("Illusion_70", 0.0625f, true));
 		//Texture_Illusion_2->AnimationBindFrame("Illusion_70", std::bind(&Skill_Fighter_F_LightingDance::CheckEffectFrame, this, std::placeholders::_1));
@@ -145,7 +145,7 @@ void Skill_Fighter_F_LightingDance::Start()
 	}
 
 	{
-		Texture_Flash = GetActor()->CreateComponent<GameEngineTextureRenderer>("Flash1");
+		Texture_Flash = GetActor()->CreateComponent<GameEngineEffectRenderer>("Flash1");
 		Texture_Flash->GetTransform().SetLocalPosition({ 0, 0, -100.f });
 		Texture_Flash->CreateFrameAnimationFolder("Lighting_Flash", FrameAnimation_DESC("Lighting_Flash", 0.08f, true));
 		Texture_Flash->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Lighting_Flash", 0.02f, true));
@@ -163,7 +163,7 @@ void Skill_Fighter_F_LightingDance::Start()
 		Texture_Flash->Off();
 	}
 	{
-		Texture_Shock = GetActor()->CreateComponent<GameEngineTextureRenderer>("Flash2");
+		Texture_Shock = GetActor()->CreateComponent<GameEngineEffectRenderer>("Flash2");
 		Texture_Shock->GetTransform().SetLocalPosition({ 0, 0, -100.f });
 		Texture_Shock->CreateFrameAnimationFolder("Lighting_Shock", FrameAnimation_DESC("Lighting_Shock", 0.08f, true));
 		Texture_Shock->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Lighting_Shock", 0.02f, true));
@@ -183,7 +183,7 @@ void Skill_Fighter_F_LightingDance::Start()
 		Texture_Shock->Off();
 	}
 	{
-		Texture_Apply = GetActor()->CreateComponent<GameEngineTextureRenderer>("Lighting_Apply");
+		Texture_Apply = GetActor()->CreateComponent<GameEngineEffectRenderer>("Lighting_Apply");
 		Texture_Apply->GetTransform().SetLocalPosition({ 0, 0, -100.f });
 		Texture_Apply->CreateFrameAnimationFolder("Lighting_Apply", FrameAnimation_DESC("Lighting_Apply", 0.08f, true));
 		Texture_Apply->AnimationBindEnd("Lighting_Apply",
@@ -533,7 +533,7 @@ CollisionReturn Skill_Fighter_F_LightingDance::GetTarget(GameEngineCollision* _T
 		GetActor<GamePlayObject>()->SetLeftDir();
 	}
 
-	PoeObject->BeHit(this, _Other, GamePlayCharacter::GetCurrentCharacterData(), CheckDir(_This, _Other), 1200);
+	PoeObject->BeHit(this, _Other, GetActor<GamePlayObject>(), CheckDir(_This, _Other), 1200);
 	Object_HitList.clear();
 	Object_HitList[_Other->GetActor<GamePlayObject>()] = 1;
 

@@ -53,7 +53,7 @@ CollisionReturn GamePlaySkill::CollsionHitFunction(GameEngineCollision* _This, G
 	TriggerSkill_ect(_This, _Other);
 	SomeOneHit = true;
 	Object_HitList[Actor] += 1;
-	Actor->BeHit(this, _Other, GamePlayCharacter::GetCurrentCharacterData(), CheckDir(_This, _Other), Class_Power[int_ComboStuck].int_SkillDamage); //
+	Actor->BeHit(this, _Other, GetActor<GamePlayObject>(), CheckDir(_This, _Other), Class_Power[int_ComboStuck].int_SkillDamage); //
 
 	return CollisionReturn::ContinueCheck;
 }

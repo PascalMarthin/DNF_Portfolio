@@ -37,12 +37,12 @@ private:
 
 	GameEngineCollision* Collision_CheckHitArea;
 
-	GameEngineTextureRenderer* Texture_Kick;
-	GameEngineTextureRenderer* Texture_Illusion_1;
-	GameEngineTextureRenderer* Texture_Illusion_2;
-	GameEngineTextureRenderer* Texture_Flash;
-	GameEngineTextureRenderer* Texture_Apply;
-	GameEngineTextureRenderer* Texture_Shock;
+	GameEngineEffectRenderer* Texture_Kick;
+	GameEngineEffectRenderer* Texture_Illusion_1;
+	GameEngineEffectRenderer* Texture_Illusion_2;
+	GameEngineEffectRenderer* Texture_Flash;
+	GameEngineEffectRenderer* Texture_Apply;
+	GameEngineEffectRenderer* Texture_Shock;
 
 
 

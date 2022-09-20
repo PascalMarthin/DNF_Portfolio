@@ -49,7 +49,7 @@ void Skill_Fighter_F_ClosePunch::Start()
 
 
 	{
-		Texture_Punch00 = GetActor()->CreateComponent<GameEngineTextureRenderer>("Punch00");
+		Texture_Punch00 = GetActor()->CreateComponent<GameEngineEffectRenderer>("Punch00");
 		Texture_Punch00->GetTransform().SetLocalPosition({ 65 , 15.f, -100.f });
 		Texture_Punch00->CreateFrameAnimationFolder("Punch00", FrameAnimation_DESC("Punch00", 0.04f, true));
 		Texture_Punch00->AnimationBindEnd("Punch00",
@@ -64,7 +64,7 @@ void Skill_Fighter_F_ClosePunch::Start()
 	}
 
 	{
-		Texture_Punch01 = GetActor()->CreateComponent<GameEngineTextureRenderer>("Punch01");
+		Texture_Punch01 = GetActor()->CreateComponent<GameEngineEffectRenderer>("Punch01");
 		Texture_Punch01->GetTransform().SetLocalPosition({ 65 , 15.f, -100.f });
 		Texture_Punch01->CreateFrameAnimationFolder("Punch01", FrameAnimation_DESC("Punch01", 0.04f, true));
 		Texture_Punch01->AnimationBindEnd("Punch01",
@@ -78,7 +78,7 @@ void Skill_Fighter_F_ClosePunch::Start()
 		Texture_Punch01->Off();
 	}
 	{
-		Texture_Punch02 = GetActor()->CreateComponent<GameEngineTextureRenderer>("Punch02");
+		Texture_Punch02 = GetActor()->CreateComponent<GameEngineEffectRenderer>("Punch02");
 		Texture_Punch02->GetTransform().SetLocalPosition({ 65 , 15.f, -100.f });
 		Texture_Punch02->CreateFrameAnimationFolder("Punch02", FrameAnimation_DESC("Punch02", 0.04f, true));
 		Texture_Punch02->AnimationBindFrame("Punch02",
@@ -95,7 +95,7 @@ void Skill_Fighter_F_ClosePunch::Start()
 		Texture_Punch02->Off();
 	}
 	{
-		Texture_Punch03 = GetActor()->CreateComponent<GameEngineTextureRenderer>("Punch03");
+		Texture_Punch03 = GetActor()->CreateComponent<GameEngineEffectRenderer>("Punch03");
 		Texture_Punch03->GetTransform().SetLocalPosition({ 65 , 10.f, -100.f });
 		Texture_Punch03->CreateFrameAnimationFolder("Punch03", FrameAnimation_DESC("Punch03", 0.08f, true));
 		Texture_Punch03->AnimationBindEnd("Punch03",
@@ -109,7 +109,7 @@ void Skill_Fighter_F_ClosePunch::Start()
 		Texture_Punch03->Off();
 	}
 	{
-		Texture_W_Front_d = GetActor()->CreateComponent<GameEngineTextureRenderer>("W_Front_d");
+		Texture_W_Front_d = GetActor()->CreateComponent<GameEngineEffectRenderer>("W_Front_d");
 		Texture_W_Front_d->GetTransform().SetLocalPosition({ 88 , -7.f, -90.f });
 		Texture_W_Front_d->CreateFrameAnimationFolder("W_Front_d", FrameAnimation_DESC("W_Front_d", 0.04f, true));
 	//	Texture_W_Front_d->AnimationBindStart("W_Front_d", std::bind(&Skill_Fighter_F_ClosePunch::Texture_W_Front_d_Animation_Start, this, std::placeholders::_1));
@@ -125,7 +125,7 @@ void Skill_Fighter_F_ClosePunch::Start()
 		Texture_W_Front_d->Off();
 	}
 	{
-		Texture_W_Back_d = GetActor()->CreateComponent<GameEngineTextureRenderer>("W_Back_d");
+		Texture_W_Back_d = GetActor()->CreateComponent<GameEngineEffectRenderer>("W_Back_d");
 		Texture_W_Back_d->GetTransform().SetLocalPosition({ 88 , -7.f, -90.f });
 		Texture_W_Back_d->CreateFrameAnimationFolder("W_Back_d", FrameAnimation_DESC("W_Back_d", 0.04f, true));
 		Texture_W_Back_d->AnimationBindEnd("W_Back_d",
@@ -140,7 +140,7 @@ void Skill_Fighter_F_ClosePunch::Start()
 	}
 
 	{
-		Texture_W_Middle_d = GetActor()->CreateComponent<GameEngineTextureRenderer>("W_Middle_d");
+		Texture_W_Middle_d = GetActor()->CreateComponent<GameEngineEffectRenderer>("W_Middle_d");
 		Texture_W_Middle_d->GetTransform().SetLocalPosition({ 88 , -7.f, -90.f });
 		Texture_W_Middle_d->CreateFrameAnimationFolder("W_Middle_d", FrameAnimation_DESC("W_Middle_d", 0.04f, true));
 		Texture_W_Middle_d->AnimationBindFrame("W_Middle_d",

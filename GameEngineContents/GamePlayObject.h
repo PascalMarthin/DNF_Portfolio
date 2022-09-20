@@ -127,7 +127,7 @@ protected:
 
 	// -------------------Battle-------------------
 public:
-	virtual void BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitCollision, const GamePlayDataBase* _Character, int _Index, unsigned int _Damage);
+	virtual void BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitCollision, GamePlayObject* _HitObject, int _Index, unsigned int _Damage);
 	virtual void BeHitHold();
 	virtual void BeHitEnd();
 	// virtual void BeHit(적 대미지);

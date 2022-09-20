@@ -26,10 +26,10 @@ protected:
 	//void OnEvent() override;
 	//void OffEvent() override;
 private:
-	GameEngineTextureRenderer* Texture_CrashLowKick;
-	GameEngineTextureRenderer* Texture_CrashLowKick_Hit1;
-	GameEngineTextureRenderer* Texture_CrashLowKick_Hit3;
-	GameEngineTextureRenderer* Texture_CrashLowKick_Bone;
+	GameEngineEffectRenderer* Texture_CrashLowKick;
+	GameEngineEffectRenderer* Texture_CrashLowKick_Hit1;
+	GameEngineEffectRenderer* Texture_CrashLowKick_Hit3;
+	GameEngineEffectRenderer* Texture_CrashLowKick_Bone;
 	//GameEngineTextureRenderer* Texture_CrashLowKick_Wave01;
 	bool IsReady;
 	//

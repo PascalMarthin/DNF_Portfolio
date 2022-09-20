@@ -62,7 +62,7 @@ void Skill_Fighter_F_Rising::Start()
 	}
 
 	{
-		GameEngineTextureRenderer* Texture_Rising_Spin = GetActor()->CreateComponent<GameEngineTextureRenderer>("Texture_Rising_spin");
+		GameEngineEffectRenderer* Texture_Rising_Spin = GetActor()->CreateComponent<GameEngineEffectRenderer>("Texture_Rising_spin");
 		Texture_Rising_Spin->CreateFrameAnimationFolder("Texture_Rising_spin", FrameAnimation_DESC("Rising_spin",1, 9, 0.075f, false));
 		Texture_Rising_Spin->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_spin", 0.04f, false));
 
@@ -74,6 +74,7 @@ void Skill_Fighter_F_Rising::Start()
 		Texture_Rising_Spin->ChangeFrameAnimation("Texture_Rising_spin");
 		Texture_Rising_Spin->ScaleToTexture();
 		Texture_Rising_Spin->GetTransform().SetLocalScale({ Texture_Rising_Spin->GetTransform().GetLocalScale().x * 0.8f, Texture_Rising_Spin->GetTransform().GetLocalScale().y * 0.5f });
+
 		Texture_Rising_Spin->GetTransform().SetLocalRotate({ 0, 0 , 90});
 		Texture_Rising_Spin->GetTransform().SetLocalPosition({ -5 , 25.f, -20.f });
 		Texture_Rising_Spin->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
@@ -83,7 +84,7 @@ void Skill_Fighter_F_Rising::Start()
 		Texture_Rising_spin.push_back(Texture_Rising_Spin); // Small
 		
 
-		Texture_Rising_Spin = GetActor()->CreateComponent<GameEngineTextureRenderer>("Texture_Rising_spin");
+		Texture_Rising_Spin = GetActor()->CreateComponent<GameEngineEffectRenderer>("Texture_Rising_spin");
 		Texture_Rising_Spin->CreateFrameAnimationFolder("Texture_Rising_spin", FrameAnimation_DESC("Rising_spin", 2, 9, 0.08f, true));
 		Texture_Rising_Spin->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_spin", 3, 9, 0.04f, false));
 
@@ -106,7 +107,7 @@ void Skill_Fighter_F_Rising::Start()
 	}
 
 	{
-		GameEngineTextureRenderer* RisingEffect = GetActor()->CreateComponent<GameEngineTextureRenderer>("RisingEffect");
+		GameEngineEffectRenderer* RisingEffect = GetActor()->CreateComponent<GameEngineEffectRenderer>("RisingEffect");
 		RisingEffect->CreateFrameAnimationFolder("RisingEffect", FrameAnimation_DESC("Tigerstrike_00", 1, 4, 0.125f, true));
 		RisingEffect->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_spin", 3, 9, 0.04f, false));
 
@@ -126,7 +127,7 @@ void Skill_Fighter_F_Rising::Start()
 		Texture_RisingEffect.push_back(RisingEffect);
 
 
-		RisingEffect = GetActor()->CreateComponent<GameEngineTextureRenderer>("RisingEffect");
+		RisingEffect = GetActor()->CreateComponent<GameEngineEffectRenderer>("RisingEffect");
 		RisingEffect->CreateFrameAnimationFolder("RisingEffect", FrameAnimation_DESC("Tigerstrike_00", 1, 4, 0.125f, true));
 		RisingEffect->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_spin", 3, 9, 0.04f, false));
 
@@ -146,7 +147,7 @@ void Skill_Fighter_F_Rising::Start()
 
 		Texture_RisingEffect.push_back(RisingEffect); 
 
-		RisingEffect = GetActor()->CreateComponent<GameEngineTextureRenderer>("RisingEffect");
+		RisingEffect = GetActor()->CreateComponent<GameEngineEffectRenderer>("RisingEffect");
 		RisingEffect->CreateFrameAnimationFolder("RisingEffect", FrameAnimation_DESC("Tigerstrike_00", 1, 4, 0.125f, true));
 		RisingEffect->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_spin", 3, 9, 0.04f, false));
 
@@ -166,7 +167,7 @@ void Skill_Fighter_F_Rising::Start()
 		Texture_RisingEffect.push_back(RisingEffect);
 	}
 	{
-		GameEngineTextureRenderer* RisingEffect = GetActor()->CreateComponent<GameEngineTextureRenderer>("RisingEffect");
+		GameEngineEffectRenderer* RisingEffect = GetActor()->CreateComponent<GameEngineEffectRenderer>("RisingEffect");
 		RisingEffect->CreateFrameAnimationFolder("RisingEffect", FrameAnimation_DESC("Tigerstrike_00", 5, 9, 0.135f, true));
 		RisingEffect->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_spin", 3, 9, 0.04f, false));
 
@@ -185,7 +186,7 @@ void Skill_Fighter_F_Rising::Start()
 
 		Texture_RisingEffect.push_back(RisingEffect);
 
-		RisingEffect = GetActor()->CreateComponent<GameEngineTextureRenderer>("RisingEffect");
+		RisingEffect = GetActor()->CreateComponent<GameEngineEffectRenderer>("RisingEffect");
 		RisingEffect->CreateFrameAnimationFolder("RisingEffect", FrameAnimation_DESC("Tigerstrike_00", 5, 9, 0.125f, true));
 		RisingEffect->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_spin", 3, 9, 0.04f, false));
 
@@ -209,7 +210,7 @@ void Skill_Fighter_F_Rising::Start()
 
 	{
 		
-		GameEngineTextureRenderer* Texture_Wind_0 = Actor_DummyActor->CreateComponent<GameEngineTextureRenderer>("Texture_Wind_0");
+		GameEngineEffectRenderer* Texture_Wind_0 = Actor_DummyActor->CreateComponent<GameEngineEffectRenderer>("Texture_Wind_0");
 		Texture_Wind_0->CreateFrameAnimationFolder("Texture_Wind_5", FrameAnimation_DESC("Rising_wind5", 5, 10, 0.2f, false));
 		Texture_Wind_0->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_wind", 0.04f, false));
 		Texture_Wind_0->AnimationBindEnd("Texture_Wind_5",
@@ -228,7 +229,7 @@ void Skill_Fighter_F_Rising::Start()
 		Texture_Wind_0->Off();
 		Texture_Wind.push_back(Texture_Wind_0);
 
-		Texture_Wind_0 = Actor_DummyActor->CreateComponent<GameEngineTextureRenderer>("Texture_Wind_0");
+		Texture_Wind_0 = Actor_DummyActor->CreateComponent<GameEngineEffectRenderer>("Texture_Wind_0");
 		Texture_Wind_0->CreateFrameAnimationFolder("Texture_Wind_5", FrameAnimation_DESC("Rising_wind5", 5, 10, 0.2f, false));
 		Texture_Wind_0->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_wind", 0.04f, false));
 		Texture_Wind_0->AnimationBindEnd("Texture_Wind_5",
@@ -248,7 +249,7 @@ void Skill_Fighter_F_Rising::Start()
 		Texture_Wind_0->Off();
 		Texture_Wind.push_back(Texture_Wind_0);
 
-		Texture_Wind_0 = Actor_DummyActor->CreateComponent<GameEngineTextureRenderer>("Texture_Wind_0");
+		Texture_Wind_0 = Actor_DummyActor->CreateComponent<GameEngineEffectRenderer>("Texture_Wind_0");
 		Texture_Wind_0->CreateFrameAnimationFolder("Texture_Wind_5", FrameAnimation_DESC("Rising_wind5", 0, 4, 0.2f, false));
 		Texture_Wind_0->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_wind", 0.04f, false));
 		Texture_Wind_0->AnimationBindEnd("Texture_Wind_5",
@@ -268,11 +269,17 @@ void Skill_Fighter_F_Rising::Start()
 		Texture_Wind_0->Off();
 		Texture_Wind.push_back(Texture_Wind_0);
 
-		Texture_Wind_0 = Actor_DummyActor->CreateComponent<GameEngineTextureRenderer>("Texture_Wind_0");
+		Texture_Wind_0 = Actor_DummyActor->CreateComponent<GameEngineEffectRenderer>("Texture_Wind_0");
 		Texture_Wind_0->CreateFrameAnimationFolder("Texture_Wind", FrameAnimation_DESC("Rising_wind", 0, 11, 0.05f, false));
 		Texture_Wind_0->CreateFrameAnimationFolder("Texture_Wind_2", FrameAnimation_DESC("Rising_wind", 12, 16, 0.125f, false));
 		Texture_Wind_0->CreateFrameAnimationFolder("None", FrameAnimation_DESC("Rising_wind", 0.04f, false));
 		Texture_Wind_0->AnimationBindEnd("Texture_Wind",
+			[](const FrameAnimation_DESC& _Desc)
+			{
+				_Desc.Renderer->Off();
+			});
+
+		Texture_Wind_0->AnimationBindEnd("Texture_Wind_2",
 			[](const FrameAnimation_DESC& _Desc)
 			{
 				_Desc.Renderer->Off();
@@ -288,7 +295,6 @@ void Skill_Fighter_F_Rising::Start()
 		Texture_Wind_0->GetPixelData().MulColor = {1.2f,1.2f,1.2f, 0.7f };
 		Texture_Wind_0->Off();
 		Texture_Wind.push_back(Texture_Wind_0);
-		
 	}
 
 	//{

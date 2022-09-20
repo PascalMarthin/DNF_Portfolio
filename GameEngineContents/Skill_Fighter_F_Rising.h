@@ -33,13 +33,13 @@ private:
 	float AttDealy;
 	int HitCount;
 	float4 LandPos;
-	std::vector<GameEngineTextureRenderer*> Texture_Wind;
+	std::vector<GameEngineEffectRenderer*> Texture_Wind;
 	//GameEngineTextureRenderer* Texture_Wind_0;
 	//GameEngineTextureRenderer* Texture_Wind_2;
 	//GameEngineTextureRenderer* Texture_Wind_5;
 
-	std::vector<GameEngineTextureRenderer*> Texture_Rising_spin;
-	std::vector<GameEngineTextureRenderer*> Texture_RisingEffect;
+	std::vector<GameEngineEffectRenderer*> Texture_Rising_spin;
+	std::vector<GameEngineEffectRenderer*> Texture_RisingEffect;
 
 	//GameEngineTextureRenderer* Texture_EffectAir_1;
 	//GameEngineTextureRenderer* Texture_EffectAir_2;

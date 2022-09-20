@@ -37,15 +37,15 @@ private:
 	bool Bool_Texture_W_Middle_d_Start;
 	bool Texture_W_Front_; //엔진 추가전
 
-	GameEngineTextureRenderer* Texture_Punch00;
-	GameEngineTextureRenderer* Texture_Punch01;
-	GameEngineTextureRenderer* Texture_Punch02;
-	GameEngineTextureRenderer* Texture_Punch03;
-	GameEngineTextureRenderer* Texture_W_1_d;
-	GameEngineTextureRenderer* Texture_W_2_d;
-	GameEngineTextureRenderer* Texture_W_Front_d;
-	GameEngineTextureRenderer* Texture_W_Back_d;
-	GameEngineTextureRenderer* Texture_W_Middle_d;
+	GameEngineEffectRenderer* Texture_Punch00;
+	GameEngineEffectRenderer* Texture_Punch01;
+	GameEngineEffectRenderer* Texture_Punch02;
+	GameEngineEffectRenderer* Texture_Punch03;
+	GameEngineEffectRenderer* Texture_W_1_d;
+	GameEngineEffectRenderer* Texture_W_2_d;
+	GameEngineEffectRenderer* Texture_W_Front_d;
+	GameEngineEffectRenderer* Texture_W_Back_d;
+	GameEngineEffectRenderer* Texture_W_Middle_d;
 
 };
 

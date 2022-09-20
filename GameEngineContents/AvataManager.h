@@ -32,46 +32,6 @@ public:
 		return AllAvatas;
 	}
 
-	//inline GameEnginePlusTextureRenderer* GetAvata_Belt()
-	//{ 
-	//	return Avata_Belt_a;
-	//}
-	//inline GameEnginePlusTextureRenderer* GetAvata_Cap()
-	//{
-	//	return Avata_Cap_a;
-	//}
-	//inline GameEnginePlusTextureRenderer* GetAvata_Coat()
-	//{ 
-	//	return Avata_Coat_a;
-	//}
-	//inline GameEnginePlusTextureRenderer* GetAvata_Face()
-	//{ 
-	//	return Avata_Face_a;
-	//}
-	//inline GameEnginePlusTextureRenderer* GetAvata_Hair_a()
-	//{
-	//	return Avata_Hair_b;
-	//}
-	//inline GameEnginePlusTextureRenderer* GetAvata_Hair_b()
-	//{ 
-	//	return Avata_Hair_c;
-	//}
-	//inline GameEnginePlusTextureRenderer* GetAvata_Neck()
-	//{ 
-	//	return Avata_Neck_a;
-	//}
-	//inline GameEnginePlusTextureRenderer* GetAvata_Pants()
-	//{
-	//	return Avata_Pants_d;
-	//}
-	//inline GameEnginePlusTextureRenderer* GetAvata_Shoes_a()
-	//{
-	//	return Avata_Shoes_a;
-	//}
-	//inline GameEnginePlusTextureRenderer* GetAvata_Shoes_b()
-	//{ 
-	//	return Avata_Shoes_b;
-	//}
 	inline GameEnginePlusTextureRenderer* GetAvata_Skin()
 	{ 
 		return Avata_Skin;
@@ -97,7 +57,11 @@ public:
 
 	// ------SuperArmor-----------
 	void SetSuperArmor();
+	void SetSuperArmorUpdate(float _DeltaTime);
+	float SuperArmorColorIndex;
+private:
 	bool StartSuperArmor;
+public:
 
 	// ------Shake--------------
 	void SetShake(float _Power ,float _Time);

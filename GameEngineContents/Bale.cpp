@@ -560,6 +560,7 @@ void Bale::FSM_Move_Walk_End(const StateInfo& _Info)
 
 void Bale::FSM_Att_Sting_Start(const StateInfo& _Info)
 {			  
+	Manager_StatManager->SetDoSkill();
 	Texture_Monster->ChangeFrameAnimation("Bale_Sting");
 }
 void Bale::FSM_Att_Sting_Update(float _DeltaTime, const StateInfo& _Info)
@@ -569,6 +570,7 @@ void Bale::FSM_Att_Sting_Update(float _DeltaTime, const StateInfo& _Info)
 void Bale::FSM_Att_Sting_End(const StateInfo& _Info)
 {
 	All_CollTime["Att_Sting"] = 2.f;
+	Manager_StatManager->SetDoSkillEnd();
 }
 
 
@@ -579,6 +581,7 @@ void Bale::Sting_End(const FrameAnimation_DESC& _DESC)
 
 void Bale::FSM_Att_Stamping_Start(const StateInfo& _Info)
 {
+	Manager_StatManager->SetDoSkill();
 	Texture_Monster->ChangeFrameAnimation("Bale_Stamping");
 }
 void Bale::FSM_Att_Stamping_Update(float _DeltaTime, const StateInfo& _Info)
@@ -588,6 +591,7 @@ void Bale::FSM_Att_Stamping_Update(float _DeltaTime, const StateInfo& _Info)
 void Bale::FSM_Att_Stamping_End(const StateInfo& _Info)
 {
 	All_CollTime["Att_Stamping"] = 3.f;
+	Manager_StatManager->SetDoSkillEnd();
 }
 
 void Bale::Bale_Stamping(const FrameAnimation_DESC& _DESC)
@@ -598,6 +602,7 @@ void Bale::Bale_Stamping(const FrameAnimation_DESC& _DESC)
 
 void Bale::FSM_Att_Dash_Start(const StateInfo& _Info)
 {
+	Manager_StatManager->SetDoSkill();
 	Texture_Monster->ChangeFrameAnimation("Bale_RunReady");
 
 	Collision_ect = CreateComponent<GameEngineCollision>("Dash");
@@ -682,12 +687,14 @@ void Bale::FSM_Att_Dash_End(const StateInfo& _Info)
 		Collision_ect = nullptr;
 	}
 
+	Manager_StatManager->SetDoSkillEnd();
+
 }
 
 
 void Bale::FSM_Move_Teleport_Start(const StateInfo& _Info)
 {
-
+	Manager_StatManager->SetDoSkill();
 	AllCollision["Move_Teleport"]->SetParent(GamePlayCharacter::GetInst());
 
 	if (AllCollision["Move_Teleport"]->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Monster, CollisionType::CT_SPHERE))
@@ -702,6 +709,7 @@ void Bale::FSM_Move_Teleport_Start(const StateInfo& _Info)
 }
 void Bale::Bale_TeleportStart(const FrameAnimation_DESC& _DESC)
 {
+
 	Texture_Monster->ChangeFrameAnimation("Bale_Teleport_After");
 
 	const float4& PlayerPos = GamePlayCharacter::GetInst()->GetTransform().GetWorldPosition();
@@ -721,10 +729,11 @@ void Bale::FSM_Move_Teleport_End(const StateInfo& _Info)
 {
 	All_CollTime["Move_Teleport"] = 10.f;
 	All_CollTime["Att_Dash"] += 5.f;
-
+	Manager_StatManager->SetDoSkillEnd();
 
 }
 void Bale::LevelStartEvent()
 {
 	All_CollTime["Move_Teleport"] = 10.f;
+	All_CollTime["Att_Dash"] = 10.f;
 }
