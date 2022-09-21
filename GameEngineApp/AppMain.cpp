@@ -14,7 +14,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_ int       nCmdShow)
 {
 	new int();
-	//_CrtSetBreakAlloc(19795507);
+	_CrtSetBreakAlloc(29759485);
 	GameEngineCore::Start<DNF>();
 
 	return 0;

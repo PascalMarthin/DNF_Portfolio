@@ -53,6 +53,9 @@ private:
 
 	std::vector<GameEngineUIRenderer*> vector_Texture_Combo_num;
 	std::vector<GameEngineUIRenderer*> vector_Texture_Combo_bonus;
+	std::vector<float> vector_Combo_bonus_Time;
+	//std::vector<float> vector_Combo_BrightIndex;
+	int FindBlank(size_t _Index);
 	std::vector<GameEngineUIRenderer*> vector_Texture_Combo_Aerial;
 	std::vector<GameEngineUIRenderer*> vector_Texture_Combo_Effect;
 	std::queue<ComboClass> Queue_ComboClass;
@@ -62,7 +65,7 @@ private:
 	void PlusCombo();
 	void RenewalCombo();
 
-	void SetBrighting(int _Pos);
+	void SetBrighting(size_t _Pos);
 
 	
 

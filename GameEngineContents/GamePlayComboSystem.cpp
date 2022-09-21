@@ -95,7 +95,7 @@ void GamePlayComboSystem::Start()
 		}
 
 		Hight -= 35.f;
-		Len = 60.f;
+		Len = 45.f;
 
 		{
 			//GameEngineUIRenderer* Renderer = CreateComponent<GameEngineUIRenderer>("Combo_num");
@@ -131,16 +131,16 @@ void GamePlayComboSystem::Start()
 		for (size_t i = 0; i < 5; i++)
 		{
 			GameEngineUIRenderer* Renderer = CreateComponent<GameEngineUIRenderer>("Combo_bonus");
-			Renderer->SetPivot(PIVOTMODE::RIGHT);
-			Renderer->GetTransform().SetLocalPosition({ 0, Hight });
+			//Renderer->SetPivot(PIVOTMODE::RIGHT);
+			Renderer->GetTransform().SetLocalPosition({ -77.5f, Hight });
 			Renderer->SetTexture(TextureR_Combo_bonus->GetTexture(2));
 			Renderer->ScaleToTexture();
 			Renderer->Off();
 			vector_Texture_Combo_bonus.push_back(Renderer);
 
 			Renderer = CreateComponent<GameEngineUIRenderer>("Aerial");
-			Renderer->GetTransform().SetLocalPosition({ 0, Hight });
-			Renderer->SetPivot(PIVOTMODE::RIGHT);
+			Renderer->GetTransform().SetLocalPosition({ -27.f - 77.5f, Hight });
+		//	Renderer->SetPivot(PIVOTMODE::RIGHT);
 			Renderer->SetTexture(TextureR_Combo_bonus->GetTexture(1));
 			Renderer->ScaleToTexture();
 			Renderer->Off();
@@ -148,8 +148,8 @@ void GamePlayComboSystem::Start()
 			
 
 			GameEngineUIRenderer* Effect = CreateComponent<GameEngineUIRenderer>("Combo_bonus_Effect");
-			Effect->GetTransform().SetLocalPosition({ 45, Hight });
-			Effect->SetPivot(PIVOTMODE::RIGHT);
+			Effect->GetTransform().SetLocalPosition({ 45.f - 77.5f, Hight });
+			//Effect->SetPivot(PIVOTMODE::RIGHT);
 			Effect->SetTexture(TextureR_Combo_bonus->GetTexture(0));
 			Effect->ScaleToTexture();
 			Effect->Off();
@@ -158,9 +158,36 @@ void GamePlayComboSystem::Start()
 			Hight -= 16.f;
 		}
 
+		vector_Combo_bonus_Time.resize(5);
 
 	}
 
+}
+
+int GamePlayComboSystem::FindBlank(size_t _Index)
+{
+	int Result = 0;
+	for (size_t i = _Index; i < 4; i++)
+	{
+		int j = 0;
+		while (!vector_Texture_Combo_bonus[i]->IsUpdate() || vector_Combo_bonus_Time[i] < 0)
+		{
+			++j;
+			if (j + i > 4)
+			{
+				break;
+			}
+			if (vector_Texture_Combo_bonus[i + j]->IsUpdate() && vector_Combo_bonus_Time[i + j] > 0)
+			{
+				vector_Texture_Combo_bonus[i]->SetTexture(vector_Texture_Combo_bonus[i + j]->GetCurTexture());
+				vector_Combo_bonus_Time[i] = vector_Combo_bonus_Time[i + j];
+				vector_Texture_Combo_bonus[i]->On();
+				vector_Texture_Combo_bonus[i + j]->Off();
+				Result++;
+			}
+		}
+	}
+	return Result;
 }
 
 
@@ -174,9 +201,45 @@ void GamePlayComboSystem::Update(float _DeltaTime)
 	else
 	{
 		ComboStack = 0;
+		for (size_t i = 0; i < 3; i++)
+		{
+			vector_Texture_Combo_num[i]->Off();
+		}
+
 		for (size_t i = 0; i < 4; i++)
 		{
-			//vector_Texture_Combo_num[i]->Off();
+			if (vector_Texture_Combo_bonus[i]->GetCurTexture() == TextureR_Combo_bonus->GetTexture(5))
+			{
+				vector_Texture_Combo_bonus[i]->Off();
+			}
+			FindBlank(i);
+
+		}
+	}
+
+	for (size_t i = 0; i < 5; i++)
+	{
+		if (vector_Texture_Combo_bonus[i]->GetCurTexture() == TextureR_Combo_bonus->GetTexture(5))
+		{
+			vector_Combo_bonus_Time[i] = 3.f;
+		}
+		else
+		{
+			vector_Combo_bonus_Time[i] -= _DeltaTime;
+		}
+	
+		if (vector_Combo_bonus_Time[i] < 0 && vector_Combo_bonus_Time[i] > -0.5f && vector_Texture_Combo_bonus[i]->IsUpdate())
+		{
+			const float4& Pos = vector_Texture_Combo_bonus[i]->GetTransform().GetLocalPosition();
+			vector_Texture_Combo_bonus[i]->GetTransform().SetLocalPosition({ Pos.x, Pos.y - 30.f * (0.05f + vector_Combo_bonus_Time[i]), Pos.z });
+			vector_Texture_Combo_bonus[i]->GetPixelData().MulColor.a += vector_Combo_bonus_Time[i];
+		}
+
+		if (vector_Texture_Combo_bonus[i]->GetPixelData().MulColor.a <= 0)
+		{
+			vector_Texture_Combo_bonus[i]->GetPixelData().MulColor.a = 0;
+			vector_Texture_Combo_bonus[i]->Off();
+			FindBlank(i);
 		}
 	}
 
@@ -185,7 +248,7 @@ void GamePlayComboSystem::Update(float _DeltaTime)
 		int UpdateOn = 0;
 		for (size_t i = 0; i < 5; i++)
 		{
-			if (vector_Texture_Combo_bonus[i]->IsUpdate())
+			if (vector_Texture_Combo_bonus[i]->IsUpdate() && vector_Combo_bonus_Time[i] > 0)
 			{
 				++UpdateOn;
 			}
@@ -197,19 +260,20 @@ void GamePlayComboSystem::Update(float _DeltaTime)
 			{
 				if (vector_Texture_Combo_bonus[0]->GetCurTexture() == TextureR_Combo_bonus->GetTexture(5))
 				{
-					for (size_t i = 1; i < 4; i++)
-					{
-						vector_Texture_Combo_bonus[i]->SetTexture(vector_Texture_Combo_bonus[i + 1]->GetCurTexture());
-					}
+					vector_Texture_Combo_bonus[1]->Off();
+					UpdateOn -= FindBlank(1);
+					//for (size_t i = 1; i < 4; i++)
+					//{
+					//	vector_Texture_Combo_bonus[i]->SetTexture(vector_Texture_Combo_bonus[i + 1]->GetCurTexture());
+					//	vector_Combo_bonus_Time[i] = vector_Combo_bonus_Time[i + 1];
+					//}
 				}
 				else
 				{
-					for (size_t i = 0; i < 4; i++)
-					{
-						vector_Texture_Combo_bonus[i]->SetTexture(vector_Texture_Combo_bonus[i + 1]->GetCurTexture());
-					}
+					vector_Texture_Combo_bonus[0]->Off();
+					UpdateOn -= FindBlank(0);
 				}
-				--UpdateOn;
+
 			}
 			else
 			{
@@ -250,6 +314,7 @@ void GamePlayComboSystem::Update(float _DeltaTime)
 				for (size_t j = 0; j < vector_Texture_Combo_num.size(); j++)
 				{
 					vector_Texture_Combo_num[j]->GetTransform().SetLocalPosition({ vector_Texture_Combo_num[j]->GetTransform().GetLocalPosition().x, -65.f + (-16.f * i),  vector_Texture_Combo_num[j]->GetTransform().GetLocalPosition().z });
+					RenewalCombo();
 				}
 				break;
 			}
@@ -261,27 +326,87 @@ void GamePlayComboSystem::Update(float _DeltaTime)
 	}
 	else if(BrightIndex < 1)
 	{
-		BrightIndex -= _DeltaTime;
+		BrightIndex += _DeltaTime * 3.f;
+		if (BrightIndex > 1.f)
+		{
+			BrightIndex = 1.f;
+		}
+
+
+		for (size_t i = 0; i < 5; i++)
+		{
+			if (vector_Texture_Combo_Effect[i]->GetPixelData().MulColor.a > 0)
+			{
+				vector_Texture_Combo_Effect[i]->GetPixelData().MulColor.a = 1.f - BrightIndex - 0.2f;
+				const float4& Pos = vector_Texture_Combo_Effect[i]->GetTransform().GetLocalPosition();
+
+				float Range = -77.5f * BrightIndex;
+
+
+
+				vector_Texture_Combo_bonus[i]->GetTransform().SetLocalPosition({ Range, Pos.y, Pos.z });
+
+
+				vector_Texture_Combo_Effect[i]->SetScaleRatio(1.2f * (1 - BrightIndex) + 1.0f * BrightIndex);
+				vector_Texture_Combo_Effect[i]->GetTransform().SetLocalPosition({ 45.f + Range, Pos.y, Pos.z });
+
+				vector_Texture_Combo_Effect[i]->ScaleToTexture();
+			}
+
+
+		}
+
+	}
+	else if (BrightIndex < 2)
+	{
+		BrightIndex += _DeltaTime * 3.f;
+
+		if (BrightIndex - 1.f > 1.f)
+		{
+			BrightIndex = 2.f;
+		}
+
+
 		for (size_t i = 0; i < 5; i++)
 		{
 			if (vector_Texture_Combo_Aerial[i]->GetPixelData().MulColor.a > 0)
 			{
-				vector_Texture_Combo_Aerial[i]->GetPixelData().MulColor.a -= _DeltaTime;
-				vector_Texture_Combo_Effect[i]->GetPixelData().MulColor.a -= _DeltaTime;
-			}
-		}
+				{
+					const float4& Pos = vector_Texture_Combo_Aerial[i]->GetTransform().GetLocalPosition();
 
+					vector_Texture_Combo_Aerial[i]->GetPixelData().MulColor.a = 1.f - (BrightIndex - 1.f) - 0.2f;
+					vector_Texture_Combo_Aerial[i]->SetScaleRatio(1.f * (1 - (BrightIndex - 1.f)) + 1.5f * (BrightIndex - 1.f));
+					vector_Texture_Combo_Aerial[i]->GetTransform().SetLocalPosition({ -((77.5f - 20.f) * (1.f * (1 - (BrightIndex - 1.f)) + 1.5f * (BrightIndex - 1.f))) , Pos.y, Pos.z });
+
+					vector_Texture_Combo_Aerial[i]->ScaleToTexture();
+					vector_Texture_Combo_Aerial[i]->On();
+				}
+			}
+
+		}
 	}
 	
 }
 
 
-void GamePlayComboSystem::SetBrighting(int _Pos)
+void GamePlayComboSystem::SetBrighting(size_t _Pos)
 {
-	vector_Texture_Combo_Aerial[_Pos]->GetPixelData().MulColor.a = 1;
-	vector_Texture_Combo_Aerial[_Pos]->On();
-	vector_Texture_Combo_Effect[_Pos]->GetPixelData().MulColor.a = 1;
+
+	const float4& Pos = vector_Texture_Combo_Effect[_Pos]->GetTransform().GetLocalPosition();
+
+	vector_Texture_Combo_bonus[_Pos]->GetPixelData().MulColor.a = 1;
+	vector_Texture_Combo_bonus[_Pos]->GetTransform().SetLocalPosition({ 0, Pos.y, Pos.z });
+	vector_Texture_Combo_Aerial[_Pos]->GetPixelData().MulColor.a = 1  - 0.2f;
+	vector_Texture_Combo_Aerial[_Pos]->SetScaleRatio(1.f);
+	vector_Texture_Combo_Aerial[_Pos]->ScaleToTexture();
+	vector_Texture_Combo_Aerial[_Pos]->GetTransform().SetLocalPosition({ -77.5f, Pos.y, Pos.z });
+	vector_Texture_Combo_Aerial[_Pos]->Off();
+	vector_Texture_Combo_Effect[_Pos]->GetPixelData().MulColor.a = 1 - 0.2f;
+	vector_Texture_Combo_Effect[_Pos]->GetTransform().SetLocalPosition({ 0, Pos.y, Pos.z });
+	vector_Texture_Combo_Effect[_Pos]->SetScaleRatio(1.2f);
+	vector_Texture_Combo_Effect[_Pos]->ScaleToTexture();
 	vector_Texture_Combo_Effect[_Pos]->On();
+	vector_Combo_bonus_Time[_Pos] = 3.f;
 }
 
 void GamePlayComboSystem::PlusScore(unsigned __int64 _Score)
@@ -425,7 +550,7 @@ void GamePlayComboSystem::LevelStartEvent()
 		ComboStack = Before->ComboStack;
 		ComboScore = Before->ComboScore;
 	}
-	ComboDelay = 1.f;
+	ComboDelay = 0.5f;
 	BrightIndex = 0;
 	Queue_ComboClass = std::queue<ComboClass>();
 
