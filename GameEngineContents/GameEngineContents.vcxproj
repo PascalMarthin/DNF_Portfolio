@@ -197,6 +197,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ComboSystemBlank.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ComboSystemScore.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="DebugLevel.h">
       <SubType>
       </SubType>
@@ -523,6 +531,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="CollisionManager.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ComboSystemBlank.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ComboSystemScore.cpp">
       <SubType>
       </SubType>
     </ClCompile>

@@ -6,6 +6,7 @@
 // 설명 :
 enum class ComboClass
 {
+	None,
 	Aerial,
 	CounterHold,
 	GhostFrame,
@@ -17,8 +18,12 @@ enum class ComboClass
 	LastKill,
 	//ArmorBreak,
 };
+class ComboSystemBlank;
+class ComboSystemScore;
 class GamePlayComboSystem : public GameEngineActor
 {
+	friend ComboSystemBlank;
+	friend ComboSystemScore;
 public:
 	GamePlayComboSystem();
 	~GamePlayComboSystem();
@@ -34,7 +39,11 @@ public:
 
 	void PlusScore(unsigned __int64 _Score);
 
+
+
 	void SetComboClass(ComboClass _Class);
+	void ComboTimeEnd();
+	void ComboShowEnd();
 
 
 protected:
@@ -47,32 +56,24 @@ protected:
 private:
 
 	unsigned __int64 ComboScore;
-
 	
+	ComboSystemScore* Actor_ComboSystemScore;
 
 
-	std::vector<GameEngineUIRenderer*> vector_Texture_Combo_num;
-	std::vector<GameEngineUIRenderer*> vector_Texture_Combo_bonus;
-	std::vector<float> vector_Combo_bonus_Time;
-	//std::vector<float> vector_Combo_BrightIndex;
-	int FindBlank(size_t _Index);
-	std::vector<GameEngineUIRenderer*> vector_Texture_Combo_Aerial;
-	std::vector<GameEngineUIRenderer*> vector_Texture_Combo_Effect;
+	std::vector<ComboSystemBlank*> vector_ComboBlank;
+	void ChangeBlank(ComboSystemBlank* _Before, ComboSystemBlank* _After);
+
+
 	std::queue<ComboClass> Queue_ComboClass;
 	unsigned int ComboStack;
-	float ComboDelay;
-	float BrightIndex;
+	//float BrightIndex;
 	void PlusCombo();
-	void RenewalCombo();
-
-	void SetBrighting(size_t _Pos);
-
 	
 
-	std::vector<GameEngineUIRenderer*> vector_Texture_Dungeon_Rank;
-	std::vector<GameEngineUIRenderer*> vector_Texture_Dungeon_score;
-	void RenewalScore();
-	void RenewalRank(unsigned __int64 _Score);
+
+
+	bool PushBack;
+
 
 	std::vector<GameEngineUIRenderer*> vector_Texture_Killpoint_num;
 
@@ -83,43 +84,6 @@ private:
 
 	static GameEngineFolderTexture* TextureR_Combo_num;
 	static GameEngineFolderTexture* TextureR_Combo_bonus;
-	static inline GameEngineTexture* GetComboClass(ComboClass _Class)
-	{
-		switch (_Class)
-		{
-		case ComboClass::Aerial:
-			return TextureR_Combo_bonus->GetTexture(1);
-			break;
-		case ComboClass::CounterHold:
-			return TextureR_Combo_bonus->GetTexture(2);
-			break;
-		case ComboClass::GhostFrame:
-			return TextureR_Combo_bonus->GetTexture(3);
-			break;
-		case ComboClass::NearMiss:
-			return TextureR_Combo_bonus->GetTexture(4);
-			break;
-		case ComboClass::Combo:
-			return TextureR_Combo_bonus->GetTexture(5);
-			break;
-		case ComboClass::BackAttack:
-			return TextureR_Combo_bonus->GetTexture(6);
-			break;
-		case ComboClass::Critical:
-			return TextureR_Combo_bonus->GetTexture(7);
-			break;
-		case ComboClass::Counter:
-			return TextureR_Combo_bonus->GetTexture(8);
-			break;
-		case ComboClass::LastKill:
-			return TextureR_Combo_bonus->GetTexture(9);
-			break;
-		default:
-			break;
-		}
-		MsgBoxAssert("없는 효과입니다");
-		return nullptr;
-	}
 	static GameEngineFolderTexture* TextureR_Dungeon_Rank;
 	static GameEngineFolderTexture* TextureR_Dungeon_score;
 	static GameEngineFolderTexture* TextureR_Killpoint_num;

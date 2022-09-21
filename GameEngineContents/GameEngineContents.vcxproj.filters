@@ -251,6 +251,12 @@
     <ClInclude Include="GameEngineUIFontRenderer.h">
       <Filter>CorePlus</Filter>
     </ClInclude>
+    <ClInclude Include="ComboSystemBlank.h">
+      <Filter>CorePlus</Filter>
+    </ClInclude>
+    <ClInclude Include="ComboSystemScore.h">
+      <Filter>CorePlus</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -498,6 +504,12 @@
       <Filter>CorePlus</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineUIFontRenderer.cpp">
+      <Filter>CorePlus</Filter>
+    </ClCompile>
+    <ClCompile Include="ComboSystemBlank.cpp">
+      <Filter>CorePlus</Filter>
+    </ClCompile>
+    <ClCompile Include="ComboSystemScore.cpp">
       <Filter>CorePlus</Filter>
     </ClCompile>
   </ItemGroup>

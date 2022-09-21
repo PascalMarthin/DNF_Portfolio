@@ -1,5 +1,7 @@
 #include "PreCompile.h"
 #include "GamePlayComboSystem.h"
+#include "ComboSystemBlank.h"
+#include "ComboSystemScore.h"
 
 GameEngineFolderTexture* GamePlayComboSystem::TextureR_Combo_num 		 = nullptr;
 GameEngineFolderTexture* GamePlayComboSystem::TextureR_Combo_bonus		 = nullptr;
@@ -12,12 +14,11 @@ GameEngineFolderTexture* GamePlayComboSystem::TextureR_Monsterkill_grade = nullp
 
 GamePlayComboSystem* GamePlayComboSystem::Before = nullptr;
 GamePlayComboSystem* GamePlayComboSystem::Inst = nullptr;
-GamePlayComboSystem::GamePlayComboSystem() 
+GamePlayComboSystem::GamePlayComboSystem()
 	: ComboScore(0)
 	, ComboStack(0)
-	, ComboDelay(0)
-	, BrightIndex(0)
-
+	, PushBack(false)
+	, Actor_ComboSystemScore(nullptr)
 {
 }
 
@@ -71,184 +72,61 @@ void GamePlayComboSystem::Start()
 	//std::vector<GameEngineUIRenderer*> vector_Texture_Monsterkill;
 	//std::vector<GameEngineUIRenderer*> vector_Texture_Monsterkill_grade;
 	{
-		for (size_t i = 0; i < 3; i++)
-		{
-			GameEngineUIRenderer* Renderer = CreateComponent<GameEngineUIRenderer>("Dungeon_Rank");
-			Renderer->SetPivot(PIVOTMODE::RIGHTTOP);
-			Renderer->Off();
-			vector_Texture_Dungeon_Rank.push_back(Renderer);
-		}
-		vector_Texture_Dungeon_Rank[0]->SetTexture(TextureR_Dungeon_Rank->GetTexture(0));
-		vector_Texture_Dungeon_Rank[0]->ScaleToTexture();
-		vector_Texture_Dungeon_Rank[0]->On();
+		Actor_ComboSystemScore = GetLevel()->CreateActor<ComboSystemScore>();
+		Actor_ComboSystemScore->SetParent(this);
+		Actor_ComboSystemScore->GetTransform().SetLocalPosition({0, 5, 10});
 
 		float Len = 18.f;
 		float Hight = -30.f;
-		for (size_t i = 0; i < 7; i++)
-		{
-			GameEngineUIRenderer* Renderer = CreateComponent<GameEngineUIRenderer>("Dungeon_score");
-			Renderer->SetPivot(PIVOTMODE::RIGHTTOP);
-			Renderer->GetTransform().SetLocalPosition({ Len * -static_cast<float>(i), Hight });
-			Renderer->GetTransform().SetLocalScale({ 23, 30 });
-			Renderer->Off();
-			vector_Texture_Dungeon_score.push_back(Renderer);
-		}
 
 		Hight -= 35.f;
-		Len = 45.f;
-
-		{
-			//GameEngineUIRenderer* Renderer = CreateComponent<GameEngineUIRenderer>("Combo_num");
-			//Renderer->GetTransform().SetLocalPosition({ 0, Hight });
-			//Renderer->SetTexture(TextureR_Combo_bonus->GetTexture(5));
-			//Renderer->SetPivot(PIVOTMODE::RIGHTTOP);
-			//Renderer->ScaleToTexture();
-			//Renderer->On();
-			//vector_Texture_Combo_num.push_back(Renderer);
-		}
-		for (size_t i = 1; i < 4; i++)
-		{
-			GameEngineUIRenderer* Renderer = CreateComponent<GameEngineUIRenderer>("Combo_num");
-			Renderer->GetTransform().SetLocalPosition({ -Len, Hight });
-			Renderer->GetTransform().SetLocalScale({ 15, 18});
-			Renderer->SetPivot(PIVOTMODE::RIGHTTOP);
-			Len += 10.f;
-			//Renderer->Off();
-			vector_Texture_Combo_num.push_back(Renderer);
-		}
-
-
-
-		//vector_Texture_Combo_num[1]->SetTexture(TextureR_Combo_num->GetTexture(7));
-		//vector_Texture_Combo_num[1]->ScaleToTexture();
-		//vector_Texture_Combo_num[1]->On();
-
-		//vector_Texture_Combo_num[2]->SetTexture(TextureR_Combo_num->GetTexture(1));
-		//vector_Texture_Combo_num[2]->ScaleToTexture();
-		//vector_Texture_Combo_num[2]->On();
+		Len = 60.f;
 
 		Hight -= 9.f;
 		for (size_t i = 0; i < 5; i++)
 		{
-			GameEngineUIRenderer* Renderer = CreateComponent<GameEngineUIRenderer>("Combo_bonus");
-			//Renderer->SetPivot(PIVOTMODE::RIGHT);
-			Renderer->GetTransform().SetLocalPosition({ -77.5f, Hight });
-			Renderer->SetTexture(TextureR_Combo_bonus->GetTexture(2));
-			Renderer->ScaleToTexture();
-			Renderer->Off();
-			vector_Texture_Combo_bonus.push_back(Renderer);
-
-			Renderer = CreateComponent<GameEngineUIRenderer>("Aerial");
-			Renderer->GetTransform().SetLocalPosition({ -27.f - 77.5f, Hight });
-		//	Renderer->SetPivot(PIVOTMODE::RIGHT);
-			Renderer->SetTexture(TextureR_Combo_bonus->GetTexture(1));
-			Renderer->ScaleToTexture();
-			Renderer->Off();
-			vector_Texture_Combo_Aerial.push_back(Renderer);
-			
-
-			GameEngineUIRenderer* Effect = CreateComponent<GameEngineUIRenderer>("Combo_bonus_Effect");
-			Effect->GetTransform().SetLocalPosition({ 45.f - 77.5f, Hight });
-			//Effect->SetPivot(PIVOTMODE::RIGHT);
-			Effect->SetTexture(TextureR_Combo_bonus->GetTexture(0));
-			Effect->ScaleToTexture();
-			Effect->Off();
-			vector_Texture_Combo_Effect.push_back(Effect);
-
+			ComboSystemBlank* Blank = GetLevel()->CreateActor<ComboSystemBlank>();
+			Blank->SetParent(this);
+			Blank->GetTransform().SetLocalPosition({-77.5f, Hight, 10});
 			Hight -= 16.f;
+			vector_ComboBlank.push_back(Blank);
 		}
-
-		vector_Combo_bonus_Time.resize(5);
 
 	}
 
 }
 
-int GamePlayComboSystem::FindBlank(size_t _Index)
+void GamePlayComboSystem::ComboShowEnd()
 {
-	int Result = 0;
-	for (size_t i = _Index; i < 4; i++)
+	for (size_t i = 0; i < 4; i++)
 	{
-		int j = 0;
-		while (!vector_Texture_Combo_bonus[i]->IsUpdate() || vector_Combo_bonus_Time[i] < 0)
+		int a = 0;
+		while (vector_ComboBlank[i]->CurrentClass == ComboClass::None)
 		{
-			++j;
-			if (j + i > 4)
+			if (i + a > 4)
 			{
 				break;
 			}
-			if (vector_Texture_Combo_bonus[i + j]->IsUpdate() && vector_Combo_bonus_Time[i + j] > 0)
-			{
-				vector_Texture_Combo_bonus[i]->SetTexture(vector_Texture_Combo_bonus[i + j]->GetCurTexture());
-				vector_Combo_bonus_Time[i] = vector_Combo_bonus_Time[i + j];
-				vector_Texture_Combo_bonus[i]->On();
-				vector_Texture_Combo_bonus[i + j]->Off();
-				Result++;
-			}
+			ChangeBlank(vector_ComboBlank[i], vector_ComboBlank[i + 1]);
+			a++;
 		}
-	}
-	return Result;
-}
 
+	}
+}
 
 
 void GamePlayComboSystem::Update(float _DeltaTime)
 {
-	if (ComboDelay > 0)
-	{
-		ComboDelay -= _DeltaTime;
-	}
-	else
-	{
-		ComboStack = 0;
-		for (size_t i = 0; i < 3; i++)
-		{
-			vector_Texture_Combo_num[i]->Off();
-		}
 
-		for (size_t i = 0; i < 4; i++)
-		{
-			if (vector_Texture_Combo_bonus[i]->GetCurTexture() == TextureR_Combo_bonus->GetTexture(5))
-			{
-				vector_Texture_Combo_bonus[i]->Off();
-			}
-			FindBlank(i);
-
-		}
-	}
-
-	for (size_t i = 0; i < 5; i++)
-	{
-		if (vector_Texture_Combo_bonus[i]->GetCurTexture() == TextureR_Combo_bonus->GetTexture(5))
-		{
-			vector_Combo_bonus_Time[i] = 3.f;
-		}
-		else
-		{
-			vector_Combo_bonus_Time[i] -= _DeltaTime;
-		}
-	
-		if (vector_Combo_bonus_Time[i] < 0 && vector_Combo_bonus_Time[i] > -0.5f && vector_Texture_Combo_bonus[i]->IsUpdate())
-		{
-			const float4& Pos = vector_Texture_Combo_bonus[i]->GetTransform().GetLocalPosition();
-			vector_Texture_Combo_bonus[i]->GetTransform().SetLocalPosition({ Pos.x, Pos.y - 30.f * (0.05f + vector_Combo_bonus_Time[i]), Pos.z });
-			vector_Texture_Combo_bonus[i]->GetPixelData().MulColor.a += vector_Combo_bonus_Time[i];
-		}
-
-		if (vector_Texture_Combo_bonus[i]->GetPixelData().MulColor.a <= 0)
-		{
-			vector_Texture_Combo_bonus[i]->GetPixelData().MulColor.a = 0;
-			vector_Texture_Combo_bonus[i]->Off();
-			FindBlank(i);
-		}
-	}
 
 	if (!Queue_ComboClass.empty())
 	{
+
+		ComboShowEnd();
 		int UpdateOn = 0;
 		for (size_t i = 0; i < 5; i++)
 		{
-			if (vector_Texture_Combo_bonus[i]->IsUpdate() && vector_Combo_bonus_Time[i] > 0)
+			if (vector_ComboBlank[i]->CurrentClass != ComboClass::None)
 			{
 				++UpdateOn;
 			}
@@ -258,20 +136,21 @@ void GamePlayComboSystem::Update(float _DeltaTime)
 		{
 			if (UpdateOn > 4) // 5부터 앞에서 잘라버리기
 			{
-				if (vector_Texture_Combo_bonus[0]->GetCurTexture() == TextureR_Combo_bonus->GetTexture(5))
+				if (vector_ComboBlank[0]->CurrentClass == ComboClass::Combo)
 				{
-					vector_Texture_Combo_bonus[1]->Off();
-					UpdateOn -= FindBlank(1);
-					//for (size_t i = 1; i < 4; i++)
-					//{
-					//	vector_Texture_Combo_bonus[i]->SetTexture(vector_Texture_Combo_bonus[i + 1]->GetCurTexture());
-					//	vector_Combo_bonus_Time[i] = vector_Combo_bonus_Time[i + 1];
-					//}
+					for (size_t i = 1; i < 4; i++)
+					{
+						ChangeBlank(vector_ComboBlank[i], vector_ComboBlank[i + 1]);
+						--UpdateOn;
+					}
 				}
 				else
 				{
-					vector_Texture_Combo_bonus[0]->Off();
-					UpdateOn -= FindBlank(0);
+					for (size_t i = 0; i < 4; i++)
+					{
+						ChangeBlank(vector_ComboBlank[i], vector_ComboBlank[i + 1]);
+						--UpdateOn;
+					}
 				}
 
 			}
@@ -279,268 +158,118 @@ void GamePlayComboSystem::Update(float _DeltaTime)
 			{
 				if (Queue_ComboClass.front() == ComboClass::Combo)
 				{
-					bool IsCombo = false;
+					bool ComboIsit = false;
 					for (size_t i = 0; i < 5; i++)
 					{
-						if (vector_Texture_Combo_bonus[i]->GetCurTexture() == TextureR_Combo_bonus->GetTexture(5))
+						if (vector_ComboBlank[i]->CurrentClass == ComboClass::Combo)
 						{
-							IsCombo = true;
+							ComboIsit = true;
 							Queue_ComboClass.pop();
 							break;
 						}
 					}
 
-					if (IsCombo)
+					if (ComboIsit == false)
 					{
-						RenewalCombo();
-						continue;
+						vector_ComboBlank[UpdateOn]->SetComboClass(Queue_ComboClass.front());
+						vector_ComboBlank[UpdateOn]->SetBrighting();
+						vector_ComboBlank[UpdateOn]->On();
+						Queue_ComboClass.pop();
 					}
 				}
-				vector_Texture_Combo_bonus[UpdateOn]->SetTexture(GetComboClass(Queue_ComboClass.front()));
-				vector_Texture_Combo_bonus[UpdateOn]->ScaleToTexture();
-				vector_Texture_Combo_bonus[UpdateOn]->On();
-				SetBrighting(UpdateOn);
-				UpdateOn++;
-				Queue_ComboClass.pop();
-
-			}
-		}
-
-
-		for (size_t i = 0; i < 5; i++)
-		{
-			if (vector_Texture_Combo_bonus[i]->GetCurTexture() == TextureR_Combo_bonus->GetTexture(5))
-			{
-				for (size_t j = 0; j < vector_Texture_Combo_num.size(); j++)
+				else
 				{
-					vector_Texture_Combo_num[j]->GetTransform().SetLocalPosition({ vector_Texture_Combo_num[j]->GetTransform().GetLocalPosition().x, -65.f + (-16.f * i),  vector_Texture_Combo_num[j]->GetTransform().GetLocalPosition().z });
-					RenewalCombo();
+					vector_ComboBlank[UpdateOn]->SetComboClass(Queue_ComboClass.front());
+					vector_ComboBlank[UpdateOn]->SetBrighting();
+					vector_ComboBlank[UpdateOn]->On();
+					UpdateOn++;
+					Queue_ComboClass.pop();
 				}
-				break;
+
+				if (UpdateOn == 5)
+				{
+					int a = 0;
+				}
 			}
 		}
-
-
-		BrightIndex = 0;
 		Queue_ComboClass = std::queue<ComboClass>();
 	}
-	else if(BrightIndex < 1)
-	{
-		BrightIndex += _DeltaTime * 3.f;
-		if (BrightIndex > 1.f)
-		{
-			BrightIndex = 1.f;
-		}
 
-
-		for (size_t i = 0; i < 5; i++)
-		{
-			if (vector_Texture_Combo_Effect[i]->GetPixelData().MulColor.a > 0)
-			{
-				vector_Texture_Combo_Effect[i]->GetPixelData().MulColor.a = 1.f - BrightIndex - 0.2f;
-				const float4& Pos = vector_Texture_Combo_Effect[i]->GetTransform().GetLocalPosition();
-
-				float Range = -77.5f * BrightIndex;
-
-
-
-				vector_Texture_Combo_bonus[i]->GetTransform().SetLocalPosition({ Range, Pos.y, Pos.z });
-
-
-				vector_Texture_Combo_Effect[i]->SetScaleRatio(1.2f * (1 - BrightIndex) + 1.0f * BrightIndex);
-				vector_Texture_Combo_Effect[i]->GetTransform().SetLocalPosition({ 45.f + Range, Pos.y, Pos.z });
-
-				vector_Texture_Combo_Effect[i]->ScaleToTexture();
-			}
-
-
-		}
-
-	}
-	else if (BrightIndex < 2)
-	{
-		BrightIndex += _DeltaTime * 3.f;
-
-		if (BrightIndex - 1.f > 1.f)
-		{
-			BrightIndex = 2.f;
-		}
-
-
-		for (size_t i = 0; i < 5; i++)
-		{
-			if (vector_Texture_Combo_Aerial[i]->GetPixelData().MulColor.a > 0)
-			{
-				{
-					const float4& Pos = vector_Texture_Combo_Aerial[i]->GetTransform().GetLocalPosition();
-
-					vector_Texture_Combo_Aerial[i]->GetPixelData().MulColor.a = 1.f - (BrightIndex - 1.f) - 0.2f;
-					vector_Texture_Combo_Aerial[i]->SetScaleRatio(1.f * (1 - (BrightIndex - 1.f)) + 1.5f * (BrightIndex - 1.f));
-					vector_Texture_Combo_Aerial[i]->GetTransform().SetLocalPosition({ -((77.5f - 20.f) * (1.f * (1 - (BrightIndex - 1.f)) + 1.5f * (BrightIndex - 1.f))) , Pos.y, Pos.z });
-
-					vector_Texture_Combo_Aerial[i]->ScaleToTexture();
-					vector_Texture_Combo_Aerial[i]->On();
-				}
-			}
-
-		}
-	}
 	
 }
 
-
-void GamePlayComboSystem::SetBrighting(size_t _Pos)
+void GamePlayComboSystem::ChangeBlank(ComboSystemBlank* _After, ComboSystemBlank* _Before)
 {
+	_After->On();
+	_After->SetComboClass(_Before->CurrentClass);
 
-	const float4& Pos = vector_Texture_Combo_Effect[_Pos]->GetTransform().GetLocalPosition();
+	_After->Combo_bonus_Time = 3.f;
+	_After->Combo_BrightTime = _Before->Combo_BrightTime;
+	_After->FontSizeUp = _Before->FontSizeUp;
 
-	vector_Texture_Combo_bonus[_Pos]->GetPixelData().MulColor.a = 1;
-	vector_Texture_Combo_bonus[_Pos]->GetTransform().SetLocalPosition({ 0, Pos.y, Pos.z });
-	vector_Texture_Combo_Aerial[_Pos]->GetPixelData().MulColor.a = 1  - 0.2f;
-	vector_Texture_Combo_Aerial[_Pos]->SetScaleRatio(1.f);
-	vector_Texture_Combo_Aerial[_Pos]->ScaleToTexture();
-	vector_Texture_Combo_Aerial[_Pos]->GetTransform().SetLocalPosition({ -77.5f, Pos.y, Pos.z });
-	vector_Texture_Combo_Aerial[_Pos]->Off();
-	vector_Texture_Combo_Effect[_Pos]->GetPixelData().MulColor.a = 1 - 0.2f;
-	vector_Texture_Combo_Effect[_Pos]->GetTransform().SetLocalPosition({ 0, Pos.y, Pos.z });
-	vector_Texture_Combo_Effect[_Pos]->SetScaleRatio(1.2f);
-	vector_Texture_Combo_Effect[_Pos]->ScaleToTexture();
-	vector_Texture_Combo_Effect[_Pos]->On();
-	vector_Combo_bonus_Time[_Pos] = 3.f;
+	
+
+	_Before->SetComboClass(ComboClass::None);
+	_Before->Combo_bonus_Time = 0;
+	_Before->Combo_BrightTime = 0;
+	_Before->Off();
 }
 
 void GamePlayComboSystem::PlusScore(unsigned __int64 _Score)
 {
 	ComboScore += _Score;
-	RenewalScore();
-
+	Actor_ComboSystemScore->RenewalScore(ComboScore);
 
 	PlusCombo();
 }
 
 void GamePlayComboSystem::SetComboClass(ComboClass _Class)
 {
+	if (_Class == ComboClass::Combo)
+	{
+		for (size_t i = 0; i < 5; i++)
+		{
+			if (vector_ComboBlank[i]->CurrentClass == ComboClass::Combo)
+			{
+				return;
+			}
+		}
+	}
 
-	//if (Queue_ComboClass.size() > 4)
-	//{
-	//	Queue_ComboClass.pop();
-	//}
+
 	Queue_ComboClass.push(_Class);
 }
 
+void GamePlayComboSystem::ComboTimeEnd()
+{
+	ComboStack = 0;
+}
+
+
 void GamePlayComboSystem::PlusCombo()
 {
-	ComboDelay = 2.0f;
 	++ComboStack;
 	if (ComboStack > 999)
 	{
 		ComboStack = 999;
 	}
-	RenewalCombo();
 
-}
-
-void GamePlayComboSystem::RenewalCombo()
-{
-	for (auto& bonus : vector_Texture_Combo_bonus)
+	bool ComboIsIt = true;
+	for (size_t i = 0; i < 5; i++)
 	{
-		if (bonus->GetCurTexture() == TextureR_Combo_bonus->GetTexture(5))
+		if (vector_ComboBlank[i]->RenewalCombo())
 		{
-			std::string Index = std::to_string(ComboStack);
-			for (size_t i = 0; i < 3; i++)
-			{
-				if (Index.empty())
-				{
-					vector_Texture_Combo_num[i]->Off();
-					continue;
-				}
-				vector_Texture_Combo_num[i]->SetTexture(TextureR_Combo_num->GetTexture(static_cast<int>(Index.back()) - 48));
-				vector_Texture_Combo_num[i]->On();
-
-				Index.pop_back();
-			}
-			return;
+			ComboIsIt = false;
 		}
 	}
 
-	if (ComboStack > 1)
+	if (ComboIsIt)
 	{
-		SetComboClass(ComboClass::Combo);
+		Queue_ComboClass.push(ComboClass::Combo);
 	}
-
-
-
-	
-}
-
-void GamePlayComboSystem::RenewalScore()
-{
-	unsigned __int64 Score = ComboScore;
-	if (Score > 9999999)
-	{
-		Score = 9999999;
-	}
-	std::string Combo = std::to_string(Score);
-	int i = 0;
-	while (Combo.size() != 0)
-	{
-		vector_Texture_Dungeon_score[i]->SetTexture(TextureR_Dungeon_score->GetTexture(static_cast<int>(Combo.back()) - 48));
-		vector_Texture_Dungeon_score[i]->ScaleToTexture();
-		vector_Texture_Dungeon_score[i]->On();
-		Combo.pop_back();
-		++i;
-		if (i >= 7)
-		{
-			break;
-		}
-	}
-
-	RenewalRank(Score);
-
 
 }
 
-void GamePlayComboSystem::RenewalRank(unsigned __int64 _Score)
-{
-	if (_Score > 5000000)
-	{
-
-		//SSS
-	}  
-	else if (_Score > 2500000)
-	{
-		//SS
-	}
-	else if (_Score > 1000000)
-	{
-		//S
-	}
-	else if (_Score > 500000)
-	{
-		//A
-	}
-	else if (_Score > 250000)
-	{
-		//B
-	}
-	else if (_Score > 100000)
-	{
-		//C
-	}
-	else if (_Score > 50000)
-	{
-		//D
-	}
-	else if (_Score > 10000)
-	{
-		//E
-	}
-	else if (_Score > 1000)
-	{
-		//F
-	}
-	
-}
 
 void GamePlayComboSystem::LevelStartEvent()
 {
@@ -550,8 +279,6 @@ void GamePlayComboSystem::LevelStartEvent()
 		ComboStack = Before->ComboStack;
 		ComboScore = Before->ComboScore;
 	}
-	ComboDelay = 0.5f;
-	BrightIndex = 0;
 	Queue_ComboClass = std::queue<ComboClass>();
 
 	GamePlayComboSystem::Inst = this;
