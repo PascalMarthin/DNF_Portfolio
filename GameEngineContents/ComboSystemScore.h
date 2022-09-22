@@ -53,7 +53,8 @@ private:
 	bool Renewal;
 	void RenewalRank(unsigned __int64 _Score);
 	void SetRankTexure(RankClass _Rank);
-	void ChangeRank();
+	void FillRankColor();
+	//void ChangeRank();
 	void EffectPlus();
 	bool DoEffect;
 	float DoEffectDelay;

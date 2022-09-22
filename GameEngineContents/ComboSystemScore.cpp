@@ -26,16 +26,21 @@ void ComboSystemScore::Start()
 {
 	//GetTransform().SetLocalScale({ 2.f, 2.f });
 	Texture_Dungeon_Rank = CreateComponent<GameEngineUIRenderer>("Dungeon_Rank");
-	Texture_Dungeon_Rank->SetPivot(PIVOTMODE::RIGHTTOP);
+	Texture_Dungeon_Rank->GetTransform().SetLocalPosition({ 0, -15.f });
+	Texture_Dungeon_Rank->SetPivot(PIVOTMODE::RIGHT);
 	Texture_Dungeon_Rank->Off();
 	Texture_Dungeon_RankColor = CreateComponent<GameEngineUIRenderer>("Dungeon_RankColor");
-	Texture_Dungeon_RankColor->GetTransform().SetLocalPosition({-3, -2, -5});
-	Texture_Dungeon_RankColor->SetPivot(PIVOTMODE::RIGHTTOP);
+	Texture_Dungeon_RankColor->GetTransform().SetLocalPosition({-3, -13.f, -5});
+	Texture_Dungeon_RankColor->SetPivot(PIVOTMODE::RIGHT);
 	Texture_Dungeon_RankColor->Off();
 	Texture_Dungeon_Effect = CreateComponent<GameEngineUIRenderer>("Dungeon_Effect");
 	Texture_Dungeon_Effect->SetTexture(GamePlayComboSystem::TextureR_Dungeon_Rank->GetTexture(16));
+	Texture_Dungeon_Effect->SetScaleRatio(1.8f);
 	Texture_Dungeon_Effect->ScaleToTexture();
-	//Texture_Dungeon_Effect->SetPivot(PIVOTMODE::RIGHTTOP);
+	Texture_Dungeon_Effect->GetTransform().SetLocalPosition({ -35.f, 0, -5.01f });
+	Texture_Dungeon_Effect->GetPixelData().MulColor.a = 0.95f;
+	Texture_Dungeon_Effect->GetPixelData().PlusColor = {0.85f, 0.85f ,0.85f , 0.3f};
+	//Texture_Dungeon_Effect->SetPivot(PIVOTMODE::RIGHT);
 	Texture_Dungeon_Effect->Off();
 
 
@@ -74,19 +79,68 @@ void ComboSystemScore::Update(float _Delta)
 	{
 		if (DoEffectDelay > 1.f)
 		{
-			DoEffectDelay -= _Delta;
+			Texture_Dungeon_Rank->On();
+			DoEffectDelay -= _Delta * 2.f;
 			if (DoEffectDelay <= 1.f)
 			{
-				Texture_Dungeon_Rank->
+				Texture_Dungeon_Rank->SetScaleRatio(1.f);
+				Texture_Dungeon_Rank->GetTransform().SetLocalPosition({0,-15.f,0});
+				Texture_Dungeon_Rank->GetPixelData().PlusColor = float4::ZERO;
+				DoEffectDelay = 1.f;
 				/*Texture_Dungeon_Rank->GetTransform*/
 
 			}
+			else 
+			{
+				Texture_Dungeon_Rank->SetScaleRatio(2.f * (1.f - (2.f - DoEffectDelay)) + (2.f - DoEffectDelay));
+				Texture_Dungeon_Rank->GetTransform().SetLocalPosition({ 0,-15.f,-5.1f });
 
+				float Color = (1.f - (2.f - (DoEffectDelay)) * 1.2f);
+				if (Color < 0)
+				{
+					Color = 0;
+				}
+				Texture_Dungeon_Rank->GetPixelData().PlusColor = { Color ,Color , Color ,0 };
+			}
+
+			Texture_Dungeon_Rank->ScaleToTexture();
 		}
 		else if (DoEffectDelay > 0)
 		{
-
+			Texture_Dungeon_RankColor->On();
+			DoEffectDelay -= _Delta * 2.f;
+			if (DoEffectDelay < 0)
+			{
+				Texture_Dungeon_RankColor->SetScaleRatio(1.f);
+				Texture_Dungeon_RankColor->GetPixelData().MulColor.a = 1.f;
+				Texture_Dungeon_Effect->GetPixelData().PlusColor.a = 0;
+				Texture_Dungeon_Effect->Off();
+				DoEffectDelay = 0;
+				DoEffect = false;
+			}
+			else
+			{
+				Texture_Dungeon_RankColor->SetScaleRatio(DoEffectDelay + 2.3f * (1.f - DoEffectDelay));
+				Texture_Dungeon_RankColor->GetPixelData().MulColor.a = DoEffectDelay;
+			}
+			Texture_Dungeon_RankColor->ScaleToTexture();
 		}
+
+		if (DoEffectDelay < 1.8f && DoEffectDelay != 0)
+		{
+			Texture_Dungeon_Effect->GetTransform().SetLocalRotate({ 0, 0, -_Delta * 150.f });
+			Texture_Dungeon_Effect->SetScaleRatio(1.8f * (1.f - ((1.8f - DoEffectDelay) / 1.8f)) + 0.5f * ((1.8f - DoEffectDelay) / 1.8f));
+			Texture_Dungeon_Effect->GetPixelData().MulColor.a = 0.95f * (1.f - ((1.8f - DoEffectDelay) / 1.8f));
+			Texture_Dungeon_Effect->GetPixelData().PlusColor.a = 0.3f;
+			
+			Texture_Dungeon_Effect->GetTransform().SetLocalPosition({ -35.f * (1.f - ((1.8f - DoEffectDelay) / 1.8f)), -10.f * DoEffectDelay, -5.01f });
+			Texture_Dungeon_Effect->ScaleToTexture();
+			Texture_Dungeon_Effect->On();
+		}
+	}
+	else
+	{
+		FillRankColor();
 	}
 
 	if (Renewal == true)
@@ -98,7 +152,7 @@ void ComboSystemScore::Update(float _Delta)
 				vector_Texture_Dungeon_score[i]->GetPixelData().PlusColor.r -= _Delta * 8.f;
 				vector_Texture_Dungeon_score[i]->GetPixelData().PlusColor.g -= _Delta * 8.f;
 				vector_Texture_Dungeon_score[i]->GetPixelData().PlusColor.b -= _Delta * 8.f;
-				vector_Texture_Dungeon_score[i]->GetPixelData().PlusColor.a -= _Delta * 8.f;
+				//vector_Texture_Dungeon_score[i]->GetPixelData().PlusColor.a -= _Delta * 8.f;
 
 				if (vector_Texture_Dungeon_score[i]->GetPixelData().PlusColor.r < 0)
 				{
@@ -143,6 +197,59 @@ void ComboSystemScore::Update(float _Delta)
 	}
 }
 
+void ComboSystemScore::FillRankColor()
+{
+	unsigned __int64 Score = GamePlayComboSystem::GetInst()->ComboScore;
+	float SliceY = 0;
+	if (Score > 5000000)
+	{
+		SliceY = 0;
+		//SSS
+	}
+	else if (Score > 2500000)
+	{
+
+		SliceY = static_cast<float>(Score - 2500000) / static_cast<float>(5000000 - 2500000);
+
+
+		//SS
+	}
+	else if (Score > 1000000)
+	{
+		SliceY = static_cast<float>(Score - 1000000) / static_cast<float>(2500000 - 1000000);
+
+		//S
+	}
+	else if (Score > 500000)
+	{
+		SliceY = static_cast<float>(Score - 500000) / static_cast<float>(1000000 - 500000);
+		//A
+	}
+	else if (Score > 250000)
+	{
+		SliceY = static_cast<float>(Score - 250000) / static_cast<float>(500000 - 250000);
+		//B
+	}
+	else if (Score > 100000)
+	{
+		SliceY = static_cast<float>(Score - 100000) / static_cast<float>(250000 - 100000);
+		//C
+	}
+	else if (Score > 50000)
+	{
+		SliceY = static_cast<float>(Score - 50000) / static_cast<float>(100000 - 50000);
+		//D
+	}
+	else
+	{
+		SliceY = static_cast<float>(Score) / static_cast<float>(50000);
+
+		//F
+	}
+
+	Texture_Dungeon_RankColor->GetPixelData().Slice.y = 1.f - SliceY;
+}
+
 void ComboSystemScore::RenewalScore(unsigned __int64 _Score)
 {
 	unsigned __int64 Score = _Score;
@@ -161,7 +268,7 @@ void ComboSystemScore::RenewalScore(unsigned __int64 _Score)
 	{
 		vector_Texture_Dungeon_score[i]->SetTexture(GamePlayComboSystem::TextureR_Dungeon_score->GetTexture(static_cast<int>(Combo.back()) - 48));
 		vector_Texture_Dungeon_score[i]->ScaleToTexture();
-		vector_Texture_Dungeon_score[i]->GetPixelData().PlusColor = float4::WHITE;
+		vector_Texture_Dungeon_score[i]->GetPixelData().PlusColor = {1, 1, 1, 0};
 
 		vector_Texture_Dungeon_score[i]->On();
 		Combo.pop_back();
@@ -175,7 +282,8 @@ void ComboSystemScore::RenewalScore(unsigned __int64 _Score)
 
 	Texture_Dungeon_Rank->GetPixelData().MulColor.a = 1.f;
 	Texture_Dungeon_RankColor->GetPixelData().MulColor.a = 1.f;
-	Texture_Dungeon_Effect->GetPixelData().MulColor.a = 1.f;
+
+	//Texture_Dungeon_Effect->GetPixelData().MulColor.a = 1.f;
 
 	for (auto& Renderer : vector_Texture_Dungeon_score)
 	{
@@ -193,6 +301,7 @@ void ComboSystemScore::RenewalScore(unsigned __int64 _Score)
 
 void ComboSystemScore::RenewalRank(unsigned __int64 _Score)
 {
+	RankClass Before = CurrentRank;
 	if (_Score > 5000000)
 	{
 		CurrentRank = RankClass::SSS;
@@ -228,18 +337,33 @@ void ComboSystemScore::RenewalRank(unsigned __int64 _Score)
 		CurrentRank = RankClass::D;
 		//D
 	}
-	else if (_Score > 10000)
+	else
 	{
 		CurrentRank = RankClass::F;
 		//F
 	}
 
+	SetRankTexure(CurrentRank);
+	if (Before != CurrentRank)
+	{
+		EffectPlus();
+	}
 }
 
 void ComboSystemScore::EffectPlus()
 {
 	DoEffect = true;
 	DoEffectDelay = 2.f;
+
+	Texture_Dungeon_Rank->SetScaleRatio(1.f);
+	Texture_Dungeon_Rank->GetTransform().SetLocalPosition({ 0,0,0 });
+	Texture_Dungeon_Rank->GetPixelData().PlusColor = float4::ZERO;
+
+	Texture_Dungeon_RankColor->SetScaleRatio(1.f);
+	Texture_Dungeon_RankColor->GetPixelData().MulColor.a = 1.f;
+	Texture_Dungeon_Effect->GetTransform().SetLocalRotation({ 0, 0, 0 });
+	Texture_Dungeon_Effect->GetTransform().SetLocalPosition({ -35.f, 0, -5.01f });
+
 	Texture_Dungeon_RankColor->Off();
 }
 

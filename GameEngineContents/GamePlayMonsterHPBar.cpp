@@ -532,26 +532,32 @@ void GamePlayMonsterHPBar::SetHitDamage_InMember(unsigned int _CurrentHP)
 
 		SetHPBarRatioTexture_Front(Monster_BeforeHPLine - Monster_GoalHPLine);
 
-		if ((Monster_BeforeHPLine - Monster_GoalHPLine) > 1000)
+		if ((Monster_BeforeHPLine - Monster_GoalHPLine) > 2000)
 		{
 			MaxSpeed = 20;
 			FrameSpeed = 0;
 		}
-		else if ((Monster_BeforeHPLine - Monster_GoalHPLine) > 500 && MaxSpeed < 10)
+		else if ((Monster_BeforeHPLine - Monster_GoalHPLine) < 2000)
 		{
-			MaxSpeed = 10;
+			float Speed = (1.f - (static_cast<float>(Monster_BeforeHPLine - Monster_GoalHPLine) / 2000.f)) + static_cast<float>(10 * (static_cast<float>(Monster_BeforeHPLine - Monster_GoalHPLine) / 2000.f));
+			if (Speed < 1)
+			{
+				Speed = 1.f;
+			}
+			
+			MaxSpeed = static_cast<int>(Speed);
 			FrameSpeed = 0;
 		}
-		else if ((Monster_BeforeHPLine - Monster_GoalHPLine) > 100 && MaxSpeed < 2)
+		else/* if ((Monster_BeforeHPLine - Monster_GoalHPLine) > 100 && MaxSpeed < 2)*/
 		{
 			MaxSpeed = 1;
 			FrameSpeed = 0;
 		}
-		else
-		{
-			MaxSpeed = 1;
-			FrameSpeed = 0.015f;
-		}
+		//else
+		//{
+		//	MaxSpeed = 1;
+		//	FrameSpeed = 0.015f;
+		//}
 			
 
 		

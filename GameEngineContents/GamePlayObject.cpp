@@ -87,7 +87,7 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitColli
 
 	
 	// 대미지 처리
-	SetDamage(500000);	
+	SetDamage(5000000);	
 
 	// 점수
 	if (Enum_ObjectType == ObjectType::Monster)
