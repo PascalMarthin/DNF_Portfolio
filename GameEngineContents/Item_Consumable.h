@@ -29,7 +29,12 @@ private:
 
 
 	void Function_Level1Up(CharacterStatManager* _Manager);
-	//void 
+	void Function_s_HPPotion(CharacterStatManager* _Manager);
+	void Function_m_HPPotion(CharacterStatManager* _Manager);
+	void Function_L_HPPotion(CharacterStatManager* _Manager);
+	void Function_s_MPPotion(CharacterStatManager* _Manager);
+	void Function_m_MPPotion(CharacterStatManager* _Manager);
+	void Function_L_MPPotion(CharacterStatManager* _Manager);
 
 };
 

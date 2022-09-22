@@ -6,10 +6,12 @@
 
 GameEngineFolderTexture* GameEngineDamageRenderer::Folder_NumberTexture_Critical = nullptr;
 GameEngineFolderTexture* GameEngineDamageRenderer::Folder_NumberTexture_Nomal = nullptr;
+
+ GameEngineFolderTexture* GameEngineDamageRenderer::Folder_NumberTexture_HPCureFont = nullptr;
+ GameEngineFolderTexture* GameEngineDamageRenderer::Folder_NumberTexture_MPCureFont = nullptr;
 std::list<GameEngineDamageRenderer*> GameEngineDamageRenderer::Static_AllDamageRenderer;
 GameEngineDamageRenderer::GameEngineDamageRenderer()
-	: Critical(false)
-	, CurrentCastingTime(1.5f)
+	:  CurrentCastingTime(1.5f)
 	, MaxDamage(false)
 	, CheckTimeEvent(0b0)
 	, FontSize(1.f)
@@ -39,10 +41,14 @@ void GameEngineDamageRenderer::Start()
 	{
 		GameEngineDamageRenderer::Folder_NumberTexture_Critical = GameEngineFolderTexture::Find("CriticalFont");
 		GameEngineDamageRenderer::Folder_NumberTexture_Nomal = GameEngineFolderTexture::Find("NomalFont");
+
+		GameEngineDamageRenderer::Folder_NumberTexture_HPCureFont = GameEngineFolderTexture::Find("HPCureFont");
+		GameEngineDamageRenderer::Folder_NumberTexture_MPCureFont = GameEngineFolderTexture::Find("MPCureFont");
+
 	}
 }
 
-void GameEngineDamageRenderer::SetDamage(unsigned int _Damage)
+void GameEngineDamageRenderer::SetDamage(unsigned int _Damage, DamageFontClass _Class)
 {
 	FontSize = 1.2f;
 	if (_Damage > 99999999)
@@ -84,18 +90,17 @@ void GameEngineDamageRenderer::SetDamage(unsigned int _Damage)
 			//int Pow = static_cast<int>(pow(10, i - 1));
 			int DamagePow = Damage[Damage.size() - i - 1] - 48;
 
-			if (Critical == true)
+			switch (_Class)
 			{
-				All_Font[i]->SetTexture(Folder_NumberTexture_Critical->GetTexture(DamagePow));
-
+			case DamageFontClass::MPHeal:
+				All_Font[i]->SetTexture(Folder_NumberTexture_MPCureFont->GetTexture(DamagePow));
 				XPos += 2;
-				if (DamagePow == 1)
-				{
-					XPos += 6;
-				}
-			}
-			else
-			{
+				break;
+			case DamageFontClass::HPHeal:
+				All_Font[i]->SetTexture(Folder_NumberTexture_HPCureFont->GetTexture(DamagePow));
+				XPos += 2;
+				break;
+			case DamageFontClass::NomalDamage:
 				All_Font[i]->SetTexture(Folder_NumberTexture_Nomal->GetTexture(DamagePow));
 				switch (DamagePow)
 				{
@@ -108,6 +113,18 @@ void GameEngineDamageRenderer::SetDamage(unsigned int _Damage)
 				default:
 					break;
 				}
+				break;
+			case DamageFontClass::Critical:
+				All_Font[i]->SetTexture(Folder_NumberTexture_Critical->GetTexture(DamagePow));
+
+				XPos += 2;
+				if (DamagePow == 1)
+				{
+					XPos += 6;
+				}
+				break;
+			default:
+				break;
 			}
 
 			All_Font[i]->ScaleToTexture();

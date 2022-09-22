@@ -24,11 +24,34 @@ protected:
 	// void End() override {}
 	// void OnEvent() {}
 	// void OffEvent() {}
+
+	void LevelStartEvent();
+	void LevelEndEvent();
 private:
+	int CurrentHP;
+	int CurrentBeHindHP;
+	int CurrentHitHP;
+
 	GameEngineTextureRenderer* HUDBase;
+	GameEngineTextureRenderer* HPBar_Outline;
+	GameEngineTextureRenderer* MPBar_Outline;
+
 	GameEngineTextureRenderer* HPBar;
+	GameEngineTextureRenderer* HPBar_Behind;
 	GameEngineTextureRenderer* HPBar_Hit;
+
+	void HPUpdate(float _Time);
+	void MPUpdate(float _Time);
+
+
+	int CurrentMP;
+	int CurrentBeHindMP;
+	int CurrentHitMP;
+
 	GameEngineTextureRenderer* MPBar;
+	GameEngineTextureRenderer* MPBar_Behind;
+	GameEngineTextureRenderer* MPBar_Hit;
+
 	GameEngineTextureRenderer* EXPBar;
 
 	std::vector<GameEngineTextureRenderer*> SkillInterface;

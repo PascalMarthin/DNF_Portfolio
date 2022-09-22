@@ -68,6 +68,14 @@ enum class GamePlayItemCode
 	Level1Up = 2000,
 	Equipment_Upgrade12,
 
+	s_HPPotion = 2100,
+	m_HPPotion,
+	L_HPPotion,
+
+	s_MPPotion,
+	m_MPPotion,
+	L_MPPotion,
+
 
 
 	Fighter_F_Belt_7st_Red = 3000,

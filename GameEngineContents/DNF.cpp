@@ -311,6 +311,26 @@ void DNF::BaseTextureLoad()
 				}
 			}
 		}
+
+		{
+
+			GameEngineDirectory Dir;
+			Dir.MoveParentToExitsChildDirectory("Resource");
+			Dir.Move("Resource");
+			Dir.Move("Texture");
+			Dir.Move("UI");
+			Dir.Move("Item");
+			Dir.Move("Icon");
+			Dir.Move("Consumption");
+
+			std::vector<GameEngineFile> Texture = Dir.GetAllFile();
+
+			for (size_t i = 0; i < Texture.size(); i++)
+			{
+				GameEngineTexture::Load(Texture[i].GetFullPath());
+			}
+		}
+
 	}
 
 }
@@ -585,6 +605,14 @@ void DNF::BaseKeySetting()
 	{
 		GameEngineInput::GetInst()->CreateKey("LMouseCLK", MK_LBUTTON);
 		GameEngineInput::GetInst()->CreateKey("RMouseCLK", MK_RBUTTON);
+	}
+	{
+		GameEngineInput::GetInst()->CreateKey("Debug0", VK_NUMPAD0);
+		GameEngineInput::GetInst()->CreateKey("Debug1", VK_NUMPAD1);
+		GameEngineInput::GetInst()->CreateKey("Debug2", VK_NUMPAD2);
+		GameEngineInput::GetInst()->CreateKey("Debug3", VK_NUMPAD3);
+		GameEngineInput::GetInst()->CreateKey("Debug4", VK_NUMPAD4);
+		GameEngineInput::GetInst()->CreateKey("Debug5", VK_NUMPAD5);
 	}
 }
 

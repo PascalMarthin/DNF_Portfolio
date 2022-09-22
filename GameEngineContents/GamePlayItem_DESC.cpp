@@ -20,6 +20,13 @@ void GamePlayItem_DESC::CreateALLItemData()
 
 	AllItem_DESC[GamePlayItemCode::Level1Up] = new GamePlayItem_DESC(GamePlayItemCode::Level1Up, GamePlayItemRate::Rare, "Level1Up", "Item_Level1Up.png");
 
+	AllItem_DESC[GamePlayItemCode::s_HPPotion] = new GamePlayItem_DESC(GamePlayItemCode::s_HPPotion, GamePlayItemRate::UnCommon, "s_HPPotion", "s_HPPotion.png");
+	AllItem_DESC[GamePlayItemCode::m_HPPotion] = new GamePlayItem_DESC(GamePlayItemCode::m_HPPotion, GamePlayItemRate::Rare, "m_HPPotion", "m_HPPotion.png");
+	AllItem_DESC[GamePlayItemCode::L_HPPotion] = new GamePlayItem_DESC(GamePlayItemCode::L_HPPotion, GamePlayItemRate::Unique, "L_HPPotion", "L_HPPotion.png");
+	AllItem_DESC[GamePlayItemCode::s_MPPotion] = new GamePlayItem_DESC(GamePlayItemCode::s_MPPotion, GamePlayItemRate::UnCommon, "s_MPPotion", "s_MPPotion.png");
+	AllItem_DESC[GamePlayItemCode::m_MPPotion] = new GamePlayItem_DESC(GamePlayItemCode::m_MPPotion, GamePlayItemRate::Rare, "m_MPPotion", "m_MPPotion.png");
+	AllItem_DESC[GamePlayItemCode::L_MPPotion] = new GamePlayItem_DESC(GamePlayItemCode::L_MPPotion, GamePlayItemRate::Unique, "L_MPPotion", "L_MPPotion.png");
+
 	AllItem_DESC[GamePlayItemCode::Equipment_Upgrade12] = new GamePlayItem_DESC(GamePlayItemCode::Equipment_Upgrade12, GamePlayItemRate::Unique, "Equipment_Upgrade12", "Equipment_Upgrade12.png");
 	
 	AllItem_DESC[GamePlayItemCode::Fighter_F_Belt_7st_Red		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Belt_7st_Red, GamePlayItemRate::Rare, "Fighter_F_Belt_7st_Red", "Fighter_F_Belt_7st_Red.png");

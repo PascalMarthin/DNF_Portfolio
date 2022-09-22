@@ -8,6 +8,7 @@
 #include "StatWindow.h"
 #include "GameSkillBuff.h"
 #include "CharacterSkillManager.h"
+#include "HealHPAni.h"
 
 
 CharacterStatManager* CharacterStatManager::Inst = nullptr;
@@ -160,8 +161,60 @@ void CharacterStatManager::SetCharacter_Fighter_F()
 	Time_CurrentEngage = 0.f;
 }
 
+void CharacterStatManager::HealHP(int _Heal, HPMPEnum _Enum)
+{
+
+	if (_Enum == HPMPEnum::HP)
+	{
+		CurrentPlayerAbilityStat->HP += _Heal;
+		if (CurrentPlayerAbilityStat->HP > CurrentPlayerAbilityStat->MAXHP)
+		{
+			_Heal -= CurrentPlayerAbilityStat->HP - CurrentPlayerAbilityStat->MAXHP;
+			CurrentPlayerAbilityStat->HP = CurrentPlayerAbilityStat->MAXHP;
+		}
+	}
+	else if (_Enum == HPMPEnum::MP)
+	{
+		CurrentPlayerAbilityStat->MP += _Heal;
+		if (CurrentPlayerAbilityStat->MP > CurrentPlayerAbilityStat->MAXMP)
+		{
+			_Heal -= CurrentPlayerAbilityStat->MP - CurrentPlayerAbilityStat->MAXMP;
+			CurrentPlayerAbilityStat->MP = CurrentPlayerAbilityStat->MAXMP;
+		}
+	}
+	HealHPAni* Heal = GetParent<GameEngineActor>()->GetLevel()->CreateActor<HealHPAni>();
+	Heal->SetParent(GetParent());
+	Heal->SetMPHPHeal(_Enum, _Heal);
+}
+
 void CharacterStatManager::Update(float _DeltaTime)
 {
+
+	if (CurrentPlayerAbilityStat != nullptr)
+	{
+		if (GameEngineInput::GetInst()->IsPress("Debug1"))
+		{
+			CurrentPlayerAbilityStat->HP -= 1;
+		}
+		if (GameEngineInput::GetInst()->IsPress("Debug2"))
+		{
+			CurrentPlayerAbilityStat->HP += 1;
+		}
+		if (GameEngineInput::GetInst()->IsDown("Debug3"))
+		{
+			CurrentPlayerAbilityStat->HP -= 100;
+		}
+		if (GameEngineInput::GetInst()->IsDown("Debug4"))
+		{
+			CurrentPlayerAbilityStat->HP += 100;
+		}
+	}
+
+
+
+
+
+
 	Time_CurrentEngage -= _DeltaTime;
 
 	FSMManager.Update(_DeltaTime);
@@ -478,6 +531,7 @@ void CharacterStatManager::LevelStartEvent()
 
 
 		Manager_SkillManager = GetParent<GamePlayCharacter>()->GetSkillManager();
+		CharacterStatManager::Inst = this;
 	}
 		break;
 	case ObjectType::Monster:
@@ -494,7 +548,7 @@ void CharacterStatManager::LevelStartEvent()
 		break;
 	}
 
-	CharacterStatManager::Inst = this;
+
 
 }
 

@@ -149,6 +149,17 @@ void GamePlayCharacter::Update(float _Delta)
 GamePlayDataBase* GamePlayCharacter::CreateCharacterBase(CharacterFormerClass _Class, const std::string& _NickName)
 {
 	GamePlayDataBase* NewCharacter = new GamePlayDataBase(_Class , _NickName);
+
+
+
+	NewCharacter->CreateItem(GamePlayItemCode::s_HPPotion, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::m_HPPotion, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::L_HPPotion, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::s_MPPotion, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::m_MPPotion, 1);
+	NewCharacter->CreateItem(GamePlayItemCode::L_MPPotion, 1);
+
+
 	NewCharacter->CreateItem(GamePlayItemCode::Level1Up, 1);
 
 	NewCharacter->CreateItem(GamePlayItemCode::Fighter_F_Belt_7st_Blue, 1);

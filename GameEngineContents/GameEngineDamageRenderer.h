@@ -3,6 +3,13 @@
 #include <GameEngineCore/GameEngineActor.h>
 
 // Ό³Έν :
+enum class DamageFontClass
+{
+	MPHeal,
+	HPHeal,
+	NomalDamage,
+	Critical,
+};
 enum DamageFontEvent
 {
 	FirstTime = 0b0000000000000001,
@@ -22,11 +29,7 @@ public:
 	GameEngineDamageRenderer& operator=(const GameEngineDamageRenderer& _Other) = delete;
 	GameEngineDamageRenderer& operator=(GameEngineDamageRenderer&& _Other) noexcept = delete;
 
-	inline void SetCritical()
-	{
-		Critical = true;
-	}
-	void SetDamage(unsigned int _Damage);
+	void SetDamage(unsigned int _Damage, DamageFontClass _Class = DamageFontClass::NomalDamage);
 
 
 protected:
@@ -41,7 +44,6 @@ private:
 	static void SetPrintingFont(GameEngineDamageRenderer* _FontRenderer);
 
 	std::vector<GameEngineUIRenderer*> All_Font;
-	bool Critical;
 	bool MaxDamage;
 
 	int CheckTimeEvent;
@@ -62,6 +64,8 @@ private:
 
 	static GameEngineFolderTexture* Folder_NumberTexture_Critical;
 	static GameEngineFolderTexture* Folder_NumberTexture_Nomal;
+	static GameEngineFolderTexture* Folder_NumberTexture_HPCureFont;
+	static GameEngineFolderTexture* Folder_NumberTexture_MPCureFont;
 
 };
 

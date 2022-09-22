@@ -7,6 +7,9 @@
 
 
 // 설명 : 상태를 체크하고 업데이트마다 정리하는 클래스
+
+enum class HPMPEnum;
+class HealHPAni;
 class CharacterAbilityStat;
 class MonsterAbilityStat;
 class GameSkillBuff;
@@ -106,6 +109,8 @@ public:
 		return PlayerCurrentState & CharacterStat::Player_Character_DoSkill;
 	}
 	
+
+	void HealHP(int _Heal, HPMPEnum _Enum);
 
 	//  Player_Character_ALive
 	//	Player_Character_Action

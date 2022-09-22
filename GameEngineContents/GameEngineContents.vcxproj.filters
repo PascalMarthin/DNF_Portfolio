@@ -215,9 +215,6 @@
     <ClInclude Include="GameEngineDamageRenderer.h">
       <Filter>CorePlus</Filter>
     </ClInclude>
-    <ClInclude Include="GamePlayComboSystem.h">
-      <Filter>CorePlus</Filter>
-    </ClInclude>
     <ClInclude Include="GamePlayMonsterHPBar.h">
       <Filter>Object\Monster</Filter>
     </ClInclude>
@@ -252,10 +249,16 @@
       <Filter>CorePlus</Filter>
     </ClInclude>
     <ClInclude Include="ComboSystemBlank.h">
-      <Filter>CorePlus</Filter>
+      <Filter>CorePlus\Combo</Filter>
     </ClInclude>
     <ClInclude Include="ComboSystemScore.h">
-      <Filter>CorePlus</Filter>
+      <Filter>CorePlus\Combo</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlayComboSystem.h">
+      <Filter>CorePlus\Combo</Filter>
+    </ClInclude>
+    <ClInclude Include="HealHPAni.h">
+      <Filter>Management</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -470,9 +473,6 @@
     <ClCompile Include="GameEngineDamageRenderer.cpp">
       <Filter>CorePlus</Filter>
     </ClCompile>
-    <ClCompile Include="GamePlayComboSystem.cpp">
-      <Filter>CorePlus</Filter>
-    </ClCompile>
     <ClCompile Include="GamePlayMonsterHPBar.cpp">
       <Filter>Object\Monster</Filter>
     </ClCompile>
@@ -507,10 +507,16 @@
       <Filter>CorePlus</Filter>
     </ClCompile>
     <ClCompile Include="ComboSystemBlank.cpp">
-      <Filter>CorePlus</Filter>
+      <Filter>CorePlus\Combo</Filter>
     </ClCompile>
     <ClCompile Include="ComboSystemScore.cpp">
-      <Filter>CorePlus</Filter>
+      <Filter>CorePlus\Combo</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlayComboSystem.cpp">
+      <Filter>CorePlus\Combo</Filter>
+    </ClCompile>
+    <ClCompile Include="HealHPAni.cpp">
+      <Filter>Management</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -606,6 +612,9 @@
     </Filter>
     <Filter Include="Object\Character\Inventory">
       <UniqueIdentifier>{bf421ceb-6aef-4335-b080-da248bf413be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CorePlus\Combo">
+      <UniqueIdentifier>{79ecc566-d711-406e-98c6-4bf81ade8177}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
