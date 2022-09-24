@@ -15,6 +15,7 @@ GamePlaySkill::GamePlaySkill()
 	, CastingTime(0)
 	, CurrentCastingTime(0)
 	, int_SkillLevel(1)
+	, Texture_CastingBuff(nullptr)
 {
 }
 
@@ -138,29 +139,29 @@ void GamePlaySkill::CreateCastingTexture(float _CastingTime)
 	CastingTime = _CastingTime;
 	CurrentCastingTime = 0;
 	GameEngineFolderTexture* Texture = GameEngineFolderTexture::Find("Casting");
-	GameEngineTextureRenderer* Casting = GetActor()->CreateComponent<GameEngineTextureRenderer>();
+	GameEngineEffectRenderer* Casting = GetActor()->CreateComponent<GameEngineEffectRenderer>();
 	Casting->SetTexture(Texture->GetTexture(0));
 	Casting->ScaleToTexture();
-	Casting->GetTransform().SetLocalPosition({ 0, 55, -100});
+	Casting->GetTransform().SetLocalPosition({ 0, 45, -100});
 	Vector_CastingTexture.push_back(Casting);
 	Casting->Off();
 
-	Casting = GetActor()->CreateComponent<GameEngineTextureRenderer>();
+	Casting = GetActor()->CreateComponent<GameEngineEffectRenderer>();
 	Casting->SetTexture(Texture->GetTexture(1));
 	Casting->ScaleToTexture();
-	Casting->GetTransform().SetLocalPosition({ 0, 55, -100});
+	Casting->GetTransform().SetLocalPosition({ 0, 45, -100});
 	Casting->GetTransform().PixLocalNegativeX();
 	Vector_CastingTexture.push_back(Casting);
 	Casting->Off();
 
-	Casting = GetActor()->CreateComponent<GameEngineTextureRenderer>();
+	Casting = GetActor()->CreateComponent<GameEngineEffectRenderer>();
 	Casting->SetTexture(Texture->GetTexture(2));
 	Casting->ScaleToTexture();
-	Casting->GetTransform().SetLocalPosition({ 0, 55, -100 });
+	Casting->GetTransform().SetLocalPosition({ 0, 45, -100 });
 	Vector_CastingTexture.push_back(Casting);
 	Casting->Off();
 
-	Casting = GetActor()->CreateComponent<GameEngineTextureRenderer>();
+	Casting = GetActor()->CreateComponent<GameEngineEffectRenderer>();
 	//Casting->SetTexture(Texture->GetTexture(2));
 	Casting->CreateFrameAnimationFolder("CastingEnd", FrameAnimation_DESC("Casting",4, 9, 0.1f, false));
 	Casting->ChangeFrameAnimation("CastingEnd");
@@ -170,9 +171,28 @@ void GamePlaySkill::CreateCastingTexture(float _CastingTime)
 			_DESC.Renderer->Off();
 		});
 	Casting->ScaleToTexture();
-	Casting->GetTransform().SetLocalPosition({ 0, 55, -100 });
+	Casting->GetTransform().SetLocalPosition({ 0, 45, -100 });
 	Vector_CastingTexture.push_back(Casting);
 	Casting->Off();
+
+
+	Texture_CastingBuff = GetActor()->CreateComponent<GameEngineEffectRenderer>();
+	//Texture_CastingBuff->SetTexture("CastingBuff");
+	Texture_CastingBuff->CreateFrameAnimationFolder("Casting", FrameAnimation_DESC("CastingBuff", 0, 22, 0.04f, true));
+	Texture_CastingBuff->CreateFrameAnimationFolder("End", FrameAnimation_DESC("CastingBuff", 23, 29, 0.04f, true));
+	Texture_CastingBuff->GetPixelData().PlusColor = 0.3f;
+	Texture_CastingBuff->GetPixelData().PlusColor.a = 0;
+	Texture_CastingBuff->AnimationBindEnd("End",
+		[](const FrameAnimation_DESC& _DESC)
+		{
+			_DESC.Renderer->Off();
+		});
+	Texture_CastingBuff->ChangeFrameAnimation("Casting");
+	Texture_CastingBuff->ScaleToTexture();
+	Texture_CastingBuff->GetTransform().SetLocalPosition({78, 145, -100.1f});
+	Texture_CastingBuff->Off();
+
+
 
 	//Casting = GetActor()->CreateComponent<GameEngineTextureRenderer>();
 	//Casting->SetTexture(Texture->GetTexture(4));
@@ -198,6 +218,18 @@ void GamePlaySkill::Casting(CharacterStatManager* _Stat, AvataManager* _Avata)
 	//Vector_CastingTexture[1]->GetTransform().SetLocalScale({0, Vector_CastingTexture[2]->GetTransform().GetLocalScale().y});
 	Vector_CastingTexture[1]->GetPixelData().Slice.x = 1;
 }
+
+void GamePlaySkill::CastingBuff()
+{
+	Texture_CastingBuff->On();
+	Texture_CastingBuff->ChangeFrameAnimation("Casting", true);
+
+}
+void GamePlaySkill::CastingBuffEnd()
+{
+	Texture_CastingBuff->ChangeFrameAnimation("End", true);
+}
+
 
 void GamePlaySkill::Update(float _DeltaTime)
 {

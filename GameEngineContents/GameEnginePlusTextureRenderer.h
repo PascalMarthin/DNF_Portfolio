@@ -81,6 +81,10 @@ public:
 	{
 		return Texture_OutLine;
 	}
+	inline AtlasData& GetAtlasDatas()
+	{
+		return AtlasDatas;
+	}
 
 
 	void ChangeFolderTexturePlus(const std::string& _TextureName);
@@ -188,6 +192,8 @@ private:
 
 	GameEngineTextureRenderer* Texture_OutLine;
 
+
+	AtlasData AtlasDatas;
 	//std::vector<GameEnginePlusTextureRenderer*> Texture_IllusionAvatas;
 
 

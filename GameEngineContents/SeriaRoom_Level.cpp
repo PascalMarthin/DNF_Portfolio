@@ -34,7 +34,7 @@ void SeriaRoom_Level::Start()
 
 	NPCSeria = CreateActor<Seria_NPC>();
 	Fighter = CreateActor<GamePlayCharacter>();
-	NPCSeria->GetTransform().SetLocalPosition({ GameEngineWindow::GetScale().hx(), -GameEngineWindow::GetScale().hy() - 200.f , Hight - GameEngineWindow::GetScale().hy() - 200.f});
+	NPCSeria->GetTransform().SetLocalPosition({ GameEngineWindow::GetScale().hx(), -GameEngineWindow::GetScale().hy(), -GameEngineWindow::GetScale().hy() });
 	GetMainCameraActor()->GetTransform().SetWorldMove({ Width / 2, -Hight / 2 });
 	GetAvataCamera()->GetTransform().SetWorldPosition({ Width / 2, -Hight / 2 });
 	GetOutLineCamera()->GetTransform().SetWorldPosition({ Width / 2, -Hight / 2 });
@@ -54,11 +54,11 @@ void SeriaRoom_Level::LevelStartEvent()
 	float Hight = Texture_SeriaRoom->GetBackGroundTextureScale().y;
 	if (GamePlayDataBase::GetCurrentCharacterData()->GetCurrentMap() == TownMap::None)
 	{
-		Fighter->GetTransform().SetLocalPosition({ GameEngineWindow::GetScale().hx(), -GameEngineWindow::GetScale().hy() - 100.f, Hight });
+		Fighter->GetTransform().SetLocalPosition({ GameEngineWindow::GetScale().hx(), -GameEngineWindow::GetScale().hy() - 100.f, -GameEngineWindow::GetScale().hy() - 100.f });
 	}
 	else
 	{
-		Fighter->GetTransform().SetLocalPosition({ GameEngineWindow::GetScale().hx(), -GameEngineWindow::GetScale().hy() - 200.f, Hight });
+		Fighter->GetTransform().SetLocalPosition({ GameEngineWindow::GetScale().hx(), -GameEngineWindow::GetScale().hy() - 200.f, -GameEngineWindow::GetScale().hy() - 200.f });
 	}
 	GamePlayDataBase::GetCurrentCharacterData()->SetCurrentMap(TownMap::Seria_Room);
 }

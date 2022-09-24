@@ -1,7 +1,7 @@
 #pragma once
-#include <GameEngineCore/GameEngineTextureRenderer.h>
+#include <GameEngineCore/GameEngineFontRenderer.h>
 // Ό³Έν :
-class GameEngineUIFontRenderer : public GameEngineTextureRenderer
+class GameEngineUIFontRenderer : public GameEngineFontRenderer
 {
 public:
 	// constrcuter destructer

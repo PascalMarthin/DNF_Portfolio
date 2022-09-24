@@ -14,6 +14,8 @@
 #include "GamePlayDataBase.h"
 #include "MouseCursorComponent.h"
 #include "AvataInventory.h"
+#include "GamePlayObjectNPC.h"
+#include "GamePlayNPCInteraction.h"
 
 GamePlayDataBase* GamePlayCharacter::CurrentCharacterData = nullptr;
 std::list<GamePlayDataBase*> GamePlayCharacter::AllCharacterData;
@@ -38,6 +40,9 @@ GamePlayCharacter::GamePlayCharacter()
 	, Manager_SkillManager(nullptr)
 	, Class_AvataInventory(nullptr)
 	, HoldCam(false)
+	, Collision_NPCCanInteraction(nullptr)
+	, Collision_NPCVoice(nullptr)
+	, NPC_Interaction(nullptr)
 {
 }
 
@@ -78,6 +83,13 @@ void GamePlayCharacter::Start()
 	Collision_Body->ChangeOrder(CollisionOrder::Player);
 	Collision_Body->SetDebugSetting(CollisionType::CT_SPHERE, { 0, 0, 1, 0.7f });
 
+
+	Collision_NPCCanInteraction = CreateComponent<GameEngineCollision>("NPCInteraction");
+	Collision_NPCCanInteraction->GetTransform().SetLocalScale({150, 100, 100});
+	Collision_NPCCanInteraction->ChangeOrder(CollisionOrder::Player_NPCinteraction);
+
+	Collision_NPCVoice = CreateComponent<GameEngineCollision>("NPCVoice");
+
 	//Collision_HitBody_Top = CreateComponent<GameEngineCollision>("Hit_Collision");
 	//Collision_HitBody_Top->ChangeOrder(CollisionOrder::Player);
 	//Collision_HitBody_Top->GetTransform().SetLocalPosition({ 0, -80 });
@@ -87,6 +99,47 @@ void GamePlayCharacter::Start()
 }
 
 void GamePlayCharacter::Update(float _Delta)
+{
+	CheckInventoryKey();
+
+	if (Manager_StatManager->GetFSMManager().GetCurStateStateName() != "Interaction")
+	{
+		if (Collision_NPCCanInteraction->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::NPC_Interaction, CollisionType::CT_SPHERE,
+			std::bind(&GamePlayCharacter::NPCInteraction, this, std::placeholders::_1, std::placeholders::_2)))
+		{
+			if (GameEngineInput::GetInst()->IsUp("Enter"))
+			{
+				Manager_StatManager->GetFSMManager().ChangeState("Interaction");
+			}
+		}
+		else if (NPC_Interaction != nullptr)
+		{
+			NPC_Interaction->SetOutLineOff();
+			NPC_Interaction = nullptr;
+		}
+	}
+
+
+}
+
+CollisionReturn GamePlayCharacter::NPCInteraction(GameEngineCollision* _This, GameEngineCollision* _Other)
+{
+	if (NPC_Interaction == _Other->GetActor<GamePlayObjectNPC>())
+	{
+		return CollisionReturn::Break;
+	}
+	else if (NPC_Interaction != nullptr)
+	{
+		NPC_Interaction->SetOutLineOff();
+	}
+
+	NPC_Interaction = _Other->GetActor<GamePlayObjectNPC>();
+	NPC_Interaction->SetOutLine();
+	return CollisionReturn::Break;
+
+}
+
+void GamePlayCharacter::CheckInventoryKey()
 {
 	if (GameEngineInput::GetInst()->IsDown("Inventory"))
 	{
@@ -124,10 +177,7 @@ void GamePlayCharacter::Update(float _Delta)
 		{
 			Manager_StatManager->StatWindowOn();
 		}
-		
 	}
-
-	
 }
 
 //void GamePlayCharacter::On_EnumCollision(Collision_AllSkill _Collsion)

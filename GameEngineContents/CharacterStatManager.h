@@ -110,7 +110,7 @@ public:
 	}
 	
 
-	void HealHP(int _Heal, HPMPEnum _Enum);
+	bool HealHP(int _Heal, HPMPEnum _Enum);
 
 	//  Player_Character_ALive
 	//	Player_Character_Action
@@ -167,7 +167,7 @@ public:
 		return CurrentPlayerAbilityStat->MoveSpeed;
 	}
 
-	void LevelUp();
+	bool LevelUp();
 
 protected:
 	void Start() override;

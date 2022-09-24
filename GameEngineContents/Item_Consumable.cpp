@@ -82,32 +82,32 @@ void Item_Consumable::AfterSetDesc()
 //	}
 //}
 
-void Item_Consumable::Function_Level1Up(CharacterStatManager* _Manager)
+bool Item_Consumable::Function_Level1Up(CharacterStatManager* _Manager)
 {
-	_Manager->LevelUp();
+	return _Manager->LevelUp();
 }
 
-void Item_Consumable::Function_s_HPPotion(CharacterStatManager* _Manager)
+bool Item_Consumable::Function_s_HPPotion(CharacterStatManager* _Manager)
 {
-	_Manager->HealHP(1000, HPMPEnum::HP);
+	return _Manager->HealHP(1000, HPMPEnum::HP);
 }
-void Item_Consumable::Function_m_HPPotion(CharacterStatManager* _Manager)
+bool Item_Consumable::Function_m_HPPotion(CharacterStatManager* _Manager)
 {
-	_Manager->HealHP(10000, HPMPEnum::HP);
+	return _Manager->HealHP(10000, HPMPEnum::HP);
 }
-void Item_Consumable::Function_L_HPPotion(CharacterStatManager* _Manager)
+bool Item_Consumable::Function_L_HPPotion(CharacterStatManager* _Manager)
 {
-	_Manager->HealHP(50000, HPMPEnum::HP);
+	return _Manager->HealHP(50000, HPMPEnum::HP);
 }
-void Item_Consumable::Function_s_MPPotion(CharacterStatManager* _Manager)
+bool Item_Consumable::Function_s_MPPotion(CharacterStatManager* _Manager)
 {
-	_Manager->HealHP(1000, HPMPEnum::MP);
+	return _Manager->HealHP(1000, HPMPEnum::MP);
 }
-void Item_Consumable::Function_m_MPPotion(CharacterStatManager* _Manager)
+bool Item_Consumable::Function_m_MPPotion(CharacterStatManager* _Manager)
 {
-	_Manager->HealHP(5000, HPMPEnum::MP);
+	return _Manager->HealHP(5000, HPMPEnum::MP);
 }
-void Item_Consumable::Function_L_MPPotion(CharacterStatManager* _Manager)
+bool Item_Consumable::Function_L_MPPotion(CharacterStatManager* _Manager)
 {
-	_Manager->HealHP(10000, HPMPEnum::MP);
+	return _Manager->HealHP(10000, HPMPEnum::MP);
 }

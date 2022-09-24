@@ -34,6 +34,12 @@ struct Output
 // 0103
 // 0010
 // 0001
+cbuffer AtlasData : register(b1)
+{
+    float2 TextureFramePos;
+    float2 TextureFrameSize;
+    float4 PivotPos;
+};
 
 Output TextureAtlas_VS(Input _Input)
 {
@@ -41,7 +47,7 @@ Output TextureAtlas_VS(Input _Input)
     // 0.5, 0.5,     0.5 0.5
     
     Output NewOutPut = (Output) 0;
-    _Input.Pos += float4(0.0f, 0.5f, 0.0f, 0.0f);
+    _Input.Pos += PivotPos;
     NewOutPut.Pos = mul(_Input.Pos, WorldViewProjection);
     NewOutPut.PosLocal = _Input.Pos;
     
@@ -69,7 +75,7 @@ Output TextureAtlas_VSINST(Input _Input)
     // 0.5, 0.5,     0.5 0.5
     
     Output NewOutPut = (Output) 0;
-    _Input.Pos += float4(0.0f, 0.5f, 0.0f, 0.0f);
+    _Input.Pos += PivotPos;
     NewOutPut.Pos = mul(_Input.Pos, WorldViewProjection);
     NewOutPut.PosLocal = _Input.Pos;
     
@@ -113,9 +119,9 @@ float4 TextureAtlas_PS(Output _Input) : SV_Target0
     
         float4 Result = (float4) 0.0f;
     
-        for (int y = 0; y < 5; ++y)
+        for (int y = 0; y < MulColor.y; ++y)
         {
-            for (int x = 0; x < 5; ++x)
+            for (int x = 0; x < MulColor.x; ++x)
             {
                 Result += Tex.Sample(Smp, CurUV);
                 CurUV.x += PixelUVSize.x;

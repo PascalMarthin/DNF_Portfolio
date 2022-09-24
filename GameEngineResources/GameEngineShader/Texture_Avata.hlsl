@@ -36,12 +36,19 @@ struct Output
 // 0010
 // 0001
 
+cbuffer AtlasData : register(b1)
+{
+    float2 TextureFramePos;
+    float2 TextureFrameSize;
+    float4 PivotPos;
+};
+
 
 Output TextureAtlas_VS(Input _Input)
 {
 
     Output NewOutPut = (Output) 0;
-    _Input.Pos += float4(0.0f, 0.5f, 0.0f, 0.0f);
+    _Input.Pos += PivotPos;
 
     NewOutPut.Pos = mul(_Input.Pos, WorldViewProjection);
     NewOutPut.PosLocal = _Input.Pos;
@@ -56,7 +63,7 @@ Output TextureAtlas_VS(Input _Input)
 Output TextureAtlas_VSINST(Input _Input)
 {
     Output NewOutPut = (Output) 0;
-    _Input.Pos += float4(0.0f, 0.5f, 0.0f, 0.0f);
+    _Input.Pos += PivotPos;
 
     NewOutPut.Pos = mul(_Input.Pos, WorldViewProjection);
     NewOutPut.PosLocal = _Input.Pos;

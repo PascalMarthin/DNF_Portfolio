@@ -161,13 +161,13 @@ void CharacterStatManager::SetCharacter_Fighter_F()
 	Time_CurrentEngage = 0.f;
 }
 
-void CharacterStatManager::HealHP(int _Heal, HPMPEnum _Enum)
+bool CharacterStatManager::HealHP(int _Heal, HPMPEnum _Enum)
 {
 
 	if (_Enum == HPMPEnum::HP)
 	{
 		CurrentPlayerAbilityStat->HP += _Heal;
-		if (CurrentPlayerAbilityStat->HP > CurrentPlayerAbilityStat->MAXHP)
+		if (static_cast<unsigned int>(CurrentPlayerAbilityStat->HP) > CurrentPlayerAbilityStat->MAXHP)
 		{
 			_Heal -= CurrentPlayerAbilityStat->HP - CurrentPlayerAbilityStat->MAXHP;
 			CurrentPlayerAbilityStat->HP = CurrentPlayerAbilityStat->MAXHP;
@@ -176,7 +176,7 @@ void CharacterStatManager::HealHP(int _Heal, HPMPEnum _Enum)
 	else if (_Enum == HPMPEnum::MP)
 	{
 		CurrentPlayerAbilityStat->MP += _Heal;
-		if (CurrentPlayerAbilityStat->MP > CurrentPlayerAbilityStat->MAXMP)
+		if (static_cast<unsigned int>(CurrentPlayerAbilityStat->MP) > CurrentPlayerAbilityStat->MAXMP)
 		{
 			_Heal -= CurrentPlayerAbilityStat->MP - CurrentPlayerAbilityStat->MAXMP;
 			CurrentPlayerAbilityStat->MP = CurrentPlayerAbilityStat->MAXMP;
@@ -185,6 +185,8 @@ void CharacterStatManager::HealHP(int _Heal, HPMPEnum _Enum)
 	HealHPAni* Heal = GetParent<GameEngineActor>()->GetLevel()->CreateActor<HealHPAni>();
 	Heal->SetParent(GetParent());
 	Heal->SetMPHPHeal(_Enum, _Heal);
+
+	return true;
 }
 
 void CharacterStatManager::Update(float _DeltaTime)
@@ -304,10 +306,10 @@ void CharacterStatManager::Update(float _DeltaTime)
 	}
 
 
-	if (!IsLive() || CurrentPlayerAbilityStat->HP < 0.f)
-	{
-		// 사망
-	}
+	//if (!IsLive() || CurrentPlayerAbilityStat->HP < 0.f)
+	//{
+	//	// 사망
+	//}
 
 
 	//역경직을 시스템으로 봐야하는가?????
@@ -488,8 +490,12 @@ void CharacterStatManager::SetCastingEnd()
 	PlayerCurrentState &= ~CharacterStat::Player_Character_Casting;
 }
 
-void CharacterStatManager::LevelUp()
+bool CharacterStatManager::LevelUp()
 {
+	if (CurrentPlayerAbilityStat->Level >= 100)
+	{
+		return false;
+	}
 	CurrentPlayerAbilityStat->Level += 1;
 	CurrentPlayerAbilityStat->EXP = 0;
 	CurrentPlayerAbilityStat->SetRefreshbyLevel();
@@ -512,7 +518,8 @@ void CharacterStatManager::LevelUp()
 	Texture_LevelUp[4]->On();
 
 	Texture_LevelUp[5]->GetPixelData().MulColor.a = 0.f;
-	Texture_LevelUp[5]->On();
+	Texture_LevelUp[5]->On(); 
+	return true;
 }
 
 

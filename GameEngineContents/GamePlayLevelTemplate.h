@@ -3,6 +3,7 @@
 
 // Ό³Έν :
 class GamePlayComboSystem;
+class GamePlayNPCInteraction;
 class GamePlayLevelTemplate : public GameEngineLevel
 {
 public:
@@ -48,6 +49,8 @@ private:
 	GameEngineCameraActor* Camera_OutLine;
 	GameEngineCameraActor* Camera_UIFont;
 	GameEngineCameraActor* Camera_Effect;
+
+	GamePlayNPCInteraction* Actor_NPCInteraction;
 
 };
 

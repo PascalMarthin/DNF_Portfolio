@@ -8,6 +8,7 @@
 class Skill_Fighter_F_BaseHit;
 class Skill_Fighter_F_DashHit;
 class MouseCursorComponent;
+class GamePlayObjectNPC;
 enum class Collision_AllSkill
 {
 	BasePunch1,
@@ -101,11 +102,19 @@ protected:
 	void Create_Fighter_F_Default_FSManager();
 	// ---------------Collision------------------
 	std::map<Collision_AllSkill , std::vector<GameEngineCollision*> > Collision_HitCollision;
+
+	GameEngineCollision* Collision_NPCCanInteraction;
+	GameEngineCollision* Collision_NPCVoice;
 	//void On_EnumCollision(Collision_AllSkill _Collsion);
 	//void Off_EnumCollision(Collision_AllSkill _Collsion);
 
 
 private:
+
+	void CheckInventoryKey();
+	CollisionReturn NPCInteraction(GameEngineCollision* _This, GameEngineCollision* _Other);
+	GamePlayObjectNPC* NPC_Interaction;
+
 	// ------------Cam--------------------
 
 	bool HoldCam;
@@ -170,6 +179,12 @@ public:
 	void FSM_Att_Skill_Start(const StateInfo& _Info);
 	void FSM_Att_Skill_Update(float _DeltaTime, const StateInfo& _Info);
 	void FSM_Att_Skill_End(const StateInfo& _Info);
+
+	// 상호작용중
+	void FSM_Interaction_Start(const StateInfo& _Info);
+	void FSM_Interaction_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Interaction_End(const StateInfo& _Info);
+	
 	//float Att_BaseAtt_Delay;
 
 	//void FSM_Att_BasePunch2_Start(const StateInfo& _Info);

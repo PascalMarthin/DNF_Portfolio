@@ -25,7 +25,7 @@ protected:
 	// void OffEvent() override {}
 
 private:
-	GameEngineTextureRenderer* Seria_Renderer;
+
 
 };
 

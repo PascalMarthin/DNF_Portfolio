@@ -331,7 +331,62 @@ void DNF::BaseTextureLoad()
 			}
 		}
 
+		{
+
+			GameEngineDirectory Dir;
+			Dir.MoveParentToExitsChildDirectory("Resource");
+			Dir.Move("Resource");
+			Dir.Move("Texture");
+			Dir.Move("UI");
+			Dir.Move("SkillIcon");
+
+			std::vector<GameEngineFile> Texture = Dir.GetAllFile();
+
+			for (size_t i = 0; i < Texture.size(); i++)
+			{
+				GameEngineTexture::Load(Texture[i].GetFullPath());
+			}
+		}
+
+
+		{
+
+			GameEngineDirectory Dir;
+			Dir.MoveParentToExitsChildDirectory("Resource");
+			Dir.Move("Resource");
+			Dir.Move("Texture");
+			Dir.Move("UI");
+			Dir.Move("NPC");
+
+			std::vector<GameEngineFile> Texture = Dir.GetAllFile();
+
+			for (size_t i = 0; i < Texture.size(); i++)
+			{
+				GameEngineTexture::Load(Texture[i].GetFullPath());
+			}
+		}
+
+
 	}
+	{
+
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resource");
+		Dir.Move("Resource");
+		Dir.Move("Texture");
+		Dir.Move("UI");
+		Dir.Move("PopUp");
+		Dir.Move("NPCInteraction");
+
+		std::vector<GameEngineFile> Texture = Dir.GetAllFile();
+
+		for (size_t i = 0; i < Texture.size(); i++)
+		{
+			GameEngineTexture::Load(Texture[i].GetFullPath());
+		}
+	}
+
+
 
 }
 
@@ -479,6 +534,26 @@ void DNF::BaseFolderTextureLoad()
 		}
 	}
 
+	{
+
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resource");
+		Dir.Move("Resource");
+		Dir.Move("Texture");
+		Dir.Move("UI");
+		Dir.Move("PopUp");
+		Dir.Move("TalkPopUp");
+
+		std::vector<GameEngineDirectory> AllTextureDir = Dir.GetRecursiveAllDirectory();
+
+		for (GameEngineDirectory& DirIter : AllTextureDir)
+		{
+
+			GameEngineFolderTexture::Load(DirIter.GetFullPath());
+		}
+	}
+
+
 	//{
 	//	GameEngineDirectory Dir;
 	//	Dir.MoveParentToExitsChildDirectory("Resource");
@@ -601,6 +676,9 @@ void DNF::BaseKeySetting()
 		GameEngineInput::GetInst()->CreateKey("Avata", 'U');
 		GameEngineInput::GetInst()->CreateKey("Skill", 'K');
 		GameEngineInput::GetInst()->CreateKey("MyProfile", 'M');
+		GameEngineInput::GetInst()->CreateKey("Enter", VK_RETURN);
+
+		
 	}
 	{
 		GameEngineInput::GetInst()->CreateKey("LMouseCLK", MK_LBUTTON);

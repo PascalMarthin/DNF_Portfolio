@@ -7,6 +7,9 @@
 #include "CharacterSkillManager.h"
 #include "Skill_Fighter_F_BaseHit.h"
 #include "Skill_Fighter_F_DashHit.h"
+#include "GamePlayNPCInteraction.h"
+#include "GamePlayObjectNPC.h"
+#include "GamePlayInteractionWindow.h"
 
 void GamePlayCharacter::Create_Fighter_F_Default_FSManager()
 {
@@ -52,6 +55,14 @@ void GamePlayCharacter::Create_Fighter_F_Default_FSManager()
 	("Att_Skill", std::bind(&GamePlayCharacter::FSM_Att_Skill_Update, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&GamePlayCharacter::FSM_Att_Skill_Start, this, std::placeholders::_1)
 		, std::bind(&GamePlayCharacter::FSM_Att_Skill_End, this, std::placeholders::_1));
+
+
+	Manager_StatManager->GetFSMManager().CreateStateMember
+	("Interaction", std::bind(&GamePlayCharacter::FSM_Interaction_Update, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&GamePlayCharacter::FSM_Interaction_Start, this, std::placeholders::_1)
+		, std::bind(&GamePlayCharacter::FSM_Interaction_End, this, std::placeholders::_1));
+
+	
 
 	Skill_BaseHit = CreateComponent<Skill_Fighter_F_BaseHit>();
 	Skill_BaseDashAtt = CreateComponent<Skill_Fighter_F_DashHit>();
@@ -153,6 +164,9 @@ void GamePlayCharacter::FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& 
 		Manager_StatManager->GetFSMManager().ChangeState("Att_BaseHit");
 		return;
 	}
+
+
+
 }
 
 void GamePlayCharacter::FSM_Move_Walk_End(const StateInfo& _Info)
@@ -260,6 +274,8 @@ void GamePlayCharacter::FSM_Move_Stand_Update(float _DeltaTime, const StateInfo&
 		Manager_StatManager->GetFSMManager().ChangeState("Att_BaseHit");
 		return;
 	}
+
+
 }
 
 
@@ -467,3 +483,42 @@ void GamePlayCharacter::FSM_Att_Skill_End(const StateInfo& _Info)
 	Manager_StatManager->SetDoSkillEnd();
 }
 
+
+void GamePlayCharacter::FSM_Interaction_Start(const StateInfo& _Info)
+{
+	GamePlayNPCInteraction::GetInst()->SetNPCInteractionMenu(NPC_Interaction);
+	Manager_AvataManager->ChangeAvataAnimation("Move_Stand");
+}
+void GamePlayCharacter::FSM_Interaction_Update(float _DeltaTime, const StateInfo& _Info)
+{
+	//if (Collision_NPCCanInteraction->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::NPC_Interaction, CollisionType::CT_SPHERE,
+	//	std::bind(&GamePlayCharacter::NPCInteraction, this, std::placeholders::_1, std::placeholders::_2)))
+	//{
+
+	//}
+	//else if (NPC_Interaction != nullptr)
+	//{
+	//	NPC_Interaction->SetOutLineOff();
+	//	NPC_Interaction = nullptr;
+	//}
+	if (GameEngineInput::GetInst()->IsUp("ESC"))
+	{
+
+		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
+		return;
+	}
+
+
+	if (GamePlayNPCInteraction::GetInst()->CheckInput() == InteractionMenuDo::Exit)
+	{
+		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
+	}
+	
+
+
+	 
+}
+void GamePlayCharacter::FSM_Interaction_End(const StateInfo& _Info)
+{
+	GamePlayNPCInteraction::GetInst()->EndInteraction();
+}

@@ -260,6 +260,18 @@
     <ClInclude Include="HealHPAni.h">
       <Filter>Management</Filter>
     </ClInclude>
+    <ClInclude Include="GameEnginePlusNPCRenderer.h">
+      <Filter>CorePlus</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlayInteractionWindow.h">
+      <Filter>Object\NPC\GamePlayNPCInteraction</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlayNPCInteraction.h">
+      <Filter>Object\NPC\GamePlayNPCInteraction</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlayNPCInteractionTalk.h">
+      <Filter>Object\NPC\GamePlayNPCInteraction</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -518,6 +530,18 @@
     <ClCompile Include="HealHPAni.cpp">
       <Filter>Management</Filter>
     </ClCompile>
+    <ClCompile Include="GameEnginePlusNPCRenderer.cpp">
+      <Filter>CorePlus</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlayInteractionWindow.cpp">
+      <Filter>Object\NPC\GamePlayNPCInteraction</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlayNPCInteraction.cpp">
+      <Filter>Object\NPC\GamePlayNPCInteraction</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlayNPCInteractionTalk.cpp">
+      <Filter>Object\NPC\GamePlayNPCInteraction</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -615,6 +639,9 @@
     </Filter>
     <Filter Include="CorePlus\Combo">
       <UniqueIdentifier>{79ecc566-d711-406e-98c6-4bf81ade8177}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\NPC\GamePlayNPCInteraction">
+      <UniqueIdentifier>{c64de1e9-f5f0-4351-9454-e7132b5d1fcf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

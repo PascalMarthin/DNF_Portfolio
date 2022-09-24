@@ -343,6 +343,8 @@ enum class CollisionOrder
 	ChangeMap = 22,
 	UI_InventoryItem,
 	UI_InventoryBlank,
+	NPC_Interaction,
+	Player_NPCinteraction,
 };
 
 enum class ObjectType

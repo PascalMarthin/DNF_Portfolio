@@ -345,6 +345,7 @@ void AvataManager::Update(float _DeltaTime)
 	//	vector_SuperArmor[i]->SetTexture(AllAvatas[i]->GetCurTexture());
 	//}
 
+
 	{
 		if (ShakePower != 0.f)
 		{

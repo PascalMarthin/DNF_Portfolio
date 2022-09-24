@@ -28,14 +28,14 @@ void Jelva2F_BackGround::Start()
 	float Hight = GetBackGroundTextureScale().y;
 
 	Collision_Jelva1F_Door = GetLevel()->CreateActor<DummyActor>()->CreateComponent<GameEngineCollision>();
-	Collision_Jelva1F_Door->GetTransform().SetLocalScale({ 200.f, 80.f , 50.f });
-	Collision_Jelva1F_Door->GetTransform().SetWorldPosition({ 1200.f, -780.f, Hight - 780.f });
+	Collision_Jelva1F_Door->GetTransform().SetLocalScale({ 200.f, 80.f , 1000.f });
+	Collision_Jelva1F_Door->GetTransform().SetWorldPosition({ 1200.f, -780.f, - 780.f });
 	Collision_Jelva1F_Door->ChangeOrder(CollisionOrder::ChangeMap);
 	Collision_Jelva1F_Door->SetDebugSetting(CollisionType::CT_AABB, float4::WHITE);
 
 	Collision_Jelva2F_01_Door = GetLevel()->CreateActor<DummyActor>()->CreateComponent<GameEngineCollision>();
-	Collision_Jelva2F_01_Door->GetTransform().SetLocalScale({ 80.f, 300.f , 300.f });
-	Collision_Jelva2F_01_Door->GetTransform().SetWorldPosition({ 2378, -700, Hight - 700 });
+	Collision_Jelva2F_01_Door->GetTransform().SetLocalScale({ 80.f, 1000.f , 300.f });
+	Collision_Jelva2F_01_Door->GetTransform().SetWorldPosition({ 2378, -700,  -700 });
 	Collision_Jelva2F_01_Door->ChangeOrder(CollisionOrder::ChangeMap);
 	Collision_Jelva2F_01_Door->SetDebugSetting(CollisionType::CT_AABB, float4::WHITE);
 

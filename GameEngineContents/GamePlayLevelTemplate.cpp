@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "GamePlayLevelTemplate.h"
 #include "GamePlayComboSystem.h"
+#include "GamePlayNPCInteraction.h"
 
 GamePlayLevelTemplate::GamePlayLevelTemplate()
 	: Camera_UIFont(nullptr)
@@ -8,6 +9,7 @@ GamePlayLevelTemplate::GamePlayLevelTemplate()
 	, Camera_MainAvata(nullptr)
 	, Camera_Effect(nullptr)
 	, Actor_SystemCombo(nullptr)
+	, Actor_NPCInteraction(nullptr)
 {
 }
 
@@ -39,6 +41,8 @@ void GamePlayLevelTemplate::Start()
 	Camera_Effect->GetCameraComponent()->SetCameraOrder(CAMERAORDER::Effect);
 
 	Actor_SystemCombo = CreateActor<GamePlayComboSystem>();
+
+	Actor_NPCInteraction = CreateActor<GamePlayNPCInteraction>();
 
 
 }

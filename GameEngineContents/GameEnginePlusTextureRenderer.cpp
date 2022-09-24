@@ -1,4 +1,3 @@
-#pragma once
 #include "PreCompile.h"
 #include <GameEngineBase/GameEngineDebug.h>
 #include <GameEngineCore/GameEngineTextureRenderer.h>
@@ -13,6 +12,7 @@ GameEnginePlusTextureRenderer::GameEnginePlusTextureRenderer()
 	, MC_CurFrame(0)
 	, EndFrame(false)
 	, Texture_OutLine(nullptr)
+	, AtlasDatas(float4::ZERO)
 {
 
 }
@@ -31,15 +31,21 @@ void GameEnginePlusTextureRenderer::Start()
 	SetPipeLine("Texture_Avata");
 
 	ChangeCamera(CAMERAORDER::Object);
+	SetPivot(PIVOTMODE::BOT);
 	ShaderResources.SetConstantBufferLink("PixelData", GetPixelData());
+	ShaderResources.SetConstantBufferLink("AtlasData", AtlasDatas);
+
 
 	Texture_OutLine = GetActor()->CreateComponent<GameEngineTextureRenderer>();
 	Texture_OutLine->GetTransform().SetLocalScale({ 500, 500 });
 	Texture_OutLine->SetPipeLine("OutLine");
 	Texture_OutLine->ShaderResources.SetConstantBufferLink("PixelData", Texture_OutLine->GetPixelData());
+	Texture_OutLine->ShaderResources.SetConstantBufferLink("AtlasData", AtlasDatas);
 	Texture_OutLine->GetTransform().SetLocalMove({ 0, 0, 0.01f });
 	Texture_OutLine->GetPixelData().MulColor = float4::ZERO;
 	Texture_OutLine->GetPixelData().PlusColor = float4::YELLOW;
+	Texture_OutLine->GetPixelData().MulColor = {5, 5};
+	AtlasDatas.PivotPos = { 0, 0.5f, 0, 0 };
 	Texture_OutLine->ChangeCamera(CAMERAORDER::Object);
 	//Renderer->SetPipeLine("Outline");
 	//Renderer->ShaderResources.SetConstantBufferLink("PixelData", Renderer->GetPixelData());
@@ -192,6 +198,11 @@ void GameEnginePlusTextureRenderer::CreateFrameAnimationFolderPlus(const std::st
 	NewAni.Info = _Desc;
 	NewAni.ParentRenderer = this;
 	NewAni.Texture = GameEngineTexture::Find("Null.png");
+	if (_Desc.TextureName != "")
+	{
+		ChangeFolderTexturePlus(_Desc.TextureName);
+	}
+
 	NewAni.FolderTextureDouble = &CurrentAvata;
 }
 

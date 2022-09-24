@@ -14,9 +14,18 @@ public:
 	GameEngineEffectRenderer& operator=(const GameEngineEffectRenderer& _Other) = delete;
 	GameEngineEffectRenderer& operator=(GameEngineEffectRenderer&& _Other) noexcept = delete;
 
+	inline void SetFollowScaleOn()
+	{
+		FollowSclae = true;
+	}
+	inline void SetFollowScaleOff()
+	{
+		FollowSclae = false;
+	}
 protected:
 	void Start() override;
+	void Update(float _Delta) override;
 private:
-
+	bool FollowSclae;
 };
 

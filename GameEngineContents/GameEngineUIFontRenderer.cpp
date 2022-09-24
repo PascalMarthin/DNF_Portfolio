@@ -11,6 +11,11 @@ GameEngineUIFontRenderer::~GameEngineUIFontRenderer()
 
 void GameEngineUIFontRenderer::Start()
 {
-	GameEngineTextureRenderer::Start();
-	ChangeCamera(CAMERAORDER::UIFont);
+	if (nullptr == FontTarget)
+	{
+		FontTarget = GameEngineRenderTarget::Create("FontTarget");
+		FontTarget->CreateRenderTargetTexture(GameEngineWindow::GetScale(), float4::ZERO);
+	}
+
+	PushRendererToUICamera();
 }

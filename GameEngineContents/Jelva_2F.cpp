@@ -66,15 +66,15 @@ void Jelva_2F::LevelStartEvent()
 	float Hight = Texture_Jelva2F->GetBackGroundTextureScale().y;
 	if (GamePlayDataBase::GetCurrentCharacterData()->GetCurrentMap() == TownMap::Jelva1F)
 	{
-		Player_Character->GetTransform().SetLocalPosition({ 1200.f , -680.f , Hight  });
+		Player_Character->GetTransform().SetLocalPosition({ 1200.f , -680.f , -680.f });
 	}
 	else if (GamePlayDataBase::GetCurrentCharacterData()->GetCurrentMap() == TownMap::Jelva2F_01)
 	{
-		Player_Character->GetTransform().SetLocalPosition({ 2216.f  , -600.f , Hight });
+		Player_Character->GetTransform().SetLocalPosition({ 2216.f  , -600.f , -600.f });
 	}
 	else// Debug
 	{
-		Player_Character->GetTransform().SetLocalPosition({ 1500.f  , -500.f , Hight  });
+		Player_Character->GetTransform().SetLocalPosition({ 1500.f  , -500.f , -500.f });
 	}
 
 	GamePlayDataBase::GetCurrentCharacterData()->SetCurrentMap(TownMap::Jelva2F);

@@ -100,6 +100,9 @@ protected:
 	// Casting---------
 	void CreateCastingTexture(float _CastingTime);;
 	void Casting(CharacterStatManager* _Stat, AvataManager* _Avata);
+	void CastingBuff();
+	void CastingBuffEnd();
+	GameEngineEffectRenderer* Texture_CastingBuff;
 	void CastingEnd(CharacterStatManager* _Stat, AvataManager* _Avata);
 	float CastingTime;
 	float CurrentCastingTime;
@@ -129,7 +132,7 @@ protected:
 		CoolTime = _Time;
 	}
 	//------Casting-------------
-	std::vector<GameEngineTextureRenderer*> Vector_CastingTexture;
+	std::vector<GameEngineEffectRenderer*> Vector_CastingTexture;
 private:
 	float CoolTime;
 	float CurrentCoolTime;
