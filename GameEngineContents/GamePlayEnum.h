@@ -47,6 +47,17 @@ enum class AllAvataClass
 	None,
 };
 
+enum class AllEquipmentClass
+{
+	Belt,
+	Coat,
+	Neck,
+	Pants,
+	Shoes,
+	Weapon,
+	None,
+};
+
 enum class GamePlayItemCode
 {
 	Error,

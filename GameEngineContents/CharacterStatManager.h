@@ -153,6 +153,8 @@ public:
 	void SetDoSkillEnd();
 	void SetCasting();
 	void SetCastingEnd();
+	void SetInvincibility();
+	void SetInvincibilityEnd();
 
 	inline void SetEngage()
 	{

@@ -62,7 +62,26 @@ void GamePlayCharacter::Create_Fighter_F_Default_FSManager()
 		, std::bind(&GamePlayCharacter::FSM_Interaction_Start, this, std::placeholders::_1)
 		, std::bind(&GamePlayCharacter::FSM_Interaction_End, this, std::placeholders::_1));
 
-	
+	Manager_StatManager->GetFSMManager().CreateStateMember
+	("Hit_Aerial", std::bind(&GamePlayCharacter::FSM_Hit_Aerial_Update, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&GamePlayCharacter::FSM_Hit_Aerial_Start, this, std::placeholders::_1)
+		, std::bind(&GamePlayCharacter::FSM_Hit_Aerial_End, this, std::placeholders::_1));
+
+	Manager_StatManager->GetFSMManager().CreateStateMember
+	("Hit_Aerial_GoingDown", std::bind(&GamePlayCharacter::FSM_Hit_Aerial_GoingDown_Update, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&GamePlayCharacter::FSM_Hit_Aerial_GoingDown_Start, this, std::placeholders::_1)
+		, std::bind(&GamePlayCharacter::FSM_Hit_Aerial_GoingDown_End, this, std::placeholders::_1));
+
+	Manager_StatManager->GetFSMManager().CreateStateMember
+	("Hit_Down", std::bind(&GamePlayCharacter::FSM_Hit_Down_Update, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&GamePlayCharacter::FSM_Hit_Down_Start, this, std::placeholders::_1)
+		, std::bind(&GamePlayCharacter::FSM_Hit_Down_End, this, std::placeholders::_1));
+
+	Manager_StatManager->GetFSMManager().CreateStateMember
+	("Hit_Stand", std::bind(&GamePlayCharacter::FSM_Hit_Stand_Update, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&GamePlayCharacter::FSM_Hit_Stand_Start, this, std::placeholders::_1)
+		, std::bind(&GamePlayCharacter::FSM_Hit_Stand_End, this, std::placeholders::_1));
+
 
 	Skill_BaseHit = CreateComponent<Skill_Fighter_F_BaseHit>();
 	Skill_BaseDashAtt = CreateComponent<Skill_Fighter_F_DashHit>();
@@ -225,6 +244,16 @@ void GamePlayCharacter::FSM_Move_Dash_End(const StateInfo& _Info)
 
 void GamePlayCharacter::FSM_Move_Stand_Start(const StateInfo& _Info)
 {
+
+	//if (_Info.PrevState == "Hit_Down")
+	//{
+	//	Manager_StatManager->SetInvincibility();
+	//	Manager_AvataManager->ChangeAvataAnimation("Move_QuickStand");
+
+
+	//}
+
+
 	if (Manager_StatManager->GetEngage() < 0.f)
 	{
 		Manager_AvataManager->ChangeAvataAnimation("Move_Stand");
@@ -396,7 +425,7 @@ void GamePlayCharacter::LandingEnd()
 	EndJump = true;
 	if (Manager_StatManager->IsAerial())
 	{
-
+		Manager_StatManager->SetAerialEnd();
 	}
 	else
 	{
@@ -509,7 +538,7 @@ void GamePlayCharacter::FSM_Interaction_Update(float _DeltaTime, const StateInfo
 	}
 
 
-	if (GamePlayNPCInteraction::GetInst()->CheckInput() == InteractionMenuDo::Exit)
+	if (GamePlayNPCInteraction::GetInst()->CheckInput() == InteractOption::Exit)
 	{
 		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
 	}
@@ -521,4 +550,87 @@ void GamePlayCharacter::FSM_Interaction_Update(float _DeltaTime, const StateInfo
 void GamePlayCharacter::FSM_Interaction_End(const StateInfo& _Info)
 {
 	GamePlayNPCInteraction::GetInst()->EndInteraction();
+}
+
+
+void GamePlayCharacter::FSM_Hit_Aerial_Start(const StateInfo& _Info)
+{
+	Manager_MoveManager->SetAerial();
+	Manager_StatManager->SetAerial();
+	Manager_AvataManager->ChangeAvataAnimation("Hit_Stand1");
+	JumpGoingDown = false;
+}
+void GamePlayCharacter::FSM_Hit_Aerial_Update(float _DeltaTime, const StateInfo& _Info)
+{
+	if (JumpGoingDown == true)
+	{
+		Manager_StatManager->GetFSMManager().ChangeState("Hit_Aerial_GoingDown");
+	}
+}
+void GamePlayCharacter::FSM_Hit_Aerial_End(const StateInfo& _Info)
+{
+	JumpGoingDown = false;
+}
+
+void GamePlayCharacter::FSM_Hit_Aerial_GoingDown_Start(const StateInfo& _Info)
+{
+	Manager_AvataManager->ChangeAvataAnimation("Hit_Falling");
+
+}
+void GamePlayCharacter::FSM_Hit_Aerial_GoingDown_Update(float _DeltaTime, const StateInfo& _Info)
+{
+	if (!Manager_StatManager->IsAerial())
+	{
+		Manager_StatManager->SetDown();
+	}
+}
+void GamePlayCharacter::FSM_Hit_Aerial_GoingDown_End(const StateInfo& _Info)
+{
+
+}
+
+
+void GamePlayCharacter::FSM_Hit_Down_Start(const StateInfo& _Info)
+{
+	Manager_AvataManager->ChangeAvataAnimation("Hit_Down");
+	DownWait = 0.6f;
+}
+void GamePlayCharacter::FSM_Hit_Down_Update(float _DeltaTime, const StateInfo& _Info)
+{
+	DownWait -= _DeltaTime;
+	if (DownWait <= 0.f)
+	{
+		Manager_StatManager->SetDownEnd();
+		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
+	}
+}
+void GamePlayCharacter::FSM_Hit_Down_End(const StateInfo& _Info)
+{
+	DownWait = 0.f;
+}
+
+
+
+void GamePlayCharacter::FSM_Hit_Stand_Start(const StateInfo& _Info)
+{
+	if (_Info.PrevState == "Hit_Stand" && GameEngineRandom::MainRandom.RandomInt(0, 1) == 1)
+	{
+		Manager_AvataManager->ChangeAvataAnimation("Hit_Stand1");
+	}
+	else
+	{
+		Manager_AvataManager->ChangeAvataAnimation("Hit_Stand2");
+	}
+
+}
+void GamePlayCharacter::FSM_Hit_Stand_Update(float _DeltaTime, const StateInfo& _Info)
+{
+	if (Manager_StatManager->IsAction())
+	{
+		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
+	}
+}
+void GamePlayCharacter::FSM_Hit_Stand_End(const StateInfo& _Info)
+{
+
 }

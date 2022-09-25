@@ -43,7 +43,7 @@ void GamePlayNPCInteractionTalk::Start()
 
 	Texture_NPCFace = CreateComponent<GameEngineUIRenderer>();
 	Texture_NPCFace->SetPivot(PIVOTMODE::BOT);
-	Texture_NPCFace->GetTransform().SetLocalPosition({ -350 ,0,-10.004f });
+	Texture_NPCFace->GetTransform().SetLocalPosition({ -365 ,0,-10.004f });
 	Texture_NPCFace->SetTexture("NPC_Dialog_Face_Ajelia.png");
 	Texture_NPCFace->ScaleToTexture();
 
@@ -60,7 +60,7 @@ void GamePlayNPCInteractionTalk::Start()
 	Off();
 }
 
-InteractionMenuDo GamePlayNPCInteractionTalk::CheckInput()
+InteractOption GamePlayNPCInteractionTalk::CheckInput()
 {
 	if (StartTalkDelay <= 0)
 	{
@@ -71,23 +71,23 @@ InteractionMenuDo GamePlayNPCInteractionTalk::CheckInput()
 			{
 				vector_TalkString = nullptr;
 				Off();
-				return InteractionMenuDo::Exit;
+				return InteractOption::Exit;
 			}
 			else
 			{
 				ShowStringBr((*vector_TalkString)[TalkingIndex]);
-				return InteractionMenuDo::None;
+				return InteractOption::None;
 			}
 		}
 	}
-	return InteractionMenuDo::None;
+	return InteractOption::None;
 }
 
 void GamePlayNPCInteractionTalk::Update(float _DeltaTime)
 {
 	if (StartTalkDelay > 0)
 	{
-		StartTalkDelay -= _DeltaTime * 3.f;
+		StartTalkDelay -= _DeltaTime * 8.f;
 		if (StartTalkDelay <= 0)
 		{
 			Texture_MessageBox->GetPixelData().MulColor.a = 1.f;
@@ -102,7 +102,7 @@ void GamePlayNPCInteractionTalk::Update(float _DeltaTime)
 			Texture_NameBox->GetPixelData().MulColor.a = 1.f - StartTalkDelay;
 			Texture_UI_Enter->GetPixelData().MulColor.a = 1.f - StartTalkDelay;
 			Texture_NPCFace->GetPixelData().MulColor.a = 1.f - StartTalkDelay;
-			GetTransform().SetLocalPosition(float4::LerpLimit({ -GameEngineWindow::GetScale().hx(), -GameEngineWindow::GetScale().hy(), -10 }, { 0, -GameEngineWindow::GetScale().hy(), -10 }, 1.f - StartTalkDelay));
+			GetTransform().SetLocalPosition(float4::LerpLimit({ -GameEngineWindow::GetScale().hx() + 500.f, -GameEngineWindow::GetScale().hy(), -10 }, { 0, -GameEngineWindow::GetScale().hy(), -10 }, 1.f - StartTalkDelay));
 		}
 	}
 }
@@ -112,7 +112,7 @@ void GamePlayNPCInteractionTalk::SetNPCInteraction_Talk(std::vector<std::string>
 	Texture_NPCFace->SetTexture(_NPC->GetFaceImage());
 	Font_Name->SetText(_NPC->GetName(), "±¼¸²");
 	vector_TalkString = _vector;
-	GetTransform().SetLocalPosition({ -GameEngineWindow::GetScale().hx(), -GameEngineWindow::GetScale().hy(), -10});
+	GetTransform().SetLocalPosition({ -GameEngineWindow::GetScale().hx() + 500.f, -GameEngineWindow::GetScale().hy(), -10});
 
 	Texture_MessageBox->GetPixelData().MulColor.a = 0;
 	Texture_NameBox->GetPixelData().MulColor.a = 0;

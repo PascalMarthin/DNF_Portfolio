@@ -19,7 +19,8 @@ enum class InteractOption
 	None,
 	Quest,
 	Deal,
-	Talking
+	Talking,
+	Exit,
 };
 
 class GameEnginePlusTextureRenderer;
@@ -87,9 +88,10 @@ protected:
 	//GameEngineTextureRenderer* Texture_NPCOutLine;
 	GameEngineTexture* TexureR_Face;
 
+	std::map<GamePlayItemCode, int> map_SellItemList;
+
 private:
 	GameEngineCollision* Collision_CharacterSpot;
-
 
 
 

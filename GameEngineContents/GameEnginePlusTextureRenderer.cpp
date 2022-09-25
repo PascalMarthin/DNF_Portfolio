@@ -179,6 +179,11 @@ void GameEnginePlusTextureRenderer::ChangeFolderTexturePlus(const std::string& _
 void GameEnginePlusTextureRenderer::ChangeFolderTexturePlus(GameEngineFolderTexture* _Texture)
 {
 	CurrentAvata = _Texture;
+	if (CurrentAniPlus != nullptr && CurrentAvata != nullptr)
+	{
+		SetTexture(CurrentAvata->GetTexture(CurrentAniPlus->Info.Frames[CurrentAniPlus->Info.CurFrame]));
+	}
+	
 }
 
 
@@ -201,6 +206,13 @@ void GameEnginePlusTextureRenderer::CreateFrameAnimationFolderPlus(const std::st
 	if (_Desc.TextureName != "")
 	{
 		ChangeFolderTexturePlus(_Desc.TextureName);
+		if (NewAni.Info.Frames.size() == 0)
+		{
+			for (unsigned int i = 0; i < CurrentAvata->GetTextureCount(); i++)
+			{
+				NewAni.Info.Frames.push_back(i);
+			}
+		}
 	}
 
 	NewAni.FolderTextureDouble = &CurrentAvata;
@@ -231,7 +243,7 @@ void GameEnginePlusTextureRenderer::ChangeFrameAnimationPlus(const std::string& 
 		CurrentAniPlus->Reset();
 		if (CurrentAvata != nullptr)
 		{
-			SetTexture(CurrentAvata->GetTexture(CurrentAniPlus->Info.Frames[0]));
+			SetTexture(CurrentAvata->GetTexture(CurrentAniPlus->Info.Frames[CurrentAniPlus->Info.CurFrame]));
 		}
 		else
 		{

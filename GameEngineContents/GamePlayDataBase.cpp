@@ -147,7 +147,7 @@ void GamePlayDataBase::CreateFighter_F_Animation()
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Hit_Stand2"] = new FrameAnimation_DESC("", 78, 78, FighterAnimationInter, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Hit_Falling"] = new FrameAnimation_DESC("", 79, 79, FighterAnimationInter, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Hit_FallUntilFloor"] = new FrameAnimation_DESC("", 80, 80, FighterAnimationInter, false);
-	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Hit_Down"] = new FrameAnimation_DESC("", 81, 85, FighterAnimationInter, false);
+	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Hit_Down"] = new FrameAnimation_DESC("", 81, 83, FighterAnimationInter, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Hit_Stand3"] = new FrameAnimation_DESC("", 84, 87, FighterAnimationInter, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_Mount"] = new FrameAnimation_DESC("", 86, 93, FighterAnimationInter, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_Casting"] = new FrameAnimation_DESC("", 92, 95, 0.125f, true);

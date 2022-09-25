@@ -11,6 +11,7 @@ GamePlayMonster::GamePlayMonster()
 	, GoingDownTime(0.f)
 	, MonsterAbilityStat()
 	, Monster_Class(MonsterClass::None)
+	, Actor_Dummy(nullptr)
 {
 }
 
@@ -22,6 +23,7 @@ GamePlayMonster::~GamePlayMonster()
 void GamePlayMonster::Start()
 {
 	GamePlayObject::Start();
+	Actor_Dummy = GetLevel()->CreateActor<GameEngineActor>();
 	Manager_StatManager = CreateComponent<CharacterStatManager>();
 }
 

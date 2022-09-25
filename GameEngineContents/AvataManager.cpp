@@ -497,14 +497,18 @@ GameEnginePlusTextureRenderer* AvataManager::CreateEctAvata(AllSkillEnum _Enum, 
 	{
 		GameEnginePlusTextureRenderer* Texture = CreateComponent<GameEnginePlusTextureRenderer>();
 		Texture->GetTransform().SetLocalScale({ 500, 500, 0 });
+		Texture->SetPivot(PIVOTMODE::BOT);
+		Texture->SetOutLineDeath();
 		for (auto& Iter : DESC)
 		{
 			Texture->CreateFrameAnimationFolderPlus(Iter.first, (*Iter.second));
 		}
 		Texture->GetTransform().SetLocalPosition({ 0, 0, Avata_Skin->GetTransform().GetLocalPosition().z - 0.001f });
+		Texture->ChangeFrameAnimationPlus("Move_Stand");
 		Texture->ChangeFolderTexturePlus(_Texture->GetFolderTexture());
 		Texture->GetPixelData().MulColor = _Texture->GetPixelData().MulColor;
 		Texture_ect[_Enum] = Texture;
+		Texture->ChangeCamera(CAMERAORDER::Object);
 		return Texture;
 	}
 	else

@@ -185,6 +185,30 @@ public:
 	void FSM_Interaction_Update(float _DeltaTime, const StateInfo& _Info);
 	void FSM_Interaction_End(const StateInfo& _Info);
 	
+
+	// ÇÇ°ÝÁß
+	void FSM_Hit_Aerial_Start(const StateInfo& _Info);
+	void FSM_Hit_Aerial_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Hit_Aerial_End(const StateInfo& _Info);
+
+
+	void FSM_Hit_Aerial_GoingDown_Start(const StateInfo& _Info);
+	void FSM_Hit_Aerial_GoingDown_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Hit_Aerial_GoingDown_End(const StateInfo& _Info);
+
+	void FSM_Hit_Down_Start(const StateInfo& _Info);
+	void FSM_Hit_Down_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Hit_Down_End(const StateInfo& _Info);
+
+	void FSM_Hit_Stand_Start(const StateInfo& _Info);
+	void FSM_Hit_Stand_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Hit_Stand_End(const StateInfo& _Info);
+	
+	
+
+
+
+	
 	//float Att_BaseAtt_Delay;
 
 	//void FSM_Att_BasePunch2_Start(const StateInfo& _Info);

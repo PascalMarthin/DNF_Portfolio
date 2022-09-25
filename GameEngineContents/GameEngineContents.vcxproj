@@ -275,6 +275,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="GamePlayEnum.h" />
+    <ClInclude Include="GamePlayInteractionShop.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="GamePlayInteractionWindow.h">
       <SubType>
       </SubType>
@@ -327,6 +331,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Hartz_von_kruger_NPC.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="HealHPAni.h">
       <SubType>
       </SubType>
@@ -335,7 +343,15 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Isabella_NPC.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ItemInventory_Consumable.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ItemInventory_Equipment.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -344,6 +360,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Item_Consumable.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Item_Equipment.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -631,6 +651,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GamePlayInteractionShop.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GamePlayInteractionWindow.cpp">
       <SubType>
       </SubType>
@@ -683,6 +707,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Hartz_von_kruger_NPC.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="HealHPAni.cpp">
       <SubType>
       </SubType>
@@ -691,7 +719,15 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Isabella_NPC.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ItemInventory_Consumable.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ItemInventory_Equipment.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -700,6 +736,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Item_Consumable.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Item_Equipment.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -872,9 +912,6 @@
   <ItemGroup>
     <ProjectReference Include="..\GameEngineBase\GameEngineBase.vcxproj">
       <Project>{33315545-4554-4677-8527-7c61beda9cf4}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\GameEngineCorePlus\GameEngineCorePlus.vcxproj">
-      <Project>{73dff0ea-6c05-43a6-903e-16feed381250}</Project>
     </ProjectReference>
     <ProjectReference Include="..\GameEngineCore\GameEngineCore.vcxproj">
       <Project>{056025fa-ee6b-4d5a-a2f0-ca4fc17c0c6e}</Project>

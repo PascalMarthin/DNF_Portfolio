@@ -62,6 +62,7 @@ void GamePlayCharacter::Start()
 {
 	GamePlayObject::Start();
 
+
 	Manager_AvataManager = GetLevel()->CreateActor<AvataManager>();
 	Manager_AvataManager->SetParent(this);
 	Manager_AvataManager->SetAvataSetup(ObjectType::Character);
@@ -96,6 +97,8 @@ void GamePlayCharacter::Start()
 	//Collision_HitBody_Top->GetTransform().SetLocalScale({ 48, 110 });
 	//Collision_HitBody_Top->SetDebugSetting(CollisionType::CT_AABB2D, {0, 0, 255, 100});
 	//Collision_HitBody_Top->Off();
+
+	Enum_UnitType = UnitType::Unit;
 }
 
 void GamePlayCharacter::Update(float _Delta)

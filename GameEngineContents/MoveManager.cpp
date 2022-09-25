@@ -232,7 +232,7 @@ void MoveManager::SetAerial()
 	{
 		LandingPostion = ParentCharacter->GetTransform().GetWorldPosition();
 	}
-	GameEngineDebug::OutPutString(std::to_string(LandingPostion.y));
+//	GameEngineDebug::OutPutString(std::to_string(LandingPostion.y));
 	if (ManagerStat->IsDown())
 	{
 		BlowPower *= 0.5f;

@@ -71,6 +71,7 @@ void GamePlayInteractionWindow::SetInteractUIOn(GamePlayObjectNPC* _NPC)
 
 void GamePlayInteractionWindow::SetInteractUIOff()
 {
+
 	for (auto& Iter : map_Texture_InteractUI)
 	{
 		Iter.second->Death();
@@ -82,9 +83,7 @@ void GamePlayInteractionWindow::SetInteractUIOff()
 		Font_Name = nullptr;
 	}
 	vector_AllCurrentOption.clear();
-	CurrentOption = InteractOption::None;
 	CurrentOptionIndex = 0;
-	
 	Off();
 }
 
@@ -106,7 +105,7 @@ void GamePlayInteractionWindow::SetTextureInteractOption(InteractOption _Option,
 	}
 }
 
-InteractionMenuDo GamePlayInteractionWindow::CheckInput()
+InteractOption GamePlayInteractionWindow::CheckInput()
 {
 	if (GameEngineInput::GetInst()->IsDown("UP_Arrow"))
 	{
@@ -119,36 +118,19 @@ InteractionMenuDo GamePlayInteractionWindow::CheckInput()
 	else if (GameEngineInput::GetInst()->IsUp("Enter"))
 	{
 		//GamePlayNPCInteraction::GetInst()->
-
-		switch (GetInteractOption())
+		if (CurrentOption == InteractOption::None)
 		{
-		case InteractOption::None:
-			//Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
-			return InteractionMenuDo::None;
-			break;
-		case InteractOption::Quest:
-			//Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
-
-			SetInteractUIOff();
-			return InteractionMenuDo::None;
-			break;
-		case InteractOption::Deal:
-			//Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
-			SetInteractUIOff();
-			return InteractionMenuDo::None;
-			break;
-		case InteractOption::Talking:
-			//Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
-			SetInteractUIOff();
-			return InteractionMenuDo::Talking;
-		default:
-			break;
+			return CurrentOption;
 		}
-
+		else
+		{
+			SetInteractUIOff();
+			return CurrentOption;
+		}
 	}
 	else
 	{
-		return InteractionMenuDo::None;
+		return InteractOption::None;
 	}
 
 
@@ -201,7 +183,7 @@ InteractionMenuDo GamePlayInteractionWindow::CheckInput()
 		break;
 	}
 
-	return InteractionMenuDo::None;
+	return InteractOption::None;
 
 
 }

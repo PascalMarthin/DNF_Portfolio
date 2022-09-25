@@ -4,7 +4,7 @@
 #include "GameEngineUIFontRenderer.h"
 
 // Ό³Έν :
-enum class InteractionMenuDo;
+enum class InteractOption;
 class GameEngineUIRenderer;
 class GamePlayObjectNPC;
 class GamePlayNPCInteractionTalk : public GameEngineActor
@@ -21,10 +21,10 @@ public:
 	GamePlayNPCInteractionTalk& operator=(GamePlayNPCInteractionTalk&& _Other) noexcept = delete;
 
 	void SetNPCInteraction_Talk(std::vector<std::string>* _vector, GamePlayObjectNPC* _NPC);
-	void SetNPCInteraction_Quest(std::vector<std::string>* _vector, GamePlayObjectNPC* _NPC);
+	//void SetNPCInteraction_Quest(std::vector<std::string>* _vector, GamePlayObjectNPC* _NPC);
 
 
-	InteractionMenuDo CheckInput();
+	InteractOption CheckInput();
 
 protected:
 	void Start() override;

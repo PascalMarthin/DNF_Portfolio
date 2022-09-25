@@ -490,6 +490,16 @@ void CharacterStatManager::SetCastingEnd()
 	PlayerCurrentState &= ~CharacterStat::Player_Character_Casting;
 }
 
+void CharacterStatManager::SetInvincibility()
+{
+	PlayerCurrentState |= CharacterStat::Player_Character_Invincibility;
+}
+void CharacterStatManager::SetInvincibilityEnd()
+{
+	PlayerCurrentState &= ~CharacterStat::Player_Character_Invincibility;
+}
+
+
 bool CharacterStatManager::LevelUp()
 {
 	if (CurrentPlayerAbilityStat->Level >= 100)

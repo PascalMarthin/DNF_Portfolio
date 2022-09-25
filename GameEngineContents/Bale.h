@@ -32,10 +32,22 @@ private:
 	std::map<std::string, GameEngineCollision*> AllCollision;
 
 
-	// ---------Dummy------------------
+	// ---------Barrier------------------
 
-	GameEngineActor* Dummy;
+	//GameEngineActor* Dummy;
+	bool Barrier_On;
+	GameEngineEffectRenderer* Texure_Barrier;
+	GameEngineEffectRenderer* Texure_Barrier_Effect_Front;
+	GameEngineEffectRenderer* Texure_Barrier_Effect_FrontDodge;
 
+	GameEngineEffectRenderer* Texure_Barrier_Effect_Back;
+	GameEngineEffectRenderer* Texure_Barrier_Effect_BackDodge;
+
+	float Barrier_CoolTime;
+	int Barrier_HP;
+	//----------Hit----------
+	GamePlayObject* Hit_Player;
+	CollisionReturn GetPlayer(GameEngineCollision* _This, GameEngineCollision* _Other);
 	// ---------FSM-------------
 
 	float4 BeforePos;
@@ -84,12 +96,24 @@ private:
 	void FSM_Att_Sting_Update(float _DeltaTime, const StateInfo& _Info);
 	void FSM_Att_Sting_End(const StateInfo& _Info);
 
+	GameEngineEffectRenderer* Texture_StingEffect;
+	GameEngineEffectRenderer* Texture_StingEffect_Puple;
+	GameEngineEffectRenderer* Texture_StingSmokeEffect;
+
 	void Sting_End(const FrameAnimation_DESC& _DESC);
 
 
 	void FSM_Att_Stamping_Start(const StateInfo& _Info);
 	void FSM_Att_Stamping_Update(float _DeltaTime, const StateInfo& _Info);
 	void FSM_Att_Stamping_End(const StateInfo& _Info);
+
+	GameEngineEffectRenderer* Texture_StampingEffect;
+	GameEngineEffectRenderer* Texture_StampingEffect_Floor;
+	GameEngineEffectRenderer* Texture_SmokeEffect;
+
+	GameEngineCollision* Collision_StampingHit;
+
+	float StampingEnd;
 
 	void Bale_Stamping(const FrameAnimation_DESC& _DESC);
 	

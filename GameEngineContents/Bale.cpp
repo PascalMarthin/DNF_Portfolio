@@ -4,9 +4,10 @@
 #include "CharacterStatManager.h"
 #include "MoveManager.h"
 #include "GamePlayCharacter.h"
+#include "GamePlaySkill.h"
 //#include <GameEngineCore/>
 
-Bale::Bale() 
+Bale::Bale()
 	: MoveDelay(0)
 	//, TrackerPos(float4::ZERO)
 	, Collision_TargetPos(nullptr)
@@ -14,6 +15,18 @@ Bale::Bale()
 	, DashUpdate(false)
 	, StayStandDelay(0)
 	, BeforePos(float4::ZERO)
+	, Barrier_HP(0)
+	, Barrier_CoolTime(0)
+	, Barrier_On(false)
+	, StampingEnd(false)
+	, Texure_Barrier(nullptr)
+	, Texture_StampingEffect(nullptr)
+	, Texture_StampingEffect_Floor(nullptr)
+	, Texture_SmokeEffect(nullptr)
+	, Collision_StampingHit(nullptr)
+	, Texure_Barrier_Effect_Front(nullptr)
+	, Hit_Player(nullptr)
+
 {
 }
 
@@ -25,7 +38,6 @@ void Bale::Start()
 {
 	GamePlayMonster::Start();
 
-	Dummy = GetLevel()->CreateActor<DummyActor>();
 	Enum_UnitType = UnitType::Unit;
 	CreateMonsterStat(1115180000, 50, 301.4f); //1,115,180,000
 
@@ -52,7 +64,7 @@ void Bale::Start()
 	Texture_Monster->AnimationBindEnd("Bale_Stand_Up", std::bind(&Bale::Ani_StandUp, this, std::placeholders::_1));
 	{
 		Texture_Monster->CreateFrameAnimationFolder("Bale_Stamping", FrameAnimation_DESC("Bale", 32, 36, 0.125f, false));
-		Texture_Monster->AnimationBindEnd("Bale_Stamping", std::bind(&Bale::Bale_Stamping, this, std::placeholders::_1));
+		Texture_Monster->AnimationBindFrame("Bale_Stamping", std::bind(&Bale::Bale_Stamping, this, std::placeholders::_1));
 
 	}
 
@@ -90,20 +102,20 @@ void Bale::Start()
 	Collision_HitBody_Mid->GetTransform().SetLocalScale({ 80, 50, 50 });
 	Collision_HitBody_Mid->GetTransform().SetLocalPosition({ 0, 0, 0 });
 	Collision_HitBody_Mid->ChangeOrder(CollisionOrder::Monster);
-	Collision_HitBody_Mid->SetDebugSetting(CollisionType::CT_AABB, { 1, 1 , 0, 0.5 });
+	Collision_HitBody_Mid->SetDebugSetting(CollisionType::CT_AABB, float4::ZERO/*{ 1, 1 , 0, 0.5 }*/);
 
 	Collision_HitBody_Top = CreateComponent<GameEngineCollision>();
 	Collision_HitBody_Top->GetTransform().SetLocalScale({ 80, 50, 30 });
 	Collision_HitBody_Top->GetTransform().SetLocalPosition({ 0, 50, 0 });
 	Collision_HitBody_Top->ChangeOrder(CollisionOrder::Monster);
-	Collision_HitBody_Top->SetDebugSetting(CollisionType::CT_AABB, {0, 1 , 1, 0.5});
+	Collision_HitBody_Top->SetDebugSetting(CollisionType::CT_AABB, float4::ZERO/*{0, 1 , 1, 0.5}*/);
 
 
 	Collision_HitBody_Bottom = CreateComponent<GameEngineCollision>();
 	Collision_HitBody_Bottom->GetTransform().SetLocalScale({ 80, 50, 30 });
 	Collision_HitBody_Bottom->GetTransform().SetLocalPosition({ 0, -50, 0 });
 	Collision_HitBody_Bottom->ChangeOrder(CollisionOrder::Monster);
-	Collision_HitBody_Bottom->SetDebugSetting(CollisionType::CT_AABB, { 1, 0 , 1, 0.5 });
+	Collision_HitBody_Bottom->SetDebugSetting(CollisionType::CT_AABB, float4::ZERO/*{ 1, 0 , 1, 0.5 }*/);
 	//Collision_HitBody_Top->Off();
 
 
@@ -112,28 +124,28 @@ void Bale::Start()
 	Collision_HitBody_Bottom->GetTransform().SetLocalScale({ 80, 50, 30 });
 	Collision_HitBody_Bottom->GetTransform().SetLocalPosition({ 0, -50, 0 });
 	Collision_HitBody_Bottom->ChangeOrder(CollisionOrder::Monster);
-	Collision_HitBody_Bottom->SetDebugSetting(CollisionType::CT_AABB, { 1, 0 , 1, 0.5f });
+	Collision_HitBody_Bottom->SetDebugSetting(CollisionType::CT_AABB, float4::ZERO/*{ 1, 0 , 1, 0.5f }*/);
 
 
 	{
 		GameEngineCollision* Collision = CreateComponent<GameEngineCollision>("BaseHit_Area");
 		Collision->GetTransform().SetLocalScale({ 300, 100, 250 });
 		Collision->ChangeOrder(CollisionOrder::Monster_Area);
-		Collision->SetDebugSetting(CollisionType::CT_SPHERE, { 0.5f, 0 , 0.8f, 0.3f });
+		Collision->SetDebugSetting(CollisionType::CT_SPHERE, float4::ZERO/*{ 0.5f, 0 , 0.8f, 0.3f }*/);
 
 		AllCollision["Att_Sting"] = Collision;
 
 		Collision = CreateComponent<GameEngineCollision>("Dash_Area");
 		Collision->GetTransform().SetLocalScale({ 550, 300, 200 });
 		Collision->ChangeOrder(CollisionOrder::Monster_Area);
-		Collision->SetDebugSetting(CollisionType::CT_SPHERE, { 0, 0.8f , 0.8f, 0.3f });
+		Collision->SetDebugSetting(CollisionType::CT_SPHERE, float4::ZERO/*{ 0, 0.8f , 0.8f, 0.3f }*/);
 
 		AllCollision["Att_Dash"] = Collision;
 
 		Collision = CreateComponent<GameEngineCollision>("Stamping_Area");
 		Collision->GetTransform().SetLocalScale({ 200, 150, 100 });
 		Collision->ChangeOrder(CollisionOrder::Monster_Area);
-		Collision->SetDebugSetting(CollisionType::CT_SPHERE, { 0, 0.8f , 0.2f, 0.3f });
+		Collision->SetDebugSetting(CollisionType::CT_SPHERE, float4::ZERO/*{ 0, 0.8f , 0.2f, 0.3f }*/);
 
 		AllCollision["Att_Stamping"] = Collision;
 
@@ -142,7 +154,7 @@ void Bale::Start()
 		Collision = CreateComponent<GameEngineCollision>("Teleport_Area");
 		Collision->GetTransform().SetLocalScale({ 400, 150, 200 });
 		Collision->ChangeOrder(CollisionOrder::Monster_Area);
-		Collision->SetDebugSetting(CollisionType::CT_SPHERE, { 0.2f, 0.5f , 0.6f, 0.3f });
+		Collision->SetDebugSetting(CollisionType::CT_SPHERE, float4::ZERO/*{ 0.2f, 0.5f , 0.6f, 0.3f }*/);
 
 		AllCollision["Move_Teleport"] = Collision;
 
@@ -172,17 +184,197 @@ void Bale::Start()
 
 
 	{
-		All_CollTime["Att_Sting"] = 0;
-		All_CollTime["Att_Dash"] = 0;
+		//All_CollTime["Att_Sting"] = 0;
+		//All_CollTime["Att_Dash"] = 0;
 		All_CollTime["Att_Stamping"] = 0;
-		All_CollTime["Move_Teleport"] = 0;
+		//All_CollTime["Move_Teleport"] = 0;
 	}
 	SetMonsterClass(MonsterClass::Named);
+
+
+	// 베리어
+	{
+		Texure_Barrier = CreateComponent<GameEngineEffectRenderer>("Barrier");
+		Texure_Barrier->GetTransform().SetLocalPosition({ 0,0, 10.0001f });
+		Texure_Barrier->CreateFrameAnimationFolder("Barrier", FrameAnimation_DESC("Bale_back", 0.0625f, true));
+		Texure_Barrier->ChangeFrameAnimation("Barrier");
+		Texure_Barrier->ScaleToTexture();
+		Texure_Barrier->Off();
+
+
+		Texure_Barrier_Effect_Front = CreateComponent<GameEngineEffectRenderer>("Barrier");
+		Texure_Barrier_Effect_Front->GetTransform().SetLocalPosition({ 0,0, 0.0001f });
+		Texure_Barrier_Effect_Front->CreateFrameAnimationFolder("Barrier", FrameAnimation_DESC("Bale_back_normal", 0.125f, true));
+		Texure_Barrier_Effect_Front->ChangeFrameAnimation("Barrier");
+		Texure_Barrier_Effect_Front->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texure_Barrier_Effect_Front->ScaleToTexture();
+		Texure_Barrier_Effect_Front->Off();
+
+		Texure_Barrier_Effect_FrontDodge = CreateComponent<GameEngineEffectRenderer>("Barrier");
+		Texure_Barrier_Effect_FrontDodge->GetTransform().SetLocalPosition({ 0,0, 0.0001f });
+		Texure_Barrier_Effect_FrontDodge->CreateFrameAnimationFolder("Barrier", FrameAnimation_DESC("Bale_front_dodge", 0.125f, true));
+		Texure_Barrier_Effect_FrontDodge->ChangeFrameAnimation("Barrier");
+		Texure_Barrier_Effect_FrontDodge->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texure_Barrier_Effect_FrontDodge->ScaleToTexture();
+		Texure_Barrier_Effect_FrontDodge->Off();
+
+
+		
+		Texure_Barrier_Effect_Back = CreateComponent<GameEngineEffectRenderer>("Barrier");
+		Texure_Barrier_Effect_Back->GetTransform().SetLocalPosition({ 0,0, 10.0001f });
+		Texure_Barrier_Effect_Back->CreateFrameAnimationFolder("Barrier", FrameAnimation_DESC("Bale_front_dodge", 0.125f, true));
+		Texure_Barrier_Effect_Back->ChangeFrameAnimation("Barrier");
+		Texure_Barrier_Effect_Back->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texure_Barrier_Effect_Back->ScaleToTexture();
+		Texure_Barrier_Effect_Back->Off();
+
+		Texure_Barrier_Effect_BackDodge = CreateComponent<GameEngineEffectRenderer>("Barrier");
+		Texure_Barrier_Effect_BackDodge->GetTransform().SetLocalPosition({ 0,0, 10.0001f });
+		Texure_Barrier_Effect_BackDodge->CreateFrameAnimationFolder("Barrier", FrameAnimation_DESC("Bale_front_dodge", 0.125f, true));
+		Texure_Barrier_Effect_BackDodge->ChangeFrameAnimation("Barrier");
+		Texure_Barrier_Effect_BackDodge->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texure_Barrier_Effect_BackDodge->ScaleToTexture();
+		Texure_Barrier_Effect_BackDodge->Off();
+
+	}
+
+	// 스탬핑
+	{
+		Texture_StampingEffect = CreateComponent<GameEngineEffectRenderer>("Stamping");
+		Texture_StampingEffect->GetTransform().SetLocalPosition({ 52, 85, -10.0001f });
+		Texture_StampingEffect->CreateFrameAnimationFolder("Stamping", FrameAnimation_DESC("Bale_StampingEffect", 0, 15, 0.05f, false));
+		Texture_StampingEffect->ChangeFrameAnimation("Stamping");
+		Texture_StampingEffect->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texture_StampingEffect->AnimationBindEnd("Stamping", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->Off();
+			});
+		Texture_StampingEffect->ScaleToTexture();
+		Texture_StampingEffect->Off();
+
+		
+		Texture_StampingEffect_Floor = CreateComponent<GameEngineEffectRenderer>("Stamping");
+		Texture_StampingEffect_Floor->GetTransform().SetLocalPosition({ 52, 85, -10.0002f });
+		Texture_StampingEffect_Floor->CreateFrameAnimationFolder("Stamping", FrameAnimation_DESC("Bale_StampingEffect", 16, 29, 0.05f, false));
+		Texture_StampingEffect_Floor->ChangeFrameAnimation("Stamping");
+		Texture_StampingEffect_Floor->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texture_StampingEffect_Floor->AnimationBindEnd("Stamping", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->Off();
+			});
+		Texture_StampingEffect_Floor->ScaleToTexture();
+		Texture_StampingEffect_Floor->Off();
+
+		
+		Texture_SmokeEffect = CreateComponent<GameEngineEffectRenderer>("Smoke");
+		Texture_SmokeEffect->GetTransform().SetLocalPosition({ 165, 60, 10.0000f });
+		Texture_SmokeEffect->CreateFrameAnimationFolder("Smoke", FrameAnimation_DESC("Bale_Stampingsmoke", 0.0625f, false));
+		Texture_SmokeEffect->ChangeFrameAnimation("Smoke");
+		Texture_SmokeEffect->AnimationBindEnd("Smoke", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->Off();
+			});
+		Texture_SmokeEffect->ScaleToTexture();
+		Texture_SmokeEffect->Off();
+
+
+		Collision_StampingHit = CreateComponent<GameEngineCollision>("Stamping");
+		Collision_StampingHit->GetTransform().SetLocalScale({ 250, 200, 180 });
+		Collision_StampingHit->GetTransform().SetLocalPosition({ 65, 10, 10.0000f });
+		Collision_StampingHit->SetDebugSetting(CollisionType::CT_SPHERE, float4::ZERO);
+		Collision_StampingHit->Off();
+	}
+
+	// 스팅
+	{
+		//Texture_StingEffect_Puple = CreateComponent<GameEngineEffectRenderer>("Sting");
+		//Texture_StingEffect_Puple->GetTransform().SetLocalPosition({ 165, 60, 10.0000f });
+		//Texture_StingEffect_Puple->CreateFrameAnimationFolder("Sting", FrameAnimation_DESC("Bale_shoot_effect", 0.0625f, false));
+		//Texture_StingEffect_Puple->ChangeFrameAnimation("Sting");
+		//Texture_StingEffect_Puple->AnimationBindEnd("Sting", [](const FrameAnimation_DESC& _DESC)
+		//	{
+		//		_DESC.Renderer->Off();
+		//	});
+		//Texture_StingEffect_Puple->ScaleToTexture();
+		//Texture_StingEffect_Puple->Off();
+
+
+		//Texture_SmokeEffect
+
+
+		//Texture_StingEffect_Puple
+		//Texture_StingSmokeEffect
+	}
 }
+
+CollisionReturn Bale::GetPlayer(GameEngineCollision* _This, GameEngineCollision* _Other)
+{
+	Hit_Player = _Other->GetActor<GamePlayObject>();
+
+	return CollisionReturn::Break;
+}
+
 
 void Bale::Update(float _DeltaTime)
 {
-	GamePlayMonster::Update(_DeltaTime);
+	GamePlayMonster::Update(_DeltaTime); 
+
+	if (Barrier_On == false)
+	{
+		Barrier_CoolTime -= _DeltaTime;
+		if (Barrier_CoolTime <= 0)
+		{
+			Barrier_On = true;
+			Barrier_HP = 15180000;
+			Texure_Barrier->On();
+			Texure_Barrier_Effect_Front->On();
+			Texure_Barrier_Effect_FrontDodge->On();
+		}
+	}
+	else
+	{
+		if (Barrier_HP <= 0)
+		{
+			Barrier_On = false;// 대사
+			Barrier_CoolTime = 60.f;
+			Texure_Barrier->Off();
+			Texure_Barrier_Effect_Front->Off();
+			Texure_Barrier_Effect_FrontDodge->Off();
+		}
+
+		if (GameEngineRandom::MainRandom.RandomInt(0, 90) == 0)
+		{
+		//	GameEngineEffectRenderer* Renderer = CreateComponent<GameEngineEffectRenderer>();
+
+			//float4 Pos = { GameEngineRandom::MainRandom.RandomFloat(-80.f, 80.f) , GameEngineRandom::MainRandom.RandomFloat(-40.f, 40.f)};
+			//Renderer->GetTransform().SetLocalPosition(Pos);
+			//Renderer->CreateFrameAnimationFolder("Bale_back_dodge", FrameAnimation_DESC("Bale_back_dodge", 0.0625f, false));
+			//Renderer->ChangeFrameAnimation("Bale_back_dodge");
+			////Renderer->ChangeCamera(CAMERAORDER::MAINCAMERA);
+			//Renderer->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+			//Renderer->ScaleToTexture();
+			//Renderer->AnimationBindEnd("Bale_back_dodge", [](const FrameAnimation_DESC& _DECS)
+			//	{
+			//		_DECS.Renderer->Off();
+			//		_DECS.Renderer->Death();
+			//	});
+			//Renderer = CreateComponent<GameEngineEffectRenderer>();
+			//Renderer->GetTransform().SetLocalPosition(Pos);
+			//Renderer->CreateFrameAnimationFolder("Bale_back_normal", FrameAnimation_DESC("Bale_back_dodge", 0.0625f, false));
+			//Renderer->ChangeFrameAnimation("Bale_back_normal");
+			//Renderer->ScaleToTexture();
+			//Renderer->AnimationBindEnd("Bale_back_normal", [](const FrameAnimation_DESC& _DECS)
+			//	{
+			//		_DECS.Renderer->Off();
+			//		_DECS.Renderer->Death();
+			//	});
+			
+		}
+
+
+	}
+
+
 
 	if (Manager_StatManager->GetFSMManager().GetCurStateStateName() == "Move_Stand" || Manager_StatManager->GetFSMManager().GetCurStateStateName() == "Move_Walk")
 	{
@@ -326,7 +518,7 @@ void Bale::FSM_Move_Stand_Start(const StateInfo& _Info)
 
 	if (GameEngineRandom::MainRandom.RandomInt(0, 3) > 2)
 	{
-		Collision_TargetPos->SetParent(Dummy);
+		Collision_TargetPos->SetParent(Actor_Dummy);
 		const float4& Pos = GamePlayCharacter::GetInst()->GetTransform().GetWorldPosition();
 		Collision_TargetPos->GetTransform().SetWorldPosition({ Pos.x , Pos.z, Pos.z });
 	}
@@ -583,20 +775,55 @@ void Bale::FSM_Att_Stamping_Start(const StateInfo& _Info)
 {
 	Manager_StatManager->SetDoSkill();
 	Texture_Monster->ChangeFrameAnimation("Bale_Stamping");
+	StampingEnd = 10.f;
+
 }
 void Bale::FSM_Att_Stamping_Update(float _DeltaTime, const StateInfo& _Info)
 {
+	if (StampingEnd < 0.125f)
+	{
+		StampingEnd -= _DeltaTime;
+		if (StampingEnd <= 0)
+		{
+			Manager_StatManager->GetFSMManager().ChangeState("None");
+		}
+	}
 
 }
 void Bale::FSM_Att_Stamping_End(const StateInfo& _Info)
 {
 	All_CollTime["Att_Stamping"] = 3.f;
 	Manager_StatManager->SetDoSkillEnd();
+	StampingEnd = 10.f;
+
 }
 
 void Bale::Bale_Stamping(const FrameAnimation_DESC& _DESC)
 {
-	Manager_StatManager->GetFSMManager().ChangeState("None");
+	if (_DESC.CurFrame == 3)
+	{
+		Texture_StampingEffect->ChangeFrameAnimation("Stamping", true);
+		Texture_StampingEffect_Floor->ChangeFrameAnimation("Stamping", true);
+		Texture_SmokeEffect->ChangeFrameAnimation("Smoke", true);
+		Texture_StampingEffect->On();
+		Texture_StampingEffect_Floor->On();
+		Texture_SmokeEffect->On();
+
+		Collision_StampingHit->On();
+		if (Collision_StampingHit->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Player ,CollisionType::CT_SPHERE,
+			std::bind(&Bale::GetPlayer, this, std::placeholders::_1, std::placeholders::_2)))
+		{
+			float Dir = Collision_StampingHit->GetTransform().GetWorldPosition().x - Hit_Player->GetTransform().GetWorldPosition().x > 0 ? -1.f : 1.f;
+			Hit_Player->BeHit({ 50, 300 }, HitPostureType::Aerial, nullptr, nullptr, Dir, 500);
+		}
+		Collision_StampingHit->Off();
+	}
+	if (_DESC.CurFrame == 4)
+	{
+		StampingEnd = 0.1f;
+		Collision_StampingHit->Off();
+	}
+
 }
 
 
@@ -606,7 +833,7 @@ void Bale::FSM_Att_Dash_Start(const StateInfo& _Info)
 	Texture_Monster->ChangeFrameAnimation("Bale_RunReady");
 
 	Collision_ect = CreateComponent<GameEngineCollision>("Dash");
-	Collision_ect->SetParent(Dummy);
+	Collision_ect->SetParent(Actor_Dummy);
 	Collision_ect->GetTransform().SetLocalScale({ 25, 25, 25 });
 
 	//const float4& Pos = GamePlayCharacter::GetInst()->GetTransform().GetWorldPosition();

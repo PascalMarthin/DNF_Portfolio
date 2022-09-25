@@ -4,6 +4,7 @@
 #include "TownLevel.h"
 #include "Jelva1F_BackGround.h"
 // Ό³Έν :
+class Hartz_von_kruger_NPC;
 class Jelva_1F : public GamePlayLevelTemplate, public TownLevel
 {
 public:
@@ -33,6 +34,7 @@ protected:
 private:
 	Jelva1F_BackGround* Texture_Jelva1F;
 
+	Hartz_von_kruger_NPC* NPC_Hartz;
 	GamePlayCharacter* Player_Character;
 };
 

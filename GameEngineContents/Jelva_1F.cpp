@@ -2,6 +2,7 @@
 #include "Jelva_1F.h"
 #include "Jelva1F_BackGround.h"
 #include "MoveManager.h"
+#include "Hartz_von_kruger_NPC.h"
 
 Jelva_1F::Jelva_1F() 
 	: Texture_Jelva1F(nullptr)
@@ -22,6 +23,8 @@ void Jelva_1F::Start()
 	float Width = Texture_Jelva1F->GetBackGroundTextureScale().x;
 	Texture_Jelva1F->GetTransform().SetLocalPosition({ 0, 0, Hight + static_cast<float>(ZSortOrder::BackGround) });
 
+	NPC_Hartz = CreateActor<Hartz_von_kruger_NPC>();
+	NPC_Hartz->GetTransform().SetLocalPosition({ 500.f, -550.f, -550.f });
 
 	Player_Character = CreateActor<GamePlayCharacter>();
 
@@ -64,15 +67,15 @@ void Jelva_1F::LevelStartEvent()
 	float Hight = Texture_Jelva1F->GetBackGroundTextureScale().y;
 	if (GamePlayDataBase::GetCurrentCharacterData()->GetCurrentMap() == TownMap::Seria_Room)
 	{
-		Player_Character->GetTransform().SetLocalPosition({ 1460.f , -550.f , Hight });
+		Player_Character->GetTransform().SetLocalPosition({ 1460.f , -550.f ,  -550.f });
 	}
 	else if (GamePlayDataBase::GetCurrentCharacterData()->GetCurrentMap() == TownMap::Jelva2F)
 	{
-		Player_Character->GetTransform().SetLocalPosition({ 2050.f , -440.f , Hight });
+		Player_Character->GetTransform().SetLocalPosition({ 2050.f , -440.f , -440.f });
 	}
 	else // Debug
 	{
-		Player_Character->GetTransform().SetLocalPosition({ 1780.f , -600.f , Hight });
+		Player_Character->GetTransform().SetLocalPosition({ 1780.f , -600.f , -600.f });
 	}
 
 	GetMainCameraActor()->GetTransform().SetWorldPosition(Player_Character->GetMoveManager()->GetMoveCollision()->GetTransform().GetLocalPosition());

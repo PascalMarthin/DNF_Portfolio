@@ -217,6 +217,145 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitColli
 
 }
 
+void GamePlayObject::BeHit(const float4& _Power, HitPostureType _Type, GameEngineCollision* _HitCollision, GamePlayObject* _HitObject, int _Index, unsigned int _Damage)
+{
+	if (Enum_UnitType == UnitType::None)
+	{
+		MsgBoxAssert("설정하지 않았습니다")
+	}
+
+	if (Manager_StatManager->IsInvincibility())
+	{
+		switch (Enum_ObjectType)
+		{
+		case ObjectType::Character:
+			GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::GhostFrame);
+			GamePlayComboSystem::GetInst()->PlusScore(10000);
+			return;
+			break;
+		case ObjectType::Monster:
+			return;
+			break;
+		default:
+			break;
+		}
+	}
+	
+	float4 Power = _Power;
+	Power.x *= static_cast<float>(_Index);
+	
+
+	//
+	// x > 0 y > 0 w > 0
+	// x > 0 y = 0 w > 0
+	// x = 0 y > 0 w = 0
+	// 
+
+
+
+	// 대미지 처리
+	SetDamage(_Damage);
+
+	// 점수
+	if (Enum_ObjectType == ObjectType::Monster)
+	{
+		float MultipleIndex = 1.f;
+		{
+			if (GetTransform().GetLocalScale().x > 0)
+			{
+				if (_HitObject->GetTransform().GetWorldPosition().x < GetTransform().GetWorldPosition().x)
+				{
+					MultipleIndex *= 1.5f;
+					GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::BackAttack);
+				}
+			}
+			else
+			{
+				if (_HitObject->GetTransform().GetWorldPosition().x > GetTransform().GetWorldPosition().x)
+				{
+					MultipleIndex *= 1.5f;
+					GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::BackAttack);
+				}
+			}
+		}// 백어택
+
+		{
+			if (Manager_StatManager->IsAerial())
+			{
+				MultipleIndex *= 1.2f;
+				GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::Aerial);
+			}
+		}// 공중에 뜸
+
+		{
+			if (Manager_StatManager->IsDoSkill())
+			{
+				MultipleIndex *= 1.8f;
+				GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::Counter);
+			}
+		}// 카운터
+
+		GamePlayComboSystem::GetInst()->PlusScore(1235);
+	}
+
+
+
+	switch (_Type)
+	{
+	case HitPostureType::Standing:
+	{
+		Manager_StatManager->SetHit_Stand();
+		Manager_MoveManager->SetHit(Power);
+	}
+	break;
+	case HitPostureType::Aerial:
+	{
+		Manager_StatManager->SetHit_BlowUp();
+		//if (Power.x != 0 && Power.y != 0 && Power.w == 0)
+		//{
+		//
+		//}
+		//else if (Power.x != 0 && Power.w != 0)
+		//{
+
+		//}
+		//else
+		//{
+		//	MsgBoxAssert("예외발생_ 확인후 추가")
+		//}
+
+		Manager_MoveManager->SetHit(Power);
+	}
+	break;
+	case HitPostureType::Hold:
+	{
+		if (Manager_StatManager->IsDoSkill())
+		{
+			GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::CounterHold); // 카운터 홀드
+		}
+
+		Manager_StatManager->SetHold();
+		Manager_MoveManager->SetHold(Power.w);
+	}
+	break;
+
+	case HitPostureType::None:
+	default:
+		MsgBoxAssert("스킬이 설정되지 않았습니다");
+		break;
+	}
+
+
+	//
+	// 스킬안으로 들어가서 스킬 타입을보고 본인의 자세를 고침
+	// 대미지는 스킬과 캐릭터 데이터 베이스를 기반으로 함
+	// 
+	// 
+
+
+
+}
+
 void GamePlayObject::SetDamage(unsigned int _Damage)
 {
 	GameEngineDamageRenderer* Font = GetLevel()->CreateActor<GameEngineDamageRenderer>();

@@ -272,6 +272,21 @@
     <ClInclude Include="GamePlayNPCInteractionTalk.h">
       <Filter>Object\NPC\GamePlayNPCInteraction</Filter>
     </ClInclude>
+    <ClInclude Include="GamePlayInteractionShop.h">
+      <Filter>Object\NPC\GamePlayNPCInteraction</Filter>
+    </ClInclude>
+    <ClInclude Include="Hartz_von_kruger_NPC.h">
+      <Filter>Object\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="Isabella_NPC.h">
+      <Filter>Object\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemInventory_Equipment.h">
+      <Filter>Object\Character\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="Item_Equipment.h">
+      <Filter>UI\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -542,6 +557,21 @@
     <ClCompile Include="GamePlayNPCInteractionTalk.cpp">
       <Filter>Object\NPC\GamePlayNPCInteraction</Filter>
     </ClCompile>
+    <ClCompile Include="GamePlayInteractionShop.cpp">
+      <Filter>Object\NPC\GamePlayNPCInteraction</Filter>
+    </ClCompile>
+    <ClCompile Include="Hartz_von_kruger_NPC.cpp">
+      <Filter>Object\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="Isabella_NPC.cpp">
+      <Filter>Object\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemInventory_Equipment.cpp">
+      <Filter>Object\Character\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="Item_Equipment.cpp">
+      <Filter>UI\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -642,6 +672,9 @@
     </Filter>
     <Filter Include="Object\NPC\GamePlayNPCInteraction">
       <UniqueIdentifier>{c64de1e9-f5f0-4351-9454-e7132b5d1fcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\NPC\Quest">
+      <UniqueIdentifier>{f0b148d1-bda0-4646-8ee1-b58a995a12ba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -23,7 +23,7 @@ public:
 	void SetInteractUIOn(GamePlayObjectNPC* _NPC);
 	void SetInteractUIOff();
 
-	InteractionMenuDo CheckInput();
+	InteractOption CheckInput();
 	inline InteractOption GetInteractOption() const
 	{
 		return CurrentOption;

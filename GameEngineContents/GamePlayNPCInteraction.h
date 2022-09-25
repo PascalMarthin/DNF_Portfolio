@@ -4,13 +4,6 @@
 
 // Ό³Έν :
 
-enum class InteractionMenuDo
-{
-	None,
-	Exit,
-	Talking,
-};
-
 
 class GameEngineUIFontRenderer;
 class GamePlayObjectNPC;
@@ -46,7 +39,7 @@ public:
 	void SetNPCInteraction(InteractOption _Option);
 	void NPCInteractionEnd();
 
-	InteractionMenuDo CheckInput();
+	InteractOption CheckInput();
 	void EndInteraction();
 
 

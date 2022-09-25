@@ -36,25 +36,12 @@ void GamePlayNPCInteraction::Update(float _DeltaTime)
 }
 
 
-InteractionMenuDo GamePlayNPCInteraction::CheckInput()
+InteractOption GamePlayNPCInteraction::CheckInput()
 {
 	switch (CurrentActiveInteract)
 	{
 	case InteractOption::None:
-		switch (Actor_InteractWindow->CheckInput())
-		{
-		case InteractionMenuDo::None:
-			return InteractionMenuDo::None;
-			break;
-		case InteractionMenuDo::Exit:
-			return InteractionMenuDo::Exit;
-			break;		
-		case InteractionMenuDo::Talking:
-			SetNPCInteraction(InteractOption::Talking);
-			break;
-		default:
-			break;
-		}
+		SetNPCInteraction(Actor_InteractWindow->CheckInput());
 		break;
 	case InteractOption::Quest:
 
@@ -62,16 +49,15 @@ InteractionMenuDo GamePlayNPCInteraction::CheckInput()
 	case InteractOption::Deal:
 		break;
 	case InteractOption::Talking:
-		if (Actor_Talk->CheckInput() == InteractionMenuDo::Exit)
+		if (Actor_Talk->CheckInput() == InteractOption::Exit)
 		{
-			return InteractionMenuDo::Exit;
-
+			return InteractOption::Exit;
 		}
 		break;
 	default:
 		break;
 	}
-	return InteractionMenuDo::None;
+	return InteractOption::None;
 }
 
 

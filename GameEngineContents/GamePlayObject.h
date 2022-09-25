@@ -3,6 +3,7 @@
 #include <GameEngineCore/GameEngineCollision.h>
 #include <GameEngineCore/GameEngineTextureRenderer.h>
 #include "GamePlayEnum.h"
+#include "CharacterStatManager.h"
 
 // Ό³Έν :
 enum class UnitType
@@ -11,6 +12,7 @@ enum class UnitType
 	Unit,
 	Building,
 };
+enum class HitPostureType;
 class MoveManager;
 class GamePlaySkill;
 class GamePlayDataBase;
@@ -127,6 +129,7 @@ protected:
 
 	// -------------------Battle-------------------
 public:
+	virtual void BeHit(const float4& _Power, HitPostureType _Type, GameEngineCollision* _HitCollision, GamePlayObject* _HitObject, int _Index, unsigned int _Damage);
 	virtual void BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitCollision, GamePlayObject* _HitObject, int _Index, unsigned int _Damage);
 	virtual void BeHitHold();
 	virtual void BeHitEnd();
@@ -136,7 +139,7 @@ public:
 		JumpGoingDown = true;
 	};
 
-	virtual void LandingEnd() {}
+	virtual void LandingEnd() { Manager_StatManager->SetAerialEnd(); }
 	virtual void LandingEnd_Down() {}
 	//virtual void LandingEnd_Down() {}
 
