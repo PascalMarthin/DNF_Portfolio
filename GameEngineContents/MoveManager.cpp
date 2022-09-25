@@ -18,6 +18,7 @@ MoveManager::MoveManager()
 	, Texture_CollisionMap(nullptr)
 	, BlowPower(float4::ZERO)
 	, HitTime(0.f)
+	, ManagerStat(nullptr)
 {
 }
 
@@ -208,6 +209,65 @@ float4 MoveManager::SetCharacterMove(const float4& _Move)
 	Move.z = Move.y;
 	ParentCharacter->GetTransform().SetLocalMove(Move);
 	//Collision_Move->GetTransform().SetLocalMove(Move);
+
+	//
+	return Move;
+}
+
+float4 MoveManager::SetCharacterMoveCheck(const float4& _Move, const float4& _TargetPos)
+{
+	if (ParentCharacter->GetObjectType() == ObjectType::Character)
+	{
+		if (_Move.x > 0.f)
+		{
+			ParentCharacter->SetRightDir();
+		}
+		else if (_Move.x < 0.f)
+		{
+			ParentCharacter->SetLeftDir();
+		}
+	}
+
+
+	// 이동 가능 여부 확인
+	const float4& Pos = Collision_Move->GetTransform().GetWorldPosition();
+	const float4& Scale = Collision_Move->GetTransform().GetLocalScale();
+
+
+	float4 Move = _Move;
+
+
+	// Left 	// Right
+	if ((Move.x < 0 && Texture_CollisionMap->GetPixelToFloat4(Pos.ix() - Scale.hix(), -Pos.iy()).CompareInt4D(float4::RED)) ||
+		(Move.x > 0 && Texture_CollisionMap->GetPixelToFloat4(Pos.ix() + Scale.hix(), -Pos.iy()).CompareInt4D(float4::RED)))
+	{
+		Move.x = 0;
+	}
+
+	//float4 Index = { Pos.x - Scale.hx(), -(Pos.y )};
+	//float4 Index1 = { Pos.x, -(Pos.y + Scale.hx()) };
+	// UP	  // Down
+	if ((Move.y > 0 && Texture_CollisionMap->GetPixelToFloat4(Pos.ix(), -(Pos.iy() + Scale.hix())).CompareInt4D(float4::RED)) ||
+		(Move.y < 0 && Texture_CollisionMap->GetPixelToFloat4(Pos.ix(), -(Pos.iy() - Scale.hix())).CompareInt4D(float4::RED)))
+	{
+		Move.y = 0;
+	}
+
+	if ((_TargetPos.y > GetTransform().GetWorldPosition().y + (Move.y * 0.73f) && _TargetPos.y < GetTransform().GetWorldPosition().y) 
+		|| (_TargetPos.y < GetTransform().GetWorldPosition().y + (Move.y * 0.73f) && _TargetPos.y > GetTransform().GetWorldPosition().y))
+	{
+		Move.y = _TargetPos.y - GetTransform().GetWorldPosition().y;
+	}
+	else
+	{
+		Move.y *= 0.73f;
+	}
+
+	
+	Move.z = Move.y;
+	//Collision_Move->GetTransform().SetLocalMove(Move);
+
+	ParentCharacter->GetTransform().SetLocalMove(Move);
 
 	//
 	return Move;

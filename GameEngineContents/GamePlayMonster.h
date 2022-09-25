@@ -97,6 +97,7 @@ public:
 
 protected:
 	GameEngineActor* Actor_Dummy;
+
 	MonsterAbilityStat MonsterAbilityStat;
 	void CreateMonsterStat(unsigned int _MAXHP, float Def, float _HPLine = -1.f);
 

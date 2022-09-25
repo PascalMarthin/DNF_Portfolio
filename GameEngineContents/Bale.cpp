@@ -25,7 +25,12 @@ Bale::Bale()
 	, Texture_SmokeEffect(nullptr)
 	, Collision_StampingHit(nullptr)
 	, Texure_Barrier_Effect_Front(nullptr)
+	, Texure_Barrier_Effect_FrontDodge(nullptr)
+	, Texure_Barrier_Effect_Back(nullptr)
+	, Texure_Barrier_Effect_BackDodge(nullptr)
 	, Hit_Player(nullptr)
+	, Collision_StingHit(nullptr)
+
 
 {
 }
@@ -50,8 +55,8 @@ void Bale::Start()
 	
 	{
 		Texture_Monster->CreateFrameAnimationFolder("Bale_Sting", FrameAnimation_DESC("Bale", 14, 23, 0.1f, false));
+		Texture_Monster->AnimationBindFrame("Bale_Sting", std::bind(&Bale::Sting_Update, this, std::placeholders::_1));
 		Texture_Monster->AnimationBindEnd("Bale_Sting", std::bind(&Bale::Sting_End, this, std::placeholders::_1));
-
 	}
 
 
@@ -129,7 +134,7 @@ void Bale::Start()
 
 	{
 		GameEngineCollision* Collision = CreateComponent<GameEngineCollision>("BaseHit_Area");
-		Collision->GetTransform().SetLocalScale({ 300, 100, 250 });
+		Collision->GetTransform().SetLocalScale({ 600, 100, 250 });
 		Collision->ChangeOrder(CollisionOrder::Monster_Area);
 		Collision->SetDebugSetting(CollisionType::CT_SPHERE, float4::ZERO/*{ 0.5f, 0 , 0.8f, 0.3f }*/);
 
@@ -184,9 +189,9 @@ void Bale::Start()
 
 
 	{
-		//All_CollTime["Att_Sting"] = 0;
+		All_CollTime["Att_Sting"] = 0;
 		//All_CollTime["Att_Dash"] = 0;
-		All_CollTime["Att_Stamping"] = 0;
+		//All_CollTime["Att_Stamping"] = 0;
 		//All_CollTime["Move_Teleport"] = 0;
 	}
 	SetMonsterClass(MonsterClass::Named);
@@ -287,25 +292,382 @@ void Bale::Start()
 
 	// ½ºÆÃ
 	{
-		//Texture_StingEffect_Puple = CreateComponent<GameEngineEffectRenderer>("Sting");
-		//Texture_StingEffect_Puple->GetTransform().SetLocalPosition({ 165, 60, 10.0000f });
-		//Texture_StingEffect_Puple->CreateFrameAnimationFolder("Sting", FrameAnimation_DESC("Bale_shoot_effect", 0.0625f, false));
-		//Texture_StingEffect_Puple->ChangeFrameAnimation("Sting");
-		//Texture_StingEffect_Puple->AnimationBindEnd("Sting", [](const FrameAnimation_DESC& _DESC)
+		Actor_TrackingObject = GetLevel()->CreateActor<GameEngineActor>();
+		GameEngineEffectRenderer* Renderer = CreateComponent<GameEngineEffectRenderer>("Sting");
+		Renderer->GetTransform().SetLocalPosition({ 200, 0, -10.01f });
+		Renderer->CreateFrameAnimationFolder("Sting", FrameAnimation_DESC("Bale_Shoot_Effect_All", 0.0625f, false));
+		Renderer->ChangeFrameAnimation("Sting");
+		Renderer->AnimationBindEnd("Sting", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->Off();
+			});
+		Renderer->ScaleToTexture();
+		Renderer->Off();
+		Texture_StingEffect_Puple.push_back(Renderer);
+
+		Renderer = CreateComponent<GameEngineEffectRenderer>("Sting");
+		Renderer->GetTransform().SetLocalPosition({ 160, -35, -10.01f });
+		Renderer->CreateFrameAnimationFolder("Sting", FrameAnimation_DESC("Bale_Shoot_Effect_All", 0.0625f, false));
+		Renderer->ChangeFrameAnimation("Sting");
+		Renderer->AnimationBindEnd("Sting", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->Off();
+			});
+		Renderer->ScaleToTexture();
+		Renderer->Off();
+		Texture_StingEffect_Puple.push_back(Renderer);
+
+
+		Renderer = CreateComponent<GameEngineEffectRenderer>("Sting");
+		Renderer->GetTransform().SetLocalPosition({ 180, 25, -10.01f });
+		Renderer->CreateFrameAnimationFolder("Sting", FrameAnimation_DESC("Bale_Shoot_Effect_All", 0.0625f, false));
+		Renderer->ChangeFrameAnimation("Sting");
+		Renderer->AnimationBindEnd("Sting", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->Off();
+			});
+		Renderer->ScaleToTexture();
+		Renderer->Off();
+		Texture_StingEffect_Puple.push_back(Renderer);
+
+
+		Renderer = CreateComponent<GameEngineEffectRenderer>("Sting");
+		Renderer->GetTransform().SetLocalPosition({ 215, -55, -10.01f });
+		Renderer->CreateFrameAnimationFolder("Sting", FrameAnimation_DESC("Bale_Shoot_Effect_All", 0.0625f, false));
+		Renderer->ChangeFrameAnimation("Sting");
+		Renderer->AnimationBindEnd("Sting", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->Off();
+			});
+		Renderer->ScaleToTexture();
+		Renderer->Off();
+		Texture_StingEffect_Puple.push_back(Renderer);
+
+
+
+
+
+		Renderer = CreateComponent<GameEngineEffectRenderer>("Talon");
+		Renderer->GetTransform().SetLocalPosition({ 280, 32, -10.00f });
+		//Renderer->SetPivot(PIVOTMODE::LEFT);
+		Renderer->CreateFrameAnimationFolder("Bale_talon_n", FrameAnimation_DESC("Bale_talon_n", 0.0625f, false));
+		Renderer->AnimationBindStart("Bale_talon_n", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->GetPixelData().MulColor.a = 1.f;
+			});
+		Renderer->AnimationBindTime("Bale_talon_n", [](const FrameAnimation_DESC& _DESC, float _Delta)
+			{	
+				if (_DESC.CurFrame > 5)
+				{
+					_DESC.Renderer->GetPixelData().MulColor.a -= _Delta * 5.f;
+					if (_DESC.Renderer->GetPixelData().MulColor.a < 0)
+					{
+						_DESC.Renderer->GetPixelData().MulColor.a = 0;
+					}
+				}
+			});
+		Renderer->AnimationBindEnd("Bale_talon_n", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->Off();
+			});
+		Renderer->ChangeFrameAnimation("Bale_talon_n");
+		Renderer->SetScaleRatio(0.8f);
+		Renderer->ScaleToTexture();
+		Renderer->Off();
+		Texture_StingEffect_Slash.push_back(Renderer);
+
+
+		Renderer = CreateComponent<GameEngineEffectRenderer>("Talon");
+		Renderer->GetTransform().SetLocalPosition({ 240, -3,-10.00f });
+		//Renderer->SetPivot(PIVOTMODE::LEFT);
+		Renderer->CreateFrameAnimationFolder("Bale_talon_n", FrameAnimation_DESC("Bale_talon_n", 0.0625f, false));
+		Renderer->AnimationBindStart("Bale_talon_n", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->GetPixelData().MulColor.a = 1.f;
+			});
+		Renderer->AnimationBindTime("Bale_talon_n", [](const FrameAnimation_DESC& _DESC, float _Delta)
+			{
+				if (_DESC.CurFrame > 5)
+				{
+					_DESC.Renderer->GetPixelData().MulColor.a -= _Delta * 5.f;
+					if (_DESC.Renderer->GetPixelData().MulColor.a < 0)
+					{
+						_DESC.Renderer->GetPixelData().MulColor.a = 0;
+					}
+				}
+			});
+		Renderer->AnimationBindEnd("Bale_talon_n", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->Off();
+			});
+		Renderer->ChangeFrameAnimation("Bale_talon_n");
+		Renderer->SetScaleRatio(0.8f);
+		Renderer->ScaleToTexture();
+		Renderer->Off();
+		Texture_StingEffect_Slash.push_back(Renderer);
+
+
+		Renderer = CreateComponent<GameEngineEffectRenderer>("Talon");
+		Renderer->GetTransform().SetLocalPosition({ 260, 57, -10.00f });
+		//Renderer->SetPivot(PIVOTMODE::LEFT);
+		Renderer->CreateFrameAnimationFolder("Bale_talon_n", FrameAnimation_DESC("Bale_talon_n", 0.0625f, false));
+		Renderer->AnimationBindStart("Bale_talon_n", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->GetPixelData().MulColor.a = 1.f;
+			});
+		Renderer->AnimationBindTime("Bale_talon_n", [](const FrameAnimation_DESC& _DESC, float _Delta)
+			{
+				if (_DESC.CurFrame > 5)
+				{
+					_DESC.Renderer->GetPixelData().MulColor.a -= _Delta * 5.f;
+					if (_DESC.Renderer->GetPixelData().MulColor.a < 0)
+					{
+						_DESC.Renderer->GetPixelData().MulColor.a = 0;
+					}
+				}
+			});
+		Renderer->AnimationBindEnd("Bale_talon_n", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->Off();
+			});
+		Renderer->ChangeFrameAnimation("Bale_talon_n");
+		Renderer->SetScaleRatio(0.8f);
+		Renderer->ScaleToTexture();
+		Renderer->Off();
+		Texture_StingEffect_Slash.push_back(Renderer);
+
+		Renderer = CreateComponent<GameEngineEffectRenderer>("Talon");
+		Renderer->GetTransform().SetLocalPosition({ 265, -23,-10.00f });
+		//Renderer->SetPivot(PIVOTMODE::LEFT);
+		Renderer->CreateFrameAnimationFolder("Bale_talon_n", FrameAnimation_DESC("Bale_talon_n", 0.0625f, false));
+		Renderer->AnimationBindStart("Bale_talon_n", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->GetPixelData().MulColor.a = 1.f;
+			});
+		Renderer->AnimationBindTime("Bale_talon_n", [](const FrameAnimation_DESC& _DESC, float _Delta)
+			{
+				if (_DESC.CurFrame > 5)
+				{
+					_DESC.Renderer->GetPixelData().MulColor.a -= _Delta * 5.f;
+					if (_DESC.Renderer->GetPixelData().MulColor.a < 0)
+					{
+						_DESC.Renderer->GetPixelData().MulColor.a = 0;
+					}
+				}
+			});
+		Renderer->AnimationBindEnd("Bale_talon_n", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->Off();
+			});
+		Renderer->ChangeFrameAnimation("Bale_talon_n");
+		Renderer->SetScaleRatio(0.8f);
+		Renderer->ScaleToTexture();
+		Renderer->Off();
+		Texture_StingEffect_Slash.push_back(Renderer);
+
+
+		//////////////////////////////
+
+
+
+		Renderer = CreateComponent<GameEngineEffectRenderer>("Sting");
+		Renderer->GetTransform().SetLocalPosition({ 120, -20, -10.01f });
+		Renderer->CreateFrameAnimationFolder("Sting", FrameAnimation_DESC("Bale_Shoot_Effect_All", 0.0625f, false));
+		Renderer->ChangeFrameAnimation("Sting");
+		Renderer->AnimationBindEnd("Sting", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->Off();
+			});
+		Renderer->ScaleToTexture();
+		Renderer->Off();
+		Texture_StingEffect_Puple.push_back(Renderer);
+
+		Renderer = CreateComponent<GameEngineEffectRenderer>("Sting");
+		Renderer->GetTransform().SetLocalPosition({ 80, -55, -10.01f });
+		Renderer->CreateFrameAnimationFolder("Sting", FrameAnimation_DESC("Bale_Shoot_Effect_All", 0.0625f, false));
+		Renderer->ChangeFrameAnimation("Sting");
+		Renderer->AnimationBindEnd("Sting", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->Off();
+			});
+		Renderer->ScaleToTexture();
+		Renderer->Off();
+		Texture_StingEffect_Puple.push_back(Renderer);
+
+
+		Renderer = CreateComponent<GameEngineEffectRenderer>("Sting");
+		Renderer->GetTransform().SetLocalPosition({ 100, 5, -10.01f });
+		Renderer->CreateFrameAnimationFolder("Sting", FrameAnimation_DESC("Bale_Shoot_Effect_All", 0.0625f, false));
+		Renderer->ChangeFrameAnimation("Sting");
+		Renderer->AnimationBindEnd("Sting", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->Off();
+			});
+		Renderer->ScaleToTexture();
+		Renderer->Off();
+		Texture_StingEffect_Puple.push_back(Renderer);
+
+
+		//Renderer = CreateComponent<GameEngineEffectRenderer>("Sting");
+		//Renderer->GetTransform().SetLocalPosition({ 105, -75, 0 });
+		//Renderer->CreateFrameAnimationFolder("Sting", FrameAnimation_DESC("Bale_Shoot_Effect_All", 0.0625f, false));
+		//Renderer->ChangeFrameAnimation("Sting");
+		//Renderer->AnimationBindEnd("Sting", [](const FrameAnimation_DESC& _DESC)
 		//	{
 		//		_DESC.Renderer->Off();
 		//	});
-		//Texture_StingEffect_Puple->ScaleToTexture();
-		//Texture_StingEffect_Puple->Off();
+		//Renderer->ScaleToTexture();
+		//Renderer->Off();
+		//Texture_StingEffect_Puple.push_back(Renderer);
 
+
+
+
+
+		Renderer = CreateComponent<GameEngineEffectRenderer>("Talon");
+		Renderer->GetTransform().SetLocalPosition({ 200, 12, -10.00f });
+		//Renderer->SetPivot(PIVOTMODE::LEFT);
+		Renderer->CreateFrameAnimationFolder("Bale_talon_n", FrameAnimation_DESC("Bale_talon_n", 0.0625f, false));
+		Renderer->AnimationBindStart("Bale_talon_n", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->GetPixelData().MulColor.a = 1.f;
+			});
+		Renderer->AnimationBindTime("Bale_talon_n", [](const FrameAnimation_DESC& _DESC, float _Delta)
+			{
+				if (_DESC.CurFrame > 5)
+				{
+					_DESC.Renderer->GetPixelData().MulColor.a -= _Delta * 5.f;
+					if (_DESC.Renderer->GetPixelData().MulColor.a < 0)
+					{
+						_DESC.Renderer->GetPixelData().MulColor.a = 0;
+					}
+				}
+			});
+		Renderer->AnimationBindEnd("Bale_talon_n", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->Off();
+			});
+		Renderer->ChangeFrameAnimation("Bale_talon_n");
+		Renderer->SetScaleRatio(0.8f);
+		Renderer->ScaleToTexture();
+		Renderer->Off();
+		Texture_StingEffect_Slash.push_back(Renderer);
+
+
+		Renderer = CreateComponent<GameEngineEffectRenderer>("Talon");
+		Renderer->GetTransform().SetLocalPosition({ 160, -23,-10.00f });
+		//Renderer->SetPivot(PIVOTMODE::LEFT);
+		Renderer->CreateFrameAnimationFolder("Bale_talon_n", FrameAnimation_DESC("Bale_talon_n", 0.0625f, false));
+		Renderer->AnimationBindStart("Bale_talon_n", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->GetPixelData().MulColor.a = 1.f;
+			});
+		Renderer->AnimationBindTime("Bale_talon_n", [](const FrameAnimation_DESC& _DESC, float _Delta)
+			{
+				if (_DESC.CurFrame > 5)
+				{
+					_DESC.Renderer->GetPixelData().MulColor.a -= _Delta * 5.f;
+					if (_DESC.Renderer->GetPixelData().MulColor.a < 0)
+					{
+						_DESC.Renderer->GetPixelData().MulColor.a = 0;
+					}
+				}
+			});
+		Renderer->AnimationBindEnd("Bale_talon_n", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->Off();
+			});
+		Renderer->ChangeFrameAnimation("Bale_talon_n");
+		Renderer->SetScaleRatio(0.8f);
+		Renderer->ScaleToTexture();
+		Renderer->Off();
+		Texture_StingEffect_Slash.push_back(Renderer);
+
+
+		//Renderer = CreateComponent<GameEngineEffectRenderer>("Talon");
+		//Renderer->GetTransform().SetLocalPosition({ 180, 37, 0.01f });
+		////Renderer->SetPivot(PIVOTMODE::LEFT);
+		//Renderer->CreateFrameAnimationFolder("Bale_talon_n", FrameAnimation_DESC("Bale_talon_n", 0.0625f, false));
+		//Renderer->AnimationBindStart("Bale_talon_n", [](const FrameAnimation_DESC& _DESC)
+		//	{
+		//		_DESC.Renderer->GetPixelData().MulColor.a = 1.f;
+		//	});
+		//Renderer->AnimationBindTime("Bale_talon_n", [](const FrameAnimation_DESC& _DESC, float _Delta)
+		//	{
+		//		if (_DESC.CurFrame > 5)
+		//		{
+		//			_DESC.Renderer->GetPixelData().MulColor.a -= _Delta * 5.f;
+		//			if (_DESC.Renderer->GetPixelData().MulColor.a < 0)
+		//			{
+		//				_DESC.Renderer->GetPixelData().MulColor.a = 0;
+		//			}
+		//		}
+		//	});
+		//Renderer->AnimationBindEnd("Bale_talon_n", [](const FrameAnimation_DESC& _DESC)
+		//	{
+		//		_DESC.Renderer->Off();
+		//	});
+		//Renderer->ChangeFrameAnimation("Bale_talon_n");
+		//Renderer->SetScaleRatio(0.8f);
+		//Renderer->ScaleToTexture();
+		//Renderer->Off();
+		//Texture_StingEffect_Slash.push_back(Renderer);
+
+		Renderer = CreateComponent<GameEngineEffectRenderer>("Talon");
+		Renderer->GetTransform().SetLocalPosition({ 185, -43, -10.00f });
+		//Renderer->SetPivot(PIVOTMODE::LEFT);
+		Renderer->CreateFrameAnimationFolder("Bale_talon_n", FrameAnimation_DESC("Bale_talon_n", 0.0625f, false));
+		Renderer->AnimationBindStart("Bale_talon_n", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->GetPixelData().MulColor.a = 1.f;
+			});
+		Renderer->AnimationBindTime("Bale_talon_n", [](const FrameAnimation_DESC& _DESC, float _Delta)
+			{
+				if (_DESC.CurFrame > 5)
+				{
+					_DESC.Renderer->GetPixelData().MulColor.a -= _Delta * 5.f;
+					if (_DESC.Renderer->GetPixelData().MulColor.a < 0)
+					{
+						_DESC.Renderer->GetPixelData().MulColor.a = 0;
+					}
+				}
+			});
+		Renderer->AnimationBindEnd("Bale_talon_n", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->Off();
+			});
+		Renderer->ChangeFrameAnimation("Bale_talon_n");
+		Renderer->SetScaleRatio(0.8f);
+		Renderer->ScaleToTexture();
+		Renderer->Off();
+		Texture_StingEffect_Slash.push_back(Renderer);
+
+
+		for (auto& Effect : Texture_StingEffect_Puple)
+		{
+			Effect->SetParent(Actor_TrackingObject);
+		}
+
+		for (auto& Effect : Texture_StingEffect_Slash)
+		{
+			Effect->SetParent(Actor_TrackingObject);
+		}
+
+		Collision_StingHit = CreateComponent<GameEngineCollision>("StingHit");
+		Collision_StingHit->GetTransform().SetLocalScale({600, 150, 180});
+		Collision_StingHit->GetTransform().SetLocalPosition({120, 0});
+		Collision_StingHit->SetDebugSetting(CollisionType::CT_SPHERE, float4::BLUE);
+		Collision_StingHit->Off();
 
 		//Texture_SmokeEffect
 
 
-		//Texture_StingEffect_Puple
+		//Texture_StingEffect_Puple;
 		//Texture_StingSmokeEffect
 	}
 }
+
+
 
 CollisionReturn Bale::GetPlayer(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
@@ -327,8 +689,8 @@ void Bale::Update(float _DeltaTime)
 			Barrier_On = true;
 			Barrier_HP = 15180000;
 			Texure_Barrier->On();
-			Texure_Barrier_Effect_Front->On();
-			Texure_Barrier_Effect_FrontDodge->On();
+			//Texure_Barrier_Effect_Front->On();
+			//Texure_Barrier_Effect_FrontDodge->On();
 		}
 	}
 	else
@@ -574,7 +936,7 @@ void Bale::FSM_Hit_Stand_Update(float _DeltaTime, const StateInfo& _Info)
 }
 void Bale::FSM_Hit_Stand_End(const StateInfo& _Info)
 {
-
+	Manager_StatManager->SetHit_StandEnd();
 }
 
 void Bale::FSM_Hit_Aerial_Start(const StateInfo& _Info)
@@ -594,10 +956,12 @@ void Bale::FSM_Hit_Aerial_Update(float _DeltaTime, const StateInfo& _Info)
 void Bale::FSM_Hit_Aerial_End(const StateInfo& _Info)
 {
 	JumpGoingDown = false;
+	Manager_StatManager->SetAerialEnd();
 }
 
 void Bale::FSM_Hit_Aerial_DoingDown_Start(const StateInfo& _Info)
 {
+	Manager_StatManager->SetAerial();
 	Texture_Monster->ChangeFrameAnimation("Bale_HitDown");
 	Collision_HitBody_Top->Off();
 	GoingDownTime = 0.f;
@@ -614,6 +978,7 @@ void Bale::FSM_Hit_Aerial_DoingDown_Update(float _DeltaTime, const StateInfo& _I
 }
 void Bale::FSM_Hit_Aerial_DoingDown_End(const StateInfo& _Info)
 {
+	Manager_StatManager->SetAerialEnd();
 	Collision_HitBody_Top->On();
 	GoingDownTime = 0.f;
 }
@@ -724,7 +1089,7 @@ void Bale::FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _Info)
 	const float4& Monster = GetTransform().GetWorldPosition();
 
 	float4 Dir = 0;
-	if (Collision_TargetPos->GetTransform().GetWorldPosition().x - GetTransform().GetWorldPosition().x > 0)
+	if (Collision.x - Monster.x > 0)
 	{
 		Dir.x = 180.f;
 	}
@@ -733,16 +1098,19 @@ void Bale::FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _Info)
 		Dir.x = -180.f;
 	}
 
-	if (Collision_TargetPos->GetTransform().GetWorldPosition().z - GetTransform().GetWorldPosition().z > 0)
+	if (Collision.z - Monster.z > 0)
 	{
 		Dir.z = 180.f;
 	}
 	else
 	{
 		Dir.z = -180.f;
+
 	}
-	
-	Manager_MoveManager->SetCharacterMove({ Dir.x * _DeltaTime, Dir.z * _DeltaTime });
+
+
+	Manager_MoveManager->SetCharacterMoveCheck({ Dir.x * _DeltaTime, Dir.z * _DeltaTime }, Collision);
+
 	
 }
 void Bale::FSM_Move_Walk_End(const StateInfo& _Info)
@@ -754,6 +1122,10 @@ void Bale::FSM_Att_Sting_Start(const StateInfo& _Info)
 {			  
 	Manager_StatManager->SetDoSkill();
 	Texture_Monster->ChangeFrameAnimation("Bale_Sting");
+
+	Actor_TrackingObject->GetTransform().SetLocalPosition(GetTransform().GetWorldPosition());
+	GetTransform().GetLocalScale().x > 0 ? Actor_TrackingObject->GetTransform().PixLocalPositiveX() : Actor_TrackingObject->GetTransform().PixLocalNegativeX();
+
 }
 void Bale::FSM_Att_Sting_Update(float _DeltaTime, const StateInfo& _Info)
 {
@@ -765,6 +1137,93 @@ void Bale::FSM_Att_Sting_End(const StateInfo& _Info)
 	Manager_StatManager->SetDoSkillEnd();
 }
 
+
+void Bale::Sting_Update(const FrameAnimation_DESC& _DESC)
+{
+	switch (_DESC.CurFrame)
+	{
+	case 2:
+		Texture_StingEffect_Puple[0]->On();
+		Texture_StingEffect_Puple[0]->ChangeFrameAnimation("Sting", true);
+
+		Texture_StingEffect_Slash[0]->On();
+		Texture_StingEffect_Slash[0]->ChangeFrameAnimation("Bale_talon_n", true);
+
+
+		Texture_StingEffect_Puple[1]->On();
+		Texture_StingEffect_Puple[1]->ChangeFrameAnimation("Sting", true);
+
+		Texture_StingEffect_Slash[1]->On();
+		Texture_StingEffect_Slash[1]->ChangeFrameAnimation("Bale_talon_n", true);
+
+
+		Texture_StingEffect_Puple[2]->On();
+		Texture_StingEffect_Puple[2]->ChangeFrameAnimation("Sting", true);
+
+		Texture_StingEffect_Slash[2]->On();
+		Texture_StingEffect_Slash[2]->ChangeFrameAnimation("Bale_talon_n", true);
+
+
+		Texture_StingEffect_Puple[3]->On();
+		Texture_StingEffect_Puple[3]->ChangeFrameAnimation("Sting", true);
+
+		Texture_StingEffect_Slash[3]->On();
+		Texture_StingEffect_Slash[3]->ChangeFrameAnimation("Bale_talon_n", true);
+
+		Collision_StingHit->On();
+		if (Collision_StingHit->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Player, CollisionType::CT_SPHERE,
+			std::bind(&Bale::GetPlayer, this, std::placeholders::_1, std::placeholders::_2)))
+		{
+			int Dir = Collision_StampingHit->GetTransform().GetWorldPosition().x - Hit_Player->GetTransform().GetWorldPosition().x > 0 ? -1 : 1;
+			Hit_Player->BeHit({ 30, 0, 0, 40.f }, HitPostureType::Standing, nullptr, nullptr, Dir, 300);
+		}
+		Collision_StingHit->Off();
+		break;
+	case 7:
+
+		Texture_StingEffect_Puple[4]->On();
+		Texture_StingEffect_Puple[4]->ChangeFrameAnimation("Sting", true);
+
+		Texture_StingEffect_Slash[4]->On();
+		Texture_StingEffect_Slash[4]->ChangeFrameAnimation("Bale_talon_n", true);
+
+
+		Texture_StingEffect_Puple[5]->On();
+		Texture_StingEffect_Puple[5]->ChangeFrameAnimation("Sting", true);
+
+		Texture_StingEffect_Slash[5]->On();
+		Texture_StingEffect_Slash[5]->ChangeFrameAnimation("Bale_talon_n", true);
+
+
+		Texture_StingEffect_Puple[6]->On();
+		Texture_StingEffect_Puple[6]->ChangeFrameAnimation("Sting", true);
+
+		Texture_StingEffect_Slash[6]->On();
+		Texture_StingEffect_Slash[6]->ChangeFrameAnimation("Bale_talon_n", true);
+
+
+		//Texture_StingEffect_Puple[7]->On();
+		//Texture_StingEffect_Puple[7]->ChangeFrameAnimation("Sting", true);
+
+		//Texture_StingEffect_Slash[7]->On();
+		//Texture_StingEffect_Slash[7]->ChangeFrameAnimation("Bale_talon_n", true);
+
+		Collision_StingHit->On();
+		if (Collision_StingHit->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Player, CollisionType::CT_SPHERE,
+			std::bind(&Bale::GetPlayer, this, std::placeholders::_1, std::placeholders::_2)))
+		{
+			int Dir = Collision_StampingHit->GetTransform().GetWorldPosition().x - Hit_Player->GetTransform().GetWorldPosition().x > 0 ? -1 : 1;
+			Hit_Player->BeHit({ 30, 0, 0, 40.f }, HitPostureType::Standing, nullptr, nullptr, Dir, 300);
+		}
+		Collision_StingHit->Off();
+
+
+		break;
+	default:
+		break;
+	}
+
+}
 
 void Bale::Sting_End(const FrameAnimation_DESC& _DESC)
 {
@@ -813,7 +1272,7 @@ void Bale::Bale_Stamping(const FrameAnimation_DESC& _DESC)
 		if (Collision_StampingHit->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Player ,CollisionType::CT_SPHERE,
 			std::bind(&Bale::GetPlayer, this, std::placeholders::_1, std::placeholders::_2)))
 		{
-			float Dir = Collision_StampingHit->GetTransform().GetWorldPosition().x - Hit_Player->GetTransform().GetWorldPosition().x > 0 ? -1.f : 1.f;
+			int Dir = Collision_StampingHit->GetTransform().GetWorldPosition().x - Hit_Player->GetTransform().GetWorldPosition().x > 0 ? -1 : 1;
 			Hit_Player->BeHit({ 50, 300 }, HitPostureType::Aerial, nullptr, nullptr, Dir, 500);
 		}
 		Collision_StampingHit->Off();

@@ -31,6 +31,8 @@ public:
 	}
 
 	float4 SetCharacterMove(const float4& _Move);
+	float4 SetCharacterMoveCheck(const float4& _Move, const float4& _TargetPos);
+	
 	//void SetCharacterMove_Inertia(const float4& _Move);
 	void SetCharacterLocation(const float4& _Pos);
 	void SetAerial();

@@ -137,6 +137,7 @@ bool Skill_Fighter_F_Bungwon::TriggerSkill_ect(GameEngineCollision* _This, GameE
 void Skill_Fighter_F_Bungwon::StartSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata)
 {
 	_Avata->ChangeAvataAnimation("Att_Punch_Off");
+	_Avata->SetAllAvataAutoControl(false);
 	MoveDistance = FSM_Move_Helper();
 	MoveDistance *= 0.5f;
 	Att_Bungwon_Delay = 0.f;

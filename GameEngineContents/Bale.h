@@ -39,7 +39,6 @@ private:
 	GameEngineEffectRenderer* Texure_Barrier;
 	GameEngineEffectRenderer* Texure_Barrier_Effect_Front;
 	GameEngineEffectRenderer* Texure_Barrier_Effect_FrontDodge;
-
 	GameEngineEffectRenderer* Texure_Barrier_Effect_Back;
 	GameEngineEffectRenderer* Texure_Barrier_Effect_BackDodge;
 
@@ -96,11 +95,23 @@ private:
 	void FSM_Att_Sting_Update(float _DeltaTime, const StateInfo& _Info);
 	void FSM_Att_Sting_End(const StateInfo& _Info);
 
-	GameEngineEffectRenderer* Texture_StingEffect;
-	GameEngineEffectRenderer* Texture_StingEffect_Puple;
-	GameEngineEffectRenderer* Texture_StingSmokeEffect;
+	std::vector<GameEngineEffectRenderer*>  Texture_StingEffect_Slash;
+	std::vector<GameEngineEffectRenderer*>  Texture_StingEffect_Puple;
+	std::vector<GameEngineEffectRenderer*>  Texture_StingSmokeEffect;
+
+	GameEngineCollision* Collision_StingHit;
+
+
+	GameEngineActor* Actor_TrackingObject;
+
+
+
+	
 
 	void Sting_End(const FrameAnimation_DESC& _DESC);
+
+
+	void Sting_Update(const FrameAnimation_DESC& _DESC);
 
 
 	void FSM_Att_Stamping_Start(const StateInfo& _Info);

@@ -24,6 +24,8 @@ void GamePlayMonster::Start()
 {
 	GamePlayObject::Start();
 	Actor_Dummy = GetLevel()->CreateActor<GameEngineActor>();
+
+
 	Manager_StatManager = CreateComponent<CharacterStatManager>();
 }
 
@@ -73,6 +75,7 @@ unsigned int GamePlayMonster::SetHPFromHit(unsigned int _Damage)
 
 void GamePlayMonster::Update(float _Delta)
 {
+	//Actor_TrackingObject->GetTransform().SetLocalPosition(GetTransform().GetWorldPosition());
 	for (auto& Time : All_CollTime)
 	{
 		if (Time.second > 0)
