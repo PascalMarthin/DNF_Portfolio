@@ -18,6 +18,14 @@ void Luke_Stage1_BackGround::Start()
 
 	Texture_MapCollision = GameEngineTexture::Find("Luke_Raid_Stage1_Collision.png");
 
+	Texture_Black = CreateComponent<GameEngineTextureRenderer>();
+	Texture_Black->SetTexture("BlackBackground.png");
+	Texture_Black->GetTransform().SetLocalScale({ 2000, 2000 });
+	Texture_Black->GetTransform().SetLocalPosition({ 0, 0, 1000 });
+	Texture_Black->SetPivot(PIVOTMODE::LEFTTOP);
+	Texture_Black->ChangeCamera(CAMERAORDER::Object);
+	Texture_Black->GetPixelData().MulColor = { 0, 0, 0, 0 };
+
 	SetBackGroundZOrder();
 }
 

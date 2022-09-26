@@ -155,6 +155,8 @@ public:
 	void SetCastingEnd();
 	void SetInvincibility();
 	void SetInvincibilityEnd();
+	void SetSuperarmor();
+	void SetSuperarmorEnd();
 
 	inline void SetEngage()
 	{

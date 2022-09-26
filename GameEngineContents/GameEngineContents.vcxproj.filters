@@ -287,6 +287,9 @@
     <ClInclude Include="Item_Equipment.h">
       <Filter>UI\Item</Filter>
     </ClInclude>
+    <ClInclude Include="GamePlayObjectSpeechPopUp.h">
+      <Filter>Gobal</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -571,6 +574,9 @@
     </ClCompile>
     <ClCompile Include="Item_Equipment.cpp">
       <Filter>UI\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlayObjectSpeechPopUp.cpp">
+      <Filter>Gobal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

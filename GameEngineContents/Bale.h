@@ -44,6 +44,10 @@ private:
 
 	float Barrier_CoolTime;
 	int Barrier_HP;
+
+	//----------배경----------
+	GameEngineEffectRenderer* Texture_BlackBack;
+	
 	//----------Hit----------
 	GamePlayObject* Hit_Player;
 	CollisionReturn GetPlayer(GameEngineCollision* _This, GameEngineCollision* _Other);
@@ -128,6 +132,8 @@ private:
 
 	void Bale_Stamping(const FrameAnimation_DESC& _DESC);
 	
+	// ----------------대쉬----------------
+
 
 	void FSM_Att_Dash_Start(const StateInfo& _Info);
 	void FSM_Att_Dash_Update(float _DeltaTime, const StateInfo& _Info);
@@ -137,7 +143,14 @@ private:
 	GameEngineCollision* Collision_ect;
 
 
+
 	void Bale_DashStart(const FrameAnimation_DESC& _DESC);
+	void Bale_DashUpdate(const FrameAnimation_DESC& _DESC, float _Time);
+	void Bale_DashFrame(const FrameAnimation_DESC& _DESC);
+	float DashColorDelay;
+
+	// ----------------텔레포트----------------
+
 
 	void FSM_Move_Teleport_Start(const StateInfo& _Info);
 	void FSM_Move_Teleport_Update(float _DeltaTime, const StateInfo& _Info);

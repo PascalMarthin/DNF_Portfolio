@@ -343,8 +343,10 @@ enum class CollisionOrder
 	None = 0,
 	InGame_Object = 1,
 	Player = 2,
+
 	Player_Floor = 3,
 	Player_Att = 4,
+	Player_HitBody,
 	Monster = 10,
 	Monster_Att = 11,
 	Monster_Area,

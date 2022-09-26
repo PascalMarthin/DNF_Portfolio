@@ -36,6 +36,12 @@ void Luke_Stage1::Update(float _DeltaTime)
 {
 	if (!GetMainCameraActor()->IsFreeCameraMode() && Player_Character->GetHoldCam() == false)
 	{
+		if (GetAvataCamera()->IsFreeCameraMode())
+		{
+			GetAvataCamera()->FreeCameraModeOnOff();
+		}
+
+
 		float4 Pos = Player_Character->GetMoveManager()->GetMoveCollision()->GetTransform().GetWorldPosition();
 		if (Pos.x <= 705.f * MonitorX)
 		{
@@ -60,6 +66,14 @@ void Luke_Stage1::Update(float _DeltaTime)
 		GetAvataCamera()->GetTransform().SetWorldPosition(Pos);
 		GetOutLineCamera()->GetTransform().SetWorldPosition(Pos);
 		GetUIFontCamera()->GetTransform().SetWorldPosition(Pos);
+	}
+	else if (GetMainCameraActor()->IsFreeCameraMode())
+	{
+		if (!GetAvataCamera()->IsFreeCameraMode())
+		{
+			GetAvataCamera()->FreeCameraModeOnOff();
+		}
+
 	}
 }
 

@@ -136,13 +136,12 @@ void GamePlayNPCInteractionTalk::ShowStringBr(const std::string& _String)
 	vector_Font_Talk.clear();
 
 	int StartCount = 0;
-	int StringAfter = 0;
+	int StringAfter = 50;
 
 	//std::string String = _String.substr(0, 20);
 	float Hight = 85;
 	do 
 	{
-		StringAfter += 50;
 		GameEngineUIFontRenderer* Renderer = CreateComponent<GameEngineUIFontRenderer>();
 		Renderer->GetTransform().SetLocalPosition({ -180 , Hight ,-10.006f });
 		Renderer->SetPositionMode(FontPositionMode::WORLD);
@@ -151,9 +150,9 @@ void GamePlayNPCInteractionTalk::ShowStringBr(const std::string& _String)
 		Renderer->SetSize(18);
 		Renderer->SetTopAndBotSort(TopAndBotSort::BOTTOM);
 		Renderer->SetLeftAndRightSort(LeftAndRightSort::LEFT);
-		if (StringAfter > _String.length())
+		if (StartCount > _String.length())
 		{
-			Renderer->SetText(_String.substr(StartCount, _String.length()), "±¼¸²");
+			Renderer->SetText(_String.substr(StartCount - 50, -1), "±¼¸²");
 		}
 		else
 		{
@@ -163,7 +162,7 @@ void GamePlayNPCInteractionTalk::ShowStringBr(const std::string& _String)
 		}
 		Hight -= 20.f;
 		vector_Font_Talk.push_back(Renderer);
-	} while (StringAfter < _String.length());
+	} while (StartCount < _String.length());
 
 
 }

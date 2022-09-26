@@ -16,6 +16,7 @@
 #include "AvataInventory.h"
 #include "GamePlayObjectNPC.h"
 #include "GamePlayNPCInteraction.h"
+#include "GamePlayObjectSpeechPopUp.h"
 
 GamePlayDataBase* GamePlayCharacter::CurrentCharacterData = nullptr;
 std::list<GamePlayDataBase*> GamePlayCharacter::AllCharacterData;
@@ -80,7 +81,7 @@ void GamePlayCharacter::Start()
 
 
 	Collision_Body = CreateComponent<GameEngineCollision>("Hit_Collision");
-	Collision_Body->GetTransform().SetLocalScale({ 48, 110 });
+	Collision_Body->GetTransform().SetLocalScale({ 48, 110, 20 });
 	Collision_Body->ChangeOrder(CollisionOrder::Player);
 	Collision_Body->SetDebugSetting(CollisionType::CT_SPHERE, { 0, 0, 1, 0.7f });
 
@@ -97,6 +98,10 @@ void GamePlayCharacter::Start()
 	//Collision_HitBody_Top->GetTransform().SetLocalScale({ 48, 110 });
 	//Collision_HitBody_Top->SetDebugSetting(CollisionType::CT_AABB2D, {0, 0, 255, 100});
 	//Collision_HitBody_Top->Off();
+
+	GamePlayObjectSpeechPopUp* Text = CreateComponent<GamePlayObjectSpeechPopUp>();
+
+	Text->CreatePopup("Âõ¾îÁÖ¸¶!");
 
 	Enum_UnitType = UnitType::Unit;
 }

@@ -24,6 +24,7 @@ protected:
 	// void OffEvent() override
 
 private:
+	GameEngineTextureRenderer* Texture_Black;
 
 	GameEngineCollision* Collision_Jelva1F_Door;
 	GameEngineCollision* Collision_Jelva2F_01_Door;
