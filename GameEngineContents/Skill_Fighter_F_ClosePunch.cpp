@@ -59,7 +59,7 @@ void Skill_Fighter_F_ClosePunch::Start()
 			});
 		Texture_Punch00->ChangeFrameAnimation("Punch00");
 		Texture_Punch00->ScaleToTexture();
-		Texture_Punch00->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texture_Punch00->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texture_Punch00->Off();
 	}
 
@@ -74,7 +74,7 @@ void Skill_Fighter_F_ClosePunch::Start()
 			});
 		Texture_Punch01->ChangeFrameAnimation("Punch01");
 		Texture_Punch01->ScaleToTexture();
-		Texture_Punch01->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texture_Punch01->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texture_Punch01->Off();
 	}
 	{
@@ -91,7 +91,7 @@ void Skill_Fighter_F_ClosePunch::Start()
 			});
 		Texture_Punch02->ChangeFrameAnimation("Punch02");
 		Texture_Punch02->ScaleToTexture();
-		Texture_Punch02->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texture_Punch02->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texture_Punch02->Off();
 	}
 	{
@@ -105,7 +105,7 @@ void Skill_Fighter_F_ClosePunch::Start()
 			});
 		Texture_Punch03->ChangeFrameAnimation("Punch03");
 		Texture_Punch03->ScaleToTexture();
-		Texture_Punch03->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texture_Punch03->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texture_Punch03->Off();
 	}
 	{

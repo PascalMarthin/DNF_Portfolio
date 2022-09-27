@@ -63,6 +63,11 @@ void GameEngineDefaultRenderer::Render(float _DeltaTime)
 
 GameEngineRenderingPipeLine* GameEngineDefaultRenderer::GetPipeLine()
 {
+	return PipeLine;
+}
+
+GameEngineRenderingPipeLine* GameEngineDefaultRenderer::GetClonePipeLine()
+{
 	if (false == PipeLine->IsOriginal())
 	{
 		return PipeLine;

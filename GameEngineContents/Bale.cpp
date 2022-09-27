@@ -229,7 +229,7 @@ void Bale::Start()
 		Texure_Barrier_Effect_Front->GetTransform().SetLocalPosition({ 0,0, 0.0001f });
 		Texure_Barrier_Effect_Front->CreateFrameAnimationFolder("Barrier", FrameAnimation_DESC("Bale_back_normal", 0.125f, true));
 		Texure_Barrier_Effect_Front->ChangeFrameAnimation("Barrier");
-		Texure_Barrier_Effect_Front->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texure_Barrier_Effect_Front->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texure_Barrier_Effect_Front->ScaleToTexture();
 		Texure_Barrier_Effect_Front->Off();
 
@@ -237,7 +237,7 @@ void Bale::Start()
 		Texure_Barrier_Effect_FrontDodge->GetTransform().SetLocalPosition({ 0,0, 0.0001f });
 		Texure_Barrier_Effect_FrontDodge->CreateFrameAnimationFolder("Barrier", FrameAnimation_DESC("Bale_front_dodge", 0.125f, true));
 		Texure_Barrier_Effect_FrontDodge->ChangeFrameAnimation("Barrier");
-		Texure_Barrier_Effect_FrontDodge->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texure_Barrier_Effect_FrontDodge->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texure_Barrier_Effect_FrontDodge->ScaleToTexture();
 		Texure_Barrier_Effect_FrontDodge->Off();
 
@@ -247,7 +247,7 @@ void Bale::Start()
 		Texure_Barrier_Effect_Back->GetTransform().SetLocalPosition({ 0,0, 10.0001f });
 		Texure_Barrier_Effect_Back->CreateFrameAnimationFolder("Barrier", FrameAnimation_DESC("Bale_front_dodge", 0.125f, true));
 		Texure_Barrier_Effect_Back->ChangeFrameAnimation("Barrier");
-		Texure_Barrier_Effect_Back->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texure_Barrier_Effect_Back->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texure_Barrier_Effect_Back->ScaleToTexture();
 		Texure_Barrier_Effect_Back->Off();
 
@@ -255,7 +255,7 @@ void Bale::Start()
 		Texure_Barrier_Effect_BackDodge->GetTransform().SetLocalPosition({ 0,0, 10.0001f });
 		Texure_Barrier_Effect_BackDodge->CreateFrameAnimationFolder("Barrier", FrameAnimation_DESC("Bale_front_dodge", 0.125f, true));
 		Texure_Barrier_Effect_BackDodge->ChangeFrameAnimation("Barrier");
-		Texure_Barrier_Effect_BackDodge->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texure_Barrier_Effect_BackDodge->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texure_Barrier_Effect_BackDodge->ScaleToTexture();
 		Texure_Barrier_Effect_BackDodge->Off();
 
@@ -267,7 +267,7 @@ void Bale::Start()
 		Texture_StampingEffect->GetTransform().SetLocalPosition({ 52, 85, -10.0001f });
 		Texture_StampingEffect->CreateFrameAnimationFolder("Stamping", FrameAnimation_DESC("Bale_StampingEffect", 0, 15, 0.05f, false));
 		Texture_StampingEffect->ChangeFrameAnimation("Stamping");
-		Texture_StampingEffect->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texture_StampingEffect->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texture_StampingEffect->AnimationBindEnd("Stamping", [](const FrameAnimation_DESC& _DESC)
 			{
 				_DESC.Renderer->Off();
@@ -280,7 +280,7 @@ void Bale::Start()
 		Texture_StampingEffect_Floor->GetTransform().SetLocalPosition({ 52, 85, -10.0002f });
 		Texture_StampingEffect_Floor->CreateFrameAnimationFolder("Stamping", FrameAnimation_DESC("Bale_StampingEffect", 16, 29, 0.05f, false));
 		Texture_StampingEffect_Floor->ChangeFrameAnimation("Stamping");
-		Texture_StampingEffect_Floor->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texture_StampingEffect_Floor->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texture_StampingEffect_Floor->AnimationBindEnd("Stamping", [](const FrameAnimation_DESC& _DESC)
 			{
 				_DESC.Renderer->Off();
@@ -1444,7 +1444,7 @@ void Bale::Bale_DashFrame(const FrameAnimation_DESC& _DESC)
 			});
 		Renderer->ChangeFrameAnimation("Bale_slash000");
 		Renderer->SetParent(Actor_Dummy);
-		Renderer->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Renderer->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Renderer->ScaleToTexture();
 		Renderer->GetTransform().SetWorldPosition({ Pos.x , Pos.y, Pos.z + 20.002f });
 		Renderer->GetTransform().SetLocalRotate({ 0, 0, 45.f });
@@ -1457,7 +1457,7 @@ void Bale::Bale_DashFrame(const FrameAnimation_DESC& _DESC)
 			});
 		Renderer->ChangeFrameAnimation("Bale_boom_purple_009");
 		Renderer->SetParent(Actor_Dummy);
-		Renderer->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Renderer->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Renderer->ScaleToTexture();
 		Renderer->GetTransform().SetWorldPosition({ Pos.x , Pos.y, Pos.z + 20.f });
 		Renderer->GetTransform().SetLocalRotate({ 0, 0, 45.f });
@@ -1489,7 +1489,7 @@ void Bale::Bale_DashFrame(const FrameAnimation_DESC& _DESC)
 			});
 		Renderer->ChangeFrameAnimation("Bale_slash000");
 		Renderer->SetParent(Actor_Dummy);
-		Renderer->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Renderer->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Renderer->ScaleToTexture();
 		Renderer->GetTransform().SetWorldPosition({ Pos.x , Pos.y, Pos.z + 20.f });
 		Renderer->GetTransform().SetLocalRotate({ 0, 0, -45.f });

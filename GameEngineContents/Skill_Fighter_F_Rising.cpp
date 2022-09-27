@@ -77,7 +77,7 @@ void Skill_Fighter_F_Rising::Start()
 
 		Texture_Rising_Spin->GetTransform().SetLocalRotate({ 0, 0 , 90});
 		Texture_Rising_Spin->GetTransform().SetLocalPosition({ -5 , 25.f, -20.f });
-		Texture_Rising_Spin->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texture_Rising_Spin->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texture_Rising_Spin->GetPixelData().MulColor = { 4.f, 2.0f , 0.9f , 1.5f };
 		Texture_Rising_Spin->GetPixelData().PlusColor = { 0, 0 ,0 , 1 };
 		Texture_Rising_Spin->Off();
@@ -99,7 +99,7 @@ void Skill_Fighter_F_Rising::Start()
 		Texture_Rising_Spin->GetTransform().SetLocalScale({ Texture_Rising_Spin->GetTransform().GetLocalScale().x , Texture_Rising_Spin->GetTransform().GetLocalScale().y * 0.8f });
 		Texture_Rising_Spin->GetTransform().SetLocalRotate({ 0, 0 , 90 });
 		Texture_Rising_Spin->GetTransform().SetLocalPosition({ -10 , -30.f, -20.f });
-		Texture_Rising_Spin->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texture_Rising_Spin->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texture_Rising_Spin->GetPixelData().MulColor = { 4.f, 2.0f , 0.9f , 1.5f };
 		Texture_Rising_Spin->GetPixelData().PlusColor = { 0, 0 ,0 , 1 };
 		Texture_Rising_Spin->Off();
@@ -224,7 +224,7 @@ void Skill_Fighter_F_Rising::Start()
 	//	Texture_Wind_0->GetTransform().SetLocalScale({ Texture_Rising_Spin->GetTransform().GetLocalScale().x * 0.8f, Texture_Rising_Spin->GetTransform().GetLocalScale().y * 0.5f });
 		//Texture_Wind_0->GetTransform().SetLocalRotate({ 0, 0 , 90 });
 		Texture_Wind_0->GetTransform().SetLocalPosition({ 0 , 0, -20.f });
-		Texture_Wind_0->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texture_Wind_0->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texture_Wind_0->GetPixelData().MulColor.a = 0.9f;
 		Texture_Wind_0->Off();
 		Texture_Wind.push_back(Texture_Wind_0);
@@ -243,7 +243,7 @@ void Skill_Fighter_F_Rising::Start()
 		//	Texture_Wind_0->GetTransform().SetLocalScale({ Texture_Rising_Spin->GetTransform().GetLocalScale().x * 0.8f, Texture_Rising_Spin->GetTransform().GetLocalScale().y * 0.5f });
 			//Texture_Wind_0->GetTransform().SetLocalRotate({ 0, 0 , 90 });
 		Texture_Wind_0->GetTransform().SetLocalPosition({ 0 , 0, -20.f });
-		Texture_Wind_0->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texture_Wind_0->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texture_Wind_0->GetTransform().PixLocalNegativeX();
 		Texture_Wind_0->GetPixelData().MulColor.a = 0.9f;
 		Texture_Wind_0->Off();
@@ -263,7 +263,7 @@ void Skill_Fighter_F_Rising::Start()
 		//	Texture_Wind_0->GetTransform().SetLocalScale({ Texture_Rising_Spin->GetTransform().GetLocalScale().x * 0.8f, Texture_Rising_Spin->GetTransform().GetLocalScale().y * 0.5f });
 			//Texture_Wind_0->GetTransform().SetLocalRotate({ 0, 0 , 90 });
 		Texture_Wind_0->GetTransform().SetLocalPosition({ 0 , 50, -20.f });
-		Texture_Wind_0->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texture_Wind_0->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texture_Wind_0->GetTransform().PixLocalNegativeX();
 		Texture_Wind_0->GetPixelData().MulColor.a = 0.9f;
 		Texture_Wind_0->Off();
@@ -290,7 +290,7 @@ void Skill_Fighter_F_Rising::Start()
 		//	Texture_Wind_0->GetTransform().SetLocalScale({ Texture_Rising_Spin->GetTransform().GetLocalScale().x * 0.8f, Texture_Rising_Spin->GetTransform().GetLocalScale().y * 0.5f });
 			//Texture_Wind_0->GetTransform().SetLocalRotate({ 0, 0 , 90 });
 		Texture_Wind_0->GetTransform().SetLocalPosition({ 0 , 70, -20.f });
-		Texture_Wind_0->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texture_Wind_0->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texture_Wind_0->GetTransform().PixLocalNegativeX();
 		Texture_Wind_0->GetPixelData().MulColor = {1.2f,1.2f,1.2f, 0.7f };
 		Texture_Wind_0->Off();

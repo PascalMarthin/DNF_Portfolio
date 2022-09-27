@@ -97,7 +97,7 @@ void Skill_Fighter_F_LightingDance::Start()
 
 		Texture_Illusion_1->ChangeFrameAnimation("Illusion_310");
 		Texture_Illusion_1->ScaleToTexture();
-		Texture_Illusion_1->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texture_Illusion_1->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texture_Illusion_1->GetPixelData().MulColor = { 2.f, 2.f , 2.f , 1.2f };
 		Texture_Illusion_1->SetParent(Actor_DummyActor);
 		Texture_Illusion_1->Off();
@@ -138,7 +138,7 @@ void Skill_Fighter_F_LightingDance::Start()
 
 		Texture_Illusion_2->ChangeFrameAnimation("Illusion_310");
 		Texture_Illusion_2->ScaleToTexture();
-		Texture_Illusion_2->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texture_Illusion_2->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texture_Illusion_2->GetPixelData().MulColor = { 2.f, 2.f , 2.f , 1.2f };
 		Texture_Illusion_2->SetParent(Actor_DummyActor);
 		Texture_Illusion_2->Off();
@@ -179,7 +179,7 @@ void Skill_Fighter_F_LightingDance::Start()
 		Texture_Shock->GetTransform().SetLocalPosition({ -50.f, 10.f });
 		Texture_Shock->SetParent(Actor_DummyActor);
 		//Texture_Shock->GetPixelData().MulColor = { 1, 1, 1, 0.9f };
-		Texture_Shock->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Texture_Shock->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texture_Shock->Off();
 	}
 	{

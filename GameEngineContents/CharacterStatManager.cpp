@@ -53,7 +53,7 @@ void CharacterStatManager::SettingFirstTime()
 				{
 					_Desc.Renderer->Off();
 				});
-			LevelUp->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+			LevelUp->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 			LevelUp->GetPixelData().MulColor.a = 1.f;
 			LevelUp->Off();
 			Texture_LevelUp.push_back(LevelUp);
@@ -70,7 +70,7 @@ void CharacterStatManager::SettingFirstTime()
 				{
 					_Desc.Renderer->Off();
 				});
-			LevelUp->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+			LevelUp->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 			LevelUp->Off();
 			Texture_LevelUp.push_back(LevelUp);
 
@@ -85,7 +85,7 @@ void CharacterStatManager::SettingFirstTime()
 					_Desc.Renderer->Off();
 				});
 			LevelUp->Off();
-			LevelUp->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+			LevelUp->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 			Texture_LevelUp.push_back(LevelUp);
 
 			LevelUp = Object->CreateComponent<GameEngineTextureRenderer>();
@@ -97,7 +97,7 @@ void CharacterStatManager::SettingFirstTime()
 				{
 					_Desc.Renderer->Off();
 				});
-			LevelUp->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+			LevelUp->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 			LevelUp->Off();
 			Texture_LevelUp.push_back(LevelUp);
 
@@ -110,7 +110,7 @@ void CharacterStatManager::SettingFirstTime()
 				{
 					_Desc.Renderer->Off();
 				});
-			LevelUp->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+			LevelUp->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 			LevelUp->Off();
 			Texture_LevelUp.push_back(LevelUp);
 
