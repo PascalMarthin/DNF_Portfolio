@@ -43,6 +43,7 @@ void GameEngineBlend::Setting()
 		return;
 	}
 
+
 	GameEngineDevice::GetContext()->OMSetBlendState(State, Factor.Arr1D, Mask);
 
 }

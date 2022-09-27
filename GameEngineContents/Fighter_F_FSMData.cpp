@@ -550,6 +550,8 @@ void GamePlayCharacter::FSM_Interaction_Update(float _DeltaTime, const StateInfo
 void GamePlayCharacter::FSM_Interaction_End(const StateInfo& _Info)
 {
 	GamePlayNPCInteraction::GetInst()->EndInteraction();
+
+
 }
 
 

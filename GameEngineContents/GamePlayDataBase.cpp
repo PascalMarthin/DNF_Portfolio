@@ -9,6 +9,7 @@ GamePlayDataBase::GamePlayDataBase(CharacterFormerClass _Class, const std::strin
 	: Enum_FormerClass(_Class)
 	, NickName(_Name)
 	, CurrentMap(TownMap::None)
+	, Gold(1000000)
 {
 
 

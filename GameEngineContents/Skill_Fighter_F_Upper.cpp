@@ -28,7 +28,7 @@ void Skill_Fighter_F_Upper::Start()
 	{
 		Texture_Upper = GetActor()->CreateComponent<GameEngineEffectRenderer>("Upper");
 		Texture_Upper->GetTransform().SetLocalPosition({ 0, 72.f, -0.01f });
-		Texture_Upper->CreateFrameAnimationFolder("Upper", FrameAnimation_DESC("Upper", FighterAnimationInter, true));
+		Texture_Upper->CreateFrameAnimationFolder("Upper", FrameAnimation_DESC("Upper", 0.06, true));
 		Texture_Upper->AnimationBindEnd("Upper",
 			[](const FrameAnimation_DESC& _Desc)
 			{

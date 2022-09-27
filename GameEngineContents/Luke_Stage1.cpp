@@ -86,6 +86,8 @@ void Luke_Stage1::LevelStartEvent()
 	}
 	else
 	{
+		BGM_Player.Stop();
+		BGM_Player = GameEngineSound::SoundPlayControl("luke_phase2.ogg");
 		Player_Character->GetMoveManager()->SetObjectPos({});
 		
 		Player_Character->GetTransform().SetLocalPosition({500.f, -500.f, -500.f });

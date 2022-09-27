@@ -426,3 +426,4 @@ bool GameEngineTextureRenderer::IsCurAnimationPause()
 {
 	return CurAni->Pause;
 }
+

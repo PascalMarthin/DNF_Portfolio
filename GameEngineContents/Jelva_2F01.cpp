@@ -2,11 +2,13 @@
 #include "Jelva_2F01.h"
 #include "MoveManager.h"
 #include "Jelva2F01_WaveBackGround.h"
+#include "Roi_hartwig_NPC.h"
 
 Jelva_2F01::Jelva_2F01() 
 	: Texture_Jelva2F01(nullptr)
 	, Player_Character(nullptr)
 	, Texture_Jelva2F01_Wave(nullptr)
+	, NPC_Roi_hartwig(nullptr)
 {
 }
 
@@ -25,6 +27,9 @@ void Jelva_2F01::Start()
 	float Width = Texture_Jelva2F01->GetBackGroundTextureScale().x;
 	Texture_Jelva2F01->GetTransform().SetLocalPosition({ 0, 0, Hight + static_cast<float>(ZSortOrder::BackGround) });
 	Texture_Jelva2F01_Wave->GetTransform().SetLocalPosition({ 0, 0, Hight + static_cast<float>(ZSortOrder::BackGround) });
+
+	NPC_Roi_hartwig = CreateActor<Roi_hartwig_NPC>();
+	NPC_Roi_hartwig->GetTransform().SetLocalPosition({ 400, -520, -520 });
 
 	Player_Character = CreateActor<GamePlayCharacter>();
 	//Player_Character->GetTransform().SetLocalPosition({ GameEngineWindow::GetScale().hx(), -GameEngineWindow::GetScale().hy() - 200.f, Hight - GameEngineWindow::GetScale().hy() - 200.f + static_cast<float>(ZSortOrder::Character_Avata) - static_cast<float>(ZSortOrder::Character_Fighter_F) });
@@ -86,6 +91,8 @@ void Jelva_2F01::LevelStartEvent()
 	}
 	else// Debug
 	{
+		BGM_Player.Stop();
+		BGM_Player = GameEngineSound::SoundPlayControl("jelva.ogg");
 		Player_Character->GetTransform().SetLocalPosition({ 1200.f  , -700.f , -700.f });
 	}
 

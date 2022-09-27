@@ -99,9 +99,9 @@ void GamePlayCharacter::Start()
 	//Collision_HitBody_Top->SetDebugSetting(CollisionType::CT_AABB2D, {0, 0, 255, 100});
 	//Collision_HitBody_Top->Off();
 
-	GamePlayObjectSpeechPopUp* Text = CreateComponent<GamePlayObjectSpeechPopUp>();
+//	GamePlayObjectSpeechPopUp* Text = CreateComponent<GamePlayObjectSpeechPopUp>();
 
-	Text->CreatePopup("찢어주마!");
+//	Text->CreatePopup("찢어주마!");
 
 	Enum_UnitType = UnitType::Unit;
 }

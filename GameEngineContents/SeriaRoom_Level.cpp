@@ -54,11 +54,21 @@ void SeriaRoom_Level::LevelStartEvent()
 	float Hight = Texture_SeriaRoom->GetBackGroundTextureScale().y;
 	if (GamePlayDataBase::GetCurrentCharacterData()->GetCurrentMap() == TownMap::None)
 	{
+		BGM_Player = GameEngineSound::SoundPlayControl("seria_gate.ogg");
 		Fighter->GetTransform().SetLocalPosition({ GameEngineWindow::GetScale().hx(), -GameEngineWindow::GetScale().hy() - 100.f, -GameEngineWindow::GetScale().hy() - 100.f });
 	}
 	else
 	{
+		BGM_Player.Stop();
+		BGM_Player = GameEngineSound::SoundPlayControl("seria_gate.ogg");
 		Fighter->GetTransform().SetLocalPosition({ GameEngineWindow::GetScale().hx(), -GameEngineWindow::GetScale().hy() - 200.f, -GameEngineWindow::GetScale().hy() - 200.f });
 	}
 	GamePlayDataBase::GetCurrentCharacterData()->SetCurrentMap(TownMap::Seria_Room);
+
+
+}
+
+void SeriaRoom_Level::LevelEndEvent()
+{
+	BGM_Player.Stop();
 }

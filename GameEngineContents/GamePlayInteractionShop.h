@@ -21,9 +21,15 @@ public:
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
+
+	//void OffEvent() override;
 	void LevelStartEvent() override;
 	void LevelEndEvent() override;
 private:
 	std::vector<GameEngineUIRenderer*> vector_ItemSlot;
+	std::vector<GameEngineUIRenderer*> vector_ItemIcon;
+
+	std::map<GamePlayItemCode, int>* map_SellList;
+	GameEngineUIRenderer* Texture_Window;
 };
 

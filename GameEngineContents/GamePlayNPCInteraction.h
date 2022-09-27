@@ -9,6 +9,7 @@ class GameEngineUIFontRenderer;
 class GamePlayObjectNPC;
 class GamePlayInteractionWindow;
 class GamePlayNPCInteractionTalk;
+class GamePlayInteractionShop;
 class GamePlayNPCInteraction : public GameEngineActor
 {
 public:
@@ -57,6 +58,7 @@ private:
 
 	GamePlayInteractionWindow* Actor_InteractWindow;
 	GamePlayNPCInteractionTalk* Actor_Talk;
+	GamePlayInteractionShop* Actor_Shop;
 
 
 	InteractOption CurrentActiveInteract;

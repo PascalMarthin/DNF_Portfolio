@@ -247,6 +247,8 @@ private:
 	std::map<InventoryBag, std::vector<InventoryData*>> DataBase_InventoryData;
 	
 
+	unsigned int Gold;
+
 	TownMap CurrentMap;
 
 	//---------------Skill---------------

@@ -263,6 +263,7 @@ void Skill_Fighter_F_ClosePunch::StartSkill(CharacterStatManager* _Stat, MoveMan
 	Att_ClosePunch_Delay = 0.f;
 	Bool_Texture_W_Middle_d_Start = false;
 	Texture_W_Front_ = false;
+	_Avata->SetAllAvataAutoControl(false);
 }
 
 void Skill_Fighter_F_ClosePunch::Texture_W_Front_d_Animation_Start(const FrameAnimation_DESC& _Desc)

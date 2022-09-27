@@ -502,6 +502,7 @@ void CharacterStatManager::SetInvincibilityEnd()
 void CharacterStatManager::SetSuperarmor()
 {
 	PlayerCurrentState |= CharacterStat::Player_Character_Superarmor;
+
 }
 void CharacterStatManager::SetSuperarmorEnd()
 {

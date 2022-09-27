@@ -22,6 +22,8 @@ void Seria_NPC::Start()
 		Texture_NPCStanding->ChangeFrameAnimationPlus("Seria_Town_Standing");
 		Texture_NPCStanding->ScaleToTexture();
 		Texture_NPCStanding->GetOutLine()->ScaleToTexture();
+		SetOutLineOff();
+
 	//	Texture_NPCStanding->SetPivot(PIVOTMODE::LEFTTOP);
 
 
@@ -29,7 +31,7 @@ void Seria_NPC::Start()
 		//Texture_NPCOutLine->ChangeFrameAnimation("Seria_Town_Standing");
 		//Texture_NPCOutLine->ScaleToTexture();
 
-
+		map_SellItemList[GamePlayItemCode::Fighter_F_Belt_14st_White] = 50000;
 		EnumNPC = NPCEnum::Seria;
 		//std::map<InteractOption, std::vector<std::string>> map_InteractionTalk;
 		vector_Option.push_back(InteractOption::Deal);

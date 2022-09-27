@@ -4,6 +4,9 @@
 #include "TownLevel.h"
 #include "Jelva2F_BackGround.h"
 // Ό³Έν :
+class Merill_pioneer_NPC;
+class Hunter_pon_NPC;
+class Ajelia_NPC;
 class Jelva_2F : public GamePlayLevelTemplate, public TownLevel
 {
 public:
@@ -35,5 +38,9 @@ private:
 	Jelva2F_BackGround* Texture_Jelva2F;
 
 	GamePlayCharacter* Player_Character;
+
+	Hunter_pon_NPC* NPC_Hunter_pon;
+	Merill_pioneer_NPC* NPC_Merill_pioneer;
+	Ajelia_NPC* NPC_Ajelia;
 };
 

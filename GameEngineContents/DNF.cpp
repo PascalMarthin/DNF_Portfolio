@@ -85,7 +85,26 @@ void DNF::AllResourceLoad()
 
 void DNF::BaseSoundLoad()
 {
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resource");
+		Dir.Move("Resource");
+		Dir.Move("Sound");
 
+
+		std::vector<GameEngineDirectory> AllTextureDir = Dir.GetRecursiveAllDirectory();
+
+		for (GameEngineDirectory& DirIter : AllTextureDir)
+		{
+			std::vector<GameEngineFile> Sound = DirIter.GetAllFile();
+
+			for (size_t i = 0; i < Sound.size(); i++)
+			{
+				GameEngineSound::LoadRessource(Sound[i].GetFullPath());
+			}
+			
+		}
+	}
 }
 
 void DNF::BaseTextureLoad()
@@ -408,6 +427,27 @@ void DNF::BaseFolderTextureLoad()
 			GameEngineFolderTexture::Load(DirIter.GetFullPath());
 		}
 	}
+
+
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resource");
+		Dir.Move("Resource");
+		Dir.Move("Texture");
+		Dir.Move("UI");
+		Dir.Move("Shop");
+
+
+		std::vector<GameEngineDirectory> AllTextureDir = Dir.GetRecursiveAllDirectory();
+
+		for (GameEngineDirectory& DirIter : AllTextureDir)
+		{
+
+			GameEngineFolderTexture::Load(DirIter.GetFullPath());
+		}
+	}
+
+
 
 	{
 		GameEngineDirectory Dir;

@@ -4,6 +4,7 @@
 #include "GamePlayObjectNPC.h"
 #include "GamePlayInteractionWindow.h"
 #include "GamePlayNPCInteractionTalk.h"
+#include "GamePlayInteractionShop.h"
 
 GamePlayNPCInteraction* GamePlayNPCInteraction::Inst = nullptr;
 
@@ -24,7 +25,9 @@ void GamePlayNPCInteraction::Start()
 
 	Actor_Talk = GetLevel()->CreateActor<GamePlayNPCInteractionTalk>();
 	Actor_InteractWindow = GetLevel()->CreateActor<GamePlayInteractionWindow>();
+	Actor_Shop = GetLevel()->CreateActor<GamePlayInteractionShop>();
 
+	
 	On();
 }
 
@@ -41,12 +44,15 @@ InteractOption GamePlayNPCInteraction::CheckInput()
 	switch (CurrentActiveInteract)
 	{
 	case InteractOption::None:
+
+
 		SetNPCInteraction(Actor_InteractWindow->CheckInput());
 		break;
 	case InteractOption::Quest:
 
 		break;
 	case InteractOption::Deal:
+
 		break;
 	case InteractOption::Talking:
 		if (Actor_Talk->CheckInput() == InteractOption::Exit)
@@ -71,6 +77,8 @@ void GamePlayNPCInteraction::SetNPCInteractionMenu(GamePlayObjectNPC* _NPC)
 void GamePlayNPCInteraction::NPCInteractionEnd()
 {
 	CurrentActiveInteract = InteractOption::None;
+	Actor_Shop->Off();
+	Actor_Talk->Off();
 }
 
 void GamePlayNPCInteraction::SetNPCInteraction(InteractOption _Option)
@@ -83,10 +91,12 @@ void GamePlayNPCInteraction::SetNPCInteraction(InteractOption _Option)
 		//SetNPCInteraction_Talk(NPC_Interaction->GetStringPtr(InteractOption::Quest));
 		break;
 	case InteractOption::Deal:
-
+		Actor_Shop->SetShopData(NPC_Interaction);
+		Actor_Shop->On();
 		break;
 	case InteractOption::Talking:
 		Actor_Talk->SetNPCInteraction_Talk(NPC_Interaction->GetStringPtr(InteractOption::Talking), NPC_Interaction);
+		Actor_Talk->On();
 		//Actor_Talk->On();
 		break;
 	default:
@@ -100,6 +110,7 @@ void GamePlayNPCInteraction::EndInteraction()
 	Actor_InteractWindow->SetInteractUIOff();
 	Actor_InteractWindow->Off();
 	Actor_Talk->Off();
+	Actor_Shop->Off();
 }
 
 

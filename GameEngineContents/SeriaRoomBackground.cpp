@@ -58,3 +58,12 @@ void SeriaRoomBackground::Update(float _DeltaTime)
 		GEngine::ChangeLevel("Jelva_1F");
 	}
 }
+
+void SeriaRoomBackground::LevelStartEvent()
+{
+	
+}
+void SeriaRoomBackground::LevelEndEvent()
+{
+
+}

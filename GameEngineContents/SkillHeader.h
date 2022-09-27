@@ -10,3 +10,4 @@
 #include "Skill_Fighter_F_LightingDance.h"
 #include "Skill_Fighter_F_Rising.h"
 #include "Skill_Fighter_F_KaiKen.h"
+#include "Skill_Fighter_F_SuperArmor.h"

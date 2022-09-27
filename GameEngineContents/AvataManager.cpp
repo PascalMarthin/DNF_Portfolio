@@ -397,9 +397,16 @@ void AvataManager::Update(float _DeltaTime)
 			}
 
 		}
-		else
+		else if(CharacterStatManager::GetInst() != nullptr && CharacterStatManager::GetInst()->IsSuperarmor())
 		{
 			SetSuperArmorUpdate(_DeltaTime);
+		}
+		else
+		{
+			for (auto& Avata : AllAvatas)
+			{
+				Avata->GetOutLine()->Off();
+			}
 		}
 	}
 }
@@ -413,6 +420,7 @@ void AvataManager::SetSuperArmor()
 		Avata->GetOutLine()->SetScaleRatio(1.5f);
 		Avata->GetOutLine()->ScaleToTexture();
 		Avata->GetOutLine()->GetPixelData().PlusColor = { 1, 1, 0, 1 };
+		Avata->GetOutLine()->On();
 		SuperArmorColorIndex = -1.f;
 	}
 

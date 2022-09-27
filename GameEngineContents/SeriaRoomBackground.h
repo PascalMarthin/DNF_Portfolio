@@ -25,6 +25,10 @@ protected:
 	// void OnEvent() {}
 	// void OffEvent() {}
 
+	void LevelStartEvent() override;
+	void LevelEndEvent() override;
+
+
 private:
 	GameEngineCollision* Collision_SeriaRoom_OutDoor;
 };

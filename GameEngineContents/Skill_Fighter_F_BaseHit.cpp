@@ -90,6 +90,7 @@ bool Skill_Fighter_F_BaseHit::ActiveSkill(CharacterStatManager* _Stat, MoveManag
 					StartSkill(_Stat, _Move, _Avata);
 					return false;
 				}
+
 			}
 			return false;
 		}

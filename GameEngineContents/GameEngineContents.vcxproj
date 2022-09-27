@@ -157,6 +157,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Ajelia_NPC.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="AvataInventory.h">
       <SubType>
       </SubType>
@@ -335,11 +339,19 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Guard_Zelva_NPC.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Hartz_von_kruger_NPC.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="HealHPAni.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Hunter_pon_NPC.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -407,6 +419,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Merill_pioneer_NPC.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="MouseCursorComponent.h">
       <SubType>
       </SubType>
@@ -416,6 +432,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="PlayerInterface.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Roi_hartwig_NPC.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -538,6 +558,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Ajelia_NPC.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="AvataInventory.cpp">
       <SubType>
       </SubType>
@@ -715,11 +739,19 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Guard_Zelva_NPC.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Hartz_von_kruger_NPC.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="HealHPAni.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Hunter_pon_NPC.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -787,6 +819,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Merill_pioneer_NPC.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="MouseCursorComponent.cpp">
       <SubType>
       </SubType>
@@ -796,6 +832,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="PlayerInterface.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Roi_hartwig_NPC.cpp">
       <SubType>
       </SubType>
     </ClCompile>

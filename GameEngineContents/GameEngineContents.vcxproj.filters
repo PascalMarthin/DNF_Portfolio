@@ -290,6 +290,21 @@
     <ClInclude Include="GamePlayObjectSpeechPopUp.h">
       <Filter>Gobal</Filter>
     </ClInclude>
+    <ClInclude Include="Guard_Zelva_NPC.h">
+      <Filter>Object\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="Merill_pioneer_NPC.h">
+      <Filter>Object\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="Hunter_pon_NPC.h">
+      <Filter>Object\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="Ajelia_NPC.h">
+      <Filter>Object\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="Roi_hartwig_NPC.h">
+      <Filter>Object\NPC</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -577,6 +592,21 @@
     </ClCompile>
     <ClCompile Include="GamePlayObjectSpeechPopUp.cpp">
       <Filter>Gobal</Filter>
+    </ClCompile>
+    <ClCompile Include="Guard_Zelva_NPC.cpp">
+      <Filter>Object\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="Merill_pioneer_NPC.cpp">
+      <Filter>Object\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="Hunter_pon_NPC.cpp">
+      <Filter>Object\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="Ajelia_NPC.cpp">
+      <Filter>Object\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="Roi_hartwig_NPC.cpp">
+      <Filter>Object\NPC</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

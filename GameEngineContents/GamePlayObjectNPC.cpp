@@ -28,7 +28,7 @@ void GamePlayObjectNPC::Start()
 	Texture_NPCStanding->GetAtlasDatas().PivotPos = float4::ZERO;
 	//Texture_NPCStanding->GetOutLine()->GetPixelData().Slice = { 5, 5 };
 
-
+	SetOutLineOff();
 
 }
 

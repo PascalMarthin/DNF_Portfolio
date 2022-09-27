@@ -402,6 +402,7 @@ enum class AllSkillEnum
 	 , Fighter_Upper
 	 , Fighter_Bungwon
 	 , Fighter_F_Rising
-	 , Fighter_LowKick
-	 , Fighter_CrashLowKick
+	 , Fighter_F_LowKick
+	 , Fighter_F_CrashLowKick
+	 , Fighter_F_SuperArmor
 };

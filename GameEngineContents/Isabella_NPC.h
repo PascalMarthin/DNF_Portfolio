@@ -1,7 +1,8 @@
 #pragma once
+#include "GamePlayObjectNPC.h"
 
 // Ό³Έν :
-class Isabella_NPC
+class Isabella_NPC : public GamePlayObjectNPC
 {
 public:
 	// constrcuter destructer
@@ -15,7 +16,7 @@ public:
 	Isabella_NPC& operator=(Isabella_NPC&& _Other) noexcept = delete;
 
 protected:
-
+	void Start() override;
 private:
 
 };

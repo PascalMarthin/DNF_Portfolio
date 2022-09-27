@@ -178,5 +178,6 @@ void Skill_Fighter_F_CrashLowKick::StartSkill(CharacterStatManager* _Stat, MoveM
 	_Avata->ChangeAvataAnimation("Att_LowKick2");
 	Texture_CrashLowKick->ChangeFrameAnimation("CrashLowKick_Base");
 	Texture_CrashLowKick->On();
+	_Avata->SetAllAvataAutoControl(false);
 	IsReady = false;
 }

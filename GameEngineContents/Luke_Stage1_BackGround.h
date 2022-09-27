@@ -22,9 +22,12 @@ protected:
 	//void End() override {}
 	// void OnEvent() override
 	// void OffEvent() override
-
+	void LevelStartEvent() override;
+	void LevelEndEvent() override;
 private:
 	GameEngineTextureRenderer* Texture_Black;
+
+
 
 	GameEngineCollision* Collision_Jelva1F_Door;
 	GameEngineCollision* Collision_Jelva2F_01_Door;

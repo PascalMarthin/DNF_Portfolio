@@ -171,6 +171,7 @@ void StatWindow::Start()
 		Font->ChangeCamera(CAMERAORDER::UICAMERA);
 		Font_Renderer[StatClass::Independent_Damage] = Font;
 	}
+	Off();
 }
 
 //Level

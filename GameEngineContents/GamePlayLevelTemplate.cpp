@@ -3,6 +3,8 @@
 #include "GamePlayComboSystem.h"
 #include "GamePlayNPCInteraction.h"
 
+
+ GameEngineSoundPlayer GamePlayLevelTemplate::BGM_Player;
 GamePlayLevelTemplate::GamePlayLevelTemplate()
 	: Camera_UIFont(nullptr)
 	, Camera_OutLine(nullptr)

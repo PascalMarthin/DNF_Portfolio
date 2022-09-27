@@ -31,6 +31,8 @@ public:
 
 	GameEngineRenderingPipeLine* GetPipeLine();
 
+	GameEngineRenderingPipeLine* GetClonePipeLine();
+
 	virtual void InstancingOn();
 
 protected:

@@ -13,6 +13,7 @@ enum class NPCEnum
 	Merill_pioneer,
 	Seria,
 	Roi_hartwig,
+	Guard_Zelva1,
 };
 enum class InteractOption
 {
@@ -27,6 +28,7 @@ class GameEnginePlusTextureRenderer;
 class GamePlayObjectNPC : public GameEngineActor
 {
 	friend class GamePlayInteractionWindow;
+	friend class GamePlayInteractionShop;
 public:
 	// constrcuter destructer
 	GamePlayObjectNPC();
@@ -90,8 +92,10 @@ protected:
 
 	std::map<GamePlayItemCode, int> map_SellItemList;
 
-private:
 	GameEngineCollision* Collision_CharacterSpot;
+
+
+private:
 
 
 

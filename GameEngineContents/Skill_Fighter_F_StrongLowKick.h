@@ -1,7 +1,8 @@
 #pragma once
+#include "GamePlaySkill.h"
 
 // Ό³Έν :
-class Skill_Fighter_F_StrongLowKick
+class Skill_Fighter_F_StrongLowKick : public GamePlaySkill
 {
 public:
 	// constrcuter destructer

@@ -1,7 +1,8 @@
 #include "PreCompile.h"
 #include "Luke_Stage1_BackGround.h"
 
-Luke_Stage1_BackGround::Luke_Stage1_BackGround() 
+Luke_Stage1_BackGround::Luke_Stage1_BackGround()
+	: Texture_Black(nullptr)
 {
 }
 
@@ -30,6 +31,15 @@ void Luke_Stage1_BackGround::Start()
 }
 
 void Luke_Stage1_BackGround::Update(float _DeltaTime)
+{
+
+}
+
+void Luke_Stage1_BackGround::LevelStartEvent()
+{
+
+}
+void Luke_Stage1_BackGround::LevelEndEvent()
 {
 
 }

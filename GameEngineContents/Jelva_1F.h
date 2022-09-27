@@ -5,6 +5,8 @@
 #include "Jelva1F_BackGround.h"
 // Ό³Έν :
 class Hartz_von_kruger_NPC;
+class Guard_Zelva_NPC;
+class Isabella_NPC;
 class Jelva_1F : public GamePlayLevelTemplate, public TownLevel
 {
 public:
@@ -29,11 +31,14 @@ protected:
 
 	void End() override {}
 	void LevelStartEvent() override;
+	void LevelEndEvent() override;
 	// void OffEvent() override
 
 private:
 	Jelva1F_BackGround* Texture_Jelva1F;
 
+	Isabella_NPC* NPC_Isabella;
+	Guard_Zelva_NPC* NPC_Guard_Zelva;
 	Hartz_von_kruger_NPC* NPC_Hartz;
 	GamePlayCharacter* Player_Character;
 };

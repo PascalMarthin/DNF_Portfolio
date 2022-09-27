@@ -6,6 +6,7 @@
 #include "Jelva2F01_WaveBackGround.h"
 
 // Ό³Έν :
+class Roi_hartwig_NPC;
 class Jelva_2F01 : public GamePlayLevelTemplate, public TownLevel
 {
 public:
@@ -36,5 +37,7 @@ private:
 	Jelva2F01_BackGround* Texture_Jelva2F01;
 	Jelva2F01_WaveBackGround* Texture_Jelva2F01_Wave;
 
+
+	Roi_hartwig_NPC* NPC_Roi_hartwig;
 	GamePlayCharacter* Player_Character;
 };

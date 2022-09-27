@@ -37,11 +37,16 @@ public:
 	{
 		return Camera_Effect;
 	}
-	
+	static GameEngineSoundPlayer& GetPlayer()
+	{
+		return BGM_Player;
+	}
 
 protected:
+	static GameEngineSoundPlayer BGM_Player;
 	void Start() override;
 
+	//GameEngineSoundPlayer BGM_Player;
 
 	GamePlayComboSystem* Actor_SystemCombo;
 private:

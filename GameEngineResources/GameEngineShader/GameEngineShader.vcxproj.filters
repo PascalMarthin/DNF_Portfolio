@@ -24,12 +24,6 @@
     <FxCompile Include="Blur.hlsl">
       <Filter>TargetEffect</Filter>
     </FxCompile>
-    <FxCompile Include="Texture_Avata.hlsl">
-      <Filter>Custom</Filter>
-    </FxCompile>
-    <FxCompile Include="Outline.hlsl">
-      <Filter>Custom</Filter>
-    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">
@@ -40,9 +34,6 @@
     </Filter>
     <Filter Include="TargetEffect">
       <UniqueIdentifier>{ae7b6a6e-95f0-4707-af5c-a8e2aed6810a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Custom">
-      <UniqueIdentifier>{f53ade8e-658e-4cab-9d90-986188d9bc03}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

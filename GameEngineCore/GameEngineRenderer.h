@@ -1,6 +1,7 @@
 #pragma once
 #include "GameEngineTransformComponent.h"
 #include "GameEngineLevel.h"
+#include "GameEngineCamera.h"
 
 struct RenderOption 
 {
@@ -9,24 +10,18 @@ struct RenderOption
 	int Temp0;
 	int Temp1;
 };
-//
-//class GameEngineRenderSet 
-//{
-//public:
-//    // 이미 만들어진 랜더링 파이프라인을 얻어와서 쓴다.
-//    GameEngineRenderingPipeLine* PipeLine;
-//    GameEngineShaderResourcesHelper ShaderHelper;
-//
-//
-//
-//};
 
+
+// 추상클래스
+// 강제 내 자식들을 하나의 인터페이스로 묶는 역할입니다.
 // 설명 :
 class GameEngineRenderingPipeLine;
+class GameEngineShaderResourcesHelper;
 class GameEngineRenderer : public GameEngineTransformComponent
 {
 	friend class GameEngineLevel;
 	friend class GameEngineCamera;
+
 
 public:
 	RenderOption renderOption;
@@ -44,7 +39,7 @@ public:
 	// float4x4 ViewPort;
 	void ChangeCamera(CAMERAORDER _Order);
 
-    GameEngineRenderingPipeLine* GetClonePipeLine(GameEngineRenderingPipeLine* _Rendering);
+    GameEngineRenderingPipeLine* ClonePipeLine(GameEngineRenderingPipeLine* _Rendering);
 
     inline int GetRenderingOrder() 
     {
@@ -55,9 +50,17 @@ public:
 
 	virtual void InstancingOn() 
 	{
-		IsInstancing = true;
+		IsInstancing_ = true;
 	};
 
+	bool IsInstancing(GameEngineRenderingPipeLine* _Rendering);
+
+	void InstancingDataSetting(GameEngineRenderingPipeLine* _Line);
+
+	void EngineShaderResourcesSetting(GameEngineShaderResourcesHelper* _ShaderResources);
+
+
+	
 protected:
 	virtual void Start();
 	virtual void Update(float _DeltaTime) {}
@@ -66,13 +69,15 @@ protected:
 	void PushRendererToMainCamera();
 	void PushRendererToUICamera();
 
-
     class GameEngineCamera* Camera;
-	CAMERAORDER CameraOrder;
-    int RenderingOrder;
-	bool IsInstancing;
+
+
 
 private:
+	CAMERAORDER CameraOrder;
+    int RenderingOrder;
+	bool IsInstancing_;
+
 	virtual void Render(float _DeltaTime) = 0;
 
 };

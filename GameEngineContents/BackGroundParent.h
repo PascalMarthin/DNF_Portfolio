@@ -36,6 +36,8 @@ protected:
 	{
 		GetTransform().SetLocalPosition({ 0, 0, GetBackGroundTextureScale().y + static_cast<float>(ZSortOrder::BackGround) });
 	}
+
+
 	GameEngineTextureRenderer* Texture_BackGround;
 
 	GameEngineTexture* Texture_MapCollision;
