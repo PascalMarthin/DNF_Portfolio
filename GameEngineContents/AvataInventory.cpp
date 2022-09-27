@@ -7,6 +7,7 @@
 #include "Item_Avata.h"
 #include "AvataManager.h"
 
+AvataInventory* AvataInventory::Inst = nullptr;
 AvataInventory::AvataInventory() 
 {
 }
@@ -201,6 +202,7 @@ void AvataInventory::LevelStartEvent()
 
 
 	Off();
+	Inst = this;
 }
 
 void AvataInventory::LevelEndEvent()
@@ -218,5 +220,5 @@ void AvataInventory::LevelEndEvent()
 
 
 	GamePlayInventory::LevelEndEvent();
-
+	Inst = nullptr;
 }

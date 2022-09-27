@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "Item_Equipment.h"
 #include "GamePlayItem_DESC.h"
+#include "GamePlayDataBase.h"
 
 Item_Equipment::Item_Equipment() 
 	: Enum_EquipmentClass(AllEquipmentClass::None)
@@ -20,6 +21,34 @@ void Item_Equipment::Start()
 void Item_Equipment::AfterSetDesc()
 {
 	Enum_EquipmentClass = FindAvataClass(Desc_ItemDesc->GetItemCode());
+	SetStatClass(Desc_ItemDesc->GetItemCode());
+}
+
+void Item_Equipment::SetStatClass(GamePlayItemCode _Code)
+{
+	switch (_Code)
+	{
+	case GamePlayItemCode::Debug_Weapon:
+		map_Stat[StatClass::Physical_Damage] = 99999999;
+		break;
+	case GamePlayItemCode::Tropica_Coat:
+		map_Stat[StatClass::MAXHP] = 800000;
+		break;
+	case GamePlayItemCode::Tropica_Belt:
+		map_Stat[StatClass::Physical_Armor] = 100000;
+		break;
+	case GamePlayItemCode::Tropica_Pants:
+		map_Stat[StatClass::MAXHP] = 50000;
+		break;
+	case GamePlayItemCode::Tropica_Neck:
+		map_Stat[StatClass::Physical_Armor] = 5000;
+		break;
+	case GamePlayItemCode::Tropica_Shoes:
+		map_Stat[StatClass::MAXHP] = 5000;
+		break;
+	default:
+		break;
+	}
 }
 
 AllEquipmentClass Item_Equipment::FindAvataClass(GamePlayItemCode _Code)
@@ -41,7 +70,6 @@ AllEquipmentClass Item_Equipment::FindAvataClass(GamePlayItemCode _Code)
 		else if (Code < 130)
 		{
 			Class = AllEquipmentClass::Belt;
-
 		}
 		else if (Code < 140)
 		{

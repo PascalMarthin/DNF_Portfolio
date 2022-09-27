@@ -24,14 +24,18 @@ void Seria_NPC::Start()
 		Texture_NPCStanding->GetOutLine()->ScaleToTexture();
 		SetOutLineOff();
 
-	//	Texture_NPCStanding->SetPivot(PIVOTMODE::LEFTTOP);
+		//Texture_NPCStanding->SetPivot(PIVOTMODE::LEFTTOP);
 
 
 		//Texture_NPCOutLine->CreateFrameAnimationFolder("Seria_Town_Standing", FrameAnimation_DESC("Seria", 0.25f));
 		//Texture_NPCOutLine->ChangeFrameAnimation("Seria_Town_Standing");
 		//Texture_NPCOutLine->ScaleToTexture();
 
-		map_SellItemList[GamePlayItemCode::Fighter_F_Belt_14st_White] = 50000;
+		map_SellItemList[GamePlayItemCode::Tropica_Coat] = 50000;
+		map_SellItemList[GamePlayItemCode::Tropica_Belt] = 50000;
+		map_SellItemList[GamePlayItemCode::Tropica_Pants] = 50000;
+		map_SellItemList[GamePlayItemCode::Tropica_Neck] = 50000;
+		map_SellItemList[GamePlayItemCode::Tropica_Shoes] = 50000;
 		EnumNPC = NPCEnum::Seria;
 		//std::map<InteractOption, std::vector<std::string>> map_InteractionTalk;
 		vector_Option.push_back(InteractOption::Deal);

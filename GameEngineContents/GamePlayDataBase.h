@@ -225,6 +225,22 @@ public:
 		return CurrentCharacterData;
 	}
 
+	inline unsigned int GetGold() const
+	{
+		return Gold;
+	}
+
+	inline unsigned int SetGold(unsigned int _int)
+	{
+		if (Gold < _int)
+		{
+			return Gold = 0;
+		}
+		else
+		{
+			return Gold -= _int;
+		}
+	}
 
 public:
 	inline CharacterAbilityStat* GetAbilityStat()

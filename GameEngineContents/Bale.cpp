@@ -33,6 +33,7 @@ Bale::Bale()
 	, Collision_StingHit(nullptr)
 	, Texture_BlackBack(nullptr)
 	, DashColorDelay(0)
+	, Actor_TrackingObject(nullptr)
 {
 }
 

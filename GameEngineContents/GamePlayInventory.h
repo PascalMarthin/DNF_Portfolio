@@ -25,6 +25,7 @@ class GameEngineCollision;
 class MouseCursorComponent;
 class GamePlayInventory : public GameEngineActor
 {
+	friend class GamePlayDataBase;
 public:
 	// constrcuter destructer
 	GamePlayInventory();
@@ -76,6 +77,17 @@ protected:
 	template<typename ItemType>
 	void SetLevelStartItem(std::vector<InventoryData*>& _Inventory)
 	{
+		for (auto& Blank : Inventory_CurrentItem)
+		{
+			if (Blank.second != nullptr)
+			{
+				Blank.second->Death();
+				Blank.second = nullptr;
+			}
+		}
+		Inventory_CurrentItem.clear();
+		Inventory_CurrentData.clear();
+
 		for (int i = 0; i < _Inventory.size(); i++)
 		{
 			//

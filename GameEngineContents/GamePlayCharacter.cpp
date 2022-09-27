@@ -17,6 +17,7 @@
 #include "GamePlayObjectNPC.h"
 #include "GamePlayNPCInteraction.h"
 #include "GamePlayObjectSpeechPopUp.h"
+#include "ItemInventory_Equipment.h"
 
 GamePlayDataBase* GamePlayCharacter::CurrentCharacterData = nullptr;
 std::list<GamePlayDataBase*> GamePlayCharacter::AllCharacterData;
@@ -44,6 +45,8 @@ GamePlayCharacter::GamePlayCharacter()
 	, Collision_NPCCanInteraction(nullptr)
 	, Collision_NPCVoice(nullptr)
 	, NPC_Interaction(nullptr)
+	, Collision_Body(nullptr)
+	, Class_EquipmentInventory(nullptr)
 {
 }
 
@@ -75,6 +78,9 @@ void GamePlayCharacter::Start()
 	
 	Class_ItemInventory = GetLevel()->CreateActor<ItemInventory_Consumable>();
 	Class_AvataInventory = GetLevel()->CreateActor<AvataInventory>();
+	Class_EquipmentInventory = GetLevel()->CreateActor<ItemInventory_Equipment>();
+	
+	
 
 	Component_MouseCursorComponent = GetLevel()->CreateActor<MouseCursorComponent>(ActorOrder::Mouse);
 
@@ -157,6 +163,7 @@ void GamePlayCharacter::CheckInventoryKey()
 		}
 		else
 		{
+			Class_EquipmentInventory->Off();
 			Class_AvataInventory->Off();
 			Class_ItemInventory->On();
 		}
@@ -170,6 +177,7 @@ void GamePlayCharacter::CheckInventoryKey()
 		}
 		else
 		{
+			Class_EquipmentInventory->Off();
 			Class_ItemInventory->Off();
 			Class_AvataInventory->On();
 		}

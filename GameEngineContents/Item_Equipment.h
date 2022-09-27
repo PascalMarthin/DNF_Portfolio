@@ -2,6 +2,7 @@
 #include "GamePlayItem.h"
 
 // Ό³Έν :
+enum class StatClass;
 class Item_Equipment : public GamePlayItem
 {
 	friend class ItemInventory_Equipment;
@@ -17,9 +18,12 @@ public:
 	Item_Equipment& operator=(Item_Equipment&& _Other) noexcept = delete;
 
 	static AllEquipmentClass FindAvataClass(GamePlayItemCode _Code);
+	void SetStatClass(GamePlayItemCode _Code);
 protected:
 	void Start() override;
 private:
+	std::map<StatClass, unsigned int> map_Stat;
+
 	AllEquipmentClass Enum_EquipmentClass;
 	void AfterSetDesc() override;
 };

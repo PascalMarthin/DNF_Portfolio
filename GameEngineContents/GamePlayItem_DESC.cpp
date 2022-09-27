@@ -27,6 +27,17 @@ void GamePlayItem_DESC::CreateALLItemData()
 	AllItem_DESC[GamePlayItemCode::m_MPPotion] = new GamePlayItem_DESC(GamePlayItemCode::m_MPPotion, GamePlayItemRate::Rare, "m_MPPotion", "m_MPPotion.png");
 	AllItem_DESC[GamePlayItemCode::L_MPPotion] = new GamePlayItem_DESC(GamePlayItemCode::L_MPPotion, GamePlayItemRate::Unique, "L_MPPotion", "L_MPPotion.png");
 
+
+
+
+
+	AllItem_DESC[GamePlayItemCode::Tropica_Coat] = new GamePlayItem_DESC(GamePlayItemCode::Tropica_Coat, GamePlayItemRate::Epic, "Tropica_Coat", "Tropica_Coat.png");
+	AllItem_DESC[GamePlayItemCode::Tropica_Belt] = new GamePlayItem_DESC(GamePlayItemCode::Tropica_Belt, GamePlayItemRate::Epic, "Tropica_Belt", "Tropica_Belt.png");
+	AllItem_DESC[GamePlayItemCode::Tropica_Pants] = new GamePlayItem_DESC(GamePlayItemCode::Tropica_Pants, GamePlayItemRate::Epic, "Tropica_Pants", "Tropica_Pants.png");
+	AllItem_DESC[GamePlayItemCode::Tropica_Neck] = new GamePlayItem_DESC(GamePlayItemCode::Tropica_Neck, GamePlayItemRate::Epic, "Tropica_Neck", "Tropica_Neck.png");
+	AllItem_DESC[GamePlayItemCode::Tropica_Shoes] = new GamePlayItem_DESC(GamePlayItemCode::Tropica_Shoes, GamePlayItemRate::Epic, "Tropica_Shoes", "Tropica_Shoes.png");
+
+
 	AllItem_DESC[GamePlayItemCode::Equipment_Upgrade12] = new GamePlayItem_DESC(GamePlayItemCode::Equipment_Upgrade12, GamePlayItemRate::Unique, "Equipment_Upgrade12", "Equipment_Upgrade12.png");
 	
 	AllItem_DESC[GamePlayItemCode::Fighter_F_Belt_7st_Red		 ]= new GamePlayItem_DESC(GamePlayItemCode::Fighter_F_Belt_7st_Red, GamePlayItemRate::Rare, "Fighter_F_Belt_7st_Red", "Fighter_F_Belt_7st_Red.png");

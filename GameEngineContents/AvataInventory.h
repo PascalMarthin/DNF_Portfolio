@@ -18,6 +18,11 @@ public:
 
 
 	void Mouse_RClick(GamePlayItem* _Item) override;
+
+	static inline AvataInventory* GetInst()
+	{
+		return Inst;
+	}
 protected:
 	void Start() override;
 	//void Update(float _DeltaTime) override;
@@ -36,6 +41,8 @@ private:
 	{
 		MoveItem(_Pos, _Item, InventoryBag::Inventory_Avata);
 	}
+
+	static AvataInventory* Inst;
 
 };
 

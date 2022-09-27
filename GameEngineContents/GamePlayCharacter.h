@@ -24,6 +24,7 @@ class GamePlayDataBase;
 class CharacterSkillManager;
 class ItemInventory_Consumable;
 class AvataInventory;
+class ItemInventory_Equipment;
 class GamePlayCharacter : public GamePlayObject
 {
 
@@ -253,7 +254,7 @@ private:
 	// -----------------Inventory------------------------------
 	ItemInventory_Consumable* Class_ItemInventory;
 	AvataInventory* Class_AvataInventory;
-
+	ItemInventory_Equipment* Class_EquipmentInventory;
 	//------------------Mouse---------------------------------
 	inline MouseCursorComponent* GetMouseCursor()
 	{

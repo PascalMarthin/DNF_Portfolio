@@ -1,6 +1,11 @@
 #include "PreCompile.h"
 #include "GamePlayDataBase.h"
 #include "GamePlayItem_DESC.h"
+#include "Item_Equipment.h"
+#include "ItemInventory_Equipment.h"
+#include "ItemInventory_Consumable.h"
+#include "AvataInventory.h"
+#include "Item_Consumable.h"
 
 std::map<AllCharacterClass, std::map<std::string, FrameAnimation_DESC*>> GamePlayDataBase::CharacterAnimation_DESCs;
 GamePlayDataBase* GamePlayDataBase::CurrentCharacterData = nullptr;
@@ -213,6 +218,11 @@ bool GamePlayDataBase::PushInventoryToItem(InventoryData* _Data)
 			if (Data == nullptr)
 			{
 				Data = _Data;
+				if (ItemInventory_Equipment::GetInst() != nullptr)
+				{
+					ItemInventory_Equipment::GetInst()->SetLevelStartItem<Item_Equipment>(GamePlayDataBase::GetCurrentCharacterData()->GetInventoryData(InventoryBag::Inventory_ItemInventory_Equipment));
+				}
+			
 				return true;
 				break;
 			}
@@ -241,6 +251,11 @@ bool GamePlayDataBase::PushInventoryToItem(InventoryData* _Data)
 			if (Data == nullptr)
 			{
 				Data = _Data;
+				if (ItemInventory_Consumable::GetInst() != nullptr)
+				{
+					ItemInventory_Consumable::GetInst()->SetLevelStartItem<Item_Consumable>(GamePlayDataBase::GetCurrentCharacterData()->GetInventoryData(InventoryBag::Inventory_ItemInventory_Consumable));
+				}
+
 				return true;
 				break;
 			}
@@ -255,6 +270,10 @@ bool GamePlayDataBase::PushInventoryToItem(InventoryData* _Data)
 			if (Data == nullptr)
 			{
 				Data = _Data;
+				if (AvataInventory::GetInst() != nullptr)
+				{
+					AvataInventory::GetInst()->SetLevelStartItem<Item_Consumable>(GamePlayDataBase::GetCurrentCharacterData()->GetInventoryData(InventoryBag::Inventory_Avata_Wear));
+				}
 				return true;
 				break;
 			}

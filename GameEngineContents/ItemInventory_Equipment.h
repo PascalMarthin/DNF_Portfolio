@@ -6,6 +6,7 @@
 // Ό³Έν :
 class ItemInventory_Equipment : public GamePlayInventory
 {
+	friend class CharacterStatManager;
 public:
 	// constrcuter destructer
 	ItemInventory_Equipment();
@@ -17,10 +18,14 @@ public:
 	ItemInventory_Equipment& operator=(const ItemInventory_Equipment& _Other) = delete;
 	ItemInventory_Equipment& operator=(ItemInventory_Equipment&& _Other) noexcept = delete;
 
+	static ItemInventory_Equipment* GetInst()
+	{
+		return Inst;
+	}
 protected:
 
 	void Start() override;
-	//void Update(float _DeltaTime) override;
+	void Update(float _DeltaTime) override;
 
 	// void End() override {}
 	void OnEvent() override;
@@ -38,5 +43,11 @@ private:
 	{
 		MoveItem(_Pos, _Item, InventoryBag::Inventory_ItemInventory_Consumable);
 	}
+
+	GameEngineCollision* Collision_InventoryTapOff;
+
+	std::map<StatClass, unsigned int> map_EquipmentstatUP;
+
+	static ItemInventory_Equipment* Inst;
 };
 

@@ -6,7 +6,9 @@
 #include "GamePlayItem_DESC.h"
 #include "Item_Equipment.h"
 #include "AvataManager.h"
-
+#include "GameEngineUIFontRenderer.h"
+#include "ItemInventory_Consumable.h"
+ItemInventory_Equipment* ItemInventory_Equipment::Inst = nullptr;
 
 ItemInventory_Equipment::ItemInventory_Equipment() 
 {
@@ -20,7 +22,7 @@ ItemInventory_Equipment::~ItemInventory_Equipment()
 void ItemInventory_Equipment::Start()
 {
 	Texture_Inventory = CreateComponent<GameEngineUIRenderer>("Equipmentinventory");
-	Texture_Inventory->SetTexture("Window_Equipmentinventory.png");
+	Texture_Inventory->SetTexture("Window_Iteminventory.png");
 	Texture_Inventory->ScaleToTexture();
 	Texture_Inventory->GetTransform().SetLocalPosition({ 0, 0, 10 });
 
@@ -54,6 +56,43 @@ void ItemInventory_Equipment::Start()
 		}
 	}
 
+	{
+		GameEngineUIRenderer* Texture = CreateComponent<GameEngineUIRenderer>();
+		Texture->SetTexture("Window_InventoryTapOn.png");
+		Texture->GetTransform().SetLocalPosition({ -100, 20 });
+		Texture->ScaleToTexture();
+
+		GameEngineUIFontRenderer* Font = CreateComponent<GameEngineUIFontRenderer>();
+		Font->GetTransform().SetLocalPosition({ -100 , 20 ,-10.006f });
+		Font->SetPositionMode(FontPositionMode::WORLD);
+		Font->SetColor({ 1.0f, 1.0f, 1.0f, 1.0 });
+		Font->SetRenderingOrder(10000);
+		Font->SetText("¿Â∫Ò", "±º∏≤");
+		Font->SetSize(11);
+		Font->SetTopAndBotSort(TopAndBotSort::VCENTER);
+		Font->SetLeftAndRightSort(LeftAndRightSort::CENTER);
+
+		Texture = CreateComponent<GameEngineUIRenderer>();
+		Texture->SetTexture("Window_InventoryTapOff.png");
+		Texture->ScaleToTexture();
+		Texture->GetTransform().SetLocalPosition({ -59, 20 });
+
+		Font = CreateComponent<GameEngineUIFontRenderer>();
+		Font->GetTransform().SetLocalPosition({ -59 , 20 ,-10.006f });
+		Font->SetPositionMode(FontPositionMode::WORLD);
+		Font->SetText("º“∫Ò", "±º∏≤");
+		Font->SetColor({ 1.0f, 1.0f, 1.0f, 1.0 });
+		Font->SetRenderingOrder(10000);
+		Font->SetSize(11);
+		Font->SetTopAndBotSort(TopAndBotSort::VCENTER);
+		Font->SetLeftAndRightSort(LeftAndRightSort::CENTER);
+
+		Collision_InventoryTapOff = CreateComponent<GameEngineCollision>();
+		Collision_InventoryTapOff->GetTransform().SetLocalPosition(Texture->GetTransform().GetLocalPosition());
+		Collision_InventoryTapOff->GetTransform().SetLocalScale(Texture->GetTransform().GetLocalScale());
+		Collision_InventoryTapOff->ChangeOrder(CollisionOrder::UI);
+	}
+
 
 	// ¿Â¬¯ æ∆πŸ≈∏
 	{
@@ -69,7 +108,7 @@ void ItemInventory_Equipment::Start()
 				}
 				GameEngineCollision* Collision = CreateComponent<GameEngineCollision>("Wearing_Avata_Collision");
 				Collision->GetTransform().SetLocalScale({ 15, 15 });
-				Collision->GetTransform().SetLocalPosition({ 4.f + (x * 33.f), 169 + (y * -34.f), -10 });
+				Collision->GetTransform().SetLocalPosition({ -102.f + (x * 33.f), 190 + (y * -34.f), -10 });
 
 				AllEquipmentClass Class = AllEquipmentClass::None;
 				if (y == 0 && x == 0)
@@ -137,7 +176,61 @@ void ItemInventory_Equipment::Mouse_RClick(GamePlayItem* _Item)
 			Inventory_CurrentItem[FromPos] = nullptr;
 		}
 	}
+
+	{
+		for (auto& GameItem : All_WearEquipment_Texture)
+		{
+			if (GameItem.second != nullptr)
+			{
+				GameItem.second->Death();
+				GameItem.second = nullptr;
+			}
+		}
+
+		All_WearEquipment_Texture.clear();
+		map_EquipmentstatUP.clear();
+
+		std::vector<InventoryData*>& WearingAvata = GamePlayDataBase::GetCurrentCharacterData()->GetInventoryData(InventoryBag::Inventory_ItemInventory_Equipment_Wear);
+		for (int i = 0; i < WearingAvata.size(); i++)
+		{
+			//
+			if (WearingAvata[i] == nullptr)
+			{
+				continue;
+			}
+
+			Item_Equipment* Item = CreateComponent<Item_Equipment>("GamePlayItem");
+			Item->SetDESC(WearingAvata[i]->Item_DESC);
+			Item->SetUITextureTransform(All_WearEquipment_Type[static_cast<AllEquipmentClass>(i)]);
+			Inventory_CurrentData[Item] = WearingAvata[i];
+			All_WearEquipment_Texture[All_WearEquipment_Type[static_cast<AllEquipmentClass>(i)]] = Item;
+
+			for (auto& ItemStat : Item->map_Stat)
+			{
+				map_EquipmentstatUP[ItemStat.first] += ItemStat.second;
+			}
+		}
+	}
+
+
+
+	ItemInventory_Consumable::GetInst()->LevelStartEvent();
 	//AvataManager::GetInst()->ReadCharacterDataBase(nullptr);
+
+}
+
+void ItemInventory_Equipment::Update(float _DeltaTime)
+{
+	GamePlayInventory::Update(_DeltaTime);
+	if (GameEngineInput::GetInst()->IsDown("LMouseCLK"))
+	{
+		if (Collision_InventoryTapOff->IsCollision(CollisionType::CT_AABB2D, CollisionOrder::UI_UIMouse, CollisionType::CT_AABB2D))
+		{
+			ItemInventory_Consumable::GetInst()->On();
+			Off();
+		}
+	}
+
 
 }
 
@@ -151,7 +244,8 @@ void ItemInventory_Equipment::LevelStartEvent()
 {
 	GamePlayInventory::LevelStartEvent();
 	SetLevelStartItem<Item_Equipment>(GamePlayDataBase::GetCurrentCharacterData()->GetInventoryData(InventoryBag::Inventory_ItemInventory_Equipment));
-
+	map_EquipmentstatUP.clear();
+	
 	{
 		std::vector<InventoryData*>& WearingAvata = GamePlayDataBase::GetCurrentCharacterData()->GetInventoryData(InventoryBag::Inventory_ItemInventory_Equipment_Wear);
 		for (int i = 0; i < WearingAvata.size(); i++)
@@ -167,6 +261,12 @@ void ItemInventory_Equipment::LevelStartEvent()
 			Item->SetUITextureTransform(All_WearEquipment_Type[static_cast<AllEquipmentClass>(i)]);
 			Inventory_CurrentData[Item] = WearingAvata[i];
 			All_WearEquipment_Texture[All_WearEquipment_Type[static_cast<AllEquipmentClass>(i)]] = Item;
+
+			for (auto& ItemStat : Item->map_Stat)
+			{
+				map_EquipmentstatUP[ItemStat.first] += ItemStat.second;
+			}
+			
 		}
 	}
 
@@ -174,6 +274,7 @@ void ItemInventory_Equipment::LevelStartEvent()
 
 
 	Off();
+	Inst = this;
 }
 
 void ItemInventory_Equipment::LevelEndEvent()
@@ -191,5 +292,5 @@ void ItemInventory_Equipment::LevelEndEvent()
 
 
 	GamePlayInventory::LevelEndEvent();
-
+	Inst = nullptr;
 }

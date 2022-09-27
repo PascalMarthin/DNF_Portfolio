@@ -8,6 +8,7 @@ TitleCreateCharacterButtonUI::TitleCreateCharacterButtonUI()
 	: Actor_CreateCharacterButton(nullptr)
 	, Texture_BackButton(nullptr)
 	, Collision_BackButton(nullptr)
+	, Actor_GoBackButton(nullptr)
 {
 }
 

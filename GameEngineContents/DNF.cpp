@@ -125,6 +125,23 @@ void DNF::BaseTextureLoad()
 			GameEngineTexture::Load(Texture[i].GetFullPath());
 		}
 	}
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resource");
+		Dir.Move("Resource");
+		Dir.Move("Texture");
+		Dir.Move("UI");
+		Dir.Move("Item");
+		Dir.Move("Icon");
+		Dir.Move("Equipment");
+		
+		std::vector<GameEngineFile> Texture = Dir.GetAllFile();
+
+		for (size_t i = 0; i < Texture.size(); i++)
+		{
+			GameEngineTexture::Load(Texture[i].GetFullPath());
+		}
+	}
 
 
 	{

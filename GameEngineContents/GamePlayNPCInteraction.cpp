@@ -44,8 +44,6 @@ InteractOption GamePlayNPCInteraction::CheckInput()
 	switch (CurrentActiveInteract)
 	{
 	case InteractOption::None:
-
-
 		SetNPCInteraction(Actor_InteractWindow->CheckInput());
 		break;
 	case InteractOption::Quest:

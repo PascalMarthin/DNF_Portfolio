@@ -76,6 +76,13 @@ enum class GamePlayItemCode
 	Debug_Weapon = 100,
 
 
+	Tropica_Coat = 101,
+	Tropica_Belt = 110,
+	Tropica_Pants = 120,
+	Tropica_Neck = 130,
+	Tropica_Shoes = 140,
+
+
 	Level1Up = 2000,
 	Equipment_Upgrade12,
 
@@ -351,6 +358,7 @@ enum class CollisionOrder
 	Monster_Att = 11,
 	Monster_Area,
 	Monster_Tarcking,
+	UI,
 	UI_MainMouse = 20,
 	UI_UIMouse = 21,
 	ChangeMap = 22,
