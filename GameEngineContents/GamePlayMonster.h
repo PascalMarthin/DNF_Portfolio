@@ -45,7 +45,7 @@ public:
 
 private: 
 	unsigned int MAXHP;
-	unsigned int HP;
+	int HP;
 
 	float MAXHPLine;
 

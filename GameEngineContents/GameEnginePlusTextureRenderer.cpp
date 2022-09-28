@@ -30,7 +30,6 @@ void GameEnginePlusTextureRenderer::Start()
 
 	SetPipeLine("Texture_Avata");
 
-	ChangeCamera(CAMERAORDER::Object);
 	SetPivot(PIVOTMODE::BOT);
 	ShaderResources.SetConstantBufferLink("PixelData", GetPixelData());
 	ShaderResources.SetConstantBufferLink("AtlasData", AtlasDatas);
@@ -46,7 +45,6 @@ void GameEnginePlusTextureRenderer::Start()
 	Texture_OutLine->GetPixelData().PlusColor = float4::YELLOW;
 	Texture_OutLine->GetPixelData().MulColor = {5, 5};
 	AtlasDatas.PivotPos = { 0, 0.5f, 0, 0 };
-	Texture_OutLine->ChangeCamera(CAMERAORDER::Object);
 	//Renderer->SetPipeLine("Outline");
 	//Renderer->ShaderResources.SetConstantBufferLink("PixelData", Renderer->GetPixelData());
 
@@ -219,7 +217,7 @@ void GameEnginePlusTextureRenderer::CreateFrameAnimationFolderPlus(const std::st
 }
 
 
-void GameEnginePlusTextureRenderer::ChangeFrameAnimationPlus(const std::string& _AnimationName)
+void GameEnginePlusTextureRenderer::ChangeFrameAnimationPlus(const std::string& _AnimationName, bool _bool)
 {
 	//if (CurrentAvata == nullptr)
 	//{
@@ -240,6 +238,18 @@ void GameEnginePlusTextureRenderer::ChangeFrameAnimationPlus(const std::string& 
 	if (CurrentAniPlus != &FrameAniPlus[Name])
 	{
 		CurrentAniPlus = &FrameAniPlus[Name];
+		CurrentAniPlus->Reset();
+		if (CurrentAvata != nullptr)
+		{
+			SetTexture(CurrentAvata->GetTexture(CurrentAniPlus->Info.Frames[CurrentAniPlus->Info.CurFrame]));
+		}
+		else
+		{
+			SetTexture(CurrentAniPlus->Texture);
+		}
+	}
+	else if (_bool == true)
+	{
 		CurrentAniPlus->Reset();
 		if (CurrentAvata != nullptr)
 		{

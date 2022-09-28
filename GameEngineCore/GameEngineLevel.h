@@ -8,9 +8,9 @@ enum class CAMERAORDER
 {
 	MAINCAMERA,
 	USER0,
-	Object,
+	USER1,
 	USER2,
-	Effect,
+	USER3,
 	USER4,
 	USER5,
 	UIFont,

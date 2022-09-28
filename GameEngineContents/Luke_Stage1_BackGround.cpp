@@ -24,7 +24,6 @@ void Luke_Stage1_BackGround::Start()
 	Texture_Black->GetTransform().SetLocalScale({ 2000, 2000 });
 	Texture_Black->GetTransform().SetLocalPosition({ 0, 0, 1000 });
 	Texture_Black->SetPivot(PIVOTMODE::LEFTTOP);
-	Texture_Black->ChangeCamera(CAMERAORDER::Object);
 	Texture_Black->GetPixelData().MulColor = { 0, 0, 0, 0 };
 
 	SetBackGroundZOrder();

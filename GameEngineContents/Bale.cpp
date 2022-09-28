@@ -6,6 +6,7 @@
 #include "GamePlayCharacter.h"
 #include "GamePlaySkill.h"
 #include "GameEngineEffectRenderer.h"
+#include "AvataManager.h"
 //#include <GameEngineCore/>
 
 Bale::Bale()
@@ -34,6 +35,8 @@ Bale::Bale()
 	, Texture_BlackBack(nullptr)
 	, DashColorDelay(0)
 	, Actor_TrackingObject(nullptr)
+	, VisionDelay(0)
+	, BringTentacleIndex(0)
 {
 }
 
@@ -53,7 +56,6 @@ void Bale::Start()
 	Texture_Monster = CreateComponent<GameEngineTextureRenderer>();
 	Texture_Monster->CreateFrameAnimationFolder("Bale_Standing", FrameAnimation_DESC("Bale", 0, 5, 0.15f));
 	Texture_Monster->CreateFrameAnimationFolder("Bale_Walk", FrameAnimation_DESC("Bale", 6, 13, 0.15f));
-	Texture_Monster->ChangeCamera(CAMERAORDER::Object);
 	
 	{
 		Texture_Monster->CreateFrameAnimationFolder("Bale_Sting", FrameAnimation_DESC("Bale", 14, 23, 0.1f, false));
@@ -197,9 +199,11 @@ void Bale::Start()
 
 	{
 		//All_CollTime["Att_Sting"] = 0;
-		All_CollTime["Att_Dash"] = 0;
+		//All_CollTime["Att_Dash"] = 0;
 		//All_CollTime["Att_Stamping"] = 0;
 		//All_CollTime["Move_Teleport"] = 0;
+		//All_CollTime["Skill_Tracking"] = 0;
+		All_CollTime["Skill_Tentacle"] = 0;
 	}
 	SetMonsterClass(MonsterClass::Named);
 	// 배경
@@ -266,39 +270,51 @@ void Bale::Start()
 	{
 		Texture_StampingEffect = CreateComponent<GameEngineEffectRenderer>("Stamping");
 		Texture_StampingEffect->GetTransform().SetLocalPosition({ 52, 85, -10.0001f });
-		Texture_StampingEffect->CreateFrameAnimationFolder("Stamping", FrameAnimation_DESC("Bale_StampingEffect", 0, 15, 0.05f, false));
+		Texture_StampingEffect->CreateFrameAnimationFolder("Stamping", FrameAnimation_DESC("Bale_StampingEffect", 0, 15, 0.125f, false));
 		Texture_StampingEffect->ChangeFrameAnimation("Stamping");
+		//Texture_StampingEffect->GetPixelData().MulColor = { 0.2f,0.2f, 0.2f, 1 };
 		Texture_StampingEffect->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
+		//Texture_StampingEffect->GetPixelData().Mul
+		Texture_StampingEffect->GetPixelData().PlusColor.a = 1;
+		//Texture_StampingEffect->SetParent(Actor_Dummy);
 		Texture_StampingEffect->AnimationBindEnd("Stamping", [](const FrameAnimation_DESC& _DESC)
 			{
 				_DESC.Renderer->Off();
 			});
+		Texture_StampingEffect->SetScaleRatio(1.2f);
 		Texture_StampingEffect->ScaleToTexture();
 		Texture_StampingEffect->Off();
 
 		
 		Texture_StampingEffect_Floor = CreateComponent<GameEngineEffectRenderer>("Stamping");
-		Texture_StampingEffect_Floor->GetTransform().SetLocalPosition({ 52, 85, -10.0002f });
-		Texture_StampingEffect_Floor->CreateFrameAnimationFolder("Stamping", FrameAnimation_DESC("Bale_StampingEffect", 16, 29, 0.05f, false));
+		Texture_StampingEffect_Floor->GetTransform().SetLocalPosition({ 52, 85, 10.0002f });
+		//Texture_StampingEffect_Floor->GetPixelData().PlusColor = { -0.5f,-0.5f, -0.5f, 0 };
+		Texture_StampingEffect_Floor->CreateFrameAnimationFolder("Stamping", FrameAnimation_DESC("Bale_StampingEffect", 16, 29, 0.075f, false));
 		Texture_StampingEffect_Floor->ChangeFrameAnimation("Stamping");
 		Texture_StampingEffect_Floor->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
+		//Texture_StampingEffect_Floor->SetParent(Actor_Dummy);
+		//Texture_StampingEffect_Floor->GetPixelData().MulColor = { 0.2f, 0.2f, 0.2f, 1.f };
+		Texture_StampingEffect_Floor->GetPixelData().PlusColor.a = 1;
 		Texture_StampingEffect_Floor->AnimationBindEnd("Stamping", [](const FrameAnimation_DESC& _DESC)
 			{
 				_DESC.Renderer->Off();
 			});
+		Texture_StampingEffect_Floor->SetScaleRatio(1.2f);
 		Texture_StampingEffect_Floor->ScaleToTexture();
 		Texture_StampingEffect_Floor->Off();
 
 		
 		Texture_SmokeEffect = CreateComponent<GameEngineEffectRenderer>("Smoke");
 		Texture_SmokeEffect->GetTransform().SetLocalPosition({ 165, 60, 10.0000f });
-		Texture_SmokeEffect->CreateFrameAnimationFolder("Smoke", FrameAnimation_DESC("Bale_Stampingsmoke", 0.0625f, false));
+		Texture_SmokeEffect->CreateFrameAnimationFolder("Smoke", FrameAnimation_DESC("Bale_Stampingsmoke", 0.125f, false));
 		Texture_SmokeEffect->ChangeFrameAnimation("Smoke");
+	
 		Texture_SmokeEffect->AnimationBindEnd("Smoke", [](const FrameAnimation_DESC& _DESC)
 			{
 				_DESC.Renderer->Off();
 			});
 		Texture_SmokeEffect->ScaleToTexture();
+		//Texture_SmokeEffect->SetParent(Actor_Dummy);
 		Texture_SmokeEffect->Off();
 
 
@@ -689,6 +705,57 @@ if (_DESC.Renderer->GetPixelData().MulColor.a < 0)
 	{
 		
 	}
+	// 추적
+	{
+
+		Texture_Monster->CreateFrameAnimationFolder("Bale_TrackingReady", FrameAnimation_DESC("Bale", 45, 46, 0.5f, false));
+		Texture_Monster->AnimationBindEnd("Bale_TrackingReady", std::bind(&Bale::Bale_TrackReadyEnd, this, std::placeholders::_1));
+		Texture_Monster->CreateFrameAnimationFolder("Bale_Tracking", FrameAnimation_DESC("Bale", 47, 48, 0.125f));
+		Texture_Monster->AnimationBindFrame("Bale_Tracking", std::bind(&Bale::Bale_TrackFrmae, this, std::placeholders::_1));
+		Texture_Monster->AnimationBindTime("Bale_Tracking", std::bind(&Bale::Bale_TrackUpdate, this, std::placeholders::_1, std::placeholders::_2));
+
+		std::vector<unsigned int> A = { 37, 38, 38, 38,38 ,38,38,38, 38, 38 ,39, 40, 41, 42, 43, 44, 44, 44, 44 };
+		Texture_Monster->CreateFrameAnimationFolder("Bale_TrackCatch", FrameAnimation_DESC("Bale", A, 0.125f, false));
+		Texture_Monster->AnimationBindTime("Bale_TrackCatch", std::bind(&Bale::Bale_TrackCatchUpdate, this, std::placeholders::_1, std::placeholders::_2));
+		Texture_Monster->AnimationBindFrame("Bale_TrackCatch", std::bind(&Bale::Bale_TrackCatchFrame, this, std::placeholders::_1));
+		Texture_Monster->AnimationBindEnd("Bale_TrackCatch", std::bind(&Bale::Bale_BackToNone, this, std::placeholders::_1));
+
+
+		Texture_Monster->CreateFrameAnimationFolder("Bale_TrackEnd", FrameAnimation_DESC("Bale", 49, 50, 0.25f, false));
+		Texture_Monster->AnimationBindEnd("Bale_TrackEnd", std::bind(&Bale::Bale_BackToNone, this, std::placeholders::_1));
+
+		GameEngineCollision* Collision = CreateComponent<GameEngineCollision>();
+		Collision->GetTransform().SetLocalScale({ 600, 600, 600 });
+		Collision->ChangeOrder(CollisionOrder::Monster_Tarcking);
+
+		AllCollision["Skill_Tracking"] = Collision;
+	}
+
+	// 촉수
+	{
+		Texture_Monster->CreateFrameAnimationFolder("Bale_TentacleReady", FrameAnimation_DESC("Bale", 32, 36, 0.1625f, false));
+		Texture_Monster->AnimationBindEnd("Bale_TentacleReady", std::bind(&Bale::Bale_TentacleReadyEnd, this, std::placeholders::_1));
+
+
+		
+		//Texture_Monster->CreateFrameAnimationFolder("Bale_Tracking", FrameAnimation_DESC("Bale", 47, 48, 0.125f));
+		//Texture_Monster->AnimationBindFrame("Bale_Tracking", std::bind(&Bale::Bale_TrackFrmae, this, std::placeholders::_1));
+		//Texture_Monster->AnimationBindTime("Bale_Tracking", std::bind(&Bale::Bale_TrackUpdate, this, std::placeholders::_1, std::placeholders::_2));
+
+		//std::vector<unsigned int> A = { 37, 38, 38, 38,38 ,38,38,38, 38, 38 ,39, 40, 41, 42, 43, 44, 44, 44, 44 };
+		//Texture_Monster->CreateFrameAnimationFolder("Bale_TrackCatch", FrameAnimation_DESC("Bale", A, 0.125f, false));
+		//Texture_Monster->AnimationBindTime("Bale_TrackCatch", std::bind(&Bale::Bale_TrackCatchUpdate, this, std::placeholders::_1, std::placeholders::_2));
+		//Texture_Monster->AnimationBindFrame("Bale_TrackCatch", std::bind(&Bale::Bale_TrackCatchFrame, this, std::placeholders::_1));
+		//Texture_Monster->AnimationBindEnd("Bale_TrackCatch", std::bind(&Bale::Bale_BackToNone, this, std::placeholders::_1));
+
+		GameEngineCollision* Collision = CreateComponent<GameEngineCollision>();
+		Collision->GetTransform().SetLocalScale({ 2000, 2000, 2000 });
+		Collision->ChangeOrder(CollisionOrder::Monster_Tarcking);
+
+		AllCollision["Skill_Tentacle"] = Collision;
+
+		BringTentacleIndex = 0; 
+	}
 }
 
 
@@ -886,7 +953,16 @@ void Bale::SetFSManager()
 		, std::bind(&Bale::FSM_Move_Teleport_Start, this, std::placeholders::_1)
 		, std::bind(&Bale::FSM_Move_Teleport_End, this, std::placeholders::_1));
 	
+	Manager_StatManager->GetFSMManager().CreateStateMember
+	("Skill_Tracking", std::bind(&Bale::FSM_Skill_Tracking_Update, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&Bale::FSM_Skill_Tracking_Start, this, std::placeholders::_1)
+		, std::bind(&Bale::FSM_Skill_Tracking_End, this, std::placeholders::_1));
 
+	Manager_StatManager->GetFSMManager().CreateStateMember
+	("Skill_Tentacle", std::bind(&Bale::FSM_Skill_BringTentacle_Update, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&Bale::FSM_Skill_BringTentacle_Start, this, std::placeholders::_1)
+		, std::bind(&Bale::FSM_Skill_BringTentacle_End, this, std::placeholders::_1));
+	
 	
 	Manager_StatManager->GetFSMManager().ChangeState("None");
 }
@@ -955,11 +1031,12 @@ void Bale::FSM_Hit_Stand_Start(const StateInfo& _Info)
 	{
 		Texture_Monster->ChangeFrameAnimation("Bale_Hit1");
 	}
+
 	
 }
 void Bale::FSM_Hit_Stand_Update(float _DeltaTime, const StateInfo& _Info)
 {
-	if (Manager_StatManager->IsAction())
+	if (!Manager_StatManager->IsBeHit())
 	{
 		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
 	}
@@ -1291,12 +1368,60 @@ void Bale::Bale_Stamping(const FrameAnimation_DESC& _DESC)
 {
 	if (_DESC.CurFrame == 3)
 	{
+
+		const float4& Pos = GetTransform().GetWorldPosition();
+
+
+		Texture_StampingEffect->SetParent(this);
+		Texture_StampingEffect_Floor->SetParent(this);
+		Texture_SmokeEffect->SetParent(this);
+
+		Texture_StampingEffect->GetTransform().SetLocalPosition({ 52, 90, -10.0001f });
+		Texture_StampingEffect_Floor->GetTransform().SetLocalPosition({ 52, 150, 10.0002f });
+		Texture_SmokeEffect->GetTransform().SetLocalPosition({ 165, 60, 10.0000f });
+
+		//GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
+		//Renderer->CreateFrameAnimationFolder("Earthquakering", FrameAnimation_DESC("Earthquakering", 0.125f, false));
+		//Renderer->ChangeFrameAnimation("Earthquakering");
+		//Renderer->AnimationBindEnd("Earthquakering", [](const FrameAnimation_DESC& _DESC)
+		//	{
+		//		_DESC.Renderer->Death();
+		//	});
+		//Renderer->ScaleToTexture();
+		//Renderer->GetTransform().SetLocalPosition({ 20, 50, 10.0000f });
+
+
+
+		float4 StampingPos = Texture_StampingEffect->GetTransform().GetWorldPosition();
+		float4 SmokePos = Texture_SmokeEffect->GetTransform().GetWorldPosition();
+
+		Texture_StampingEffect->SetParent(Actor_Dummy);
+		Texture_StampingEffect_Floor->SetParent(Actor_Dummy);
+		Texture_SmokeEffect->SetParent(Actor_Dummy);
+
+		Texture_StampingEffect->GetTransform().SetWorldPosition(StampingPos);
+		Texture_StampingEffect_Floor->GetTransform().SetWorldPosition(StampingPos);
+		Texture_SmokeEffect->GetTransform().SetWorldPosition(SmokePos);
+
+
+
 		Texture_StampingEffect->ChangeFrameAnimation("Stamping", true);
 		Texture_StampingEffect_Floor->ChangeFrameAnimation("Stamping", true);
 		Texture_SmokeEffect->ChangeFrameAnimation("Smoke", true);
 		Texture_StampingEffect->On();
 		Texture_StampingEffect_Floor->On();
-		Texture_SmokeEffect->On();
+
+
+
+
+
+		//Texture_SmokeEffect->On();
+
+
+		//Texture_SmokeEffect->GetTransform().SetWorldPosition({ Pos.x, Pos.y  , Pos.z  });
+		//Texture_StampingEffect_Floor->GetTransform().SetWorldPosition({ Pos.x  , Pos.y , Pos.z  });
+		//Texture_StampingEffect->GetTransform().SetWorldPosition({ Pos.x, Pos.y , Pos.z });
+
 
 		Collision_StampingHit->On();
 		if (Collision_StampingHit->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player ,CollisionType::CT_AABB,
@@ -1370,6 +1495,7 @@ void Bale::Bale_DashStart(const FrameAnimation_DESC& _DESC)
 	BeforePos = GetTransform().GetWorldPosition();
 	Texture_BlackBack->GetPixelData().PlusColor = { 1, 1, 1, 0 };
 	DashColorDelay = 1;
+	VisionDelay = 0;
 	//Texture_BlackBack->GetPixelData().MulColor.a = 1;
 	// 마구 베면서 전진
 }
@@ -1424,21 +1550,37 @@ void Bale::Bale_DashUpdate(const FrameAnimation_DESC& _DESC, float _Time)
 	}
 	else
 	{
+
 		DashColorDelay = -1.f;
 		Texture_BlackBack->GetPixelData().PlusColor.a = 0;
 	}
+	VisionDelay += _Time;
+	if (VisionDelay > 0.0125f)
+	{
+		Avata_Vision* Renderer = GetLevel()->CreateActor<Avata_Vision>();
+		Renderer->CreateVision(Texture_Monster, { 0,0,0,0.8f }, 0.8f);
+		if (GetTransform().GetLocalScale().x < 0)
+		{
+			Renderer->GetTransform().PixLocalNegativeX();
+		}
+
+		VisionDelay = 0;
+	}
+
 }
 
 void Bale::Bale_DashFrame(const FrameAnimation_DESC& _DESC)
 {
+
+
 	switch (_DESC.CurFrame)
 	{
-	case 0:
+	case 1:
 	{
 		const float4& Pos = GetTransform().GetWorldPosition();
 
 		GameEngineEffectRenderer* Renderer = CreateComponent<GameEngineEffectRenderer>();
-		Renderer->CreateFrameAnimationFolder("Bale_slash000", FrameAnimation_DESC("Bale_slash000", 0.0875f));
+		Renderer->CreateFrameAnimationFolder("Bale_slash000", FrameAnimation_DESC("Bale_slash000", 0.15f));
 		Renderer->AnimationBindEnd("Bale_slash000", [](const FrameAnimation_DESC& _DESC)
 			{
 				_DESC.Renderer->Death();
@@ -1446,12 +1588,14 @@ void Bale::Bale_DashFrame(const FrameAnimation_DESC& _DESC)
 		Renderer->ChangeFrameAnimation("Bale_slash000");
 		Renderer->SetParent(Actor_Dummy);
 		Renderer->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Renderer->GetPixelData().PlusColor.a = 1.0f;
 		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetWorldPosition({ Pos.x , Pos.y, Pos.z + 20.002f });
-		Renderer->GetTransform().SetLocalRotate({ 0, 0, 45.f });
+		Renderer->GetTransform().SetWorldPosition({ Pos.x , Pos.y, Pos.z + 0.0002f });
+		Renderer->GetTransform().SetLocalRotate({ 0, 0, GameEngineRandom::MainRandom.RandomFloat(25.f, 65.f) });
+
 
 		Renderer = CreateComponent<GameEngineEffectRenderer>();
-		Renderer->CreateFrameAnimationFolder("Bale_boom_purple_009", FrameAnimation_DESC("Bale_boom_purple_009", 0.05f));
+		Renderer->CreateFrameAnimationFolder("Bale_boom_purple_009", FrameAnimation_DESC("Bale_boom_purple_009", 0.075f));
 		Renderer->AnimationBindEnd("Bale_boom_purple_009", [](const FrameAnimation_DESC& _DESC)
 			{
 				_DESC.Renderer->Death();
@@ -1459,31 +1603,35 @@ void Bale::Bale_DashFrame(const FrameAnimation_DESC& _DESC)
 		Renderer->ChangeFrameAnimation("Bale_boom_purple_009");
 		Renderer->SetParent(Actor_Dummy);
 		Renderer->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Renderer->GetPixelData().PlusColor.a = 0.7f;
 		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetWorldPosition({ Pos.x , Pos.y, Pos.z + 20.f });
-		Renderer->GetTransform().SetLocalRotate({ 0, 0, 45.f });
+		Renderer->GetTransform().SetWorldPosition({ Pos.x , Pos.y, Pos.z + 0.f });
+		//Renderer->GetTransform().SetLocalRotate({ 0, 0, 45.f });
 
 		Renderer = CreateComponent<GameEngineEffectRenderer>();
-		Renderer->CreateFrameAnimationFolder("Bale_boom_purple_011", FrameAnimation_DESC("Bale_boom_purple_011", 0.025f));
+		Renderer->CreateFrameAnimationFolder("Bale_boom_purple_011", FrameAnimation_DESC("Bale_boom_purple_011", 0.0125f));
 		Renderer->AnimationBindEnd("Bale_boom_purple_011", [](const FrameAnimation_DESC& _DESC)
 			{
 				_DESC.Renderer->Death();
 			});
 		Renderer->ChangeFrameAnimation("Bale_boom_purple_011");
+		Renderer->SetScaleRatio(0.3f);
+		Renderer->GetPixelData().MulColor.a = 0.7f;
 		Renderer->SetParent(Actor_Dummy);
 		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetWorldPosition({ Pos.x , Pos.y, Pos.z + 20.001f });
-		Renderer->GetTransform().SetLocalRotate({ 0, 0, 45.f });
+		Renderer->GetTransform().SetWorldPosition({ Pos.x , Pos.y, Pos.z + 0.0001f });
+		//Renderer->GetTransform().SetLocalRotate({ 0, 0, 45.f });
 	}
 
 
 
 	break;
-	case 1:
+	case 2:
 	{
 		const float4& Pos = GetTransform().GetWorldPosition();
+
 		GameEngineEffectRenderer* Renderer = CreateComponent<GameEngineEffectRenderer>();
-		Renderer->CreateFrameAnimationFolder("Bale_slash000", FrameAnimation_DESC("Bale_slash000", 0.0875f));
+		Renderer->CreateFrameAnimationFolder("Bale_slash000", FrameAnimation_DESC("Bale_slash000", 0.15f));
 		Renderer->AnimationBindEnd("Bale_slash000", [](const FrameAnimation_DESC& _DESC)
 			{
 				_DESC.Renderer->Death();
@@ -1491,9 +1639,25 @@ void Bale::Bale_DashFrame(const FrameAnimation_DESC& _DESC)
 		Renderer->ChangeFrameAnimation("Bale_slash000");
 		Renderer->SetParent(Actor_Dummy);
 		Renderer->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
+		Renderer->GetPixelData().PlusColor.a = 1.0f;
 		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetWorldPosition({ Pos.x , Pos.y, Pos.z + 20.f });
-		Renderer->GetTransform().SetLocalRotate({ 0, 0, -45.f });
+		Renderer->GetTransform().SetWorldPosition({ Pos.x , Pos.y + GameEngineRandom::MainRandom.RandomFloat(-20.f, 20.f), Pos.z + 0.0002f});
+		Renderer->GetTransform().SetLocalRotate({ 0, 0,  GameEngineRandom::MainRandom.RandomFloat(115.f, 155.f) });
+
+
+		Renderer = CreateComponent<GameEngineEffectRenderer>();
+		Renderer->CreateFrameAnimationFolder("Bale_slash000", FrameAnimation_DESC("Bale_slash000_ect", 0.15f));
+		Renderer->AnimationBindEnd("Bale_slash000", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->Death();
+			});
+		Renderer->ChangeFrameAnimation("Bale_slash000");
+		Renderer->SetParent(Actor_Dummy);
+		//Renderer->GetPixelData().PlusColor.a = 1.0f;
+		Renderer->GetPixelData().MulColor = { 0.1f, 0.1f, 0.1f,1.f };
+		Renderer->ScaleToTexture();
+		Renderer->GetTransform().SetWorldPosition({ Pos.x , Pos.y + GameEngineRandom::MainRandom.RandomFloat(-20.f, 20.f), Pos.z + 0.0002f });
+		Renderer->GetTransform().SetLocalRotate({ 0, 0,  GameEngineRandom::MainRandom.RandomFloat(35.f, 55.f) });
 	}
 	break;
 	default:
@@ -1512,7 +1676,7 @@ void Bale::FSM_Att_Dash_End(const StateInfo& _Info)
 		Collision_ect->Death();
 		Collision_ect = nullptr;
 	}
-
+	Texture_BlackBack->GetPixelData().PlusColor.a = 0;
 	Manager_StatManager->SetDoSkillEnd();
 
 }
@@ -1558,6 +1722,250 @@ void Bale::FSM_Move_Teleport_End(const StateInfo& _Info)
 	Manager_StatManager->SetDoSkillEnd();
 
 }
+
+void Bale::FSM_Skill_Tracking_Start(const StateInfo& _Info)
+{
+	Texture_Monster->ChangeFrameAnimation("Bale_TrackingReady");
+	Texture_BlackBack->GetPixelData().PlusColor = {0, 0, 0, 0};
+	Collision_TargetPos->SetParent(GamePlayCharacter::GetInst());
+	Collision_TargetPos->GetTransform().SetLocalPosition({80,0,0});
+}
+void Bale::FSM_Skill_Tracking_Update(float _DeltaTime, const StateInfo& _Info)
+{
+	if (Texture_BlackBack->GetPixelData().PlusColor.a < 1)
+	{
+		Texture_BlackBack->GetPixelData().PlusColor.a += _DeltaTime;
+	}
+	else
+	{
+		Texture_BlackBack->GetPixelData().PlusColor.a = 1;
+	}
+
+	if (_Info.StateTime > 5.f)
+	{
+		Texture_Monster->ChangeFrameAnimation("Bale_TrackEnd");
+		Texture_BlackBack->GetPixelData().PlusColor.a -= _DeltaTime * 2.f;
+	}
+	
+}
+void Bale::FSM_Skill_Tracking_End(const StateInfo& _Info)
+{
+	Texture_BlackBack->GetPixelData().PlusColor.a = 0;
+	Collision_TargetPos->GetTransform().SetLocalPosition(float4::ZERO);
+	dynamic_cast<GamePlayCharacter*>(Hit_Player)->SetCamHoldOff();
+	All_CollTime["Skill_Tracking"] = 5;
+
+}
+
+void Bale::Bale_TrackReadyEnd(const FrameAnimation_DESC& _DESC)
+{
+	Texture_Monster->ChangeFrameAnimation("Bale_Tracking");
+}
+void Bale::Bale_TrackFrmae(const FrameAnimation_DESC& _DESC)
+{
+	//switch (_DESC.CurFrame)
+	//{
+	//case 1:
+	//	const float4 & Pos = GamePlayCharacter::GetInst()->GetTransform().GetWorldPosition();
+
+	//	Collision_TargetPos
+
+	//	break;
+	//default:
+	//	break;
+	//}
+}
+void Bale::Bale_TrackUpdate(const FrameAnimation_DESC& _DESC, float _Time)
+{
+
+	if (Collision_HitBody_Mid->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player, CollisionType::CT_AABB,
+		std::bind(&Bale::GetPlayer, this, std::placeholders::_1, std::placeholders::_2)))
+	{
+		Texture_Monster->ChangeFrameAnimation("Bale_TrackCatch");
+		Texture_Monster->CurAnimationPauseOff();
+		int Dir = Collision_StampingHit->GetTransform().GetWorldPosition().x - Hit_Player->GetTransform().GetWorldPosition().x > 0 ? -1 : 1;
+		Hit_Player->BeHit({ 0, 0, 0, 3000}, HitPostureType::Hold, nullptr, nullptr, Dir, 500);
+
+		const float4& Pos = GetTransform().GetWorldPosition();
+		if (GetTransform().GetLocalScale().x >= 0)
+		{
+			Hit_Player->GetTransform().SetWorldPosition({ Pos.x + 50, Pos.y + 100, Pos.z });
+			Hit_Player->GetTransform().PixLocalNegativeX();
+		}
+		else
+		{
+			Hit_Player->GetTransform().SetWorldPosition({ Pos.x - 50, Pos.y + 100, Pos.z });
+			Hit_Player->GetTransform().PixLocalPositiveX();
+		}
+		Hit_Player->GetStatManager()->SetAerial();
+		dynamic_cast<GamePlayCharacter*>(Hit_Player)->SetCamHoldOn();
+		Texture_BlackBack->GetPixelData().PlusColor.a = 0;
+		return;
+	}
+	float4 Dir = Collision_TargetPos->GetTransform().GetWorldPosition() - GetTransform().GetWorldPosition();
+
+	Dir.x = Dir.x > 0 ? 1 : -1;
+	Dir.z = Dir.z > 0 ? 0.8f : -0.8f;
+
+	Manager_MoveManager->SetCharacterMove({ Dir.x * 480.f * _Time, Dir.z * 350.f * _Time });
+	if (Collision_TargetPos->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Monster, CollisionType::CT_SPHERE))
+	{
+		Collision_TargetPos->GetTransform().SetLocalPosition(Collision_TargetPos->GetTransform().GetLocalPosition() * -1.f);
+	}
+
+	if (Collision_TargetPos->GetTransform().GetWorldPosition().x > GetTransform().GetWorldPosition().x)
+	{
+		GetTransform().PixLocalPositiveX();
+	}
+	else
+	{
+		GetTransform().PixLocalNegativeX();
+	}
+}
+
+void Bale::Bale_TrackCatchUpdate(const FrameAnimation_DESC& _DESC, float _Time)
+{
+	Texture_BlackBack->GetPixelData().PlusColor.a = 0;
+
+
+}
+void Bale::Bale_TrackCatchFrame(const FrameAnimation_DESC& _DESC)
+{
+	const float4& Pos = GetTransform().GetWorldPosition();
+	int Dir = Texture_Monster->GetTransform().GetWorldPosition().x - Hit_Player->GetTransform().GetWorldPosition().x > 0 ? -1 : 1;
+
+	switch (_DESC.CurFrame)
+	{
+	case 1:
+		break;
+	case 2:
+		break;
+	case 3:
+		break;
+	case 4:
+		//if (GetTransform().GetLocalScale().x >= 0)
+		//{
+		//	Hit_Player->GetTransform().SetWorldPosition({ Pos.x - 30, Pos.y + 100, Pos.z });
+		//}
+		//else
+		//{
+		//	Hit_Player->GetTransform().SetWorldPosition({ Pos.x + 30, Pos.y + 100, Pos.z });
+		//}
+		//break;
+	case 12:
+		if (GetTransform().GetLocalScale().x >= 0)
+		{
+			Hit_Player->GetTransform().SetWorldPosition({ Pos.x + 50, Pos.y + 100, Pos.z });
+		}
+		else
+		{
+			Hit_Player->GetTransform().SetWorldPosition({ Pos.x - 50, Pos.y + 100, Pos.z });
+		}
+		break;
+	case 13:
+	{
+		Hit_Player->GetStatManager()->GetFSMManager().ChangeState("Hit_Down");
+		if (GetTransform().GetLocalScale().x >= 0)
+		{
+			Hit_Player->GetTransform().SetWorldPosition({ Pos.x + 50, Pos.z , Pos.z });
+		}
+		else
+		{
+			Hit_Player->GetTransform().SetWorldPosition({ Pos.x - 50, Pos.z , Pos.z });
+		}
+
+		GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
+		Renderer->CreateFrameAnimationFolder("Stone006", FrameAnimation_DESC("Stone006", 0.125f, false));
+		Renderer->ChangeFrameAnimation("Stone006");
+		Renderer->AnimationBindEnd("Stone006", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->Death();
+			});
+		Renderer->GetTransform().SetLocalPosition({ 70, -60, -1.f });
+		float4 Pos = Renderer->GetTransform().GetWorldPosition();
+		Renderer->SetParent(Actor_Dummy);
+		Renderer->GetTransform().SetWorldPosition(Pos);
+		Renderer->ScaleToTexture();
+
+		Renderer = CreateComponent<GameEngineTextureRenderer>();
+		Renderer->CreateFrameAnimationFolder("Crack005", FrameAnimation_DESC("Crack005", 0.125f, false));
+		Renderer->ChangeFrameAnimation("Crack005");
+		Renderer->AnimationBindEnd("Crack005", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->Death();
+			});
+		Renderer->GetTransform().SetLocalPosition({ 70, -60, 20.f });
+		Pos = Renderer->GetTransform().GetWorldPosition();
+		Renderer->SetParent(Actor_Dummy);
+		Renderer->GetTransform().SetWorldPosition(Pos);
+		Renderer->ScaleToTexture();
+
+	}
+	break;
+	case 16:
+	{
+	
+		Hit_Player->BeHit({ 200, 600, 0, 0 }, HitPostureType::Aerial, nullptr, nullptr, -Dir, 3000);
+		GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
+		Renderer->CreateFrameAnimationFolder("Bale_boom_purple_026", FrameAnimation_DESC("Bale_boom_purple_026", 15, 28, 0.075f, false));
+		Renderer->ChangeFrameAnimation("Bale_boom_purple_026");
+		Renderer->SetScaleRatio(1.5f);
+		Renderer->AnimationBindEnd("Bale_boom_purple_026", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->Death();
+			});
+		Renderer->GetTransform().SetLocalPosition({ 70, 80 });
+		float4 Pos = Renderer->GetTransform().GetWorldPosition();
+		Renderer->SetParent(Actor_Dummy);
+		Renderer->GetTransform().SetWorldPosition(Pos);
+		Renderer->ScaleToTexture();
+
+
+
+	}
+		break;
+	default:
+		break;
+	}
+
+	//{ 37, 38, 38, 38, 38, 38, 38, 38, 38, 38, 39, 40, 41, 42, 43, 44, 44, 44, 44 };
+}
+
+
+
+void Bale::FSM_Skill_BringTentacle_Start(const StateInfo& _Info)
+{
+	Texture_Monster->ChangeFrameAnimation("Bale_TentacleReady");
+	BringTentacleIndex = -5000;
+}
+
+void Bale::Bale_TentacleReadyEnd(const FrameAnimation_DESC& _DESC)
+{
+
+	if (GameEngineRandom::MainRandom.RandomInt(0, 3) == 0)
+	{
+		BringTentacleIndex = 20000;
+	}
+}
+
+void Bale::FSM_Skill_BringTentacle_Update(float _DeltaTime, const StateInfo& _Info)
+{
+
+	BringTentacleIndex += GameEngineRandom::MainRandom.RandomInt(10, 50);
+
+	
+	if (BringTentacleIndex > 10000)
+	{
+		Texture_Monster->ChangeFrameAnimation("Bale_TentacleReady", true);
+		BringTentacleIndex = 0;
+	}
+}
+void Bale::FSM_Skill_BringTentacle_End(const StateInfo& _Info)
+{
+
+}
+
+
 void Bale::LevelStartEvent()
 {
 	//All_CollTime["Move_Teleport"] = 10.f;

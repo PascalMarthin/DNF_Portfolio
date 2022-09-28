@@ -509,6 +509,7 @@ void GamePlayCharacter::FSM_Att_Skill_Update(float _DeltaTime, const StateInfo& 
 }
 void GamePlayCharacter::FSM_Att_Skill_End(const StateInfo& _Info)
 {
+	Skill_CurrentSkill->Off();
 	Manager_StatManager->SetDoSkillEnd();
 }
 
@@ -627,7 +628,7 @@ void GamePlayCharacter::FSM_Hit_Stand_Start(const StateInfo& _Info)
 }
 void GamePlayCharacter::FSM_Hit_Stand_Update(float _DeltaTime, const StateInfo& _Info)
 {
-	if (Manager_StatManager->IsAction())
+	if (!Manager_StatManager->IsBeHit())
 	{
 		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
 	}

@@ -57,7 +57,11 @@ private:
 public:
 	inline void HitDir(float _Dir);
 	void SetHit(const float4& _HitPower);
-	void SetHold(float _HoldTime);
+	void SetHold(const float4& _HoldTime);
+	inline void SetHoldEnd()
+	{
+		BlowPower.w = 0;
+	}
 	float HitTime;
 private:
 	float4 BlowPower;

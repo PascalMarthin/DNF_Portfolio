@@ -13,7 +13,6 @@ GameEngineEffectRenderer::~GameEngineEffectRenderer()
 void GameEngineEffectRenderer::Start()
 {
 	GameEngineTextureRenderer::Start();
-	ChangeCamera(CAMERAORDER::Object);
 }
 
 

@@ -93,7 +93,7 @@ public:
 	void CreateFrameAnimationFolderPlus(const std::string& _AnimationName, const FrameAnimation_DESC& _Desc);
 	//void CreateFrameAnimation(const std::string& _AnimationName, const FrameAnimation_DESC& _Desc);
 
-	void ChangeFrameAnimationPlus(const std::string& _AnimationName);
+	void ChangeFrameAnimationPlus(const std::string& _AnimationName, bool _bool = false);
 
 	bool EndFrame;
 

@@ -18,25 +18,25 @@ public:
 	GamePlayLevelTemplate& operator=(GamePlayLevelTemplate&& _Other) noexcept = delete;
 
 
-	inline GameEngineCameraActor* GetAvataCamera() const
-	{
-		return Camera_MainAvata;
-	}
+	//inline GameEngineCameraActor* GetAvataCamera() const
+	//{
+	//	return Camera_MainAvata;
+	//}
 
-	inline GameEngineCameraActor* GetOutLineCamera() const
-	{
-		return Camera_OutLine;
-	}
+	//inline GameEngineCameraActor* GetOutLineCamera() const
+	//{
+	//	return Camera_OutLine;
+	//}
 
 	inline GameEngineCameraActor* GetUIFontCamera() const
 	{
 		return Camera_UIFont;
 	}
 
-	inline GameEngineCameraActor* GetEffectCamera() const
-	{
-		return Camera_Effect;
-	}
+	//inline GameEngineCameraActor* GetEffectCamera() const
+	//{
+	//	return Camera_Effect;
+	//}
 	static GameEngineSoundPlayer& GetPlayer()
 	{
 		return BGM_Player;
@@ -50,10 +50,10 @@ protected:
 
 	GamePlayComboSystem* Actor_SystemCombo;
 private:
-	GameEngineCameraActor* Camera_MainAvata;
-	GameEngineCameraActor* Camera_OutLine;
+	//GameEngineCameraActor* Camera_MainAvata;
+	//GameEngineCameraActor* Camera_OutLine;
 	GameEngineCameraActor* Camera_UIFont;
-	GameEngineCameraActor* Camera_Effect;
+	//GameEngineCameraActor* Camera_Effect;
 
 	GamePlayNPCInteraction* Actor_NPCInteraction;
 

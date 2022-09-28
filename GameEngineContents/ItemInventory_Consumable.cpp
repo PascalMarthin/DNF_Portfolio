@@ -168,7 +168,7 @@ void ItemInventory_Consumable::Mouse_RClick(GamePlayItem* _Item)
 	//unsigned int Pos = FindGamePlayItem(_Item);
 	Item_Consumable* Consumable = dynamic_cast<Item_Consumable*>(_Item);
 	Consumable->Item_Effect(CharacterStatManager::GetInst());
-	Consumable->
+	//Consumable->
 
 	///*if (Pos == -1 )
 	//{

@@ -83,6 +83,8 @@ void GamePlayMonster::Update(float _Delta)
 			Time.second -= _Delta;
 		}	
 	}
+
+
 }
 
 

@@ -310,7 +310,20 @@ void GamePlayObject::BeHit(const float4& _Power, HitPostureType _Type, GameEngin
 	break;
 	case HitPostureType::Aerial:
 	{
-		Manager_StatManager->SetHit_BlowUp();
+
+
+		if (Manager_StatManager->IsSuperarmor())
+		{
+			Power.x = 0;
+			Power.y = 0;
+		}
+		else
+		{
+			Manager_StatManager->SetHit_BlowUp();
+		
+		}
+
+		Manager_MoveManager->SetHit(Power);
 		//if (Power.x != 0 && Power.y != 0 && Power.w == 0)
 		//{
 		//
@@ -324,7 +337,7 @@ void GamePlayObject::BeHit(const float4& _Power, HitPostureType _Type, GameEngin
 		//	MsgBoxAssert("예외발생_ 확인후 추가")
 		//}
 
-		Manager_MoveManager->SetHit(Power);
+	
 	}
 	break;
 	case HitPostureType::Hold:
@@ -335,7 +348,7 @@ void GamePlayObject::BeHit(const float4& _Power, HitPostureType _Type, GameEngin
 		}
 
 		Manager_StatManager->SetHold();
-		Manager_MoveManager->SetHold(Power.w);
+		Manager_MoveManager->SetHold(Power);
 	}
 	break;
 

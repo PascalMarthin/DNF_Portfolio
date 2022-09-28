@@ -27,7 +27,6 @@ void Skill_Fighter_F_KaiKen::Start()
 	Texture_Casting->GetPixelData().MulColor = { 0.9f, 0.25f, 0.25f, 0.8f };
 	Texture_Casting->Off();
 
-	Texture_Casting->ChangeCamera(CAMERAORDER::Object);
 	Off();
 }
 

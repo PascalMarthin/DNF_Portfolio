@@ -148,6 +148,7 @@ private:
 	void Bale_DashUpdate(const FrameAnimation_DESC& _DESC, float _Time);
 	void Bale_DashFrame(const FrameAnimation_DESC& _DESC);
 	float DashColorDelay;
+	float VisionDelay;
 
 	// ----------------텔레포트----------------
 
@@ -158,6 +159,30 @@ private:
 
 
 	void Bale_TeleportStart(const FrameAnimation_DESC& _DESC);
+
+	// ----------------스킬--------------------
+
+	// ----------------추적--------------------
+	void FSM_Skill_Tracking_Start(const StateInfo& _Info);
+	void FSM_Skill_Tracking_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Skill_Tracking_End(const StateInfo& _Info);
+
+	void Bale_TrackReadyEnd(const FrameAnimation_DESC& _DESC);
+	void Bale_TrackFrmae(const FrameAnimation_DESC& _DESC);
+	void Bale_TrackUpdate(const FrameAnimation_DESC& _DESC, float _Time);
+
+
+	void Bale_TrackCatchUpdate(const FrameAnimation_DESC& _DESC, float _Time);
+	void Bale_TrackCatchFrame(const FrameAnimation_DESC& _DESC);
+
+	// ----------------촉수소환------------------
+	void FSM_Skill_BringTentacle_Start(const StateInfo& _Info);
+	void FSM_Skill_BringTentacle_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Skill_BringTentacle_End(const StateInfo& _Info);
+
+	void Bale_TentacleReadyEnd(const FrameAnimation_DESC& _DESC);
+
+	int BringTentacleIndex;
 
 	//void FSM_Att_TrackingPlayer_Start(const StateInfo& _Info);
 	//void FSM_Att_TrackingPlayer_Update(float _DeltaTime, const StateInfo& _Info);

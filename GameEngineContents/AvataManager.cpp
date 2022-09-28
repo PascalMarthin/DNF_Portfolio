@@ -489,7 +489,6 @@ GameEnginePlusTextureRenderer* AvataManager::CreateEctAvata(AllSkillEnum _Enum, 
 		Texture->ChangeFolderTexturePlus(_TextureName);
 		Texture->GetPixelData().MulColor = _Color;
 		Texture_ect[_Enum] = Texture;
-		Texture->ChangeCamera(CAMERAORDER::Object);
 		return Texture;
 	}
 	else
@@ -516,7 +515,6 @@ GameEnginePlusTextureRenderer* AvataManager::CreateEctAvata(AllSkillEnum _Enum, 
 		Texture->ChangeFolderTexturePlus(_Texture->GetFolderTexture());
 		Texture->GetPixelData().MulColor = _Texture->GetPixelData().MulColor;
 		Texture_ect[_Enum] = Texture;
-		Texture->ChangeCamera(CAMERAORDER::Object);
 		return Texture;
 	}
 	else
@@ -874,11 +872,11 @@ void AvataManager::ReadAvataCodeandApply(GamePlayItemCode _Code)
 
 }
 
-void AvataManager::ChangeAvataAnimation(const std::string& _AnimationName) const
+void AvataManager::ChangeAvataAnimation(const std::string& _AnimationName, bool _bool) const
 {
 	for (GameEnginePlusTextureRenderer* Avata : AllAvatas)
 	{
-		Avata->ChangeFrameAnimationPlus(_AnimationName);
+		Avata->ChangeFrameAnimationPlus(_AnimationName , _bool);
 	}
 
 	for (auto& ect : Texture_ect)

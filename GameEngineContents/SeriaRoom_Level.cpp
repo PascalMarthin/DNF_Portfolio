@@ -36,9 +36,6 @@ void SeriaRoom_Level::Start()
 	Fighter = CreateActor<GamePlayCharacter>();
 	NPCSeria->GetTransform().SetLocalPosition({ GameEngineWindow::GetScale().hx(), -GameEngineWindow::GetScale().hy(), -GameEngineWindow::GetScale().hy() });
 	GetMainCameraActor()->GetTransform().SetWorldMove({ Width / 2, -Hight / 2 });
-	GetAvataCamera()->GetTransform().SetWorldPosition({ Width / 2, -Hight / 2 });
-	GetOutLineCamera()->GetTransform().SetWorldPosition({ Width / 2, -Hight / 2 });
-	GetUIFontCamera()->GetTransform().SetWorldPosition({ Width / 2, -Hight / 2 });
 
 
 }

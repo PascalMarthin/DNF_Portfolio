@@ -409,7 +409,7 @@ void CharacterStatManager::SetDoBaseAttEnd()
 
 void CharacterStatManager::SetCanAction()
 {
-	PlayerCurrentState |= 0b0000000111101110;
+	//PlayerCurrentState |= 0b0000000110101110;
 }
 
 void CharacterStatManager::SetCantAction()
@@ -438,7 +438,7 @@ void CharacterStatManager::SetHit_Stand()
 void CharacterStatManager::SetHit_StandEnd()
 {
 	PlayerCurrentState &= ~CharacterStat::Player_Character_BeHit;
-	SetCanAction();
+	
 }
 
 void CharacterStatManager::SetHit_BlowUp()

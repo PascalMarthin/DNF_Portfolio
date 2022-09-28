@@ -50,7 +50,7 @@ public:
 
 	void ReadCharacterDataBase(GamePlayDataBase* _Data);
 
-	void ChangeAvataAnimation(const std::string& _AnimationName) const;
+	void ChangeAvataAnimation(const std::string& _AnimationName, bool _bool = false) const;
 	void SetAllAvataManualControl();
 	void SetAllAvataAutoControl(bool _Reset = true);
 	void ChangeFrame_Manual(int _Frame = -1) const;
@@ -168,35 +168,62 @@ public:
 		//GetTransform().SetLocalPosition({ 0, 72.f, 0 });
 	}
 
-	void CreateVision(const std::vector<GameEnginePlusTextureRenderer*>& _Avata)
+	void CreateVision(const std::vector<GameEnginePlusTextureRenderer*>& _Avata, const float4& _Color = { 1,1,1,0.9f })
 	{
+		//if (_Avata[0]->GetTransform().GetLocalScale().x < 0)
+		//{
+		//	GetTransform().PixLocalNegativeX();
+		//}
+
 		for (size_t i = 0; i < _Avata.size(); i++)
 		{
 			GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
 			Renderer->GetTransform().SetLocalScale({ 500, 500 });
 			Renderer->GetTransform().SetLocalPosition({ 0, 0, 0.1f });
 			Renderer->GetPixelData().MulColor = float4::ZERO;
-			Renderer->GetPixelData().PlusColor = {1,1,1,0.9f};
+			Renderer->GetPixelData().PlusColor = _Color;
 			Renderer->SetTexture(_Avata[i]->GetCurTexture());
 			Renderer->SetPivot(PIVOTMODE::BOT);
 			vector_AvataVision.push_back(Renderer);
+
 			//Renderer->SetPipeLine("Outline");
 			//Renderer->ShaderResources.SetConstantBufferLink("PixelData", Renderer->GetPixelData());
 
 			//Renderer->ShaderResources.SetConstantBufferLink("AtlasData", Renderer->Geta);
-
+			Time = 0.5f;
 		}
 	}
+
+	void CreateVision(GameEngineTextureRenderer* _Avata, const float4& _Color, float _Time)
+	{
+		Time = _Time;
+		GetTransform().SetLocalPosition(_Avata->GetTransform().GetWorldPosition());
+		GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
+		Renderer->GetTransform().SetLocalPosition({ 0, 0, 0.1f });
+		Renderer->GetPixelData().MulColor = float4::ZERO;
+		Renderer->GetPixelData().PlusColor = _Color;
+		Renderer->SetTexture(_Avata->GetCurTexture());
+		Renderer->ScaleToTexture();
+		vector_AvataVision.push_back(Renderer);
+		//Renderer->SetPipeLine("Outline");
+		//Renderer->ShaderResources.SetConstantBufferLink("PixelData", Renderer->GetPixelData());
+
+		//Renderer->ShaderResources.SetConstantBufferLink("AtlasData", Renderer->Geta);
+
+		
+	}
+
 	void Update(float _DeltaTime) override
 	{
 		Dealy += _DeltaTime;
 		for (auto* Renderer : vector_AvataVision)
 		{
-			float Lerp = 0.9f - (Dealy / 0.5f);
-			Renderer->GetPixelData().PlusColor = { 1 , 1 , 1 , Lerp };
+			float Lerp = 0.9f - (Dealy / Time);
+			Renderer->GetPixelData().PlusColor.a =  Lerp ;
 		}
 		
 	}
+	float Time;
 	float Dealy;
 	std::vector<GameEngineTextureRenderer*> vector_AvataVision;
 };

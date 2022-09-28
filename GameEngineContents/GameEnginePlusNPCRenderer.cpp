@@ -12,7 +12,6 @@ GameEnginePlusNPCRenderer::~GameEnginePlusNPCRenderer()
 void GameEnginePlusNPCRenderer::Start()
 {
 	GameEngineTextureRenderer::Start();
-	ChangeCamera(CAMERAORDER::Object);
 
 }
 

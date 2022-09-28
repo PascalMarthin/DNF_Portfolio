@@ -67,9 +67,6 @@ void Jelva_1F::Update(float _DeltaTime)
 		Pos.y += 100.f;
 
 		GetMainCameraActor()->GetTransform().SetWorldPosition(Pos);
-		GetAvataCamera()->GetTransform().SetWorldPosition(Pos);
-		GetOutLineCamera()->GetTransform().SetWorldPosition(Pos);
-		GetUIFontCamera()->GetTransform().SetWorldPosition(Pos);
 	}
 }
 

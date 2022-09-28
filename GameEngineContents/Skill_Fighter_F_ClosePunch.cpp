@@ -195,6 +195,7 @@ bool Skill_Fighter_F_ClosePunch::ActiveSkill(CharacterStatManager* _Stat, MoveMa
 			if (Bool_Texture_W_Middle_d_Start == false && Att_ClosePunch_Delay >= _Avata->GetAvata_Skin()->GetFrameAnimation()->GetInfo().Inter * 2.f)
 			{
 				_Avata->SetShake(10, _Avata->GetAvata_Skin()->GetFrameAnimation()->GetInfo().Inter * 6.f);
+				Texture_W_Middle_d->ChangeFrameAnimation("W_Middle_d", true);
 				Texture_W_Middle_d->On();
 				Bool_Texture_W_Middle_d_Start = true;
 			}
@@ -257,7 +258,8 @@ bool Skill_Fighter_F_ClosePunch::TriggerSkill_ect(GameEngineCollision* _This, Ga
 
 void Skill_Fighter_F_ClosePunch::StartSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata)
 {
-	_Avata->ChangeAvataAnimation("Att_OneinchPunch");
+	_Avata->ChangeAvataAnimation("Att_OneinchPunch", true);
+	Texture_W_Front_d->ChangeFrameAnimation("W_Front_d", true);
 	Texture_W_Front_d->On();
 	Texture_W_Front_d->CurAnimationPauseSwitch();
 	Att_ClosePunch_Delay = 0.f;
@@ -278,10 +280,12 @@ void Skill_Fighter_F_ClosePunch::Texture_W_Front_d_Animation_Frame(const FrameAn
 		break;
 	case 1:
 		{
+			Texture_Punch00->ChangeFrameAnimation("Punch00", true);
 			Texture_Punch00->On();
 		}
 		break;
 	case 2:
+		Texture_Punch01->ChangeFrameAnimation("Punch01", true);
 		Texture_Punch01->On();
 		break;
 	case 3:
@@ -298,6 +302,7 @@ void Skill_Fighter_F_ClosePunch::Texture_W_Middle_d_Animation_Frame(const FrameA
 	switch (_Desc.CurFrame)
 	{
 	case 2:
+		Texture_W_Back_d->ChangeFrameAnimation("W_Back_d", true);
 		Texture_W_Back_d->On();
 		break;
 	case 5:
@@ -309,6 +314,7 @@ void Skill_Fighter_F_ClosePunch::Texture_W_Middle_d_Animation_Frame(const FrameA
 		break;
 	case 6:
 	{
+		Texture_Punch02->ChangeFrameAnimation("Punch02", true);
 		Texture_Punch02->On();
 		CheckCollision();
 	}
@@ -326,6 +332,7 @@ void Skill_Fighter_F_ClosePunch::Texture_Punch02_Animation_Frame(const FrameAnim
 	{
 	case 1:
 	{
+		Texture_Punch03->ChangeFrameAnimation("Punch03", true);
 		Texture_Punch03->On();
 	}
 	break;
