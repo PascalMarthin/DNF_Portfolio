@@ -2,6 +2,7 @@
 #include "GamePlayMonster.h"
 
 // Ό³Έν :
+class BaleTentacle;
 class Bale : public GamePlayMonster
 {
 public:
@@ -183,6 +184,8 @@ private:
 	void Bale_TentacleReadyEnd(const FrameAnimation_DESC& _DESC);
 
 	int BringTentacleIndex;
+	BaleTentacle* Actor_Tentacle;
+
 
 	//void FSM_Att_TrackingPlayer_Start(const StateInfo& _Info);
 	//void FSM_Att_TrackingPlayer_Update(float _DeltaTime, const StateInfo& _Info);

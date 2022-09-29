@@ -7,6 +7,7 @@
 #include "GamePlaySkill.h"
 #include "GameEngineEffectRenderer.h"
 #include "AvataManager.h"
+#include "BaleTentacle.h"
 //#include <GameEngineCore/>
 
 Bale::Bale()
@@ -733,10 +734,10 @@ if (_DESC.Renderer->GetPixelData().MulColor.a < 0)
 
 	// ÃË¼ö
 	{
+		Texture_Monster->CreateFrameAnimationFolder("Bale_TentacleSet", FrameAnimation_DESC("Bale", 32, 36, 0.1625f, false));
+
 		Texture_Monster->CreateFrameAnimationFolder("Bale_TentacleReady", FrameAnimation_DESC("Bale", 32, 36, 0.1625f, false));
 		Texture_Monster->AnimationBindEnd("Bale_TentacleReady", std::bind(&Bale::Bale_TentacleReadyEnd, this, std::placeholders::_1));
-
-
 		
 		//Texture_Monster->CreateFrameAnimationFolder("Bale_Tracking", FrameAnimation_DESC("Bale", 47, 48, 0.125f));
 		//Texture_Monster->AnimationBindFrame("Bale_Tracking", std::bind(&Bale::Bale_TrackFrmae, this, std::placeholders::_1));
@@ -1804,7 +1805,7 @@ void Bale::Bale_TrackUpdate(const FrameAnimation_DESC& _DESC, float _Time)
 	}
 	float4 Dir = Collision_TargetPos->GetTransform().GetWorldPosition() - GetTransform().GetWorldPosition();
 
-	Dir.x = Dir.x > 0 ? 1 : -1;
+	Dir.x = Dir.x > 0 ? 1.f : -1.f;
 	Dir.z = Dir.z > 0 ? 0.8f : -0.8f;
 
 	Manager_MoveManager->SetCharacterMove({ Dir.x * 480.f * _Time, Dir.z * 350.f * _Time });
@@ -1935,17 +1936,22 @@ void Bale::Bale_TrackCatchFrame(const FrameAnimation_DESC& _DESC)
 
 void Bale::FSM_Skill_BringTentacle_Start(const StateInfo& _Info)
 {
-	Texture_Monster->ChangeFrameAnimation("Bale_TentacleReady");
-	BringTentacleIndex = -5000;
+	Texture_Monster->ChangeFrameAnimation("Bale_TentacleSet");
+	BringTentacleIndex = 10;
+
+	Actor_Tentacle = GetLevel()->CreateActor<BaleTentacle>();
+	Actor_Tentacle->GetTransform().SetLocalPosition(GetTransform().GetWorldPosition());
 }
 
 void Bale::Bale_TentacleReadyEnd(const FrameAnimation_DESC& _DESC)
 {
-
+	Actor_Tentacle->CreateTentacle();
+	
 	if (GameEngineRandom::MainRandom.RandomInt(0, 3) == 0)
 	{
 		BringTentacleIndex = 20000;
 	}
+	
 }
 
 void Bale::FSM_Skill_BringTentacle_Update(float _DeltaTime, const StateInfo& _Info)
@@ -1956,7 +1962,7 @@ void Bale::FSM_Skill_BringTentacle_Update(float _DeltaTime, const StateInfo& _In
 	
 	if (BringTentacleIndex > 10000)
 	{
-		Texture_Monster->ChangeFrameAnimation("Bale_TentacleReady", true);
+		Texture_Monster->ChangeFrameAnimation("Bale_TentacleReady");
 		BringTentacleIndex = 0;
 	}
 }

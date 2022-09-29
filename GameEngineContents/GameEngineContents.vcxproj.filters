@@ -305,6 +305,9 @@
     <ClInclude Include="Roi_hartwig_NPC.h">
       <Filter>Object\NPC</Filter>
     </ClInclude>
+    <ClInclude Include="BaleTentacle.h">
+      <Filter>Object\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -607,6 +610,9 @@
     </ClCompile>
     <ClCompile Include="Roi_hartwig_NPC.cpp">
       <Filter>Object\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="BaleTentacle.cpp">
+      <Filter>Object\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
