@@ -25,8 +25,13 @@ void GamePlayMonster::Start()
 	GamePlayObject::Start();
 	Actor_Dummy = GetLevel()->CreateActor<GameEngineActor>();
 
-
 	Manager_StatManager = CreateComponent<CharacterStatManager>();
+
+	//Manager_StatManager->GetFSMManager().CreateStateMember
+	//("Dead", std::bind(&GamePlayMonster::FSM_Dead_Update, this, std::placeholders::_1, std::placeholders::_2)
+	//	, std::bind(&GamePlayMonster::FSM_Dead_Start, this, std::placeholders::_1)
+	//	, std::bind(&GamePlayMonster::FSM_Dead_End, this, std::placeholders::_1));
+
 }
 
 void GamePlayMonster::CreateMonsterStat(unsigned int _MAXHP, float Def, float _HPLine)
@@ -61,7 +66,9 @@ unsigned int GamePlayMonster::SetHPFromHit(unsigned int _Damage)
 
 	if (MonsterAbilityStat.HP < Damage)
 	{
-		GamePlayMonsterHPBar::SetHitDamage(0);
+		Dead();
+		GamePlayMonsterHPBar::SetHitDamage(MonsterAbilityStat.HP);
+		MonsterAbilityStat.HP = 0;
 	}
 	else
 	{
@@ -72,9 +79,66 @@ unsigned int GamePlayMonster::SetHPFromHit(unsigned int _Damage)
 	return Damage;
 }
 
+void GamePlayMonster::Dead()
+{
+	GetStatManager()->SetDead();
+	Texture_Monster->GetPixelData().MulColor = float4::ZERO;
+	Texture_Monster->GetPixelData().PlusColor = float4::WHITE;
+	Texture_Monster->CurAnimationPauseOn();
+
+	DeadDelay = 0.375f;
+}
+//
+//void GamePlayMonster::FSM_Dead_Start(const StateInfo& _Info)
+//{
+//
+//}
+//void GamePlayMonster::FSM_Dead_Update(float _DeltaTime, const StateInfo& _Info)
+//{
+//
+//}
+//void GamePlayMonster::FSM_Dead_End(const StateInfo& _Info)
+//{
+//
+//}
+
 
 void GamePlayMonster::Update(float _Delta)
 {
+	if (!Manager_StatManager->IsLive())
+	{
+		DeadDelay -= _Delta;
+		if (DeadDelay < 0)
+		{
+			int a = GameEngineRandom::MainRandom.RandomInt(-10, 3);
+			if (a == 0)
+			{
+				GameEngineTextureRenderer* Renderer = Actor_Dummy->CreateComponent<GameEngineTextureRenderer>();
+				Renderer->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
+				Renderer->CreateFrameAnimationFolder("Stone", FrameAnimation_DESC("Stone015", 0.125f, false));
+				Renderer->ChangeFrameAnimation("Stone");
+				Renderer->AnimationBindEnd("Stone", [](const FrameAnimation_DESC& _DESC)
+					{
+						_DESC.Renderer->Death();
+					});
+				Renderer->ScaleToTexture();
+			}
+			else if (a == 1)
+			{
+				GameEngineTextureRenderer* Renderer = Actor_Dummy->CreateComponent<GameEngineTextureRenderer>();
+				Renderer->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
+				Renderer->CreateFrameAnimationFolder("Stone", FrameAnimation_DESC("Stone024", 0.125f, false));
+				Renderer->ChangeFrameAnimation("Stone");
+				Renderer->AnimationBindEnd("Stone", [](const FrameAnimation_DESC& _DESC)
+					{
+						_DESC.Renderer->Death();
+					});
+				Renderer->ScaleToTexture();
+			}
+			Off();
+		}
+	}
+	
 	//Actor_TrackingObject->GetTransform().SetLocalPosition(GetTransform().GetWorldPosition());
 	for (auto& Time : All_CollTime)
 	{

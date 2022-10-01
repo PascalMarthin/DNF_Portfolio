@@ -38,6 +38,7 @@ Bale::Bale()
 	, Actor_TrackingObject(nullptr)
 	, VisionDelay(0)
 	, BringTentacleIndex(0)
+	, Coliision_TentacleHit(nullptr)
 {
 }
 
@@ -199,11 +200,11 @@ void Bale::Start()
 
 
 	{
-		//All_CollTime["Att_Sting"] = 0;
-		//All_CollTime["Att_Dash"] = 0;
-		//All_CollTime["Att_Stamping"] = 0;
-		//All_CollTime["Move_Teleport"] = 0;
-		//All_CollTime["Skill_Tracking"] = 0;
+		All_CollTime["Att_Sting"] = 0;
+		All_CollTime["Att_Dash"] = 0;
+		All_CollTime["Att_Stamping"] = 0;
+		All_CollTime["Move_Teleport"] = 0;
+		All_CollTime["Skill_Tracking"] = 0;
 		All_CollTime["Skill_Tentacle"] = 0;
 	}
 	SetMonsterClass(MonsterClass::Named);
@@ -225,7 +226,7 @@ void Bale::Start()
 	{
 		Texure_Barrier = CreateComponent<GameEngineEffectRenderer>("Barrier");
 		Texure_Barrier->GetTransform().SetLocalPosition({ 0,0, 10.0001f });
-		Texure_Barrier->CreateFrameAnimationFolder("Barrier", FrameAnimation_DESC("Bale_back", 0.0625f, true));
+		Texure_Barrier->CreateFrameAnimationFolder("Barrier", FrameAnimation_DESC("Bale_back", 0.125f, true));
 		Texure_Barrier->ChangeFrameAnimation("Barrier");
 		Texure_Barrier->ScaleToTexture();
 		Texure_Barrier->Off();
@@ -233,7 +234,7 @@ void Bale::Start()
 
 		Texure_Barrier_Effect_Front = CreateComponent<GameEngineEffectRenderer>("Barrier");
 		Texure_Barrier_Effect_Front->GetTransform().SetLocalPosition({ 0,0, 0.0001f });
-		Texure_Barrier_Effect_Front->CreateFrameAnimationFolder("Barrier", FrameAnimation_DESC("Bale_back_normal", 0.125f, true));
+		Texure_Barrier_Effect_Front->CreateFrameAnimationFolder("Barrier", FrameAnimation_DESC("Bale_back_normal", 0.25f, true));
 		Texure_Barrier_Effect_Front->ChangeFrameAnimation("Barrier");
 		Texure_Barrier_Effect_Front->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texure_Barrier_Effect_Front->ScaleToTexture();
@@ -241,7 +242,7 @@ void Bale::Start()
 
 		Texure_Barrier_Effect_FrontDodge = CreateComponent<GameEngineEffectRenderer>("Barrier");
 		Texure_Barrier_Effect_FrontDodge->GetTransform().SetLocalPosition({ 0,0, 0.0001f });
-		Texure_Barrier_Effect_FrontDodge->CreateFrameAnimationFolder("Barrier", FrameAnimation_DESC("Bale_front_dodge", 0.125f, true));
+		Texure_Barrier_Effect_FrontDodge->CreateFrameAnimationFolder("Barrier", FrameAnimation_DESC("Bale_front_dodge", 0.25f, true));
 		Texure_Barrier_Effect_FrontDodge->ChangeFrameAnimation("Barrier");
 		Texure_Barrier_Effect_FrontDodge->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texure_Barrier_Effect_FrontDodge->ScaleToTexture();
@@ -251,7 +252,7 @@ void Bale::Start()
 		
 		Texure_Barrier_Effect_Back = CreateComponent<GameEngineEffectRenderer>("Barrier");
 		Texure_Barrier_Effect_Back->GetTransform().SetLocalPosition({ 0,0, 10.0001f });
-		Texure_Barrier_Effect_Back->CreateFrameAnimationFolder("Barrier", FrameAnimation_DESC("Bale_front_dodge", 0.125f, true));
+		Texure_Barrier_Effect_Back->CreateFrameAnimationFolder("Barrier", FrameAnimation_DESC("Bale_front_dodge", 0.25f, true));
 		Texure_Barrier_Effect_Back->ChangeFrameAnimation("Barrier");
 		Texure_Barrier_Effect_Back->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texure_Barrier_Effect_Back->ScaleToTexture();
@@ -259,7 +260,7 @@ void Bale::Start()
 
 		Texure_Barrier_Effect_BackDodge = CreateComponent<GameEngineEffectRenderer>("Barrier");
 		Texure_Barrier_Effect_BackDodge->GetTransform().SetLocalPosition({ 0,0, 10.0001f });
-		Texure_Barrier_Effect_BackDodge->CreateFrameAnimationFolder("Barrier", FrameAnimation_DESC("Bale_front_dodge", 0.125f, true));
+		Texure_Barrier_Effect_BackDodge->CreateFrameAnimationFolder("Barrier", FrameAnimation_DESC("Bale_front_dodge", 0.25f, true));
 		Texure_Barrier_Effect_BackDodge->ChangeFrameAnimation("Barrier");
 		Texure_Barrier_Effect_BackDodge->GetClonePipeLine()->SetOutputMergerBlend("TransparentBlend");
 		Texure_Barrier_Effect_BackDodge->ScaleToTexture();
@@ -738,7 +739,8 @@ if (_DESC.Renderer->GetPixelData().MulColor.a < 0)
 
 		Texture_Monster->CreateFrameAnimationFolder("Bale_TentacleReady", FrameAnimation_DESC("Bale", 32, 36, 0.1625f, false));
 		Texture_Monster->AnimationBindEnd("Bale_TentacleReady", std::bind(&Bale::Bale_TentacleReadyEnd, this, std::placeholders::_1));
-		
+		Texture_Monster->AnimationBindFrame("Bale_TentacleReady", std::bind(&Bale::Bale_TentacleFrame, this, std::placeholders::_1));
+
 		//Texture_Monster->CreateFrameAnimationFolder("Bale_Tracking", FrameAnimation_DESC("Bale", 47, 48, 0.125f));
 		//Texture_Monster->AnimationBindFrame("Bale_Tracking", std::bind(&Bale::Bale_TrackFrmae, this, std::placeholders::_1));
 		//Texture_Monster->AnimationBindTime("Bale_Tracking", std::bind(&Bale::Bale_TrackUpdate, this, std::placeholders::_1, std::placeholders::_2));
@@ -749,9 +751,15 @@ if (_DESC.Renderer->GetPixelData().MulColor.a < 0)
 		//Texture_Monster->AnimationBindFrame("Bale_TrackCatch", std::bind(&Bale::Bale_TrackCatchFrame, this, std::placeholders::_1));
 		//Texture_Monster->AnimationBindEnd("Bale_TrackCatch", std::bind(&Bale::Bale_BackToNone, this, std::placeholders::_1));
 
+		Coliision_TentacleHit = CreateComponent<GameEngineCollision>();
+		Coliision_TentacleHit->GetTransform().SetLocalScale({ 150, 200, 150 });
+		Coliision_TentacleHit->ChangeOrder(CollisionOrder::Monster_Att);
+		Coliision_TentacleHit->GetTransform().SetLocalPosition({ 65, 10 });
+
 		GameEngineCollision* Collision = CreateComponent<GameEngineCollision>();
 		Collision->GetTransform().SetLocalScale({ 2000, 2000, 2000 });
 		Collision->ChangeOrder(CollisionOrder::Monster_Tarcking);
+		Collision->SetDebugSetting(CollisionType::CT_AABB, float4::ZERO);
 
 		AllCollision["Skill_Tentacle"] = Collision;
 
@@ -1670,7 +1678,7 @@ void Bale::Bale_DashFrame(const FrameAnimation_DESC& _DESC)
 
 void Bale::FSM_Att_Dash_End(const StateInfo& _Info)
 {
-	All_CollTime["Att_Dash"] = 0.f;
+	All_CollTime["Att_Dash"] = 10.f;
 	DashUpdate = false;
 	BeforePos = float4::ZERO;
 	{
@@ -1754,8 +1762,7 @@ void Bale::FSM_Skill_Tracking_End(const StateInfo& _Info)
 	Texture_BlackBack->GetPixelData().PlusColor.a = 0;
 	Collision_TargetPos->GetTransform().SetLocalPosition(float4::ZERO);
 	dynamic_cast<GamePlayCharacter*>(Hit_Player)->SetCamHoldOff();
-	All_CollTime["Skill_Tracking"] = 5;
-
+	All_CollTime["Skill_Tracking"] = 10.f;
 }
 
 void Bale::Bale_TrackReadyEnd(const FrameAnimation_DESC& _DESC)
@@ -1941,17 +1948,75 @@ void Bale::FSM_Skill_BringTentacle_Start(const StateInfo& _Info)
 
 	Actor_Tentacle = GetLevel()->CreateActor<BaleTentacle>();
 	Actor_Tentacle->GetTransform().SetLocalPosition(GetTransform().GetWorldPosition());
+
+
 }
 
 void Bale::Bale_TentacleReadyEnd(const FrameAnimation_DESC& _DESC)
 {
-	Actor_Tentacle->CreateTentacle();
-	
 	if (GameEngineRandom::MainRandom.RandomInt(0, 3) == 0)
 	{
-		BringTentacleIndex = 20000;
+		BringTentacleIndex = 17000;
+	}
+}
+
+void Bale::Bale_TentacleFrame(const FrameAnimation_DESC& _DESC)
+{
+	if (_DESC.CurFrame == 2)
+	{
+		Actor_Tentacle->CreateTentacle();
+
+		if (Coliision_TentacleHit->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player, CollisionType::CT_AABB, std::bind(&Bale::GetPlayer, this, std::placeholders::_1, std::placeholders::_2)))
+		{
+			int Dir = Texture_Monster->GetTransform().GetWorldPosition().x - Hit_Player->GetTransform().GetWorldPosition().x > 0 ? -1 : 1;
+			Hit_Player->BeHit({ 200, 600, 0, 0 }, HitPostureType::Aerial, nullptr, nullptr, -Dir, 3000);
+		}
+		//32 36
+
+
+		GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
+		Renderer->CreateFrameAnimationFolder("Stone006", FrameAnimation_DESC("Stone006", 0.125f, false));
+		Renderer->ChangeFrameAnimation("Stone006");
+		Renderer->AnimationBindEnd("Stone006", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->Death();
+			});
+		Renderer->GetTransform().SetLocalPosition({ 70, -60, -1.f });
+		float4 Pos = Renderer->GetTransform().GetWorldPosition();
+		Renderer->SetParent(Actor_Dummy);
+		Renderer->GetTransform().SetWorldPosition(Pos);
+		Renderer->ScaleToTexture();
+
+		Renderer = CreateComponent<GameEngineTextureRenderer>();
+		Renderer->CreateFrameAnimationFolder("Crack005", FrameAnimation_DESC("Crack005", 0, 8, 0.125f, false));
+		Renderer->ChangeFrameAnimation("Crack005");
+		Renderer->AnimationBindEnd("Crack005", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->Death();
+			});
+		Renderer->GetTransform().SetLocalPosition({ 70, -60, 20.f });
+		Pos = Renderer->GetTransform().GetWorldPosition();
+		Renderer->SetParent(Actor_Dummy);
+		Renderer->GetTransform().SetWorldPosition(Pos);
+		Renderer->ScaleToTexture();
+
+
+		Renderer = CreateComponent<GameEngineTextureRenderer>();
+		Renderer->CreateFrameAnimationFolder("Bale_boom_purple_026", FrameAnimation_DESC("Bale_boom_purple_026", 15, 28, 0.075f, false));
+		Renderer->ChangeFrameAnimation("Bale_boom_purple_026");
+		Renderer->SetScaleRatio(1.2f);
+		Renderer->AnimationBindEnd("Bale_boom_purple_026", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->Death();
+			});
+		Renderer->GetTransform().SetLocalPosition({ 70, 40 });
+		Pos = Renderer->GetTransform().GetWorldPosition();
+		Renderer->SetParent(Actor_Dummy);
+		Renderer->GetTransform().SetWorldPosition(Pos);
+		Renderer->ScaleToTexture();
 	}
 	
+
 }
 
 void Bale::FSM_Skill_BringTentacle_Update(float _DeltaTime, const StateInfo& _Info)
@@ -1959,21 +2024,25 @@ void Bale::FSM_Skill_BringTentacle_Update(float _DeltaTime, const StateInfo& _In
 
 	BringTentacleIndex += GameEngineRandom::MainRandom.RandomInt(10, 50);
 
+
+
+
 	
-	if (BringTentacleIndex > 10000)
+	if (BringTentacleIndex > 20000)
 	{
-		Texture_Monster->ChangeFrameAnimation("Bale_TentacleReady");
+		Texture_Monster->ChangeFrameAnimation("Bale_TentacleReady", true);
 		BringTentacleIndex = 0;
 	}
 }
 void Bale::FSM_Skill_BringTentacle_End(const StateInfo& _Info)
 {
-
+	All_CollTime["Skill_Tentacle"] = 60.f;
 }
 
 
 void Bale::LevelStartEvent()
 {
-	//All_CollTime["Move_Teleport"] = 10.f;
-	//All_CollTime["Att_Dash"] = 10.f;
+	All_CollTime["Move_Teleport"] = 10.f;
+	All_CollTime["Att_Dash"] = 10.f;
+	All_CollTime["Skill_Tentacle"] = 10.f;
 }

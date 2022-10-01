@@ -24,7 +24,7 @@ void BaleTentacle::CreateTentacle()
 
 void TentacleTextureCollision::Start()
 {
-	for (size_t i = 0; i < 1; i++)
+	for (size_t i = 0; i < 20; i++)
 	{
 		TentacleKal* kal = GetActor()->CreateComponent<TentacleKal>();
 		//kal->SetParent(this);
@@ -34,63 +34,54 @@ void TentacleTextureCollision::Start()
 	Texture_Test = GetActor()->CreateComponent<GameEngineTextureRenderer>();
 	Texture_Test->GetTransform().SetLocalScale({ 50, 50, 50 });
 	Texture_Test->SetParent(this);
-	Rotation = 0;
+	//Rotation = 0;
 	GetTransform().SetLocalPosition({50, -20, 0});
-	GetTransform().SetLocalRotate({ 45, 0, 0 });
+	Lena = 100;
+	Lenb = 40;
+	DirIndexX = -1.f;
+	DirIndexY = 1.f;
 }
 void TentacleTextureCollision::Update(float _Time)
 {
 	Time += _Time;
-	
+
+
+
+	//Lena += _Time * 30.f;
+	//Lenb += _Time * 6.f;
+
+
+	if ((abs(Lena) - abs(LenX)) / abs(Lena) < 0.05f)
 	{
-		//float MoveIndex = 0;
-
-		Rotation += _Time * 20.f;
-		if (Rotation > 360.f)
-		{
-			Rotation -= 360.f;
-		}
-		
-		//float Result = Rotation;
-		//if ((Result / 180.f) > 1.f)
-		//{
-		//	Result -= 180.f;
-		//}
-		//
-		//if (Result > 90.f)
-		//{
-		//	Result -= 90.f
-		//	MoveIndex = 0;
-		//}
-		//else
-		//{
-		//	MoveIndex = 20.f ;
-		//}
-	
-
-
-		Texture_Test->GetTransform().SetLocalMove({ _Time * (15.f), 0 });
+		Lena += _Time * 10.f;
+		LenX += _Time * (50.f * (1.f - ((abs(Lena) - abs(LenX)) / abs(Lena) * 0.02f)) + 400.f * ((abs(Lena) - abs(LenX)) / abs(Lena) * 0.02f)) * DirIndexX;
 	}
-	GetTransform().SetLocalRotation({ 45 ,Rotation, 0 });
-	Texture_Test->GetTransform().SetWorldRotation({ 0,0,0});
+	else
+	{
+		Lena += _Time * 50.f;
+		Lenb += _Time * 15.f;
+		LenX += _Time * 400.f * DirIndexX;
+	}
 
 
-	const float4x4& Pos = GetTransformData().WorldWorldMatrix;
 
+//	LenX += _Time * (100.f * (1.f - ((abs(Lena) - abs(LenX)) / abs(Lena))) + 400.f * ((abs(Lena) - abs(LenX)) / abs(Lena))) * DirIndexX;
+	if (abs(Lena) <= abs(LenX))
+	{
+		LenX = Lena * DirIndexX;
 
+		DirIndexX *= -1.f;
+		DirIndexY *= -1.f;
+	}
+
+	float Y = 0;
+	Y = sqrt((1 - ((LenX * LenX) / (Lena * Lena))) * (Lenb * Lenb)) * DirIndexY;
+
+	Texture_Test->GetTransform().SetLocalPosition({ LenX, Y, Y });
 
 
 	if (!list_ActiveCollision.empty())
 	{
-		//for (auto& Iter : list_ActiveCollision)
-		//{
-		//	if (!Iter->IsUpdate())
-		//	{
-		//		list_WaitCollision.push_back(Iter);
-		//		list_ActiveCollision.erase(Iter);
-		//		break;
-		//	}
-		//}
 		std::list<TentacleKal*>::iterator StartIter = list_ActiveCollision.begin();
 		std::list<TentacleKal*>::iterator EndIter = list_ActiveCollision.end();
 
@@ -105,37 +96,33 @@ void TentacleTextureCollision::Update(float _Time)
 			StartIter++;
 		}
 	}
-
-	if (!list_WaitCollision.empty())
+	Delay -= _Time;
+	if (Delay < 0)
 	{
-		list_WaitCollision.front()->On();
-	//	list_WaitCollision.front()->GetTransform().Set
-		//list_WaitCollision.front()->GetTransform().SetWorldPosition({ (GetTransform().GetWorldPosition().x * Pos.Arr2D[0][0]) + (GetTransform().GetWorldPosition().y * Pos.Arr2D[0][1]),
-			//(GetTransform().GetWorldPosition().x * Pos.Arr2D[1][0]) + (GetTransform().GetWorldPosition().y * Pos.Arr2D[1][1]),
-			//GetTransform().GetWorldPosition().z });
-		//GameEngineDebug::OutPutString(std::to_string(list_WaitCollision.front()->GetTransform().GetWorldPosition().x) + " " + std::to_string(list_WaitCollision.front()->GetTransform().GetWorldPosition().y) + " " + std::to_string(list_WaitCollision.front()->GetTransform().GetWorldPosition().x));
-		
-		//list_WaitCollision.front()->GetTransform().SetAddWorldRotation(GetTransform().GetLocalRotation());
+		if (!list_WaitCollision.empty())
+		{
+			list_WaitCollision.front()->On();
+			//	list_WaitCollision.front()->GetTransform().Set
+
+			float index = 0;
+			if (GetTransform().GetLocalPosition().x >= 0)
+			{
+				index = 1.f;
+			}
+			else
+			{
+				index = -1.f;
+			}
+			list_WaitCollision.front()->GetTransform().SetLocalPosition({ LenX + (50.f * index), Y - (20.f), Y - (20.f) });
 
 
-		//list_WaitCollision.front()->GetTransform().SetLocalPosition({ Time * 100.f , 0,0});
-		//list_WaitCollision.front()->GetTransform().SetAddWorldRotation({0, _Time , _Time });
-
-		//const float4& Pos = list_WaitCollision.front()->GetTransform().GetWorldPosition();
-		//const float4& Ros = list_WaitCollision.front()->GetTransform().GetWorldPosition();
-
-		
-			
-
-
-
-			
-			
-
-	//	GameEngineDebug::OutPutString(std::to_string(GetTransform().GetWorldPosition().x * Pos.Arr2D[0][0] * Pos.Arr2D[2][0]) + " + " + std::to_string(GetTransform().GetWorldPosition().z * Pos.Arr2D[0][2] * Pos.Arr2D[2][2]));
-		list_ActiveCollision.push_back(list_WaitCollision.front());
-		list_WaitCollision.erase(list_WaitCollision.begin());
+		//	GameEngineDebug::OutPutString(std::to_string(GetTransform().GetWorldPosition().x * Pos.Arr2D[0][0] * Pos.Arr2D[2][0]) + " + " + std::to_string(GetTransform().GetWorldPosition().z * Pos.Arr2D[0][2] * Pos.Arr2D[2][2]));
+			list_ActiveCollision.push_back(list_WaitCollision.front());
+			list_WaitCollision.erase(list_WaitCollision.begin());
+		}
+		Delay = 0.0625f + (Time * 0.01f);
 	}
+
 
 
 }
@@ -174,11 +161,12 @@ void TentacleKal::Start()
 	Texture_Kal->Off();
 
 	Collision_Tentacle = GetActor()->CreateComponent<GameEngineCollision>();
+	Collision_Tentacle->SetParent(this);
 	Collision_Tentacle->GetTransform().SetLocalScale({ 50, 50, 50 });
 	Collision_Tentacle->GetTransform().SetLocalPosition({ 2, -78 });
 	Collision_Tentacle->ChangeOrder(CollisionOrder::Monster_Att);
 	Collision_Tentacle->SetDebugSetting(CollisionType::CT_SPHERE, float4::BLACK);
-
+	Delay = 0;
 }
 void TentacleKal::Update(float _Time)
 {
@@ -211,24 +199,30 @@ void TentacleKal::Update(float _Time)
 		Time += _Time;
 	}
 
-	if (Time > 2.f)
+	if (Time > 1.2f)
 	{
 		Texture_Tentacle->GetPixelData().MulColor.a -= _Time * 3.f;
 		Collision_Tentacle->Off();
 	}
-
-
-
-
-	if (Collision_Tentacle->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player, CollisionType::CT_AABB, 
-		std::bind(&TentacleKal::GetPlayer, this, std::placeholders::_1, std::placeholders::_2)))
+	else
 	{
-		Texture_KalEffect->ChangeFrameAnimation("Texture_KalEffect", true);
-		//Texture_KalEffect->On();
+		Collision_Tentacle->On();
+		if (Delay < 0)
+		{
+			if (Collision_Tentacle->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player, CollisionType::CT_AABB,
+				std::bind(&TentacleKal::GetPlayer, this, std::placeholders::_1, std::placeholders::_2)))
+			{
+				Texture_KalEffect->ChangeFrameAnimation("Texture_KalEffect", true);
+				Texture_KalEffect->On();
 
-		//Texture_Kal->ChangeFrameAnimation("Texture_Kal", true);
-		//Texture_Kal->On();
+				Texture_Kal->ChangeFrameAnimation("Texture_Kal", true);
+				Texture_Kal->On();
+				Delay = 1.5f;
+			}
+		}
 	}
+	Delay -= _Time;
+
 }
 
 void TentacleKal::OnEvent()

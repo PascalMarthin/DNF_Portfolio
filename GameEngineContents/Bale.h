@@ -182,11 +182,13 @@ private:
 	void FSM_Skill_BringTentacle_End(const StateInfo& _Info);
 
 	void Bale_TentacleReadyEnd(const FrameAnimation_DESC& _DESC);
+	void Bale_TentacleFrame(const FrameAnimation_DESC& _DESC);
+
 
 	int BringTentacleIndex;
 	BaleTentacle* Actor_Tentacle;
 
-
+	GameEngineCollision* Coliision_TentacleHit;
 	//void FSM_Att_TrackingPlayer_Start(const StateInfo& _Info);
 	//void FSM_Att_TrackingPlayer_Update(float _DeltaTime, const StateInfo& _Info);
 	//void FSM_Att_TrackingPlayer_End(const StateInfo& _Info);

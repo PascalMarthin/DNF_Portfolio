@@ -86,7 +86,7 @@ public:
 	}
 	inline bool IsSuperarmor() const
 	{
-		return PlayerCurrentState & CharacterStat::Player_Character_Superarmor;
+		return PlayerCurrentState & CharacterStat::Player_Character_Superarmor & CharacterStat::Player_Character_ALive;
 	}
 	inline bool IsAerial() const
 	{
@@ -94,7 +94,7 @@ public:
 	}
 	inline bool IsBeHit() const
 	{
-		return PlayerCurrentState & CharacterStat::Player_Character_BeHit;
+		return (PlayerCurrentState & CharacterStat::Player_Character_BeHit) & CharacterStat::Player_Character_ALive;
 	}
 	inline bool IsHold() const
 	{
@@ -157,6 +157,7 @@ public:
 	void SetInvincibilityEnd();
 	void SetSuperarmor();
 	void SetSuperarmorEnd();
+	void SetDead();
 
 	inline void SetEngage()
 	{

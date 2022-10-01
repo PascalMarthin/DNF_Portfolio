@@ -14,6 +14,8 @@ Skill_Fighter_F_Ham_Kick::~Skill_Fighter_F_Ham_Kick()
 
 void Skill_Fighter_F_Ham_Kick::Start()
 {
+	Class_Power.push_back(SkillComboPower(200, 1, { 200, 300.f, 0.f, 0.f }, HitPostureType::Aerial, HitType::Hit));
+
 	SetCoolTime(5.f);
 	GameEngineCollision* Collision_HamerKick = GetActor()->CreateComponent<GameEngineCollision>("Ham_Kick");
 	Collision_HamerKick->GetTransform().SetLocalScale({100.f, 100.f, 40.f});
@@ -27,7 +29,25 @@ void Skill_Fighter_F_Ham_Kick::Start()
 
 bool Skill_Fighter_F_Ham_Kick::ActiveSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata, float _DeltaTime)
 {
+	TimePass += _DeltaTime;
+
+	if (Is_CollisionCheck == false && _Avata->GetAvata_Skin()->GetCurrentFrameStuck() == 2)
+	{
+		CheckCollision();
+		Is_CollisionCheck = true;
+	}
+	else if (_Avata->GetAvata_Skin()->IsEndFrame())
+	{
+		Off();
+		return true;
+	}
 	return false;
+}
+
+void Skill_Fighter_F_Ham_Kick::StartSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata)
+{
+	_Avata->ChangeAvataAnimation("Att_BaseKick");
+	_Avata->SetSuperArmor();
 }
 
 bool Skill_Fighter_F_Ham_Kick::TriggerSkill_ect(GameEngineCollision* _This, GameEngineCollision* _Other)

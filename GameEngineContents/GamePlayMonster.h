@@ -138,8 +138,15 @@ protected:
 	// --------CoolTime-----------------
 	std::map<std::string, float> All_CollTime;
 
+	//void FSM_Dead_Start(const StateInfo& _Info);
+	//void FSM_Dead_Update(float _DeltaTime, const StateInfo& _Info);
+	//void FSM_Dead_End(const StateInfo& _Info);
+
+
 
 private:
+	float DeadDelay;
+	virtual void Dead();
 	std::string String_MonsterName;
 	
 	MonsterClass Monster_Class;

@@ -308,6 +308,12 @@
     <ClInclude Include="BaleTentacle.h">
       <Filter>Object\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="Luke_Stage2.h">
+      <Filter>Level\Battle</Filter>
+    </ClInclude>
+    <ClInclude Include="Light_archer.h">
+      <Filter>Object\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -612,6 +618,12 @@
       <Filter>Object\NPC</Filter>
     </ClCompile>
     <ClCompile Include="BaleTentacle.cpp">
+      <Filter>Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Luke_Stage2.cpp">
+      <Filter>Level\Battle</Filter>
+    </ClCompile>
+    <ClCompile Include="Light_archer.cpp">
       <Filter>Object\Monster</Filter>
     </ClCompile>
   </ItemGroup>

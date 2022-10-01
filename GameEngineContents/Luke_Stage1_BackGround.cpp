@@ -2,7 +2,7 @@
 #include "Luke_Stage1_BackGround.h"
 
 Luke_Stage1_BackGround::Luke_Stage1_BackGround()
-	: Texture_Black(nullptr)
+	: Texture_Stage2_Door(nullptr)
 {
 }
 
@@ -19,12 +19,10 @@ void Luke_Stage1_BackGround::Start()
 
 	Texture_MapCollision = GameEngineTexture::Find("Luke_Raid_Stage1_Collision.png");
 
-	Texture_Black = CreateComponent<GameEngineTextureRenderer>();
-	Texture_Black->SetTexture("BlackBackground.png");
-	Texture_Black->GetTransform().SetLocalScale({ 2000, 2000 });
-	Texture_Black->GetTransform().SetLocalPosition({ 0, 0, 1000 });
-	Texture_Black->SetPivot(PIVOTMODE::LEFTTOP);
-	Texture_Black->GetPixelData().MulColor = { 0, 0, 0, 0 };
+	Texture_Stage2_Door = CreateComponent<GameEngineTextureRenderer>();
+	Texture_Stage2_Door->SetTexture("pathGate_Close.png");
+	Texture_Stage2_Door->ScaleToTexture();
+	Texture_Stage2_Door->GetTransform().SetLocalPosition({ 2000, -600, -600 });
 
 	SetBackGroundZOrder();
 }

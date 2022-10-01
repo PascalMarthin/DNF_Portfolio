@@ -28,6 +28,10 @@ void Skill_Fighter_F_Rising::Start()
 {
 	Class_Power.push_back(SkillComboPower(200, 1, { 0, 0.f, 0, 0.f }, HitPostureType::Aerial, HitType::Hit));
 	Class_Power.push_back(SkillComboPower(200, 1, { 0, 500.f, 0, 0.f }, HitPostureType::Aerial, HitType::Hit));
+	Class_Power.push_back(SkillComboPower(200, 1, { 0, 0.f, 0, 0.f }, HitPostureType::Aerial, HitType::Hit));
+	Class_Power.push_back(SkillComboPower(200, 1, { 0, 0.f, 0, 0.f }, HitPostureType::Aerial, HitType::Hit));
+	Class_Power.push_back(SkillComboPower(200, 1, { 0, 0.f, 0, 0.f }, HitPostureType::Aerial, HitType::Hit));
+	Class_Power.push_back(SkillComboPower(1000, 1, { 100.f, 500.f, 0, 0.f }, HitPostureType::Aerial, HitType::Hit));
 	//Class_Power.push_back(SkillComboPower(300, 1, { 700.f, 0.f, 0, 0.f }, HitPostureType::Aerial, HitType::Hit));
 	//Class_Power.push_back(SkillComboPower(400, 1, { 700.f, 0.f, 0, 0.f }, HitPostureType::Aerial, HitType::Hit));
 
@@ -447,6 +451,23 @@ bool Skill_Fighter_F_Rising::ActiveSkill(CharacterStatManager* _Stat, MoveManage
 
 			Texture_Wind[3]->ChangeFrameAnimation("Texture_Wind_2");
 			Texture_Wind[3]->On();
+
+			GameEngineEffectRenderer* RisingEffect = GetActor()->CreateComponent<GameEngineEffectRenderer>("RisingEffect");
+			RisingEffect->CreateFrameAnimationFolder("Rising_wave013", FrameAnimation_DESC("Rising_wave013", 1, 4, 0.125f, true));
+			RisingEffect->AnimationBindEnd("Rising_wave013",
+				[](const FrameAnimation_DESC& _Desc)
+				{
+					_Desc.Renderer->Death();
+				});
+			RisingEffect->ChangeFrameAnimation("Rising_wave013");
+			RisingEffect->SetScaleRatio(1.f);
+			RisingEffect->ScaleToTexture();
+			RisingEffect->GetTransform().SetLocalPosition({ 0.f , 70.f, -10.f });
+			RisingEffect->GetPixelData().MulColor = { 1.f,1.f,1.f, 1.8f };
+
+			CheckCollision(0);
+			Object_HitList.clear();
+
 			return false;
 		}
 

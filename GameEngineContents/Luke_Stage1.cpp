@@ -5,10 +5,11 @@
 #include "MoveManager.h"
 #include "AvataManager.h"
 #include "Bale.h"
+#include "Light_archer.h"
 
 Luke_Stage1::Luke_Stage1() 
 	: Texture_Luke_Stage1(nullptr)
-	, Debug_Bale(nullptr)
+
 {
 }
 
@@ -22,7 +23,13 @@ void Luke_Stage1::Start()
 	Texture_Luke_Stage1 = CreateActor<Luke_Stage1_BackGround>();
 	Player_Character = CreateActor<GamePlayCharacter>();
 
-	Debug_Bale = CreateActor<Bale>();
+	for (size_t i = 0; i < 2; i++)
+	{
+		Light_archer* Archer = CreateActor<Light_archer>();
+		vector_Archer.push_back(Archer);
+	}
+
+
 
 	for (auto& Actor :GetGroup(0))
 	{
@@ -36,8 +43,6 @@ void Luke_Stage1::Update(float _DeltaTime)
 {
 	if (!GetMainCameraActor()->IsFreeCameraMode() && Player_Character->GetHoldCam() == false)
 	{
-
-
 		float4 Pos = Player_Character->GetMoveManager()->GetMoveCollision()->GetTransform().GetWorldPosition();
 		if (Pos.x <= 705.f * MonitorX)
 		{
@@ -79,8 +84,14 @@ void Luke_Stage1::LevelStartEvent()
 		
 		Player_Character->GetTransform().SetLocalPosition({500.f, -500.f, -500.f });
 	}
-	Debug_Bale->GetTransform().SetLocalPosition({ 1000.f, -600.f, -600.f });
-	Debug_Bale->SetLeftDir();
+
+	for (size_t i = 0; i < vector_Archer.size(); i++)
+	{
+		vector_Archer[i]->GetTransform().SetLocalPosition({ 1000, -500.f -100.f * i, -500.f -100.f * i });
+	}
+
+	//Debug_Bale->GetTransform().SetLocalPosition({ 1000.f, -600.f, -600.f });
+	//Debug_Bale->SetLeftDir();
 	Dungeon_Luke::SetStage(Luke_Stage::Stage_1);
 
 }

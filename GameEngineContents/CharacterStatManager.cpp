@@ -33,7 +33,7 @@ void CharacterStatManager::Start()
 {
 	//SetOrder(static_cast<int>(ActorOrder::Manager));
 	SettingFirstTime();
-
+	PlayerCurrentState |= CharacterStat::Player_Character_ALive;
 }
 
 void CharacterStatManager::SettingFirstTime()
@@ -523,6 +523,11 @@ void CharacterStatManager::SetSuperarmor()
 void CharacterStatManager::SetSuperarmorEnd()
 {
 	PlayerCurrentState &= ~CharacterStat::Player_Character_Superarmor;
+}
+
+void CharacterStatManager::SetDead()
+{
+	PlayerCurrentState &= ~CharacterStat::Player_Character_ALive;
 }
 
 

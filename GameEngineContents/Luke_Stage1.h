@@ -4,7 +4,7 @@
 
 // Ό³Έν :
 class Luke_Stage1_BackGround;
-class Bale;
+class Light_archer;
 class Luke_Stage1 : public Dungeon_Luke
 {
 public:
@@ -34,6 +34,6 @@ protected:
 private:
 
 	Luke_Stage1_BackGround* Texture_Luke_Stage1;
-	Bale* Debug_Bale;
+	std::vector<Light_archer*> vector_Archer;
 };
 

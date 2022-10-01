@@ -36,7 +36,7 @@ class TentacleTextureCollision : public GameEngineTransformComponent
 public:
 	// constrcuter destructer
 	TentacleTextureCollision()
-	: Rotation(0),
+	: //Rotation(0),
 		Time(0)
 	{}
 	~TentacleTextureCollision() {}
@@ -55,8 +55,14 @@ private:
 	std::list<TentacleKal*> list_WaitCollision;
 
 	float Time;
-	float Rotation;
+//	float Rotation;
+	float DirIndexX;
+	float DirIndexY;
+	float LenX;
+	float Lena;
+	float Lenb;
 
+	float Delay;
 	GameEngineTextureRenderer* Texture_Test;
 
 };
@@ -93,7 +99,7 @@ private:
 	GameEngineEffectRenderer* Texture_KalEffect;
 	GameEngineEffectRenderer* Texture_Kal;
 
-
+	float Delay;
 	CollisionReturn GetPlayer(GameEngineCollision* _This, GameEngineCollision* _Other);
 
 	float Time;

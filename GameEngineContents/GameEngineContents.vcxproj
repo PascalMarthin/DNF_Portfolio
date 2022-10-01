@@ -415,11 +415,19 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Light_archer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Luke_Stage1.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="Luke_Stage1_BackGround.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Luke_Stage2.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -819,11 +827,19 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Light_archer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Luke_Stage1.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="Luke_Stage1_BackGround.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Luke_Stage2.cpp">
       <SubType>
       </SubType>
     </ClCompile>
