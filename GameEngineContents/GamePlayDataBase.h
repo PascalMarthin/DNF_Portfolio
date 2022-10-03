@@ -77,7 +77,7 @@ public:
 		, Physical_Damage(1)
 		, Magcial_Damage(1)
 		, Independent_Damage(1)
-		, Physical_Critical(0)
+		, Physical_Critical(35.f)
 		, Magcial_Critical(0)
 		, Accuracy(0.f)
 		, Evasion(0.f)
@@ -123,6 +123,21 @@ public:
 	inline unsigned int GetMAXMP() const
 	{
 		return MAXMP;
+	}
+
+	inline float GetPhysical_Critical() const
+	{
+		return Physical_Critical;
+	}
+
+	inline unsigned int GetSTR() const
+	{
+		return STR;
+	}
+
+	inline unsigned int GetPhysical_Damage() const
+	{
+		return Physical_Damage;
 	}
 
 private:

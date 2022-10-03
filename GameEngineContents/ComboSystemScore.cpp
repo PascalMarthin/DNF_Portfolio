@@ -4,6 +4,8 @@
 
 ComboSystemScore* ComboSystemScore::BeforeInst = nullptr;
 
+
+
 ComboSystemScore::ComboSystemScore()
 	: Renewal(false)
 	, NoInputTime(5.f)
@@ -42,6 +44,8 @@ void ComboSystemScore::Start()
 	Texture_Dungeon_Effect->GetPixelData().PlusColor = {0.85f, 0.85f ,0.85f , 0.3f};
 	//Texture_Dungeon_Effect->SetPivot(PIVOTMODE::RIGHT);
 	Texture_Dungeon_Effect->Off();
+
+
 
 
 

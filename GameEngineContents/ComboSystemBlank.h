@@ -54,5 +54,8 @@ private:
 
 	void ReSet();
 
+
+
+
 };
 

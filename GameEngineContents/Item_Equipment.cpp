@@ -5,6 +5,7 @@
 
 Item_Equipment::Item_Equipment() 
 	: Enum_EquipmentClass(AllEquipmentClass::None)
+	, AddDamage(0)
 {
 }
 
@@ -39,16 +40,48 @@ void Item_Equipment::SetStatClass(GamePlayItemCode _Code)
 		break;
 	case GamePlayItemCode::Tropica_Pants:
 		map_Stat[StatClass::MAXHP] = 50000;
+		AddDamage = 0.03f;
 		break;
 	case GamePlayItemCode::Tropica_Neck:
 		map_Stat[StatClass::Physical_Armor] = 5000;
+		AddDamage = 0.04f;
 		break;
 	case GamePlayItemCode::Tropica_Shoes:
-		map_Stat[StatClass::MAXHP] = 5000;
+		AddDamage = 0.05f;
 		break;
 	default:
 		break;
 	}
+}
+
+float Item_Equipment::FindAddDamage(GamePlayItemCode _Code)
+{
+	float a = 0;
+	switch (_Code)
+	{
+	case GamePlayItemCode::Debug_Weapon:
+		break;
+	case GamePlayItemCode::Tropica_Coat:
+
+		break;
+	case GamePlayItemCode::Tropica_Belt:
+	
+		break;
+	case GamePlayItemCode::Tropica_Pants:
+
+		a = 0.03f;
+		break;
+	case GamePlayItemCode::Tropica_Neck:
+
+		a = 0.04f;
+		break;
+	case GamePlayItemCode::Tropica_Shoes:
+		a = 0.05f;
+		break;
+	default:
+		break;
+	}
+	return a;
 }
 
 AllEquipmentClass Item_Equipment::FindAvataClass(GamePlayItemCode _Code)

@@ -62,5 +62,7 @@ private:
 	float NoInputTime;
 
 	static ComboSystemScore* BeforeInst;
+
+
 };
 

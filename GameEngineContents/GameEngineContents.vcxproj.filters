@@ -314,6 +314,12 @@
     <ClInclude Include="Light_archer.h">
       <Filter>Object\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="Luke_Stage2_BackGround.h">
+      <Filter>Level\BackGround\Battle</Filter>
+    </ClInclude>
+    <ClInclude Include="Light_Knight.h">
+      <Filter>Object\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -624,6 +630,12 @@
       <Filter>Level\Battle</Filter>
     </ClCompile>
     <ClCompile Include="Light_archer.cpp">
+      <Filter>Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Luke_Stage2_BackGround.cpp">
+      <Filter>Level\BackGround\Battle</Filter>
+    </ClCompile>
+    <ClCompile Include="Light_Knight.cpp">
       <Filter>Object\Monster</Filter>
     </ClCompile>
   </ItemGroup>

@@ -39,7 +39,7 @@ void GamePlayObjectSpeechPopUp::CreatePopup(const std::string& _Speech)
 {
 	int StringSize = static_cast<int>(_Speech.size());
 
-	float Len = StringSize * 5.5f;
+	float Len = StringSize * 5.f;
 
 	for (auto& Iter :vector_Texture_PopText)
 	{

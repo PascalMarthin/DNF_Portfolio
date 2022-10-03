@@ -6,6 +6,7 @@
 #include "AvataManager.h"
 #include "Bale.h"
 #include "Light_archer.h"
+#include "Light_Knight.h"
 
 Luke_Stage1::Luke_Stage1() 
 	: Texture_Luke_Stage1(nullptr)
@@ -26,7 +27,13 @@ void Luke_Stage1::Start()
 	for (size_t i = 0; i < 2; i++)
 	{
 		Light_archer* Archer = CreateActor<Light_archer>();
-		vector_Archer.push_back(Archer);
+		vector_AllMonster.push_back(Archer);
+	}
+
+	for (size_t i = 0; i < 3; i++)
+	{
+		Light_Knight* Archer = CreateActor<Light_Knight>();
+		vector_AllMonster.push_back(Archer);
 	}
 
 
@@ -85,10 +92,16 @@ void Luke_Stage1::LevelStartEvent()
 		Player_Character->GetTransform().SetLocalPosition({500.f, -500.f, -500.f });
 	}
 
-	for (size_t i = 0; i < vector_Archer.size(); i++)
+	for (size_t i = 0; i < 2; i++)
 	{
-		vector_Archer[i]->GetTransform().SetLocalPosition({ 1000, -500.f -100.f * i, -500.f -100.f * i });
+		vector_AllMonster[i]->GetTransform().SetLocalPosition({ 1000, -500.f -100.f * i, -500.f -100.f * i });
 	}
+
+	for (size_t i = 2; i < 5; i++)
+	{
+		vector_AllMonster[i]->GetTransform().SetLocalPosition({ 700, -450.f - 100.f * i, -450.f - 100.f * i });
+	}
+
 
 	//Debug_Bale->GetTransform().SetLocalPosition({ 1000.f, -600.f, -600.f });
 	//Debug_Bale->SetLeftDir();

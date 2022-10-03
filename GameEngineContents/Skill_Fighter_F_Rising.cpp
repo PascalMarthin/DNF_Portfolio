@@ -392,6 +392,9 @@ bool Skill_Fighter_F_Rising::ActiveSkill(CharacterStatManager* _Stat, MoveManage
 		break;
 	case 1:
 	{
+		_Stat->SetJump();
+
+
 		AttDealy += _DeltaTime;
 		JumpTime += _DeltaTime;
 		GetActor()->GetTransform().SetLocalMove({ 0, Skill_Rising_High * (JumpTime - _DeltaTime) * 0.7f, 0 });
@@ -439,6 +442,7 @@ bool Skill_Fighter_F_Rising::ActiveSkill(CharacterStatManager* _Stat, MoveManage
 		}
 		break;
 	case 4:
+		_Stat->SetJumpEnd();
 		JumpTime += _DeltaTime;
 		GetActor()->GetTransform().SetLocalMove({ 0, -Skill_Rising_High * (JumpTime - _DeltaTime), 0 });
 		if (GetActor()->GetTransform().GetWorldPosition().y <= LandPos.y)
@@ -477,6 +481,7 @@ bool Skill_Fighter_F_Rising::ActiveSkill(CharacterStatManager* _Stat, MoveManage
 		JumpTime += _DeltaTime; // Delay
 		if (JumpTime * 2.f >= 1.f)
 		{
+			_Stat->SetSuperarmorEnd();
 			return true;
 		}
 		break;
@@ -554,6 +559,8 @@ bool Skill_Fighter_F_Rising::TriggerSkill_ect(GameEngineCollision* _This, GameEn
 
 void Skill_Fighter_F_Rising::StartSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata)
 {
+	_Avata->SetSuperArmor();
+	_Stat->SetSuperarmor();
 	_Avata->ChangeAvataAnimation("Att_RisingUpper_Ready");
 	int_ComboStuck = 0;
 	JumpTime = 0;
@@ -562,6 +569,7 @@ void Skill_Fighter_F_Rising::StartSkill(CharacterStatManager* _Stat, MoveManager
 	_Avata->SetShake(2.f, 0.2f);
 	AttDealy = 0;
 	HitCount = 0;
+
 
 
 }

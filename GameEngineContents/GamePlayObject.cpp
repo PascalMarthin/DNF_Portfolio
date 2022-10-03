@@ -58,12 +58,15 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitColli
 		MsgBoxAssert("설정하지 않았습니다")
 	}
 
+	std::queue<ComboClass> Combo;
+
 	if (Manager_StatManager->IsInvincibility())
 	{
 		switch (Enum_ObjectType)
 		{
 		case ObjectType::Character:
 			GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::GhostFrame);
+			Combo.push(ComboClass::GhostFrame);
 			GamePlayComboSystem::GetInst()->PlusScore(10000);
 			return;
 			break;
@@ -87,7 +90,15 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitColli
 
 	
 	// 대미지 처리
-	SetDamage(5000000);	
+
+	
+
+	CharacterAbilityStat* Stat = GamePlayCharacter::GetInst()->GetStatManager()->GetAbilityStat();
+	_Damage *= Stat->GetPhysical_Damage()* Stat->GetSTR();
+
+
+	
+	
 
 	// 점수
 	if (Enum_ObjectType == ObjectType::Monster)
@@ -100,6 +111,8 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitColli
 				{
 					MultipleIndex *= 1.5f;
 					GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::BackAttack);
+					Combo.push(ComboClass::BackAttack);
+					_Damage = static_cast<unsigned int>(static_cast<float>(_Damage) * 1.1f);
 				}
 			}
 			else
@@ -108,6 +121,8 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitColli
 				{
 					MultipleIndex *= 1.5f;
 					GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::BackAttack);
+					Combo.push(ComboClass::BackAttack);
+					_Damage = static_cast<unsigned int>(static_cast<float>(_Damage) * 1.1f);
 				}
 			}
 		}// 백어택
@@ -117,6 +132,7 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitColli
 			{
 				MultipleIndex *= 1.2f;
 				GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::Aerial);
+				Combo.push(ComboClass::Aerial);
 			}
 		}// 공중에 뜸
 
@@ -125,11 +141,15 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitColli
 			{
 				MultipleIndex *= 1.8f;
 				GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::Counter);
+				Combo.push(ComboClass::Counter);
+				_Damage = static_cast<unsigned int>(static_cast<float>(_Damage) * 1.3f);
 			}
 		}// 카운터
 
-		GamePlayComboSystem::GetInst()->PlusScore(1235);
+		GamePlayComboSystem::GetInst()->PlusScore(14531.f * MultipleIndex);
 	}
+
+
 
 
 
@@ -165,6 +185,8 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitColli
 		if (Manager_StatManager->IsDoSkill())
 		{
 			GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::CounterHold); // 카운터 홀드
+			Combo.push(ComboClass::CounterHold);
+			_Damage = static_cast<unsigned int>(static_cast<float>(_Damage) * 1.2f);
 		}
 
 		Manager_StatManager->SetHold();
@@ -177,6 +199,49 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitColli
 		MsgBoxAssert("스킬이 설정되지 않았습니다");
 		break;
 	}
+
+
+	float Random = GameEngineRandom::MainRandom.RandomFloat(0, 100.f);
+
+	{
+		const std::vector<float>& AddDamage = GamePlayCharacter::GetInst()->GetStatManager()->GetAddDamage();
+			if (!AddDamage.empty())
+			{
+				if (Random < Stat->GetPhysical_Critical()) // 크리티컬
+				{
+					SetDamage(_Damage * 2, AddDamage, DamageFontClass::Critical);
+					GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::Critical);
+				}
+				else
+				{
+					SetDamage(_Damage, AddDamage, DamageFontClass::NomalDamage);
+				}
+				while (!Combo.empty())
+				{
+					for (size_t i = 0; i < AddDamage.size(); i++)
+					{
+						GamePlayComboSystem::GetInst()->SetComboClass(Combo.front());
+					}
+					Combo.pop();
+					GamePlayComboSystem::GetInst()->PlusScore(1000);
+				}
+			}
+			else
+			{
+				if (Random < Stat->GetPhysical_Critical()) // 크리티컬
+				{
+					SetDamage(_Damage * 2, DamageFontClass::Critical);
+					GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::Critical);
+				}
+				else
+				{
+					SetDamage(_Damage, DamageFontClass::NomalDamage);
+				}
+
+			}
+	}
+
+
 
 
 
@@ -254,49 +319,49 @@ void GamePlayObject::BeHit(const float4& _Power, HitPostureType _Type, GameEngin
 
 
 	// 대미지 처리
-	SetDamage(_Damage);
-
+	SetDamage(_Damage, DamageFontClass::PlayerHit);
+	
 	// 점수
-	if (Enum_ObjectType == ObjectType::Monster)
-	{
-		float MultipleIndex = 1.f;
-		{
-			if (GetTransform().GetLocalScale().x > 0)
-			{
-				if (_HitObject->GetTransform().GetWorldPosition().x < GetTransform().GetWorldPosition().x)
-				{
-					MultipleIndex *= 1.5f;
-					GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::BackAttack);
-				}
-			}
-			else
-			{
-				if (_HitObject->GetTransform().GetWorldPosition().x > GetTransform().GetWorldPosition().x)
-				{
-					MultipleIndex *= 1.5f;
-					GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::BackAttack);
-				}
-			}
-		}// 백어택
+	//if (Enum_ObjectType == ObjectType::Monster)
+	//{
+	//	float MultipleIndex = 1.f;
+	//	{
+	//		if (GetTransform().GetLocalScale().x > 0)
+	//		{
+	//			if (_HitObject->GetTransform().GetWorldPosition().x < GetTransform().GetWorldPosition().x)
+	//			{
+	//				MultipleIndex *= 1.5f;
+	//				//GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::BackAttack);
+	//			}
+	//		}
+	//		else
+	//		{
+	//			if (_HitObject->GetTransform().GetWorldPosition().x > GetTransform().GetWorldPosition().x)
+	//			{
+	//				MultipleIndex *= 1.5f;
+	//				GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::BackAttack);
+	//			}
+	//		}
+	//	}// 백어택
 
-		{
-			if (Manager_StatManager->IsAerial())
-			{
-				MultipleIndex *= 1.2f;
-				GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::Aerial);
-			}
-		}// 공중에 뜸
+	//	{
+	//		if (Manager_StatManager->IsAerial())
+	//		{
+	//			MultipleIndex *= 1.2f;
+	//			GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::Aerial);
+	//		}
+	//	}// 공중에 뜸
 
-		{
-			if (Manager_StatManager->IsDoSkill())
-			{
-				MultipleIndex *= 1.8f;
-				GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::Counter);
-			}
-		}// 카운터
+	//	{
+	//		if (Manager_StatManager->IsDoSkill())
+	//		{
+	//			MultipleIndex *= 1.8f;
+	//			GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::Counter);
+	//		}
+	//	}// 카운터
 
-		GamePlayComboSystem::GetInst()->PlusScore(1235);
-	}
+	//	GamePlayComboSystem::GetInst()->PlusScore(10000 * MultipleIndex);
+	//}
 
 
 
@@ -369,16 +434,40 @@ void GamePlayObject::BeHit(const float4& _Power, HitPostureType _Type, GameEngin
 
 }
 
-void GamePlayObject::SetDamage(unsigned int _Damage)
+void GamePlayObject::SetDamage(unsigned int _Damage, DamageFontClass _Class)
 {
 	GameEngineDamageRenderer* Font = GetLevel()->CreateActor<GameEngineDamageRenderer>();
 	Font->GetTransform().SetLocalPosition({ GetTransform().GetLocalPosition().x ,GetTransform().GetLocalPosition().y, -10.f});
-	Font->SetDamage(SetHPFromHit(_Damage));
-
-	
+	unsigned int Damge = SetHPFromHit(_Damage);
+	if (Damge == -1)
+	{
+		return; // 수동
+	}
+	else
+	{
+		Font->SetDamage(Damge, _Class);
+	}
 	// 대미지 - 방어력 
 
 }
+
+void GamePlayObject::SetDamage(unsigned int _Damage, const std::vector<float>& _AddDamage, DamageFontClass _Class)
+{
+	GameEngineDamageRenderer* Font = GetLevel()->CreateActor<GameEngineDamageRenderer>();
+	Font->GetTransform().SetLocalPosition({ GetTransform().GetLocalPosition().x ,GetTransform().GetLocalPosition().y, -10.f });
+	unsigned int Damge = SetHPFromHit(_Damage, _AddDamage);
+	if (Damge == -1)
+	{
+		return; // 수동
+	}
+	else
+	{
+		Font->SetDamage(Damge, _AddDamage, _Class);
+	}
+	// 대미지 - 방어력 
+
+}
+
 
 void GamePlayObject::BeHitHold()
 {

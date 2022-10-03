@@ -18,11 +18,20 @@ public:
 	Item_Equipment& operator=(Item_Equipment&& _Other) noexcept = delete;
 
 	static AllEquipmentClass FindAvataClass(GamePlayItemCode _Code);
+	static float FindAddDamage(GamePlayItemCode _Code);
+
 	void SetStatClass(GamePlayItemCode _Code);
+
+	inline float GetAddDamage() const
+	{
+		return AddDamage;
+	}
 protected:
 	void Start() override;
 private:
 	std::map<StatClass, unsigned int> map_Stat;
+	float AddDamage;
+
 
 	AllEquipmentClass Enum_EquipmentClass;
 	void AfterSetDesc() override;

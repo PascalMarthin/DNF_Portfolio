@@ -1,6 +1,6 @@
 #pragma once
 #include "Dungeon_Luke.h"
-#include "Luke_Stage1_BackGround.h"
+#include "Luke_Stage2_BackGround.h"
 
 class Bale;
 class Luke_Stage2 : public Dungeon_Luke
@@ -18,7 +18,7 @@ public:
 
 	inline GameEngineTexture* GetCollisionMapTexture()
 	{
-		return 	Texture_Luke_Stage1->GetCollisionTexture();
+		return 	Texture_Luke_Stage2->GetCollisionTexture();
 	}
 
 protected:
@@ -30,7 +30,7 @@ protected:
 	//void OffEvent() override;
 private:
 
-	Luke_Stage1_BackGround* Texture_Luke_Stage1;
+	Luke_Stage2_BackGround* Texture_Luke_Stage2;
 	Bale* Debug_Bale;
 
 };

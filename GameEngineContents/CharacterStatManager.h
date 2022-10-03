@@ -86,7 +86,7 @@ public:
 	}
 	inline bool IsSuperarmor() const
 	{
-		return PlayerCurrentState & CharacterStat::Player_Character_Superarmor & CharacterStat::Player_Character_ALive;
+		return (PlayerCurrentState & CharacterStat::Player_Character_Superarmor) | PlayerCurrentState & CharacterStat::Player_Character_Build;
 	}
 	inline bool IsAerial() const
 	{
@@ -94,7 +94,7 @@ public:
 	}
 	inline bool IsBeHit() const
 	{
-		return (PlayerCurrentState & CharacterStat::Player_Character_BeHit) & CharacterStat::Player_Character_ALive;
+		return PlayerCurrentState & CharacterStat::Player_Character_BeHit;
 	}
 	inline bool IsHold() const
 	{
@@ -108,7 +108,18 @@ public:
 	{
 		return PlayerCurrentState & CharacterStat::Player_Character_DoSkill;
 	}
+	inline bool IsBuild() const
+	{
+		return PlayerCurrentState & CharacterStat::Player_Character_Build;
+	}
 	
+	inline const std::vector<float>& GetAddDamage() const
+	{
+		return vector_AddDamage;
+	}
+
+
+
 
 	bool HealHP(int _Heal, HPMPEnum _Enum);
 
@@ -158,6 +169,8 @@ public:
 	void SetSuperarmor();
 	void SetSuperarmorEnd();
 	void SetDead();
+	void SetBuild();
+	void SetBuildEnd();
 
 	inline void SetEngage()
 	{
@@ -206,6 +219,8 @@ private:
 	MonsterAbilityStat* CurrentMonsterAbilityStat;
 private:
 	std::vector<GameEngineTextureRenderer*> Texture_LevelUp;
+	std::vector<float> vector_AddDamage;
+
 	float LevelUpTime;
 
 

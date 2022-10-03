@@ -274,7 +274,17 @@ void GameEnginePlusTextureRenderer::SetAutoControl(bool _Reset)
 {
 	if (_Reset)
 	{
-		CurrentAniPlus->Reset();
+		if (CurrentAniPlus != nullptr)
+		{
+			CurrentAniPlus->Reset();
+			MC_CurFrame = 0;
+		}
+		else
+		{
+			ManualControl = false;
+			MC_CurFrame = 0;
+			return;
+		}
 	}
 
 	if (CurrentAvata != nullptr)

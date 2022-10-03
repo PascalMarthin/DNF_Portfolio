@@ -34,6 +34,6 @@ protected:
 private:
 
 	Luke_Stage1_BackGround* Texture_Luke_Stage1;
-	std::vector<Light_archer*> vector_Archer;
+	//std::vector<Light_archer*> vector_Archer;
 };
 

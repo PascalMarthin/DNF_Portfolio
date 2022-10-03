@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "GamePlayMonsterHPBar.h"
 #include "GamePlayMonster.h"
+#include <GameEngineCore/GameEngineFontRenderer.h>
 
 GamePlayMonsterHPBar* GamePlayMonsterHPBar::CurrentActor = nullptr;
 
@@ -126,6 +127,20 @@ void GamePlayMonsterHPBar::Start()
 		GamePlayMonsterHPBar::Texture_NomalColor = GameEngineTexture::Find("MonsterHP_NomalHP_White.png");
 	}
 	
+	Font_MonsterName = CreateComponent<GameEngineFontRenderer>();
+	//Font_MonsterName->GetTransform().SetLocalPosition({ 0 , 0.f, -10.006f });
+	//Font_Name->SetText("¾ÆÁ©¸®¾Æ ·ÎÆ®", "±¼¸²");
+	Font_MonsterName->SetColor({ 1.0f, 1.0f, 1.0f, 1.f });
+	Font_MonsterName->SetRenderingOrder(10000);
+	Font_MonsterName->SetSize(13);
+
+//	Font_MonsterName->SetPositionMode(FontPositionMode::WORLD);
+	Font_MonsterName->SetTopAndBotSort(TopAndBotSort::VCENTER);
+	Font_MonsterName->SetLeftAndRightSort(LeftAndRightSort::LEFT);
+
+	Texture_Thumbnail = CreateComponent<GameEngineUIRenderer>();
+	//Texture_Thumbnail->
+
 }
 
 
@@ -137,6 +152,10 @@ void GamePlayMonsterHPBar::SetMonster_InMember(GamePlayMonster* _Monster)
 	}
 
 	Monster_Target = _Monster;
+	
+	
+	DeathOff = 5.f;
+
 	Monster_CurrentHP = Monster_Target->GetMonsterStat()->GetHP();
 	Monster_GoalHPLine = static_cast<int>(((static_cast<float>(Monster_CurrentHP) * Monster_Target->GetMonsterStat()->GetMaxHPLine()) / _Monster->GetMonsterStat()->GetMAXHP()) * 100.f);
 	if (Monster_GoalHPLine >= 1000000)
@@ -152,6 +171,7 @@ void GamePlayMonsterHPBar::SetMonster_InMember(GamePlayMonster* _Monster)
 		}
 		All_MonsterCategory.clear();
 		float Pos = 28.f;
+		float Len = 0;
 		for (auto& Category : Monster_Target->GetMonsterCategory())
 		{
 			GameEngineUIRenderer* Renderer = CreateComponent<GameEngineUIRenderer>();
@@ -159,22 +179,29 @@ void GamePlayMonsterHPBar::SetMonster_InMember(GamePlayMonster* _Monster)
 			{
 			case MonsterCategory::None:
 				break;
+			case MonsterCategory::Soul:
+				Renderer->SetFolderTextureToIndex("MonsterCategory", 8);
+				break;
 			case MonsterCategory::Human:
 				Renderer->SetFolderTextureToIndex("MonsterCategory", 0);
 				break;
 			case MonsterCategory::Machine:
-				Renderer->SetFolderTextureToIndex("MonsterCategory", 1);
+				Renderer->SetFolderTextureToIndex("MonsterCategory", 4);
 				break;
 			default:
 				break;
 			}
+			Len += 33.f;
 			Renderer->ScaleToTexture();
 			Renderer->GetTransform().SetLocalPosition({ Pos , 14.f });
 			Pos += Renderer->GetCurTexture()->GetScale().x + 2.f;
 
 			All_MonsterCategory.push_back(Renderer);
 		}
+		Font_MonsterName->SetScreenPostion({ 67 + Len, 142 });
+		Font_MonsterName->SetText(Monster_Target->GetMonsterNameRef(), "±¼¸²");
 	}
+
 
 
 
@@ -244,6 +271,7 @@ void GamePlayMonsterHPBar::SetMonster_InMember(GamePlayMonster* _Monster)
 		
 		Texture_MonsterHPBar_UIEnd->SetTexture(GamePlayMonsterHPBar::Texture_BossHPBarEnd);
 		
+
 		//Texture_HP1_Front->SetTexture(Vector_BossColor[CurrentIndex]);
 		//Texture_HP1_Back->SetTexture(Vector_BossColor[CurrentIndex]);
 		//
@@ -403,6 +431,11 @@ void GamePlayMonsterHPBar::Update(float _DeltaTime)
 
 		if (Monster_GoalHPLine <= 0)
 		{
+			DeathOff -= _DeltaTime;
+			if (DeathOff < 0)
+			{
+				Off();
+			}
 			if (DeathBlink <= 0)
 			{
 				Texture_MonsterHP_Delete->OnOffSwitch();
@@ -548,10 +581,10 @@ void GamePlayMonsterHPBar::SetHitDamage_InMember(unsigned int _CurrentHP)
 			MaxSpeed = static_cast<int>(Speed);
 			FrameSpeed = 0;
 		}
-		else/* if ((Monster_BeforeHPLine - Monster_GoalHPLine) > 100 && MaxSpeed < 2)*/
+		else if ((Monster_BeforeHPLine - Monster_GoalHPLine) > 100 && MaxSpeed < 2)
 		{
 			MaxSpeed = 1;
-			FrameSpeed = 0;
+			FrameSpeed = 0.025f;
 		}
 		//else
 		//{

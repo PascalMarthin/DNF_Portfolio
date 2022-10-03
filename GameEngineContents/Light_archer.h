@@ -1,6 +1,7 @@
 #pragma once
 #include "GamePlayMonster.h"
 // Ό³Έν :
+enum class HitPostureType;
 class Light_archer : public GamePlayMonster
 {
 public:
@@ -24,11 +25,21 @@ protected:
 	void LevelStartEvent() override;
 private:
 	GameEngineTextureRenderer* Texture_Renderer;
+	GameEngineTextureRenderer* Texture_Eff;
 	GameEngineCollision* Collision_HitBody;
-	GameEngineCollision* Collision_TargetPos;
+	GameEngineCollision* Collision_PlayerLessPos;
+	GameEngineCollision* Collision_PlayerMaxPos;
+	GameEngineCollision* Collision_GoPos;
+
+	
 
 	// ---------Dir-------------
 	void CheckDir();
+
+
+	//
+
+	std::map<std::string, GameEngineCollision*> AllCollision;
 
 
 	float MoveDelay;
@@ -68,5 +79,15 @@ private:
 	void FSM_Move_Walk_Start(const StateInfo& _Info);
 	void FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _Info);
 	void FSM_Move_Walk_End(const StateInfo& _Info);
+
+	void FSM_Att_Shoot_Start(const StateInfo& _Info);
+	void FSM_Att_Shoot_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Att_Shoot_End(const StateInfo& _Info);
+
+	void Att_ShootFrame(const FrameAnimation_DESC& _DESC);
+
+	void Att_ArrowUpdate(const FrameAnimation_DESC& _DESC, float _Time);
+	GameEngineCollision* Collision_Arrow;
+
 };
 

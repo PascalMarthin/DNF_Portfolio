@@ -9,6 +9,9 @@ enum class DamageFontClass
 	HPHeal,
 	NomalDamage,
 	Critical,
+	PlayerHit,
+	TrueDamage,
+	AddDamage,
 };
 enum DamageFontEvent
 {
@@ -30,7 +33,7 @@ public:
 	GameEngineDamageRenderer& operator=(GameEngineDamageRenderer&& _Other) noexcept = delete;
 
 	void SetDamage(unsigned int _Damage, DamageFontClass _Class = DamageFontClass::NomalDamage);
-
+	void SetDamage(unsigned int _Damage, const std::vector<float>& _AddDamage, DamageFontClass _Class);
 
 protected:
 	void Start() override;
@@ -42,8 +45,11 @@ protected:
 private:
 	static std::list<GameEngineDamageRenderer*> Static_AllDamageRenderer;
 	static void SetPrintingFont(GameEngineDamageRenderer* _FontRenderer);
+	static void SetPrintingFontAddDamage(GameEngineDamageRenderer* _FontRenderer);
 
 	std::vector<GameEngineUIRenderer*> All_Font;
+	std::map<int,std::vector<GameEngineUIRenderer*>> All_AddFont;
+
 	bool MaxDamage;
 
 	int CheckTimeEvent;
@@ -67,5 +73,7 @@ private:
 	static GameEngineFolderTexture* Folder_NumberTexture_HPCureFont;
 	static GameEngineFolderTexture* Folder_NumberTexture_MPCureFont;
 
+	static GameEngineFolderTexture* Folder_NumberTexture_PlayerHitFont;
+	static GameEngineFolderTexture* Folder_NumberTexture_TrueDamage;
 };
 

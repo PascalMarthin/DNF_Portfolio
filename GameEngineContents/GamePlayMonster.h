@@ -1,6 +1,7 @@
 #pragma once
 #include "GamePlayObject.h"
 #include <GameEngineCore/GameEngineCollision.h> 
+#include "GamePlayObjectSpeechPopUp.h"
 
 // Ό³Έν :
 enum class MonsterClass
@@ -14,6 +15,7 @@ enum class MonsterCategory
 {
 	None,
 	Human,
+	Soul,
 	Machine,
 };
 
@@ -22,6 +24,7 @@ class MonsterAbilityStat
 {
 	friend class CharacterStatManager;
 	friend class GamePlayMonster;
+
 public:
 	inline unsigned int GetMAXHP() const
 	{
@@ -43,7 +46,6 @@ public:
 		return MAXHPLine;
 	}
 
-private: 
 	unsigned int MAXHP;
 	int HP;
 
@@ -55,6 +57,7 @@ private:
 class GameEngineStateManager;
 class GamePlayMonster : public GamePlayObject
 {
+	friend class GamePlayMonsterHPBar;
 public:
 	// constrcuter destructer
 	GamePlayMonster();
@@ -94,7 +97,7 @@ public:
 	//	//return Texture_Monster->Get
 	//}
 
-
+	CollisionReturn GetTarget(GameEngineCollision* _This, GameEngineCollision* _Other);
 protected:
 	GameEngineActor* Actor_Dummy;
 
@@ -112,13 +115,19 @@ protected:
 	GameEngineCollision* Collision_HitBody_Mid;
 	GameEngineCollision* Collision_HitBody_Bottom;
 
+	GamePlayObject* Player_Target;
+
+
 
 	//---------------------Texture-----------------
 	GameEngineTextureRenderer* Texture_Monster;
 
+	// -----Popup---------------
+	GamePlayObjectSpeechPopUp* Actor_SpeechPopUp;
+
 
 	unsigned int SetHPFromHit(unsigned int _Damage) override;
-
+	unsigned int SetHPFromHit(unsigned int _Damage, const std::vector<float>& _AddDamage) override;
 
 	inline void SetMonsterClass(MonsterClass _Class)
 	{
@@ -143,10 +152,10 @@ protected:
 	//void FSM_Dead_End(const StateInfo& _Info);
 
 
+	virtual void Dead();
 
 private:
 	float DeadDelay;
-	virtual void Dead();
 	std::string String_MonsterName;
 	
 	MonsterClass Monster_Class;

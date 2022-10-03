@@ -5,6 +5,7 @@
 #include "DungeonLoding_BackGround.h"
 #include "Luke_Stage1.h"
 #include "TownLevel.h"
+#include "Luke_Stage2.h"
 
 LocalDungeon DungeonLoding::CurrentDungeon = LocalDungeon::None;
 
@@ -39,7 +40,9 @@ void DungeonLoding::LevelStartEvent()
 		{
 			GamePlayLevelTemplate::GetPlayer().Stop();
 			DNF::GetInst()->CreateLoadLevel<Luke_Stage1>("Luke_Stage1");
+			DNF::GetInst()->CreateLoadLevel<Luke_Stage2>("Luke_Stage2");
 
+			
 			GEngine::ChangeLevel("Luke_Stage1");
 		}
 		break;

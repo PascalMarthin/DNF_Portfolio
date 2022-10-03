@@ -120,7 +120,7 @@ void TentacleTextureCollision::Update(float _Time)
 			list_ActiveCollision.push_back(list_WaitCollision.front());
 			list_WaitCollision.erase(list_WaitCollision.begin());
 		}
-		Delay = 0.0625f + (Time * 0.01f);
+		Delay = 0.0875f + (Time * 0.01f);
 	}
 
 

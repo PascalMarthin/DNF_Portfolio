@@ -27,8 +27,8 @@ protected:
 private:
 
 	GameEngineTextureRenderer* Texture_Stage2_Door;
+	GameEngineTextureRenderer* Texture_Stage2_Door_Close;
 
-	GameEngineCollision* Collision_Jelva1F_Door;
-	GameEngineCollision* Collision_Jelva2F_01_Door;
+	GameEngineCollision* Collision_Stage2_Door;
 };
 

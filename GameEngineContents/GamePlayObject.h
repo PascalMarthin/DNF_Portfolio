@@ -4,6 +4,7 @@
 #include <GameEngineCore/GameEngineTextureRenderer.h>
 #include "GamePlayEnum.h"
 #include "CharacterStatManager.h"
+#include "GameEngineDamageRenderer.h"
 
 // Ό³Έν :
 enum class UnitType
@@ -143,8 +144,10 @@ public:
 	virtual void LandingEnd_Down() {}
 	//virtual void LandingEnd_Down() {}
 
-	void SetDamage(unsigned int _Damage);
+	void SetDamage(unsigned int _Damage, DamageFontClass _Class);
+	void SetDamage(unsigned int _Damage, const std::vector<float>& _AddDamage, DamageFontClass _Class);
 	virtual unsigned int  SetHPFromHit(unsigned int _Damage) { return 100; }
+	virtual unsigned int  SetHPFromHit(unsigned int _Damage , const std::vector<float>& _AddDamage) { return 100; }
 
 
 	virtual void SetFSManager() {}

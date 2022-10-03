@@ -67,6 +67,7 @@ void DNF::Start()
 
 	ChangeLevel("SelectCharacter");
 
+
 	GameEngineGUI::CreateGUIWindow<GameEngineStatusWindow>("EngineStatus", nullptr);
 }
 

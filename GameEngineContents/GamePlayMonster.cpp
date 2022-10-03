@@ -2,6 +2,9 @@
 #include "GamePlayMonster.h"
 #include "CharacterStatManager.h"
 #include "GamePlayMonsterHPBar.h"
+#include "GamePlayCharacter.h"
+#include "GamePlayComboSystem.h"
+#include "GamePlayObjectSpeechPopUp.h"
 
 GamePlayMonster::GamePlayMonster() 
 	: Collision_HitBody_Top(nullptr)
@@ -12,6 +15,7 @@ GamePlayMonster::GamePlayMonster()
 	, MonsterAbilityStat()
 	, Monster_Class(MonsterClass::None)
 	, Actor_Dummy(nullptr)
+	, Player_Target(nullptr)
 {
 }
 
@@ -26,6 +30,7 @@ void GamePlayMonster::Start()
 	Actor_Dummy = GetLevel()->CreateActor<GameEngineActor>();
 
 	Manager_StatManager = CreateComponent<CharacterStatManager>();
+	Actor_SpeechPopUp = CreateComponent<GamePlayObjectSpeechPopUp>();
 
 	//Manager_StatManager->GetFSMManager().CreateStateMember
 	//("Dead", std::bind(&GamePlayMonster::FSM_Dead_Update, this, std::placeholders::_1, std::placeholders::_2)
@@ -62,13 +67,18 @@ unsigned int GamePlayMonster::SetHPFromHit(unsigned int _Damage)
 	{
 		MonsterAbilityStat.Def = 1000.f;
 	}
-	unsigned int Damage = _Damage - static_cast<unsigned int>((255.f * MonsterAbilityStat.Def) * 0.8f);
+	//if (_Damage)
+	//{
+
+	//}
+	unsigned int Damage = _Damage / static_cast<unsigned int>(MonsterAbilityStat.Def); /*- static_cast<unsigned int>((255.f * MonsterAbilityStat.Def) * 0.8f);*/
 
 	if (MonsterAbilityStat.HP < Damage)
 	{
 		Dead();
 		GamePlayMonsterHPBar::SetHitDamage(MonsterAbilityStat.HP);
 		MonsterAbilityStat.HP = 0;
+		GamePlayMonsterHPBar::SetHitDamage(0);
 	}
 	else
 	{
@@ -79,15 +89,74 @@ unsigned int GamePlayMonster::SetHPFromHit(unsigned int _Damage)
 	return Damage;
 }
 
+unsigned int GamePlayMonster::SetHPFromHit(unsigned int _Damage, const std::vector<float>& _AddDamage)
+{
+	GamePlayMonsterHPBar::SetMonster(this);
+
+	if (MonsterAbilityStat.Def > 1000.f)
+	{
+		MonsterAbilityStat.Def = 1000.f;
+	}
+	//if (_Damage)
+	//{
+
+	//}
+	unsigned int Damage = _Damage / static_cast<unsigned int>(MonsterAbilityStat.Def); /*- static_cast<unsigned int>((255.f * MonsterAbilityStat.Def) * 0.8f);*/
+	unsigned int AddDamage = _Damage;
+
+	for (float Iter : _AddDamage)
+	{
+		AddDamage += static_cast<unsigned int>(static_cast<float>(_Damage) * Iter);
+	}
+
+
+	if (MonsterAbilityStat.HP < AddDamage)
+	{
+		Dead();
+		GamePlayMonsterHPBar::SetHitDamage(MonsterAbilityStat.HP);
+		MonsterAbilityStat.HP = 0;
+		GamePlayMonsterHPBar::SetHitDamage(0);
+	}
+	else
+	{
+		MonsterAbilityStat.HP -= AddDamage;
+		GamePlayMonsterHPBar::SetHitDamage(MonsterAbilityStat.HP);
+	}
+
+	
+
+	return Damage;
+}
+
+
+
 void GamePlayMonster::Dead()
 {
-	GetStatManager()->SetDead();
-	Texture_Monster->GetPixelData().MulColor = float4::ZERO;
-	Texture_Monster->GetPixelData().PlusColor = float4::WHITE;
-	Texture_Monster->CurAnimationPauseOn();
+	if (GetStatManager()->IsLive())
+	{
+		GetStatManager()->SetDead();
+		Texture_Monster->GetPixelData().MulColor = float4::ZERO;
+		Texture_Monster->GetPixelData().PlusColor = float4::WHITE;
+		Texture_Monster->CurAnimationPauseOn();
 
-	DeadDelay = 0.375f;
+		DeadDelay = 0.375f;
+	}
+
 }
+
+CollisionReturn GamePlayMonster::GetTarget(GameEngineCollision* _This, GameEngineCollision* _Other)
+{
+	Player_Target = _Other->GetActor<GamePlayCharacter>();
+	if (Player_Target == nullptr)
+	{
+		return CollisionReturn::ContinueCheck;
+	}
+	else
+	{
+		return CollisionReturn::Break;
+	}
+}
+
 //
 //void GamePlayMonster::FSM_Dead_Start(const StateInfo& _Info)
 //{
@@ -135,6 +204,8 @@ void GamePlayMonster::Update(float _Delta)
 					});
 				Renderer->ScaleToTexture();
 			}
+
+			//GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::BackAttack);
 			Off();
 		}
 	}

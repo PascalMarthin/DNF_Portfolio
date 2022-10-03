@@ -2,9 +2,15 @@
 #include "Light_archer.h"
 #include "MoveManager.h"
 #include "GamePlayCharacter.h"
+#include "BattleLevel.h"
+#include "GamePlaySkill.h"
 
 Light_archer::Light_archer() 
 	: MoveDelay(0)
+	, Collision_GoPos(nullptr)
+	, Collision_PlayerLessPos(nullptr)
+	, Collision_PlayerMaxPos(nullptr)
+	, Texture_Eff(nullptr)
 {
 }
 
@@ -22,6 +28,9 @@ void Light_archer::Start()
 
 	SetMonsterClass(MonsterClass::Nomal);
 
+	SetMonsterName("ºûÀÇ ±Ã»ç");
+	SetCategory(MonsterCategory::Soul);
+	//SetCategory(MonsterCategory::Machine);
 
 	Texture_Monster = CreateComponent<GameEngineTextureRenderer>();
 	Texture_Monster->CreateFrameAnimationFolder("Monster_Standing", FrameAnimation_DESC("light_archer_Body", 0, 3, 0.15f));
@@ -31,19 +40,62 @@ void Light_archer::Start()
 	Texture_Monster->CreateFrameAnimationFolder("Monster_GoingDown", FrameAnimation_DESC("light_archer_Body", 35, 36, 0.125f, false));
 	Texture_Monster->CreateFrameAnimationFolder("Monster_Hit1", FrameAnimation_DESC("light_archer_Body", 34, 34, 0.15f, false));
 	Texture_Monster->CreateFrameAnimationFolder("Monster_Hit2", FrameAnimation_DESC("light_archer_Body", 35, 35, 0.15f, false));
+
+
+	Texture_Monster->CreateFrameAnimationFolder("Monster_Att", FrameAnimation_DESC("light_archer_Body", 38, 47, 0.125f, false));
+	Texture_Monster->AnimationBindFrame("Monster_Att", std::bind(&Light_archer::Att_ShootFrame, this, std::placeholders::_1));
+	Texture_Monster->AnimationBindEnd("Monster_Att", std::bind(&Light_archer::Bale_BackToNone, this, std::placeholders::_1));
+
+
+	Texture_Eff = CreateComponent<GameEngineTextureRenderer>();
+	Texture_Eff->CreateFrameAnimationFolder("Monster_Standing", FrameAnimation_DESC("light_archer_Eff", 0, 3, 0.15f));
+	Texture_Eff->CreateFrameAnimationFolder("Monster_Walk", FrameAnimation_DESC("light_archer_Eff", 0, 3, 0.15f));
+
+	Texture_Eff->CreateFrameAnimationFolder("Monster_Down", FrameAnimation_DESC("light_archer_Eff", 38, 38, 0.15f, false));
+	Texture_Eff->CreateFrameAnimationFolder("Monster_GoingDown", FrameAnimation_DESC("light_archer_Eff", 35, 36, 0.125f, false));
+	Texture_Eff->CreateFrameAnimationFolder("Monster_Hit1", FrameAnimation_DESC("light_archer_Eff", 34, 34, 0.15f, false));
+	Texture_Eff->CreateFrameAnimationFolder("Monster_Hit2", FrameAnimation_DESC("light_archer_Eff", 35, 35, 0.15f, false));
+
+	Texture_Eff->CreateFrameAnimationFolder("Monster_Att", FrameAnimation_DESC("light_archer_Eff", 38, 47, 0.125f, false));
+	Texture_Eff->AnimationBindFrame("Monster_Att", std::bind(&Light_archer::Att_ShootFrame, this, std::placeholders::_1));
+	Texture_Eff->AnimationBindEnd("Monster_Att", std::bind(&Light_archer::Bale_BackToNone, this, std::placeholders::_1));
+
+	Texture_Eff->ChangeFrameAnimation("Monster_Walk");
+	Texture_Eff->ScaleToTexture();
+	Texture_Eff->GetTransform().SetLocalPosition({ 0, 10, 0 });
+
 	Texture_Monster->ChangeFrameAnimation("Monster_Walk");
 	Texture_Monster->ScaleToTexture();
 
-	Texture_Monster->GetTransform().SetLocalPosition({ 0, 30, 0 });
+	Texture_Monster->GetTransform().SetLocalPosition({ 0, 10, 0 });
 
 	Collision_HitBody = CreateComponent<GameEngineCollision>();
 	Collision_HitBody->GetTransform().SetLocalScale({ 80, 150, 50 });
 	Collision_HitBody->ChangeOrder(CollisionOrder::Monster);
 
 
-	Collision_TargetPos = CreateComponent<GameEngineCollision>();
-	Collision_TargetPos->GetTransform().SetLocalScale({ 200, 200, 200 });
+	GameEngineCollision* Collision = CreateComponent<GameEngineCollision>();
+	Collision->GetTransform().SetLocalScale({ 800, 200, 200 });
+	Collision->SetDebugSetting(CollisionType::CT_AABB, float4::ZERO);
+	Collision->GetTransform().SetLocalPosition({ 200, 0, 0 });
+	Collision->ChangeOrder(CollisionOrder::Monster_Att);
+	AllCollision["Att_Shoot"] = Collision;
+	All_CollTime["Att_Shoot"] = 0;
 
+
+	Collision_PlayerLessPos = CreateComponent<GameEngineCollision>();
+	Collision_PlayerLessPos->GetTransform().SetLocalScale({ 500, 200, 200 });
+	Collision_PlayerLessPos->SetDebugSetting(CollisionType::CT_AABB, float4::ZERO);
+
+	Collision_PlayerMaxPos = CreateComponent<GameEngineCollision>();
+	Collision_PlayerMaxPos->GetTransform().SetLocalScale({ 900, 400, 400 });
+	Collision_PlayerMaxPos->SetDebugSetting(CollisionType::CT_AABB, float4::ZERO);
+
+	Collision_GoPos = CreateComponent<GameEngineCollision>();
+	Collision_GoPos->GetTransform().SetLocalScale({ 50, 50, 50 });
+	Collision_GoPos->SetDebugSetting(CollisionType::CT_AABB, float4::WHITE);
+
+	Collision_GoPos->SetParent(Actor_Dummy);
 
 	SetFSManager();
 }
@@ -85,6 +137,13 @@ void Light_archer::SetFSManager()
 		, std::bind(&Light_archer::FSM_Move_Walk_Start, this, std::placeholders::_1)
 		, std::bind(&Light_archer::FSM_Move_Walk_End, this, std::placeholders::_1));
 
+	Manager_StatManager->GetFSMManager().CreateStateMember
+	("Att_Shoot", std::bind(&Light_archer::FSM_Att_Shoot_Update, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&Light_archer::FSM_Att_Shoot_Start, this, std::placeholders::_1)
+		, std::bind(&Light_archer::FSM_Att_Shoot_End, this, std::placeholders::_1));
+
+
+	
 	Manager_StatManager->GetFSMManager().ChangeState("None");
 
 }
@@ -130,11 +189,11 @@ void Light_archer::Update(float _DeltaTime)
 
 		for (auto& Collision : CanSkill)
 		{
-			//if (!AllCollision[Collision]->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Player, CollisionType::CT_SPHERE))
-			//{
-			//	Collision = "None";
-			//	continue;
-			//}
+			if (!AllCollision[Collision]->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player, CollisionType::CT_AABB))
+			{
+				Collision = "None";
+				continue;
+			}
 		}
 
 		int RandomIndex = GameEngineRandom::MainRandom.RandomInt(-100, static_cast<int>(CanSkill.size()) - 1);
@@ -148,10 +207,6 @@ void Light_archer::Update(float _DeltaTime)
 			}
 		}
 	}
-
-
-
-	
 }
 
 
@@ -163,11 +218,10 @@ void Light_archer::Bale_BackToNone(const FrameAnimation_DESC& _DESC)
 
 void Light_archer::FSM_Move_Stand_Start(const StateInfo& _Info)
 {
-	
+	Texture_Eff->ChangeFrameAnimation("Monster_Standing");
 	Texture_Monster->ChangeFrameAnimation("Monster_Standing");
 	
-
-	StayStandDelay = 1.5f;
+	StayStandDelay = 0.5f;
 }
 void Light_archer::FSM_Move_Stand_Update(float _DeltaTime, const StateInfo& _Info)
 {
@@ -179,7 +233,7 @@ void Light_archer::FSM_Move_Stand_Update(float _DeltaTime, const StateInfo& _Inf
 		return;
 	}
 
-	//if (!Collision_TargetPos->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Player, CollisionType::CT_SPHERE))
+	//if (!Collision_PlayerLessPos->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Player, CollisionType::CT_SPHERE))
 	//{
 	//	Manager_StatManager->GetFSMManager().ChangeState("Move_Walk"); // Áß´ÜÁ¡ ¿ë
 	//	return;
@@ -197,10 +251,12 @@ void Light_archer::FSM_Hit_Stand_Start(const StateInfo& _Info)
 	if (_Info.PrevState == "Hit_Stand" && GameEngineRandom::MainRandom.RandomInt(0, 1) == 1)
 	{
 		Texture_Monster->ChangeFrameAnimation("Monster_Hit2");
+		Texture_Eff->ChangeFrameAnimation("Monster_Hit2");
 	}
 	else
 	{
 		Texture_Monster->ChangeFrameAnimation("Monster_Hit1");
+		Texture_Eff->ChangeFrameAnimation("Monster_Hit1");
 	}
 
 
@@ -222,6 +278,7 @@ void Light_archer::FSM_Hit_Aerial_Start(const StateInfo& _Info)
 	Manager_MoveManager->SetAerial();
 	Manager_StatManager->SetAerial();
 	Texture_Monster->ChangeFrameAnimation("Monster_Hit1");
+	Texture_Eff->ChangeFrameAnimation("Monster_Hit1");
 	JumpGoingDown = false;
 }
 void Light_archer::FSM_Hit_Aerial_Update(float _DeltaTime, const StateInfo& _Info)
@@ -241,6 +298,7 @@ void Light_archer::FSM_Hit_Aerial_DoingDown_Start(const StateInfo& _Info)
 {
 	Manager_StatManager->SetAerial();
 	Texture_Monster->ChangeFrameAnimation("Monster_GoingDown");
+	Texture_Eff->ChangeFrameAnimation("Monster_GoingDown");
 	GoingDownTime = 0.f;
 }
 void Light_archer::FSM_Hit_Aerial_DoingDown_Update(float _DeltaTime, const StateInfo& _Info)
@@ -277,6 +335,7 @@ void Light_archer::LandingEnd()
 void Light_archer::FSM_Hit_Down_Start(const StateInfo& _Info)
 {
 	Texture_Monster->ChangeFrameAnimation("Monster_Down");
+	Texture_Eff->ChangeFrameAnimation("Monster_Down");
 	DownWait = 0.6f;
 }
 void Light_archer::FSM_Hit_Down_Update(float _DeltaTime, const StateInfo& _Info)
@@ -296,45 +355,97 @@ void Light_archer::FSM_Hit_Down_End(const StateInfo& _Info)
 
 void Light_archer::FSM_Move_Walk_Start(const StateInfo& _Info)
 {
-
 	Texture_Monster->ChangeFrameAnimation("Monster_Walk", true);
-	Collision_TargetPos->SetParent(GamePlayCharacter::GetInst());
-	Collision_TargetPos->GetTransform().SetLocalPosition(float4::ZERO);
-	MoveDelay = 0;
-}
-void Light_archer::FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _Info)
-{
+	Texture_Eff->ChangeFrameAnimation("Monster_Walk", true);
+	const float4& PlayerPos = GamePlayCharacter::GetInst()->GetTransform().GetWorldPosition();
 
-	MoveDelay -= _DeltaTime;
-	bool IsArrive = false;
-	if (MoveDelay <= 0 || (IsArrive = Collision_TargetPos->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Monster, CollisionType::CT_SPHERE)))
+	if (Collision_PlayerMaxPos->IsCollision(CollisionType::CT_AABB,CollisionOrder::Player, CollisionType::CT_AABB))
 	{
-		if (IsArrive == true)
+		float indexX = 0;
+		if (PlayerPos.x > GetTransform().GetWorldPosition().x)
 		{
-			if (Collision_TargetPos->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Player, CollisionType::CT_SPHERE))
-			{
-				Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
-			}
-		}
-
-		float4 Pos = float4::ZERO;
-		Pos.x += GameEngineRandom::MainRandom.RandomFloat(-2.f, 2.f) * 25.f;
-		Pos.y += GameEngineRandom::MainRandom.RandomFloat(-2.f, 2.f) * 20.f ;
-
-		if (Pos.x >= 0)
-		{
-			Pos.x += 190.f;
+			indexX = 1.f;
 		}
 		else
 		{
-			Pos.x -= 190.f;
+			indexX = -1.f;
+		}
+		float indexY = 0;
+		if (PlayerPos.y > GetTransform().GetWorldPosition().y)
+		{
+			indexY = 1.f;
+		}
+		else
+		{
+			indexY = -1.f;
 		}
 
-		Collision_TargetPos->GetTransform().SetLocalPosition(Pos);
-		MoveDelay = 2.f;
+		float RandomIndex = GameEngineRandom::MainRandom.RandomFloat(-1.f + PlayerPos.NormalizeReturn().y, 1.f + PlayerPos.NormalizeReturn().y);
+		
+		if (Collision_PlayerLessPos->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player, CollisionType::CT_AABB))
+		{
+			Collision_GoPos->GetTransform().SetWorldPosition({ PlayerPos.x + (indexX * -300.f * RandomIndex), PlayerPos.y + (indexY * -300.f * RandomIndex),  PlayerPos.y + (indexY * -300.f * RandomIndex) });
+		}
+		else
+		{
+			Collision_GoPos->GetTransform().SetWorldPosition({ PlayerPos.x + (indexX * 300.f * RandomIndex), PlayerPos.y + (indexY * 300.f * RandomIndex),  PlayerPos.y + (indexY * 300.f * RandomIndex) });
+		}
+	}
+	else
+	{
+		Collision_GoPos->GetTransform().SetWorldPosition(PlayerPos);
 	}
 
-	const float4& Collision = Collision_TargetPos->GetTransform().GetWorldPosition();
+	//float Len = 0;
+	//if (PlayerPos.x >= GetTransform().GetWorldPosition().x)
+	//{
+
+	//	Len = 10.f ;
+	//}
+	//else
+	//{
+	//	Len = -10.f;
+	//}
+
+	//
+	//float4 Pos = float4::ZERO;
+
+	//Pos.x = GetTransform().GetWorldPosition().x;
+	//Pos.y = GetTransform().GetWorldPosition().y;
+	//Pos.Normalize();
+	//Pos.x += GameEngineRandom::MainRandom.RandomFloat(-1.f + Len + Pos.x + Pos.y, 1.f + Len + Pos.x + Pos.y) * 15.f;
+
+
+	//if (PlayerPos.y >= GetTransform().GetWorldPosition().y)
+	//{
+	//	Len = 10.f;
+	//}
+	//else
+	//{
+	//	Len = -10.f;
+	//}
+	//Pos.y += GameEngineRandom::MainRandom.RandomFloat(-1.f + Len + Pos.y, 1.f + Len + Pos.y) * 10.f;
+
+
+	//Collision_PlayerLessPos->GetTransform().SetLocalPosition({ Pos.x , Pos.y, Pos.y });
+	MoveDelay = 1.0f;
+}
+void Light_archer::FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _Info)
+{
+	MoveDelay -= _DeltaTime;
+	if (MoveDelay <= 0 /*|| (Collision_GoPos->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Monster, CollisionType::CT_SPHERE))*/)
+	{
+		if (GameEngineRandom::MainRandom.RandomFloat(GetTransform().GetWorldPosition().NormalizeReturn().y, -GetTransform().GetWorldPosition().NormalizeReturn().y) > 0)
+		{
+			Manager_StatManager->GetFSMManager().ChangeState("Move_Walk");
+		}
+		else
+		{
+			Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
+		}
+	}
+
+	const float4& Collision = Collision_GoPos->GetTransform().GetWorldPosition();
 	const float4& Monster = GetTransform().GetWorldPosition();
 
 	float4 Dir = 0;
@@ -360,15 +471,15 @@ void Light_archer::FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _Info
 
 
 	//Manager_MoveManager->SetCharacterMoveCheck({ Dir.x * _DeltaTime, Dir.z * _DeltaTime }, Collision);
-	//if (Collision_TargetPos->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Monster, CollisionType::CT_SPHERE))
+	//if (Collision_PlayerLessPos->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Monster, CollisionType::CT_SPHERE))
 	//{
-	//	if (Collision_TargetPos->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Player, CollisionType::CT_SPHERE))
+	//	if (Collision_PlayerLessPos->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Player, CollisionType::CT_SPHERE))
 	//	{
 	//		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
 	//	}
 	//}
 
-	//const float4& Collision = Collision_TargetPos->GetTransform().GetWorldPosition();
+	//const float4& Collision = Collision_PlayerLessPos->GetTransform().GetWorldPosition();
 	//const float4& Monster = GetTransform().GetWorldPosition();
 
 	//float4 Dir = 0;
@@ -390,7 +501,11 @@ void Light_archer::FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _Info
 	//	Dir.z = -100.f;
 	//}
 
-	Manager_MoveManager->SetCharacterMoveCheck({ Dir.x * _DeltaTime, Dir.z * _DeltaTime }, Collision);
+
+	if ((Manager_MoveManager->SetCharacterMoveCheck({ Dir.x * _DeltaTime, Dir.z * _DeltaTime }, Collision) * 10.f).CompareInt3D(float4::ZERO))
+	{
+		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
+	}
 
 }
 void Light_archer::FSM_Move_Walk_End(const StateInfo& _Info)
@@ -402,4 +517,86 @@ void Light_archer::FSM_Move_Walk_End(const StateInfo& _Info)
 void Light_archer::LevelStartEvent()
 {
 
+}
+
+void Light_archer::FSM_Att_Shoot_Start(const StateInfo& _Info)
+{
+	Texture_Monster->ChangeFrameAnimation("Monster_Att", true);
+	Texture_Eff->ChangeFrameAnimation("Monster_Att", true);
+	Manager_StatManager->SetDoSkill();
+}
+void Light_archer::FSM_Att_Shoot_Update(float _DeltaTime, const StateInfo& _Info)
+{
+
+}
+void Light_archer::Att_ShootFrame(const FrameAnimation_DESC& _DESC)
+{
+	//Texture_Monster->AnimationBindFrame("Monster_Att", std::bind(&Light_archer::Att_ShootFrame, this, std::placeholders::_1));
+	// 38, 47
+	// 44
+	switch (_DESC.CurFrame)
+	{
+	case 7:
+	{
+		if (Collision_Arrow == nullptr)
+		{
+			Collision_Arrow = CreateComponent<GameEngineCollision>();
+			Collision_Arrow->GetTransform().SetLocalScale({ 50, 50, 200 });
+			Collision_Arrow->ChangeOrder(CollisionOrder::Monster_Att);
+			Collision_Arrow->SetParent(Actor_Dummy);
+		}
+		Collision_Arrow->On();
+		GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
+		Renderer->SetParent(Actor_Dummy);
+		Renderer->GetTransform().SetWorldPosition({ GetTransform().GetWorldPosition().x + (GetTransform().GetLocalScale().x < 0 ? -50.f : 50.f), GetTransform().GetWorldPosition().y + 80.f, GetTransform().GetWorldPosition().z});
+		if (GetTransform().GetLocalScale().x < 0)
+		{
+			Renderer->GetTransform().PixLocalNegativeX();
+		}
+		Renderer->CreateFrameAnimationFolder("BaseArrow", FrameAnimation_DESC("BaseArrow", 0.125f, true));
+		Renderer->AnimationBindTime("BaseArrow", std::bind(&Light_archer::Att_ArrowUpdate, this, std::placeholders::_1, std::placeholders::_2));
+		Renderer->ChangeFrameAnimation("BaseArrow");
+		Renderer->ScaleToTexture();
+		Renderer->Death(5.f);
+
+	}
+		// ½´ÆÃ
+		break;
+
+	default:
+		break;
+	}
+}
+
+void Light_archer::Att_ArrowUpdate(const FrameAnimation_DESC& _DESC, float _Time)
+{
+
+	if (_DESC.Renderer->GetTransform().GetWorldScale().x < 0)
+	{
+		_DESC.Renderer->GetTransform().SetLocalMove({ -500 * _Time, 0 });
+	}
+	else
+	{
+		_DESC.Renderer->GetTransform().SetLocalMove({ 500 * _Time, 0 });
+	}
+	Collision_Arrow->GetTransform().SetWorldPosition(_DESC.Renderer->GetTransform().GetWorldPosition());
+	if (Collision_Arrow->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player, CollisionType::CT_AABB, std::bind(&GamePlayMonster::GetTarget, this, std::placeholders::_1, std::placeholders::_2)))
+	{
+		Player_Target->BeHit({ 20, 0, 0, 50 }, HitPostureType::Standing, nullptr, Player_Target, (GetTransform().GetWorldPosition().x > Player_Target->GetTransform().GetWorldPosition().x ? -1 : 1), 1000);
+		_DESC.Renderer->Death();
+		Collision_Arrow->Off();
+	}
+
+	if (GetLevel<BattleLevel>()->GetCollisionMapTexture()->GetPixelToFloat4(GetTransform().GetWorldPosition().ix(), -(GetTransform().GetWorldPosition().ix())).CompareInt4D(float4::RED))
+	{
+		_DESC.Renderer->Death();
+		Collision_Arrow->Off();
+	}
+}
+
+
+void Light_archer::FSM_Att_Shoot_End(const StateInfo& _Info)
+{
+	Manager_StatManager->SetDoSkillEnd();
+	All_CollTime["Att_Shoot"] = 5.f;
 }

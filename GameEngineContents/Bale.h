@@ -24,6 +24,9 @@ protected:
 	//void OnEvent();
 	// void OffEvent() override {}
 	void LevelStartEvent() override;
+
+	unsigned int SetHPFromHit(unsigned int _Damage) override;
+	unsigned int SetHPFromHit(unsigned int _Damage, const std::vector<float>& _AddDamage)override;
 private:
 	// ---------Dir-------------
 	void CheckDir();
@@ -94,7 +97,7 @@ private:
 
 	float MoveDelay;
 	//float4 TrackerPos;
-	GameEngineCollision* Collision_TargetPos;
+	GameEngineCollision* Collision_PlayerLessPos;
 	
 	void FSM_Att_Sting_Start(const StateInfo& _Info);
 	void FSM_Att_Sting_Update(float _DeltaTime, const StateInfo& _Info);

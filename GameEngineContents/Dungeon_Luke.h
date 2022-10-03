@@ -1,10 +1,12 @@
 #pragma once
 #include "BattleLevel.h"
 #include "GamePlayLevelTemplate.h"
+#include "GamePlayMonster.h"
 
 // Ό³Έν :
 class GamePlayMonsterHPBar;
 class GameEngineLevel;
+class GamePlayMonster;
 enum class Luke_Stage
 {
 	None,
@@ -27,6 +29,18 @@ public:
 	Dungeon_Luke& operator=(const Dungeon_Luke& _Other) = delete;
 	Dungeon_Luke& operator=(Dungeon_Luke&& _Other) noexcept = delete;
 
+	inline bool IsAllMonsterDie()
+	{
+		for (auto& Iter : vector_AllMonster)
+		{
+			if (Iter->IsUpdate()) 
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
 protected:
 	inline static void SetStage(Luke_Stage _Stage)
 	{
@@ -37,11 +51,13 @@ protected:
 		return CurrentStage;
 	}
 
+	std::vector<GamePlayMonster*> vector_AllMonster;
 
 private:
 	static Luke_Stage CurrentStage;
 
 	GamePlayMonsterHPBar* Actor_MonsterHP;
+
 
 };
 

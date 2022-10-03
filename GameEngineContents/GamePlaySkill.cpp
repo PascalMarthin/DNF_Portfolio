@@ -281,6 +281,15 @@ void GamePlaySkill::OffEvent()
 {
 	int_ComboStuck = 0;
 	TimePass = 0.f;
+	if (Texture_CastingBuff != nullptr)
+	{
+		Texture_CastingBuff->Off();
+		for (size_t i = 0; i < Vector_CastingTexture.size() - 1; i++)
+		{
+			Vector_CastingTexture[i]->Off();
+		}
+	}
+
 }
 
 void GamePlaySkill::LevelStartEvent()

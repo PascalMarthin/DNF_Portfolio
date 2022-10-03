@@ -28,7 +28,7 @@ void Skill_Fighter_F_LightingDance::Start()
 	GamePlaySkill::Start();
 	SetCoolTime(5.f);
 	Class_Power.push_back(SkillComboPower(1500, 1, { 20.f, 20.f, 0, 0.5f }, HitPostureType::Standing, HitType::Hit));
-	Class_Power.push_back(SkillComboPower(1200, 1, { 10.f, 20.f, 0, 0.2f }, HitPostureType::Standing, HitType::Hit));
+	Class_Power.push_back(SkillComboPower(1200, 1, { 10.f, 20.f, 0, 0.2f }, HitPostureType::Hold, HitType::Hit));
 	{
 		GameEngineCollision* Collision_HamerKick = GetActor()->CreateComponent<GameEngineCollision>("LightingDance");
 		Collision_HamerKick->GetTransform().SetLocalScale({ 100.f, 80.f, 40.f });
@@ -249,9 +249,11 @@ bool Skill_Fighter_F_LightingDance::ActiveSkill(CharacterStatManager* _Stat, Mov
 	break;
 	case 1:
 	{
+		_Stat->SetInvincibility();
 		if (LightingStuck <= 0)
 		{
 			GetActor<GamePlayCharacter>()->SetCamHoldOff();
+			_Stat->SetInvincibilityEnd();
 			return true;
 		}
 		HitDelay += _DeltaTime;
@@ -267,6 +269,7 @@ bool Skill_Fighter_F_LightingDance::ActiveSkill(CharacterStatManager* _Stat, Mov
 				if (Object_HitList.empty()) // 전에 한번 때린적 있는가?
 				{
 					GetActor<GamePlayCharacter>()->SetCamHoldOff();
+					_Stat->SetInvincibilityEnd();
 					return true;
 				}
 				else
@@ -444,6 +447,8 @@ void Skill_Fighter_F_LightingDance::StartSkill(CharacterStatManager* _Stat, Move
 	int_ComboStuck = 0;
 	LightingStuck = 12;
 	Object_HitList.clear();
+
+
 
 	GetActor<GamePlayCharacter>()->SetCamHoldOn();
 

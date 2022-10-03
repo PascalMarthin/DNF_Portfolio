@@ -16,6 +16,7 @@ enum class ComboClass
 	Critical,
 	Counter,
 	LastKill,
+	Kill,
 	//ArmorBreak,
 };
 class ComboSystemBlank;
@@ -42,6 +43,7 @@ public:
 
 
 	void SetComboClass(ComboClass _Class);
+	void SetKill();
 	void ComboTimeEnd();
 	void ComboShowEnd();
 
@@ -93,5 +95,14 @@ private:
 
 	static GamePlayComboSystem* Inst;
 	static GamePlayComboSystem* Before;
+
+
+	// ---------Sound------------
+	float SoundDelay;
+
+	static GameEngineSoundPlayer ScoreSound;
+
+	void ComboScore_PlaySound(ComboClass _Class);
+
 };
 

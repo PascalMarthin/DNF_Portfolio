@@ -511,6 +511,8 @@ void GamePlayCharacter::FSM_Att_Skill_End(const StateInfo& _Info)
 {
 	Skill_CurrentSkill->Off();
 	Manager_StatManager->SetDoSkillEnd();
+	Manager_AvataManager->SetAllAvataAutoControl();
+
 }
 
 

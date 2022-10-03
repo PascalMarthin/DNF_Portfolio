@@ -78,7 +78,7 @@ public:
 
 	virtual void StartSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata) {}
 private:
-	virtual void EndSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata) {}
+	virtual void EndSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata) { int a = 0; }
 protected:
 	int int_ComboStuck;
 	float TimePass;

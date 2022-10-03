@@ -256,7 +256,7 @@ enum CharacterStat
 	Player_Character_Casting		=	0b0000000010000000 ,// 캐스팅중						
 	Player_Character_Charging		=	0b0000000100000000 ,// 차징중							
 	Player_Character_Invincibility	=	0b0000001000000000 ,// 무적상태							
-	Player_Character_Evasion		=	0b0000010000000000 ,// 절대회피(피격판정X)					
+	Player_Character_Build			=	0b0000010000000000 ,// 건물형					
 	Player_Character_Superarmor		=	0b0000100000000000 ,// 슈퍼아머상태							
 	Player_Character_BeHit			=	0b0001000000000000 ,// 경직중						
 	Player_Character_Aerial	        =   0b0010000000000000 ,// 타의로 공중에 뜨는중							

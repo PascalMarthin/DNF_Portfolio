@@ -12,6 +12,8 @@ GameEngineFolderTexture* GamePlayComboSystem::TextureR_Monster_killcount = nullp
 GameEngineFolderTexture* GamePlayComboSystem::TextureR_Monsterkill		 = nullptr;
 GameEngineFolderTexture* GamePlayComboSystem::TextureR_Monsterkill_grade = nullptr;
 
+GameEngineSoundPlayer GamePlayComboSystem::ScoreSound;
+
 GamePlayComboSystem* GamePlayComboSystem::Before = nullptr;
 GamePlayComboSystem* GamePlayComboSystem::Inst = nullptr;
 GamePlayComboSystem::GamePlayComboSystem()
@@ -118,10 +120,8 @@ void GamePlayComboSystem::ComboShowEnd()
 void GamePlayComboSystem::Update(float _DeltaTime)
 {
 
-
 	if (!Queue_ComboClass.empty())
 	{
-
 		ComboShowEnd();
 		int UpdateOn = 0;
 		for (size_t i = 0; i < 5; i++)
@@ -136,12 +136,23 @@ void GamePlayComboSystem::Update(float _DeltaTime)
 		{
 			if (UpdateOn > 4) // 5부터 앞에서 잘라버리기
 			{
-				if (vector_ComboBlank[0]->CurrentClass == ComboClass::Combo)
+				if (vector_ComboBlank[0]->CurrentClass == ComboClass::Combo || vector_ComboBlank[0]->CurrentClass == ComboClass::Kill)
 				{
-					for (size_t i = 1; i < 4; i++)
+					if (vector_ComboBlank[1]->CurrentClass == ComboClass::Combo || vector_ComboBlank[1]->CurrentClass == ComboClass::Kill)
 					{
-						ChangeBlank(vector_ComboBlank[i], vector_ComboBlank[i + 1]);
-						--UpdateOn;
+						for (size_t i = 2; i < 4; i++)
+						{
+							ChangeBlank(vector_ComboBlank[i], vector_ComboBlank[i + 1]);
+							--UpdateOn;
+						}
+					}
+					else
+					{
+						for (size_t i = 1; i < 4; i++)
+						{
+							ChangeBlank(vector_ComboBlank[i], vector_ComboBlank[i + 1]);
+							--UpdateOn;
+						}
 					}
 				}
 				else
@@ -177,10 +188,32 @@ void GamePlayComboSystem::Update(float _DeltaTime)
 						Queue_ComboClass.pop();
 					}
 				}
+				else if (Queue_ComboClass.front() == ComboClass::Kill)
+				{
+					bool ComboIsit = false;
+					for (size_t i = 0; i < 5; i++)
+					{
+						if (vector_ComboBlank[i]->CurrentClass == ComboClass::Kill)
+						{
+							ComboIsit = true;
+							Queue_ComboClass.pop();
+							break;
+						}
+					}
+
+					if (ComboIsit == false)
+					{
+						vector_ComboBlank[UpdateOn]->SetComboClass(Queue_ComboClass.front());
+						vector_ComboBlank[UpdateOn]->SetBrighting();
+						vector_ComboBlank[UpdateOn]->On();
+						Queue_ComboClass.pop();
+					}
+				}
 				else
 				{
 					vector_ComboBlank[UpdateOn]->SetComboClass(Queue_ComboClass.front());
 					vector_ComboBlank[UpdateOn]->SetBrighting();
+
 					vector_ComboBlank[UpdateOn]->On();
 					UpdateOn++;
 					Queue_ComboClass.pop();
@@ -193,6 +226,26 @@ void GamePlayComboSystem::Update(float _DeltaTime)
 			}
 		}
 		Queue_ComboClass = std::queue<ComboClass>();
+
+		SoundDelay = 0;
+
+	}
+
+	if (SoundDelay > 0.25f)
+	{
+		for (size_t i = 0; i < 5; i++)
+		{
+			if (vector_ComboBlank[i]->IsUpdate())
+			{
+				ComboScore_PlaySound(vector_ComboBlank[i]->CurrentClass);
+			}
+		}
+		
+		SoundDelay = -1.f;
+	}
+	else if (SoundDelay >= 0)
+	{
+		SoundDelay += _DeltaTime;
 	}
 
 	
@@ -215,6 +268,50 @@ void GamePlayComboSystem::ChangeBlank(ComboSystemBlank* _After, ComboSystemBlank
 	_Before->Off();
 }
 
+
+void GamePlayComboSystem::ComboScore_PlaySound(ComboClass _Class)
+{
+	if (_Class == ComboClass::Combo)
+	{
+		return;
+	}
+
+	ScoreSound.Stop();
+	switch (_Class)
+	{
+	case ComboClass::Aerial:
+		ScoreSound = GameEngineSound::SoundPlayControl("hk3_aerial.ogg", 1);
+		break;
+	case ComboClass::CounterHold:
+		ScoreSound = GameEngineSound::SoundPlayControl("hk3_shold.ogg", 1);
+		break;
+	case ComboClass::GhostFrame:
+		ScoreSound = GameEngineSound::SoundPlayControl("hk3_gframe.ogg", 1);
+		break;
+	case ComboClass::NearMiss:
+		ScoreSound = GameEngineSound::SoundPlayControl("hk3_nmiss.ogg", 1);
+		break;
+	case ComboClass::BackAttack:
+		ScoreSound = GameEngineSound::SoundPlayControl("hk3_batk.ogg", 1);
+		break;
+	case ComboClass::Critical:
+		ScoreSound = GameEngineSound::SoundPlayControl("hk3_excellent.ogg", 1);
+		break;
+	case ComboClass::Counter:
+		ScoreSound = GameEngineSound::SoundPlayControl("hk3_counter.ogg", 1);
+		break;
+	case ComboClass::LastKill:
+		ScoreSound = GameEngineSound::SoundPlayControl("hk3_okill.ogg", 1);
+		break;
+	case ComboClass::Kill:
+		break;
+	default:
+		break;
+	}
+	ScoreSound.Volume(0.8f);
+}
+
+
 void GamePlayComboSystem::PlusScore(unsigned __int64 _Score)
 {
 	ComboScore += _Score;
@@ -235,9 +332,24 @@ void GamePlayComboSystem::SetComboClass(ComboClass _Class)
 			}
 		}
 	}
+	else if (_Class == ComboClass::Kill)
+	{
+		for (size_t i = 0; i < 5; i++)
+		{
+			if (vector_ComboBlank[i]->CurrentClass == ComboClass::Combo)
+			{
+				return;
+			}
+		}
+	}
 
 
 	Queue_ComboClass.push(_Class);
+}
+
+void GamePlayComboSystem::SetKill()
+{
+
 }
 
 void GamePlayComboSystem::ComboTimeEnd()
@@ -283,6 +395,7 @@ void GamePlayComboSystem::LevelStartEvent()
 
 	GamePlayComboSystem::Inst = this;
 	GamePlayComboSystem::Before = nullptr;
+	ScoreSound.Stop();
 }
 
 void GamePlayComboSystem::LevelEndEvent()

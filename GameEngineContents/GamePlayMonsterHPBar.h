@@ -4,6 +4,7 @@
 // Ό³Έν :
 class GamePlayMonster;
 class GameEngineUIRenderer;
+class GameEngineFontRenderer;
 class GamePlayMonsterHPBar : public GameEngineActor
 {
 public:
@@ -78,11 +79,16 @@ private:
 	unsigned int Monster_BeforeHPLine;
 	unsigned int Monster_GoalHPLine;
 
+	GameEngineFontRenderer* Font_MonsterName;
+	GameEngineUIRenderer* Texture_Thumbnail;
+
 	float FlashTime;
 	int MaxSpeed;
 	float FrameSpeed;
 	float DecreaseTime;
 	float DeathBlink;
+
+	float DeathOff;
 
 
 	//

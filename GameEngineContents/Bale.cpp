@@ -8,12 +8,13 @@
 #include "GameEngineEffectRenderer.h"
 #include "AvataManager.h"
 #include "BaleTentacle.h"
+#include "GamePlayMonsterHPBar.h"
 //#include <GameEngineCore/>
 
 Bale::Bale()
 	: MoveDelay(0)
 	//, TrackerPos(float4::ZERO)
-	, Collision_TargetPos(nullptr)
+	, Collision_PlayerLessPos(nullptr)
 	, Collision_ect(nullptr)
 	, DashUpdate(false)
 	, StayStandDelay(0)
@@ -182,10 +183,10 @@ void Bale::Start()
 	}
 
 	{
-		Collision_TargetPos = CreateComponent<GameEngineCollision>("TargetPos");
-		Collision_TargetPos->GetTransform().SetLocalScale({ 25, 10, 10 });
-		Collision_TargetPos->ChangeOrder(CollisionOrder::Monster_Tarcking);
-		Collision_TargetPos->SetDebugSetting(CollisionType::CT_SPHERE, { 0.5f, 0 , 0.8f, 0.3f });
+		Collision_PlayerLessPos = CreateComponent<GameEngineCollision>("TargetPos");
+		Collision_PlayerLessPos->GetTransform().SetLocalScale({ 25, 10, 10 });
+		Collision_PlayerLessPos->ChangeOrder(CollisionOrder::Monster_Tarcking);
+		Collision_PlayerLessPos->SetDebugSetting(CollisionType::CT_SPHERE, { 0.5f, 0 , 0.8f, 0.3f });
 	}
 
 
@@ -214,7 +215,7 @@ void Bale::Start()
 		Texture_BlackBack = CreateComponent<GameEngineEffectRenderer>("BlackBack");
 		Texture_BlackBack->SetParent(Actor_Dummy);
 		Texture_BlackBack->GetTransform().SetLocalScale({ 3500, 1300, 0 });
-		Texture_BlackBack->GetTransform().SetWorldPosition({ 0, 0, 1000.f });
+		Texture_BlackBack->GetTransform().SetWorldPosition({ 0, 0, -0.001f });
 		Texture_BlackBack->SetTexture("BlackBackground.png");
 		Texture_BlackBack->SetPivot(PIVOTMODE::LEFTTOP);
 		Texture_BlackBack->GetPixelData().MulColor.a = 0;
@@ -788,8 +789,9 @@ void Bale::Update(float _DeltaTime)
 		if (Barrier_CoolTime <= 0)
 		{
 			Barrier_On = true;
-			Barrier_HP = 15180000;
+			Barrier_HP = 1518000;
 			Texure_Barrier->On();
+			Manager_StatManager->SetBuild();
 			//Texure_Barrier_Effect_Front->On();
 			//Texure_Barrier_Effect_FrontDodge->On();
 		}
@@ -804,6 +806,9 @@ void Bale::Update(float _DeltaTime)
 			Texure_Barrier_Effect_Front->Off();
 			Texure_Barrier_Effect_FrontDodge->Off();
 			Manager_StatManager->SetSuperarmorEnd();
+			Manager_StatManager->SetBuildEnd();
+
+			Actor_SpeechPopUp->CreatePopup("크르르... 루크님의 선물이...!");
 		}
 		else
 		{
@@ -995,16 +1000,16 @@ void Bale::FSM_Move_Stand_Start(const StateInfo& _Info)
 
 	if (GameEngineRandom::MainRandom.RandomInt(0, 3) > 2)
 	{
-		Collision_TargetPos->SetParent(Actor_Dummy);
+		Collision_PlayerLessPos->SetParent(Actor_Dummy);
 		const float4& Pos = GamePlayCharacter::GetInst()->GetTransform().GetWorldPosition();
-		Collision_TargetPos->GetTransform().SetWorldPosition({ Pos.x , Pos.z, Pos.z });
+		Collision_PlayerLessPos->GetTransform().SetWorldPosition({ Pos.x , Pos.z, Pos.z });
 	}
 	
 	StayStandDelay = 1.5f;
 }
 void Bale::FSM_Move_Stand_Update(float _DeltaTime, const StateInfo& _Info)
 {
-	//if (Collision_TargetPos->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Monster, CollisionType::CT_SPHERE))
+	//if (Collision_PlayerLessPos->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Monster, CollisionType::CT_SPHERE))
 	//{
 
 	//}
@@ -1017,7 +1022,7 @@ void Bale::FSM_Move_Stand_Update(float _DeltaTime, const StateInfo& _Info)
 		return;
 	}
 
-	if (!Collision_TargetPos->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Player, CollisionType::CT_SPHERE))
+	if (!Collision_PlayerLessPos->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Player, CollisionType::CT_SPHERE))
 	{
 		Manager_StatManager->GetFSMManager().ChangeState("Move_Walk"); // 중단점 용
 		return;
@@ -1141,19 +1146,19 @@ void Bale::FSM_Move_Walk_Start(const StateInfo& _Info)
 {
 	MoveDelay = 0;
 	Texture_Monster->ChangeFrameAnimation("Bale_Walk", true);
-	Collision_TargetPos->SetParent(GamePlayCharacter::GetInst());
-	Collision_TargetPos->GetTransform().SetLocalPosition(float4::ZERO);
+	Collision_PlayerLessPos->SetParent(GamePlayCharacter::GetInst());
+	Collision_PlayerLessPos->GetTransform().SetLocalPosition(float4::ZERO);
 }
 void Bale::FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _Info)
 {
 
 	MoveDelay -= _DeltaTime;
 	bool IsArrive = false;
-	if (MoveDelay <= 0 || (IsArrive = Collision_TargetPos->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Monster, CollisionType::CT_SPHERE)))
+	if (MoveDelay <= 0 || (IsArrive = Collision_PlayerLessPos->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Monster, CollisionType::CT_SPHERE)))
 	{
 		if (IsArrive == true)
 		{
-			if (Collision_TargetPos->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Player, CollisionType::CT_SPHERE))
+			if (Collision_PlayerLessPos->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Player, CollisionType::CT_SPHERE))
 			{
 				Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
 			}
@@ -1184,7 +1189,7 @@ void Bale::FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _Info)
 		//}
 
 
-		Collision_TargetPos->GetTransform().SetLocalPosition(Pos);
+		Collision_PlayerLessPos->GetTransform().SetLocalPosition(Pos);
 		MoveDelay = 2.f;
 	}
 
@@ -1201,7 +1206,7 @@ void Bale::FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _Info)
 	// 마주보기
 
 	
-	const float4& Collision = Collision_TargetPos->GetTransform().GetWorldPosition();
+	const float4& Collision = Collision_PlayerLessPos->GetTransform().GetWorldPosition();
 	const float4& Monster = GetTransform().GetWorldPosition();
 
 	float4 Dir = 0;
@@ -1734,10 +1739,11 @@ void Bale::FSM_Move_Teleport_End(const StateInfo& _Info)
 
 void Bale::FSM_Skill_Tracking_Start(const StateInfo& _Info)
 {
+	Manager_StatManager->SetDoSkill();
 	Texture_Monster->ChangeFrameAnimation("Bale_TrackingReady");
 	Texture_BlackBack->GetPixelData().PlusColor = {0, 0, 0, 0};
-	Collision_TargetPos->SetParent(GamePlayCharacter::GetInst());
-	Collision_TargetPos->GetTransform().SetLocalPosition({80,0,0});
+	Collision_PlayerLessPos->SetParent(GamePlayCharacter::GetInst());
+	Collision_PlayerLessPos->GetTransform().SetLocalPosition({80,0,0});
 }
 void Bale::FSM_Skill_Tracking_Update(float _DeltaTime, const StateInfo& _Info)
 {
@@ -1760,9 +1766,10 @@ void Bale::FSM_Skill_Tracking_Update(float _DeltaTime, const StateInfo& _Info)
 void Bale::FSM_Skill_Tracking_End(const StateInfo& _Info)
 {
 	Texture_BlackBack->GetPixelData().PlusColor.a = 0;
-	Collision_TargetPos->GetTransform().SetLocalPosition(float4::ZERO);
+	Collision_PlayerLessPos->GetTransform().SetLocalPosition(float4::ZERO);
 	dynamic_cast<GamePlayCharacter*>(Hit_Player)->SetCamHoldOff();
 	All_CollTime["Skill_Tracking"] = 10.f;
+	Manager_StatManager->SetDoSkillEnd();
 }
 
 void Bale::Bale_TrackReadyEnd(const FrameAnimation_DESC& _DESC)
@@ -1776,7 +1783,7 @@ void Bale::Bale_TrackFrmae(const FrameAnimation_DESC& _DESC)
 	//case 1:
 	//	const float4 & Pos = GamePlayCharacter::GetInst()->GetTransform().GetWorldPosition();
 
-	//	Collision_TargetPos
+	//	Collision_PlayerLessPos
 
 	//	break;
 	//default:
@@ -1810,18 +1817,18 @@ void Bale::Bale_TrackUpdate(const FrameAnimation_DESC& _DESC, float _Time)
 		Texture_BlackBack->GetPixelData().PlusColor.a = 0;
 		return;
 	}
-	float4 Dir = Collision_TargetPos->GetTransform().GetWorldPosition() - GetTransform().GetWorldPosition();
+	float4 Dir = Collision_PlayerLessPos->GetTransform().GetWorldPosition() - GetTransform().GetWorldPosition();
 
 	Dir.x = Dir.x > 0 ? 1.f : -1.f;
 	Dir.z = Dir.z > 0 ? 0.8f : -0.8f;
 
 	Manager_MoveManager->SetCharacterMove({ Dir.x * 480.f * _Time, Dir.z * 350.f * _Time });
-	if (Collision_TargetPos->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Monster, CollisionType::CT_SPHERE))
+	if (Collision_PlayerLessPos->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Monster, CollisionType::CT_SPHERE))
 	{
-		Collision_TargetPos->GetTransform().SetLocalPosition(Collision_TargetPos->GetTransform().GetLocalPosition() * -1.f);
+		Collision_PlayerLessPos->GetTransform().SetLocalPosition(Collision_PlayerLessPos->GetTransform().GetLocalPosition() * -1.f);
 	}
 
-	if (Collision_TargetPos->GetTransform().GetWorldPosition().x > GetTransform().GetWorldPosition().x)
+	if (Collision_PlayerLessPos->GetTransform().GetWorldPosition().x > GetTransform().GetWorldPosition().x)
 	{
 		GetTransform().PixLocalPositiveX();
 	}
@@ -1943,6 +1950,7 @@ void Bale::Bale_TrackCatchFrame(const FrameAnimation_DESC& _DESC)
 
 void Bale::FSM_Skill_BringTentacle_Start(const StateInfo& _Info)
 {
+	Manager_StatManager->SetDoSkill();
 	Texture_Monster->ChangeFrameAnimation("Bale_TentacleSet");
 	BringTentacleIndex = 10;
 
@@ -1964,6 +1972,16 @@ void Bale::Bale_TentacleFrame(const FrameAnimation_DESC& _DESC)
 {
 	if (_DESC.CurFrame == 2)
 	{
+		if (GameEngineRandom::MainRandom.RandomInt(0, 1) == 0)
+		{
+			Actor_SpeechPopUp->CreatePopup("찢어주마!");
+		}
+		else
+		{
+			Actor_SpeechPopUp->CreatePopup("카카하! 어둠의 송곳니!");
+		}
+	
+
 		Actor_Tentacle->CreateTentacle();
 
 		if (Coliision_TentacleHit->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player, CollisionType::CT_AABB, std::bind(&Bale::GetPlayer, this, std::placeholders::_1, std::placeholders::_2)))
@@ -2019,6 +2037,8 @@ void Bale::Bale_TentacleFrame(const FrameAnimation_DESC& _DESC)
 
 }
 
+
+
 void Bale::FSM_Skill_BringTentacle_Update(float _DeltaTime, const StateInfo& _Info)
 {
 
@@ -2037,6 +2057,7 @@ void Bale::FSM_Skill_BringTentacle_Update(float _DeltaTime, const StateInfo& _In
 void Bale::FSM_Skill_BringTentacle_End(const StateInfo& _Info)
 {
 	All_CollTime["Skill_Tentacle"] = 60.f;
+	Manager_StatManager->SetDoSkillEnd();
 }
 
 
@@ -2045,4 +2066,117 @@ void Bale::LevelStartEvent()
 	All_CollTime["Move_Teleport"] = 10.f;
 	All_CollTime["Att_Dash"] = 10.f;
 	All_CollTime["Skill_Tentacle"] = 10.f;
+}
+
+
+unsigned int Bale::SetHPFromHit(unsigned int _Damage)
+{
+	GamePlayMonsterHPBar::SetMonster(this);
+	float Def = MonsterAbilityStat.Def;
+	if (MonsterAbilityStat.GetDef() > 1000.f)
+	{
+		Def = 1000.f;
+	}
+	//if (_Damage)
+	//{
+
+	//}
+	unsigned int Damage = _Damage / static_cast<unsigned int>(Def); /*- static_cast<unsigned int>((255.f * MonsterAbilityStat.Def) * 0.8f);*/
+
+
+
+	if (Barrier_HP <= 0)
+	{
+		if (MonsterAbilityStat.HP < Damage)
+		{
+			Dead();
+			GamePlayMonsterHPBar::SetHitDamage(MonsterAbilityStat.HP);
+			MonsterAbilityStat.HP = 0;
+			GamePlayMonsterHPBar::SetHitDamage(0);
+		}
+		else
+		{
+			MonsterAbilityStat.HP -= Damage;
+			GamePlayMonsterHPBar::SetHitDamage(MonsterAbilityStat.HP);
+		}
+	}
+	else
+	{
+		GameEngineDamageRenderer* Font = GetLevel()->CreateActor<GameEngineDamageRenderer>();
+		Font->GetTransform().SetLocalPosition({ GetTransform().GetLocalPosition().x ,GetTransform().GetLocalPosition().y, -10.f });
+		Font->SetDamage(_Damage / 10000, DamageFontClass::TrueDamage);
+
+		Barrier_HP -= _Damage / 10000;
+
+
+		Damage = -1;
+	}
+	// 구조짤때 델타타임으로 역경직시간 넣을껄
+
+
+	return Damage;
+}
+
+
+unsigned int Bale::SetHPFromHit(unsigned int _Damage, const std::vector<float>& _AddDamage)
+{
+	GamePlayMonsterHPBar::SetMonster(this);
+
+	if (MonsterAbilityStat.Def > 1000.f)
+	{
+		MonsterAbilityStat.Def = 1000.f;
+	}
+	//if (_Damage)
+	//{
+
+	//}
+	int Damage = _Damage / static_cast<int>(MonsterAbilityStat.Def); /*- static_cast<unsigned int>((255.f * MonsterAbilityStat.Def) * 0.8f);*/
+	int AddDamage = _Damage;
+
+	for (float Iter : _AddDamage)
+	{
+		AddDamage += static_cast<int>(static_cast<float>(_Damage) * Iter);
+	}
+
+
+
+	if (Barrier_HP <= 0)
+	{
+		if (MonsterAbilityStat.HP < Damage)
+		{
+			Dead();
+			GamePlayMonsterHPBar::SetHitDamage(MonsterAbilityStat.HP);
+			MonsterAbilityStat.HP = 0;
+			GamePlayMonsterHPBar::SetHitDamage(0);
+		}
+		else
+		{
+			MonsterAbilityStat.HP -= AddDamage;
+			GamePlayMonsterHPBar::SetHitDamage(MonsterAbilityStat.HP);
+		}
+	}
+	else
+	{
+		GameEngineDamageRenderer* Font = GetLevel()->CreateActor<GameEngineDamageRenderer>();
+		Font->GetTransform().SetLocalPosition({ GetTransform().GetLocalPosition().x ,GetTransform().GetLocalPosition().y, -10.f });
+		Font->SetDamage(_Damage / 10000, _AddDamage ,DamageFontClass::TrueDamage);
+
+		Barrier_HP -= AddDamage / 10000;
+		if (MonsterAbilityStat.HP < AddDamage / 10000)
+		{
+			Dead();
+			GamePlayMonsterHPBar::SetHitDamage(MonsterAbilityStat.HP);
+			MonsterAbilityStat.HP = 0;
+			GamePlayMonsterHPBar::SetHitDamage(0);
+		}
+		else
+		{
+			MonsterAbilityStat.HP -= AddDamage / 10000;
+			GamePlayMonsterHPBar::SetHitDamage(MonsterAbilityStat.HP);
+		}
+		Damage = -1;
+	}
+
+
+	return Damage;
 }

@@ -1,7 +1,7 @@
 #include "PreCompile.h"
 #include "Luke_Stage2.h"
 #include "GamePlayCharacter.h"
-#include "Luke_Stage1_BackGround.h"
+#include "Luke_Stage2_BackGround.h"
 #include "MoveManager.h"
 #include "AvataManager.h"
 #include "Bale.h"
@@ -19,7 +19,7 @@ Luke_Stage2::~Luke_Stage2()
 void Luke_Stage2::Start()
 {
 	GamePlayLevelTemplate::Start();
-	Texture_Luke_Stage1 = CreateActor<Luke_Stage1_BackGround>();
+	Texture_Luke_Stage2 = CreateActor<Luke_Stage2_BackGround>();
 	Player_Character = CreateActor<GamePlayCharacter>();
 
 	Debug_Bale = CreateActor<Bale>();
@@ -64,11 +64,11 @@ void Luke_Stage2::Update(float _DeltaTime)
 
 void Luke_Stage2::LevelStartEvent()
 {
-	float Hight = Texture_Luke_Stage1->GetBackGroundTextureScale().y;
+	float Hight = Texture_Luke_Stage2->GetBackGroundTextureScale().y;
 	if (Dungeon_Luke::GetStage() == Luke_Stage::Stage_1)
 	{
 
-
+		Player_Character->GetTransform().SetLocalPosition({ 200.f, -650.f, -650.f });
 
 	}
 	else

@@ -10,6 +10,8 @@
 #include "CharacterSkillManager.h"
 #include "HealHPAni.h"
 #include "ItemInventory_Equipment.h"
+#include "Item_Equipment.h"
+#include "GamePlayItem_DESC.h"
 
 
 CharacterStatManager* CharacterStatManager::Inst = nullptr;
@@ -194,6 +196,8 @@ bool CharacterStatManager::HealHP(int _Heal, HPMPEnum _Enum)
 void CharacterStatManager::Update(float _DeltaTime)
 {
 
+
+
 	if (CurrentPlayerAbilityStat != nullptr)
 	{
 		if (GameEngineInput::GetInst()->IsPress("Debug1"))
@@ -318,6 +322,24 @@ void CharacterStatManager::Update(float _DeltaTime)
 			}
 		
 			Window_Stat->RefreshStat();
+		}
+	}
+
+
+	{
+		vector_AddDamage.clear(); 
+		const std::vector<InventoryData*>& Data = GamePlayDataBase::GetCurrentCharacterData()->GetInventoryData(InventoryBag::Inventory_ItemInventory_Equipment_Wear);
+		for (auto& Iter : Data)
+		{
+			if (Iter != nullptr)
+			{
+				float Add = Item_Equipment::FindAddDamage(Iter->Item_DESC->GetItemCode());
+				if (Add == 0)
+				{
+					continue;
+				}
+				vector_AddDamage.push_back(Add);
+			}
 		}
 	}
 
@@ -458,7 +480,7 @@ void CharacterStatManager::SetHold()
 		FSMManager.ChangeState("Hit_Aerial");
 		SetCantAction();
 	}
-	else
+	else if (!IsBuild())
 	{
 		FSMManager.ChangeState("Hit_Stand");
 		PlayerCurrentState |= CharacterStat::Player_Character_BeHit;
@@ -528,6 +550,15 @@ void CharacterStatManager::SetSuperarmorEnd()
 void CharacterStatManager::SetDead()
 {
 	PlayerCurrentState &= ~CharacterStat::Player_Character_ALive;
+}
+
+void CharacterStatManager::SetBuild()
+{
+	PlayerCurrentState |= CharacterStat::Player_Character_Build;
+}
+void CharacterStatManager::SetBuildEnd()
+{
+	PlayerCurrentState &= ~CharacterStat::Player_Character_Build;
 }
 
 
