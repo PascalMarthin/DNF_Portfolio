@@ -31,5 +31,11 @@ private:
 	float MoveDistance;
 	float Att_BaseAtt_Delay;
 	bool DelayPunch;
+
+
+	GameEngineSoundPlayer Sound_BaseHit1;
+	GameEngineSoundPlayer Sound_BaseHit2;
+	GameEngineSoundPlayer Sound_BaseHit3;
+	GameEngineSoundPlayer Sound_BaseHit4;
 };
 

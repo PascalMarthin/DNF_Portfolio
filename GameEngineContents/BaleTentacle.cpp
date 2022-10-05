@@ -2,6 +2,8 @@
 #include "BaleTentacle.h"
 #include "GamePlayCharacter.h"
 #include <d3d11.h>
+#include "GamePlayCharacter.h"
+#include "GamePlaySkill.h"
 
 BaleTentacle::BaleTentacle() 
 {
@@ -24,16 +26,15 @@ void BaleTentacle::CreateTentacle()
 
 void TentacleTextureCollision::Start()
 {
-	for (size_t i = 0; i < 20; i++)
+	for (size_t i = 0; i < 10; i++)
 	{
 		TentacleKal* kal = GetActor()->CreateComponent<TentacleKal>();
+		kal->Off();
 		//kal->SetParent(this);
 		list_WaitCollision.push_back(kal);
 	}
 
-	Texture_Test = GetActor()->CreateComponent<GameEngineTextureRenderer>();
-	Texture_Test->GetTransform().SetLocalScale({ 50, 50, 50 });
-	Texture_Test->SetParent(this);
+
 	//Rotation = 0;
 	GetTransform().SetLocalPosition({50, -20, 0});
 	Lena = 100;
@@ -53,7 +54,7 @@ void TentacleTextureCollision::Update(float _Time)
 
 	if ((abs(Lena) - abs(LenX)) / abs(Lena) < 0.05f)
 	{
-		Lena += _Time * 10.f;
+		Lena += _Time * 20.f;
 		LenX += _Time * (50.f * (1.f - ((abs(Lena) - abs(LenX)) / abs(Lena) * 0.02f)) + 400.f * ((abs(Lena) - abs(LenX)) / abs(Lena) * 0.02f)) * DirIndexX;
 	}
 	else
@@ -76,8 +77,6 @@ void TentacleTextureCollision::Update(float _Time)
 
 	float Y = 0;
 	Y = sqrt((1 - ((LenX * LenX) / (Lena * Lena))) * (Lenb * Lenb)) * DirIndexY;
-
-	Texture_Test->GetTransform().SetLocalPosition({ LenX, Y, Y });
 
 
 	if (!list_ActiveCollision.empty())
@@ -120,7 +119,7 @@ void TentacleTextureCollision::Update(float _Time)
 			list_ActiveCollision.push_back(list_WaitCollision.front());
 			list_WaitCollision.erase(list_WaitCollision.begin());
 		}
-		Delay = 0.0875f + (Time * 0.01f);
+		Delay = 0.125f + (Time * 0.01f);
 	}
 
 
@@ -212,12 +211,56 @@ void TentacleKal::Update(float _Time)
 			if (Collision_Tentacle->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player, CollisionType::CT_AABB,
 				std::bind(&TentacleKal::GetPlayer, this, std::placeholders::_1, std::placeholders::_2)))
 			{
+				switch (GameEngineRandom::MainRandom.RandomInt(0, 6))
+				{
+				case 0:
+					Sound_Hit.Stop();
+					Sound_Hit = GameEngineSound::SoundPlayControl("mon_long_sword_hit_01.ogg");
+					Sound_Hit.Volume(0.8f);
+					break;
+				case 1:
+					Sound_Hit.Stop();
+					Sound_Hit = GameEngineSound::SoundPlayControl("mon_long_sword_hit_02.ogg");
+					Sound_Hit.Volume(0.8f);
+					break;
+				case 2:
+					Sound_Hit.Stop();
+					Sound_Hit = GameEngineSound::SoundPlayControl("mon_long_sword_hit_03.ogg");
+					Sound_Hit.Volume(0.8f);
+					break;
+				case 3:
+					Sound_Hit.Stop();
+					Sound_Hit = GameEngineSound::SoundPlayControl("mon_long_sword_hit_04.ogg");
+					Sound_Hit.Volume(0.8f);
+					break;
+				case 4:
+					Sound_Hit.Stop();
+					Sound_Hit = GameEngineSound::SoundPlayControl("mon_long_sword_hit_05.ogg");
+					Sound_Hit.Volume(0.8f);
+					break;
+				case 5:
+					Sound_Hit.Stop();
+					Sound_Hit = GameEngineSound::SoundPlayControl("mon_long_sword_hit_06.ogg");
+					Sound_Hit.Volume(0.8f);
+					break;
+				case 6:
+					Sound_Hit.Stop();
+					Sound_Hit = GameEngineSound::SoundPlayControl("mon_long_sword_hit_07.ogg");
+					Sound_Hit.Volume(0.8f);
+					break;
+				default:
+					break;
+				}
+
 				Texture_KalEffect->ChangeFrameAnimation("Texture_KalEffect", true);
 				Texture_KalEffect->On();
 
 				Texture_Kal->ChangeFrameAnimation("Texture_Kal", true);
 				Texture_Kal->On();
 				Delay = 1.5f;
+				Player_Target->BeHit({ 0,0,0,20.f }, HitPostureType::Standing, nullptr, nullptr, GetTransform().GetWorldPosition().x > Player_Target->GetTransform().GetWorldPosition().x ? 1 : -1
+					, 300);
+
 			}
 		}
 	}
@@ -234,6 +277,8 @@ void TentacleKal::OnEvent()
 CollisionReturn TentacleKal::GetPlayer(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	int a = 0;
+
+	Player_Target = _Other->GetActor<GamePlayCharacter>();
 	//_Other->GetActor<GamePlayCharacter>()->BeHit();
 	return CollisionReturn::Break;
 }

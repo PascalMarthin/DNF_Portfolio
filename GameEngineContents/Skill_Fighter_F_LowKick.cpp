@@ -32,7 +32,7 @@ void Skill_Fighter_F_LowKick::Start()
 	{
 		Texture_LowKick = GetActor()->CreateComponent<GameEngineEffectRenderer>("Lowkick");
 		Texture_LowKick->GetTransform().SetLocalPosition({ 70.f, 75.f, -0.01f });
-		Texture_LowKick->CreateFrameAnimationFolder("Lowkick", FrameAnimation_DESC("Lowkick", 0.05f));
+		Texture_LowKick->CreateFrameAnimationFolder("Lowkick", FrameAnimation_DESC("Lowkick", 0.05f, false));
 		Texture_LowKick->AnimationBindEnd("Lowkick",
 			[](const FrameAnimation_DESC& _Desc)
 			{
@@ -114,13 +114,39 @@ bool Skill_Fighter_F_LowKick::TriggerSkill_ect(GameEngineCollision* _This, GameE
 	//Texture_LowKick_WaveEffect06->SetParent(_Other->GetActor());
 	//Texture_LowKick_WaveEffect06->On();
 	
+	if (!Object_HitList.empty())
+	{
+		GameEngineSound::SoundPlayControl("lowkick_hit_01.ogg").Volume(0.6f);
+	}
+
 	return false;
 }
 
 void Skill_Fighter_F_LowKick::StartSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata)
 {
+
+	switch (GameEngineRandom::MainRandom.RandomInt(0, 2))
+	{
+	case 0:
+		GamePlayCharacter::SetVoice("ft_lowkick_01.ogg");
+		break;
+	case 1:
+		GamePlayCharacter::SetVoice("ft_lowkick_02.ogg");
+		break;
+	case 2:
+		GamePlayCharacter::SetVoice("ft_lowkick_03.ogg");
+		break;
+	default:
+		break;
+	}
+	GameEngineSound::SoundPlayControl("lowkick_01.ogg").Volume(0.6f);
 	_Avata->ChangeAvataAnimation("Att_LowKick1");
 	Texture_LowKick->On();
 	Texture_LowKick->ChangeFrameAnimation("Lowkick", true);
 	IsReady = false;
+}
+
+void Skill_Fighter_F_LowKick::EndSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata)
+{
+	Texture_LowKick->Off();
 }

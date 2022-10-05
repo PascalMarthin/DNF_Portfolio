@@ -53,9 +53,12 @@ void CharacterSkillManager::Start()
 	Staic_CoolTime[AllSkillEnum::Fighter_F_KaiKen] = 0.f;
 	List_AllSkill[AllSkillEnum::Fighter_F_SuperArmor] = GetActor()->CreateComponent<Skill_Fighter_F_SuperArmor>();
 	Staic_CoolTime[AllSkillEnum::Fighter_F_SuperArmor] = 0.f;
-
-	
-
+	List_AllSkill[AllSkillEnum::Fighter_HamKick] = GetActor()->CreateComponent<Skill_Fighter_F_Ham_Kick>();
+	Staic_CoolTime[AllSkillEnum::Fighter_HamKick] = 0.f;
+	List_AllSkill[AllSkillEnum::Fighter_F_ShoulderDash] = GetActor()->CreateComponent<Skill_Fighter_F_ShoulderDash>();
+	Staic_CoolTime[AllSkillEnum::Fighter_F_ShoulderDash] = 0.f;
+	List_AllSkill[AllSkillEnum::Fighter_F_StrongLowKick] = GetActor()->CreateComponent<Skill_Fighter_F_StrongLowKick>();
+	Staic_CoolTime[AllSkillEnum::Fighter_F_StrongLowKick] = 0.f;
 	
 
 	map_SkillSlot['Q'] = nullptr;
@@ -128,17 +131,22 @@ void CharacterSkillManager::Update(float _DeltaTime)
 void CharacterSkillManager::LevelStartEvent()
 {
 	map_SkillSlot['Q'] = nullptr;
-	map_SkillSlot['W'] = nullptr;
+	map_SkillSlot['W'] = List_AllSkill[AllSkillEnum::Fighter_F_Rising];
 	map_SkillSlot['E'] = List_AllSkill[AllSkillEnum::Fighter_LightingDance];
-	map_SkillSlot['R'] = nullptr;
+	map_SkillSlot['R'] = List_AllSkill[AllSkillEnum::Fighter_F_StrongLowKick];
 	map_SkillSlot['T'] = List_AllSkill[AllSkillEnum::Fighter_F_SuperArmor];
 	map_SkillSlot['Y'] = List_AllSkill[AllSkillEnum::Fighter_F_KaiKen];
 	map_SkillSlot['A'] = List_AllSkill[AllSkillEnum::Fighter_ClosePunch];
 	map_SkillSlot['S'] = List_AllSkill[AllSkillEnum::Fighter_Upper];
-	map_SkillSlot['D'] = List_AllSkill[AllSkillEnum::Fighter_Bungwon];
-	map_SkillSlot['F'] = List_AllSkill[AllSkillEnum::Fighter_F_Rising];
-	map_SkillSlot['G'] = List_AllSkill[AllSkillEnum::Fighter_F_LowKick];
-	map_SkillSlot['H'] = List_AllSkill[AllSkillEnum::Fighter_F_CrashLowKick];
+	map_SkillSlot['D'] = List_AllSkill[AllSkillEnum::Fighter_F_LowKick];
+	map_SkillSlot['F'] = List_AllSkill[AllSkillEnum::Fighter_F_CrashLowKick];
+	map_SkillSlot['G'] = List_AllSkill[AllSkillEnum::Fighter_HamKick];
+	map_SkillSlot['H'] = List_AllSkill[AllSkillEnum::Fighter_Bungwon];
+
+	map_SkillSlot['U'] = List_AllSkill[AllSkillEnum::Fighter_F_CrashLowKick];
+	map_SkillSlot['V'] = List_AllSkill[AllSkillEnum::Fighter_F_CrashLowKick];
+	map_SkillSlot['Z'] = List_AllSkill[AllSkillEnum::Fighter_F_ShoulderDash];
+
 
 
 	for (auto& Skill : List_AllSkill)

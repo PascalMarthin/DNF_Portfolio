@@ -17,6 +17,9 @@ enum class ComboClass
 	Counter,
 	LastKill,
 	Kill,
+	
+	BeHit,
+	MultiHit
 	//ArmorBreak,
 };
 class ComboSystemBlank;
@@ -25,6 +28,7 @@ class GamePlayComboSystem : public GameEngineActor
 {
 	friend ComboSystemBlank;
 	friend ComboSystemScore;
+	friend class GamePlayResultWindow;
 public:
 	GamePlayComboSystem();
 	~GamePlayComboSystem();
@@ -41,9 +45,9 @@ public:
 	void PlusScore(unsigned __int64 _Score);
 
 
-
 	void SetComboClass(ComboClass _Class);
 	void SetKill();
+	void SetKillLast();
 	void ComboTimeEnd();
 	void ComboShowEnd();
 
@@ -68,10 +72,10 @@ private:
 
 	std::queue<ComboClass> Queue_ComboClass;
 	unsigned int ComboStack;
+	unsigned int MaxComboStack;
 	//float BrightIndex;
 	void PlusCombo();
 	
-
 
 
 	bool PushBack;
@@ -104,5 +108,27 @@ private:
 
 	void ComboScore_PlaySound(ComboClass _Class);
 
+
+	// -----Kill------
+
+
+	int KillStuck;
+	float KillDelay;
+	void KillEffect();
+
+
+
+	bool DoEffect;
+	float DoEffectDelay;
+	bool KillFlash;
+
+	GameEngineUIRenderer* Texture_Dungeon_Kill;
+	GameEngineUIRenderer* Texture_Dungeon_KillEffect;
+	GameEngineUIRenderer* Texture_Dungeon_KillDraw;
+
+
+	std::map<ComboClass, int> map_ComboStuck;
+
+	
 };
 

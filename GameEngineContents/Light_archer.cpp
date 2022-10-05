@@ -4,6 +4,7 @@
 #include "GamePlayCharacter.h"
 #include "BattleLevel.h"
 #include "GamePlaySkill.h"
+#include "GamePlayComboSystem.h"
 
 Light_archer::Light_archer() 
 	: MoveDelay(0)
@@ -96,6 +97,8 @@ void Light_archer::Start()
 	Collision_GoPos->SetDebugSetting(CollisionType::CT_AABB, float4::WHITE);
 
 	Collision_GoPos->SetParent(Actor_Dummy);
+
+	Texture_Thumbnail = GameEngineTexture::Find("light_archer_25.png");
 
 	SetFSManager();
 }
@@ -524,6 +527,7 @@ void Light_archer::FSM_Att_Shoot_Start(const StateInfo& _Info)
 	Texture_Monster->ChangeFrameAnimation("Monster_Att", true);
 	Texture_Eff->ChangeFrameAnimation("Monster_Att", true);
 	Manager_StatManager->SetDoSkill();
+	NearMiss = false;
 }
 void Light_archer::FSM_Att_Shoot_Update(float _DeltaTime, const StateInfo& _Info)
 {
@@ -582,13 +586,59 @@ void Light_archer::Att_ArrowUpdate(const FrameAnimation_DESC& _DESC, float _Time
 	Collision_Arrow->GetTransform().SetWorldPosition(_DESC.Renderer->GetTransform().GetWorldPosition());
 	if (Collision_Arrow->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player, CollisionType::CT_AABB, std::bind(&GamePlayMonster::GetTarget, this, std::placeholders::_1, std::placeholders::_2)))
 	{
+		NearMiss = false;
+		switch (GameEngineRandom::MainRandom.RandomInt(0, 9))
+		{
+		case 0:
+			GameEngineSound::SoundPlayControl("mon_bow_hit_01.ogg").Volume(0.8f);
+			break;								 
+		case 1:									
+			GameEngineSound::SoundPlayControl("mon_bow_hit_02.ogg").Volume(0.8f);
+			break;								  
+		case 2:									   
+			GameEngineSound::SoundPlayControl("mon_bow_hit_03.ogg").Volume(0.8f);
+			break;								
+		case 3:									 
+			GameEngineSound::SoundPlayControl("mon_bow_hit_04.ogg").Volume(0.8f);
+			break;								  
+		case 4:									 
+			GameEngineSound::SoundPlayControl("mon_bow_hit_05.ogg").Volume(0.8f);
+			break;								 
+		case 5:									 
+			GameEngineSound::SoundPlayControl("mon_bow_hit_06.ogg").Volume(0.8f);
+			break;								 
+		case 6:									
+			GameEngineSound::SoundPlayControl("mon_bow_hit_07.ogg").Volume(0.8f);
+			break;								 
+		case 7:									
+			GameEngineSound::SoundPlayControl("mon_bow_hit_08.ogg").Volume(0.8f);
+			break;								 
+		case 8:									 
+			GameEngineSound::SoundPlayControl("mon_bow_hit_09.ogg").Volume(0.8f);
+			break;
+
+		default:
+			break;
+		}
+
+
 		Player_Target->BeHit({ 20, 0, 0, 50 }, HitPostureType::Standing, nullptr, Player_Target, (GetTransform().GetWorldPosition().x > Player_Target->GetTransform().GetWorldPosition().x ? -1 : 1), 1000);
+		_DESC.Renderer->Off();
 		_DESC.Renderer->Death();
 		Collision_Arrow->Off();
 	}
-
-	if (GetLevel<BattleLevel>()->GetCollisionMapTexture()->GetPixelToFloat4(GetTransform().GetWorldPosition().ix(), -(GetTransform().GetWorldPosition().ix())).CompareInt4D(float4::RED))
+	else if(Collision_Arrow->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player_NearMiss, CollisionType::CT_AABB))
 	{
+		NearMiss = true;
+	}
+
+	if (GetLevel<BattleLevel>()->GetCollisionMapTexture()->GetPixelToFloat4(GetTransform().GetWorldPosition().ix(), -(GetTransform().GetWorldPosition().iy())).CompareInt4D(float4::RED))
+	{
+		if (NearMiss == true)
+		{
+			GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::NearMiss);
+		}
+		_DESC.Renderer->Off();
 		_DESC.Renderer->Death();
 		Collision_Arrow->Off();
 	}

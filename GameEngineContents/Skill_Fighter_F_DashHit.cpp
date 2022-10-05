@@ -69,15 +69,34 @@ bool Skill_Fighter_F_DashHit::ActiveSkill(CharacterStatManager* _Stat, MoveManag
 
 bool Skill_Fighter_F_DashHit::TriggerSkill_ect(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
+	if (!Object_HitList.empty())
+	{
+		GameEngineSound::SoundPlayControl("bgloveC_Hit.ogg").Volume(0.6f);
+	}
+
 	return false;
 }
 
 void Skill_Fighter_F_DashHit::StartSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata)
 {
+
 	switch (int_ComboStuck)
 	{
 	case 0:
 	{
+		switch (GameEngineRandom::MainRandom.RandomInt(0, 1))
+		{
+		case 0:
+			GamePlayCharacter::SetVoice("ft_shoulder_01.ogg");
+			break;
+		case 1:
+			GamePlayCharacter::SetVoice("ft_shoulder_02.ogg");
+			break;
+		default:
+			break;
+		}
+
+
 		DelayPunch = false;
 		_Avata->ChangeAvataAnimation("Att_Dash");
 		MoveDistance = FSM_Move_Helper();

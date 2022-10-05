@@ -37,19 +37,22 @@ public:
 	//{
 	//	return Camera_Effect;
 	//}
-	static GameEngineSoundPlayer& GetPlayer()
-	{
-		return BGM_Player;
-	}
+
 
 protected:
-	static GameEngineSoundPlayer BGM_Player;
 	void Start() override;
 
+	static void SetPlayer(const std::string& _Name)
+	{
+		BGM_Player.Stop();
+		BGM_Player = GameEngineSound::SoundPlayControl(_Name, 10);
+		BGM_Player.Volume(0.65f);
+	}
 	//GameEngineSoundPlayer BGM_Player;
 
 	GamePlayComboSystem* Actor_SystemCombo;
 private:
+	static GameEngineSoundPlayer BGM_Player;
 	//GameEngineCameraActor* Camera_MainAvata;
 	//GameEngineCameraActor* Camera_OutLine;
 	GameEngineCameraActor* Camera_UIFont;

@@ -17,7 +17,7 @@ public:
 
 	bool TriggerSkill_ect(GameEngineCollision* _This, GameEngineCollision* _Other) override;
 	bool ActiveSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata, float _DeltaTime) override;
-
+	void EndSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata)override;
 	void StartSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata) override;
 protected:
 	void Start() override;

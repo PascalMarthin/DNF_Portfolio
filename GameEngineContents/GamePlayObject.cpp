@@ -94,11 +94,8 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitColli
 	
 
 	CharacterAbilityStat* Stat = GamePlayCharacter::GetInst()->GetStatManager()->GetAbilityStat();
-	_Damage *= Stat->GetPhysical_Damage()* Stat->GetSTR();
+	_Damage *= (Stat->GetSTR());
 
-
-	
-	
 
 	// 점수
 	if (Enum_ObjectType == ObjectType::Monster)
@@ -407,10 +404,10 @@ void GamePlayObject::BeHit(const float4& _Power, HitPostureType _Type, GameEngin
 	break;
 	case HitPostureType::Hold:
 	{
-		if (Manager_StatManager->IsDoSkill())
-		{
-			GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::CounterHold); // 카운터 홀드
-		}
+		//if (Manager_StatManager->IsDoSkill())
+		//{
+		//	GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::CounterHold); // 카운터 홀드
+		//}
 
 		Manager_StatManager->SetHold();
 		Manager_MoveManager->SetHold(Power);
@@ -423,7 +420,7 @@ void GamePlayObject::BeHit(const float4& _Power, HitPostureType _Type, GameEngin
 		break;
 	}
 
-
+	GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::BeHit);
 	//
 	// 스킬안으로 들어가서 스킬 타입을보고 본인의 자세를 고침
 	// 대미지는 스킬과 캐릭터 데이터 베이스를 기반으로 함

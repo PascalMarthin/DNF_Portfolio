@@ -29,8 +29,14 @@ void Ajelia_NPC::Start()
 	map_InteractionTalk[InteractOption::Talking].push_back("하지만 무턱대고 공격해서는 안 됩니다.이미 아라드의 운명이 그들과 깊게 연결되어 있기 때문이죠.");
 	map_InteractionTalk[InteractOption::Talking].push_back("엉킨 실타래를 풀듯이 조심스럽게 다가가야 해요.돌이킬 수 없는 일이 다시 벌어져서는 안 됩니다.");
 	
-		
+	map_NPCVoice[InteractOptionNPCVoice::Nomal].push_back("azalea_amb_05.ogg");
+	map_NPCVoice[InteractOptionNPCVoice::Nomal].push_back("azalea_amb_03.ogg");
 
+	map_NPCVoice[InteractOptionNPCVoice::Click].push_back("azalea_tk_03.ogg");
+	map_NPCVoice[InteractOptionNPCVoice::Click].push_back("azalea_tk_02.ogg");
+
+	map_NPCVoice[InteractOptionNPCVoice::Off].push_back("azalea_fw_01.ogg");
+	map_NPCVoice[InteractOptionNPCVoice::Off].push_back("azalea_fw_05.ogg");
 
 	TexureR_Face = GameEngineTexture::Find("NPC_Dialog_Face_Ajelia.png");
 

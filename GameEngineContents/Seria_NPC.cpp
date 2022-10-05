@@ -31,6 +31,22 @@ void Seria_NPC::Start()
 		//Texture_NPCOutLine->ChangeFrameAnimation("Seria_Town_Standing");
 		//Texture_NPCOutLine->ScaleToTexture();
 
+
+		map_NPCVoice[InteractOptionNPCVoice::Nomal].push_back("seria_amb_01.ogg");
+		map_NPCVoice[InteractOptionNPCVoice::Nomal].push_back("seria_amb_02.ogg");
+		map_NPCVoice[InteractOptionNPCVoice::Nomal].push_back("seria_amb_03.ogg");
+
+		map_NPCVoice[InteractOptionNPCVoice::Click].push_back("seria_tk_01.ogg");
+		map_NPCVoice[InteractOptionNPCVoice::Click].push_back("seria_tk_02.ogg");
+		map_NPCVoice[InteractOptionNPCVoice::Click].push_back("seria_tk_03.ogg");
+
+		map_NPCVoice[InteractOptionNPCVoice::Off].push_back("seria_fw_01.ogg");
+		map_NPCVoice[InteractOptionNPCVoice::Off].push_back("seria_fw_02.ogg");
+		map_NPCVoice[InteractOptionNPCVoice::Off].push_back("seria_fw_03.ogg");
+
+
+
+
 		map_SellItemList[GamePlayItemCode::Tropica_Coat] = 50000;
 		map_SellItemList[GamePlayItemCode::Tropica_Belt] = 50000;
 		map_SellItemList[GamePlayItemCode::Tropica_Pants] = 50000;
@@ -50,8 +66,8 @@ void Seria_NPC::Start()
 	}
 }
 
-void Seria_NPC::Update(float _DeltaTime)
-{
-	//GameEngineDebug::OutPutString(std::to_string(Texture_NPCStanding->GetTransform().GetLocalPosition().y));
-	//GameEngineDebug::OutPutString(std::to_string(Texture_NPCOutLine->GetTransform().GetLocalPosition().y));
-} 
+//void Seria_NPC::Update(float _DeltaTime)
+//{
+//	GameEngineDebug::OutPutString(std::to_string(Texture_NPCStanding->GetTransform().GetLocalPosition().y));
+//	GameEngineDebug::OutPutString(std::to_string(Texture_NPCOutLine->GetTransform().GetLocalPosition().y));
+//} 

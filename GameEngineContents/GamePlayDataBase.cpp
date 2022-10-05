@@ -173,6 +173,28 @@ void GamePlayDataBase::CreateFighter_F_Animation()
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_Punch_Off"] = new FrameAnimation_DESC("", 154, 156, FighterAnimationInter, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_Dash_Punch1"] = new FrameAnimation_DESC("", 157, 159, FighterAnimationInter, false);
 	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_Dash_Punch2"] = new FrameAnimation_DESC("", 160, 160, FighterAnimationInter, false);
+
+	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_HamKick"] = new FrameAnimation_DESC("", 30, 35, 0.06f, false);
+
+	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_ShoulderDash"] = new FrameAnimation_DESC("", 0, 2, 0.075f, false);
+	CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_ShoulderDash_Delay"] = new FrameAnimation_DESC("", 3, 4, 0.125f, false);
+	
+
+	{
+		std::vector<unsigned int> Ready = { 154, 66, 67, 155, 155, 155, 156 };
+		CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_StrongLowKick_Ready"] = new FrameAnimation_DESC("", Ready, 0.1f, false);
+
+
+		std::vector<unsigned int> Spin = { 154, 7, 8, 154, 7, 8 };
+		CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_StrongLowKick_Spin"] = new FrameAnimation_DESC("", Spin, 0.125f, false);
+
+		CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_StrongLowKick_ing"] = new FrameAnimation_DESC("", 66, 66, 0.125f, true);
+
+		CharacterAnimation_DESCs[AllCharacterClass::Fighter_F]["Att_StrongLowKick_Kick"] = new FrameAnimation_DESC("", 66, 69, 0.08f, false);
+	}
+
+
+
 }
 
 void GamePlayDataBase::DestroyFrameAnimationDESC()

@@ -26,6 +26,18 @@ void Isabella_NPC::Start()
 
 	map_InteractionTalk[InteractOption::Talking].push_back("벨란트 공이 초대했던 만찬 파티는 정말 최악이었어요 그 후줄근한 커튼보다는 차라리 이곳 젤바의 천막이 더 화려할 거예요.");
 
+	map_NPCVoice[InteractOptionNPCVoice::Nomal].push_back("isabella_amb_03.ogg");
+	map_NPCVoice[InteractOptionNPCVoice::Nomal].push_back("isabella_amb_05.ogg");
+	map_NPCVoice[InteractOptionNPCVoice::Nomal].push_back("isabella_amb_08.ogg");
+
+	map_NPCVoice[InteractOptionNPCVoice::Click].push_back("isabella_tk_03.ogg");
+	map_NPCVoice[InteractOptionNPCVoice::Click].push_back("isabella_tk_01.ogg");
+	map_NPCVoice[InteractOptionNPCVoice::Click].push_back("isabella_tk_05.ogg");
+
+	map_NPCVoice[InteractOptionNPCVoice::Off].push_back("isabella_fw_01.ogg");
+	map_NPCVoice[InteractOptionNPCVoice::Off].push_back("isabella_fw_03.ogg");
+	map_NPCVoice[InteractOptionNPCVoice::Off].push_back("isabella_fw_05.ogg");
+
 
 	TexureR_Face = GameEngineTexture::Find("NPC_Dialog_Face_Isabella.png");
 

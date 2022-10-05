@@ -21,6 +21,8 @@ GamePlayComboSystem::GamePlayComboSystem()
 	, ComboStack(0)
 	, PushBack(false)
 	, Actor_ComboSystemScore(nullptr)
+	, DoEffect(false)
+	, DoEffectDelay(0)
 {
 }
 
@@ -93,6 +95,43 @@ void GamePlayComboSystem::Start()
 			Hight -= 16.f;
 			vector_ComboBlank.push_back(Blank);
 		}
+
+	}
+
+
+
+	{
+		Texture_Dungeon_KillDraw = CreateComponent<GameEngineUIRenderer>();
+
+
+		Texture_Dungeon_Kill =CreateComponent<GameEngineUIRenderer>();
+		Texture_Dungeon_Kill->GetTransform().SetLocalPosition({ -130, 10 });
+		Texture_Dungeon_Kill->Off();
+
+
+
+
+		Texture_Dungeon_KillEffect = CreateComponent<GameEngineUIRenderer>();
+		Texture_Dungeon_KillEffect->GetTransform().SetLocalPosition({ -130, 10 });
+		Texture_Dungeon_KillEffect->Off();
+
+
+
+		Texture_Dungeon_KillDraw->GetTransform().SetLocalPosition({ -130, 10 });
+		Texture_Dungeon_KillDraw->CreateFrameAnimationFolder("monsterkill_grade", FrameAnimation_DESC("monsterkill_grade", 6, 8 ,0.25f, false));
+		Texture_Dungeon_KillDraw->ChangeFrameAnimation("monsterkill_grade");
+
+		std::vector<unsigned int> A = { 8, 7, 6 };
+		Texture_Dungeon_KillDraw->CreateFrameAnimationFolder("monsterkill_grade_Off", FrameAnimation_DESC("monsterkill_grade", A, 0.25f, false));
+		Texture_Dungeon_KillDraw->AnimationBindEnd("monsterkill_grade_Off", [](const FrameAnimation_DESC& _DESC)
+			{
+				_DESC.Renderer->Off();
+			}
+		);
+
+
+		Texture_Dungeon_KillDraw->ScaleToTexture();
+		Texture_Dungeon_KillDraw->Off();
 
 	}
 
@@ -231,6 +270,69 @@ void GamePlayComboSystem::Update(float _DeltaTime)
 
 	}
 
+	if (Texture_Dungeon_Kill->GetAccTime() > 3.f)
+	{
+		Texture_Dungeon_KillDraw->ChangeFrameAnimation("monsterkill_grade_Off");
+		Texture_Dungeon_Kill->ReSetAccTime();
+		Texture_Dungeon_Kill->Off();
+	}
+	
+
+
+	if (KillDelay > 0)
+	{
+		KillDelay -= _DeltaTime;
+		if (KillDelay <= 0)
+		{
+			KillEffect();
+			KillDelay = 0;
+		}
+	
+	}
+	else if (DoEffect == true)
+	{
+
+		DoEffectDelay -= _DeltaTime * 3.f;
+		if (KillFlash)
+		{
+			if (DoEffectDelay > 0)
+			{
+				Texture_Dungeon_KillEffect->On();
+				Texture_Dungeon_KillEffect->SetScaleRatio(DoEffectDelay + 1.8f * (1.f - DoEffectDelay));
+				Texture_Dungeon_KillEffect->GetPixelData().MulColor.a = DoEffectDelay;
+				Texture_Dungeon_KillEffect->ScaleToTexture();
+			}
+			else
+			{
+				KillFlash = false;
+				DoEffect = false;
+				Texture_Dungeon_KillEffect->Off();
+			}
+		}
+
+
+		if (DoEffectDelay > 0 && KillFlash == false)
+		{
+			Texture_Dungeon_Kill->GetPixelData().PlusColor = { DoEffectDelay ,DoEffectDelay ,DoEffectDelay ,DoEffectDelay };
+			Texture_Dungeon_Kill->SetScaleRatio(1.5f * DoEffectDelay + (1.f - DoEffectDelay));
+			Texture_Dungeon_Kill->ScaleToTexture();
+		}
+		else if(KillFlash == false)
+		{
+			Texture_Dungeon_Kill->GetPixelData().PlusColor = float4::ZERO;
+			Texture_Dungeon_Kill->SetScaleRatio(1.f);
+			Texture_Dungeon_Kill->ScaleToTexture();
+			KillFlash = true;
+			DoEffectDelay = 1.f;
+		}
+
+	}
+
+
+
+
+
+
 	if (SoundDelay > 0.25f)
 	{
 		for (size_t i = 0; i < 5; i++)
@@ -247,9 +349,89 @@ void GamePlayComboSystem::Update(float _DeltaTime)
 	{
 		SoundDelay += _DeltaTime;
 	}
-
-	
 }
+
+void GamePlayComboSystem::KillEffect()
+{
+	DoEffect = true;
+	DoEffectDelay = 1.f;
+	KillFlash = false;
+	ScoreSound.Stop();
+
+
+	if (KillStuck == -1)
+	{
+		//마무리 퍼펙트
+		Texture_Dungeon_Kill->SetTexture(TextureR_Monsterkill_grade->GetTexture(4));
+		
+		Texture_Dungeon_KillEffect->SetTexture(TextureR_Monsterkill_grade->GetTexture(4));
+
+		ScoreSound = GameEngineSound::SoundPlayControl("hk3_perfect.ogg");
+	}
+	else if (KillStuck == 1)
+	{
+		Texture_Dungeon_Kill->SetTexture(TextureR_Monsterkill_grade->GetTexture(0));
+
+		Texture_Dungeon_KillEffect->SetTexture(TextureR_Monsterkill_grade->GetTexture(0));
+
+		ScoreSound = GameEngineSound::SoundPlayControl("hk3_good.ogg");
+	}
+	else if (KillStuck == 2)
+	{
+		Texture_Dungeon_Kill->SetTexture(TextureR_Monsterkill_grade->GetTexture(1));
+
+		Texture_Dungeon_KillEffect->SetTexture(TextureR_Monsterkill_grade->GetTexture(1));
+
+
+		ScoreSound = GameEngineSound::SoundPlayControl("hk3_nice.ogg");
+
+	}
+	else if (KillStuck == 3)
+	{
+		Texture_Dungeon_Kill->SetTexture(TextureR_Monsterkill_grade->GetTexture(2));
+
+		Texture_Dungeon_KillEffect->SetTexture(TextureR_Monsterkill_grade->GetTexture(2));
+
+		ScoreSound = GameEngineSound::SoundPlayControl("hk3_great.ogg");
+
+	}
+	else if (KillStuck == 4)
+	{
+		Texture_Dungeon_Kill->SetTexture(TextureR_Monsterkill_grade->GetTexture(3));
+
+		Texture_Dungeon_KillEffect->SetTexture(TextureR_Monsterkill_grade->GetTexture(3));
+
+		ScoreSound = GameEngineSound::SoundPlayControl("hk3_excellent.ogg");
+	}
+	else if (KillStuck == 5)
+	{
+		Texture_Dungeon_Kill->SetTexture(TextureR_Monsterkill_grade->GetTexture(4));
+
+		Texture_Dungeon_KillEffect->SetTexture(TextureR_Monsterkill_grade->GetTexture(4));
+
+	}
+
+	Texture_Dungeon_Kill->GetPixelData().PlusColor = { 1,1,1,1 };
+	Texture_Dungeon_Kill->SetScaleRatio(1.5f);
+	Texture_Dungeon_Kill->ScaleToTexture();
+	Texture_Dungeon_Kill->On();
+	Texture_Dungeon_Kill->ReSetAccTime();
+	Texture_Dungeon_KillEffect->SetScaleRatio(1.f);
+	Texture_Dungeon_KillEffect->ScaleToTexture();
+	Texture_Dungeon_KillEffect->GetPixelData().MulColor.a = 1.f;
+	Texture_Dungeon_KillEffect->Off();
+
+
+
+
+	Texture_Dungeon_KillDraw->ChangeFrameAnimation("monsterkill_grade", true);
+	Texture_Dungeon_KillDraw->ScaleToTexture();
+	Texture_Dungeon_KillDraw->On();
+
+
+	ScoreSound.Volume(0.8f);
+}
+
 
 void GamePlayComboSystem::ChangeBlank(ComboSystemBlank* _After, ComboSystemBlank* _Before)
 {
@@ -295,7 +477,7 @@ void GamePlayComboSystem::ComboScore_PlaySound(ComboClass _Class)
 		ScoreSound = GameEngineSound::SoundPlayControl("hk3_batk.ogg", 1);
 		break;
 	case ComboClass::Critical:
-		ScoreSound = GameEngineSound::SoundPlayControl("hk3_excellent.ogg", 1);
+		//ScoreSound = GameEngineSound::SoundPlayControl("hk3_excellent.ogg", 1);
 		break;
 	case ComboClass::Counter:
 		ScoreSound = GameEngineSound::SoundPlayControl("hk3_counter.ogg", 1);
@@ -322,6 +504,17 @@ void GamePlayComboSystem::PlusScore(unsigned __int64 _Score)
 
 void GamePlayComboSystem::SetComboClass(ComboClass _Class)
 {
+	if (_Class == ComboClass::BeHit || _Class == ComboClass::MultiHit)
+	{
+		map_ComboStuck[_Class] += 1;
+		return;
+	}
+	if (_Class == ComboClass::NearMiss)
+	{
+		GamePlayComboSystem::GetInst()->PlusScore(10500);
+	}
+
+
 	if (_Class == ComboClass::Combo)
 	{
 		for (size_t i = 0; i < 5; i++)
@@ -349,11 +542,20 @@ void GamePlayComboSystem::SetComboClass(ComboClass _Class)
 
 void GamePlayComboSystem::SetKill()
 {
-
+	++KillStuck;
+	KillDelay = 1.f;
 }
 
+
+void GamePlayComboSystem::SetKillLast()
+{
+	KillStuck = -1;
+	KillDelay = 1.f;
+
+}
 void GamePlayComboSystem::ComboTimeEnd()
 {
+	MaxComboStack = (MaxComboStack > ComboStack ? MaxComboStack : ComboStack);
 	ComboStack = 0;
 }
 
@@ -390,12 +592,20 @@ void GamePlayComboSystem::LevelStartEvent()
 	{
 		ComboStack = Before->ComboStack;
 		ComboScore = Before->ComboScore;
+		map_ComboStuck = GamePlayComboSystem::Before->map_ComboStuck;
+		MaxComboStack = GamePlayComboSystem::Before->MaxComboStack;
 	}
 	Queue_ComboClass = std::queue<ComboClass>();
+
 
 	GamePlayComboSystem::Inst = this;
 	GamePlayComboSystem::Before = nullptr;
 	ScoreSound.Stop();
+	KillStuck = 0;
+	KillDelay = 0;
+	DoEffect = false;
+	DoEffectDelay = 0;
+	KillFlash = false;
 }
 
 void GamePlayComboSystem::LevelEndEvent()
@@ -403,4 +613,7 @@ void GamePlayComboSystem::LevelEndEvent()
 	GamePlayComboSystem::Before = this;
 	GamePlayComboSystem::Inst = nullptr;
 	Queue_ComboClass = std::queue<ComboClass>();
+	KillStuck = 0;
+	KillDelay = 0;
+	KillFlash = false;
 }

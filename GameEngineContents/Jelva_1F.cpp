@@ -76,8 +76,8 @@ void Jelva_1F::LevelStartEvent()
 	float Hight = Texture_Jelva1F->GetBackGroundTextureScale().y;
 	if (GamePlayDataBase::GetCurrentCharacterData()->GetCurrentMap() == TownMap::Seria_Room)
 	{
-		BGM_Player.Stop();
-		BGM_Player = GameEngineSound::SoundPlayControl("jelva.ogg");
+		
+		SetPlayer("jelva.ogg");
 		Player_Character->GetTransform().SetLocalPosition({ 1460.f , -550.f ,  -550.f });
 	}
 	else if (GamePlayDataBase::GetCurrentCharacterData()->GetCurrentMap() == TownMap::Jelva2F)
@@ -87,7 +87,7 @@ void Jelva_1F::LevelStartEvent()
 	}
 	else // Debug
 	{
-		BGM_Player = GameEngineSound::SoundPlayControl("jelva.ogg");
+		SetPlayer("jelva.ogg");
 		Player_Character->GetTransform().SetLocalPosition({ 1780.f , -600.f , -600.f });
 	}
 

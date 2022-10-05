@@ -35,7 +35,7 @@ void TitleCharacterSlot::Start()
 	{
 		Texture_MagicCircle->SetTexture("CharacterSelect_CaractorCircle.png");
 		Texture_MagicCircle->ScaleToTexture();
-		Texture_MagicCircle->GetTransform().SetLocalPosition({0 , -70 });
+		Texture_MagicCircle->GetTransform().SetLocalPosition({0 , -70, 10.f });
 	}
 
 	{
@@ -57,9 +57,13 @@ void TitleCharacterSlot::CreateAvataData(GamePlayDataBase* _Data)
 	{
 		Manager_Avata = GetLevel()->CreateActor<AvataManager>();
 		Manager_Avata->SetParent(this);
-		Manager_Avata->GetTransform().SetLocalPosition({ 0, 62.f });
+		Manager_Avata->GetTransform().SetLocalPosition({ 0, 62.f, GetTransform().GetWorldPosition().z - 0.001f});
 		Manager_Avata->SetAvataSetup(ObjectType::Character);
 		Manager_Avata->ReadCharacterDataBase(Data_Character);
+
+		const float4& Pos = Manager_Avata->GetTransform().GetWorldPosition();
+		const float4& Pos1 = Texture_MagicCircle->GetTransform().GetWorldPosition();
+		
 		std::vector<GameEnginePlusTextureRenderer*>& AllAvatas = Manager_Avata->GetAllAvatas();
 		switch (Data_Character->GetCharacterClass())
 		{

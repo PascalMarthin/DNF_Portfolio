@@ -167,7 +167,6 @@ void CharacterStatManager::SetCharacter_Fighter_F()
 
 bool CharacterStatManager::HealHP(int _Heal, HPMPEnum _Enum)
 {
-
 	if (_Enum == HPMPEnum::HP)
 	{
 		CurrentPlayerAbilityStat->HP += _Heal;
@@ -539,6 +538,13 @@ void CharacterStatManager::SetInvincibilityEnd()
 
 void CharacterStatManager::SetSuperarmor()
 {
+	if (CurrentPlayerAbilityStat != nullptr)
+	{	
+		if (!IsSuperarmor())
+		{
+			GameEngineSound::SoundPlayOneShot("sarmor.ogg");
+		}
+	}
 	PlayerCurrentState |= CharacterStat::Player_Character_Superarmor;
 
 }
@@ -571,6 +577,7 @@ bool CharacterStatManager::LevelUp()
 	CurrentPlayerAbilityStat->Level += 1;
 	CurrentPlayerAbilityStat->EXP = 0;
 	CurrentPlayerAbilityStat->SetRefreshbyLevel();
+	CurrentPlayerAbilityStat->HP = CurrentPlayerAbilityStat->MAXHP;
 	Window_Stat->RefreshStat();
 	LevelUpTime = 0;
 

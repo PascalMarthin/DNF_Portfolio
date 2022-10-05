@@ -78,6 +78,9 @@ public:
 
 	static void SetPlayerCharacter();
 
+	static void SetVoice(const std::string& _Name);
+
+	unsigned int SetHPFromHit(unsigned int _Damage) override;
 protected:
 	void Start() override;
 	void Update(float _Delta) override;
@@ -111,6 +114,11 @@ protected:
 
 
 private:
+
+	// ----Sound
+	static GameEngineSoundPlayer Fighter_Voice;
+
+
 
 	void CheckInventoryKey();
 	CollisionReturn NPCInteraction(GameEngineCollision* _This, GameEngineCollision* _Other);
@@ -263,5 +271,11 @@ private:
 
 	private:
 	MouseCursorComponent* Component_MouseCursorComponent;
+
+	// -----------------NearMiss---------------------------
+
+	GameEngineCollision* Collision_NearMiss;
+	//CollisionReturn NearMissFunc(GameEngineCollision* _This, GameEngineCollision* _Other);
+	//std::map<GameEngineCollision*, float> NearList;
 };
 

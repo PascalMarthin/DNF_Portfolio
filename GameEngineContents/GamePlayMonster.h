@@ -2,6 +2,7 @@
 #include "GamePlayObject.h"
 #include <GameEngineCore/GameEngineCollision.h> 
 #include "GamePlayObjectSpeechPopUp.h"
+#include "GamePlayComboSystem.h"
 
 // Ό³Έν :
 enum class MonsterClass
@@ -90,7 +91,10 @@ public:
 	{
 		return All_MonsterCategory;
 	}
-
+	inline GameEngineTexture* GetThumbnail()
+	{
+		return Texture_Thumbnail;
+	}
 
 	//inline float4 GetScale() override
 	//{
@@ -153,6 +157,11 @@ protected:
 
 
 	virtual void Dead();
+	GameEngineTexture* Texture_Thumbnail;
+
+	bool NearMiss;
+	bool PlayerHit;
+
 
 private:
 	float DeadDelay;

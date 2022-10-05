@@ -244,6 +244,7 @@ bool Skill_Fighter_F_ClosePunch::TriggerSkill_ect(GameEngineCollision* _This, Ga
 	case 1:
 		if (!Object_HitList.empty())
 		{
+			GameEngineSound::SoundPlayControl("scyclone_crash.ogg").Volume(0.8f);
 			//Texture_Punch02->On();
 			//Texture_Punch03->On();
 		}
@@ -258,6 +259,7 @@ bool Skill_Fighter_F_ClosePunch::TriggerSkill_ect(GameEngineCollision* _This, Ga
 
 void Skill_Fighter_F_ClosePunch::StartSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata)
 {
+	GamePlayCharacter::SetVoice("ft_1punch.ogg");
 	_Avata->ChangeAvataAnimation("Att_OneinchPunch", true);
 	Texture_W_Front_d->ChangeFrameAnimation("W_Front_d", true);
 	Texture_W_Front_d->On();

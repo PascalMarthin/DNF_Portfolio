@@ -70,6 +70,9 @@ bool Skill_Fighter_F_BaseHit::ActiveSkill(CharacterStatManager* _Stat, MoveManag
 		{
 			if (Is_CollisionCheck == false && _Avata->GetAvata_Skin()->GetCurrentFrameStuck() == 1)
 			{
+				GamePlayCharacter::SetVoice("ft_atk_01.ogg");
+				Sound_BaseHit1 = GameEngineSound::SoundPlayControl("bglovea.ogg");
+				Sound_BaseHit1.Volume(0.5f);
 				CheckCollision();
 				Is_CollisionCheck = true;
 			}
@@ -101,6 +104,9 @@ bool Skill_Fighter_F_BaseHit::ActiveSkill(CharacterStatManager* _Stat, MoveManag
 			{
 				if (Is_CollisionCheck == false && _Avata->GetAvata_Skin()->GetCurrentFrameStuck() == 1)
 				{
+					GamePlayCharacter::SetVoice("ft_atk_02.ogg");
+					Sound_BaseHit2 = GameEngineSound::SoundPlayControl("bgloveb_01.ogg");
+					Sound_BaseHit2.Volume(0.5f);
 					CheckCollision();
 					Is_CollisionCheck = true;
 				}
@@ -141,6 +147,9 @@ bool Skill_Fighter_F_BaseHit::ActiveSkill(CharacterStatManager* _Stat, MoveManag
 			{
 				if (Is_CollisionCheck == false && _Avata->GetAvata_Skin()->GetCurrentFrameStuck() == 1)
 				{
+					GamePlayCharacter::SetVoice("ft_atk_03.ogg");
+					Sound_BaseHit3 = GameEngineSound::SoundPlayControl("bglovec_01.ogg");
+					Sound_BaseHit3.Volume(0.5f);
 					CheckCollision();
 					Is_CollisionCheck = true;
 				}
@@ -179,6 +188,16 @@ bool Skill_Fighter_F_BaseHit::ActiveSkill(CharacterStatManager* _Stat, MoveManag
 		{
 			if (Is_CollisionCheck == false && _Avata->GetAvata_Skin()->GetCurrentFrameStuck() == 1)
 			{
+				if (GameEngineRandom::MainRandom.RandomInt(0, 1) == 0)
+				{
+					GamePlayCharacter::SetVoice("ft_axkick_01.ogg");
+				}
+				else
+				{
+					GamePlayCharacter::SetVoice("ft_axkick_02.ogg");
+				}
+				Sound_BaseHit4 = GameEngineSound::SoundPlayControl("lowkick_01.ogg");
+				Sound_BaseHit4.Volume(0.5f);
 				CheckCollision();
 				Is_CollisionCheck = true;
 			}
@@ -204,6 +223,40 @@ bool Skill_Fighter_F_BaseHit::ActiveSkill(CharacterStatManager* _Stat, MoveManag
 
 bool Skill_Fighter_F_BaseHit::TriggerSkill_ect(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
+	switch (int_ComboStuck)
+	{
+	case 0:
+	{
+		Sound_BaseHit1.Stop();
+		Sound_BaseHit1 = GameEngineSound::SoundPlayControl("bglovea_Hit.ogg");
+		Sound_BaseHit1.Volume(0.5f);
+	}
+	break;
+	case 1:
+	{
+		Sound_BaseHit2.Stop();
+		Sound_BaseHit2 = GameEngineSound::SoundPlayControl("bgloveb_Hit_01.ogg");
+		Sound_BaseHit2.Volume(0.5f);
+	}
+	break;
+	case 2:
+	{
+		Sound_BaseHit3.Stop();
+		Sound_BaseHit3 = GameEngineSound::SoundPlayControl("bgloveC_Hit.ogg");
+		Sound_BaseHit3.Volume(0.5f);
+	}
+	break;
+	case 3:
+	{
+		Sound_BaseHit4.Stop();
+		Sound_BaseHit4 = GameEngineSound::SoundPlayControl("lowkick_01.ogg");
+		Sound_BaseHit4.Volume(0.5f);
+		 
+	}
+	break;
+	default:
+		break;
+	}
 	return false;
 }
 
@@ -213,6 +266,7 @@ void Skill_Fighter_F_BaseHit::StartSkill(CharacterStatManager* _Stat, MoveManage
 	{
 	case 0:
 		{
+
 			_Avata->ChangeAvataAnimation("Att_BasePunch1");
 			Att_BaseAtt_Delay = 0.f;
 		}

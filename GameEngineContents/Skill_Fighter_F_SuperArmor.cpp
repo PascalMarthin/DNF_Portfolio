@@ -40,6 +40,8 @@ bool Skill_Fighter_F_SuperArmor::ActiveSkill(CharacterStatManager* _Stat, MoveMa
 	{
 		CastingEnd(_Stat, _Avata);
 		CastingBuffEnd();
+		GamePlayCharacter::SetVoice("ft_sarmor.ogg");
+		
 		//GameEngineEffectRenderer* SkillIcon = GetActor()->CreateComponent<GameEngineEffectRenderer>();
 		//SkillIcon->SetTexture("SkillIcon_BackGround.png");
 		//SkillIcon->ScaleToTexture();
@@ -59,7 +61,7 @@ bool Skill_Fighter_F_SuperArmor::ActiveSkill(CharacterStatManager* _Stat, MoveMa
 		//SkillIcon->SetParent(Actor_DummyActor);
 
 		_Avata->SetSuperArmor();
-		GetActor<GamePlayCharacter>()->GetSkillManager()->InsertBuff(AllSkillEnum::Fighter_F_SuperArmor, 10.f);
+		GetActor<GamePlayCharacter>()->GetSkillManager()->InsertBuff(AllSkillEnum::Fighter_F_SuperArmor, 60.f);
 
 
 		//GameEngineDebug::OutPutString(std::to_string(Texture_CastingBuff->GetTransform().GetWorldPosition().z));

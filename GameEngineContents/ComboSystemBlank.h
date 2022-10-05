@@ -55,7 +55,7 @@ private:
 	void ReSet();
 
 
-
+	std::map<ComboClass, int> map_ComboStuck;
 
 };
 

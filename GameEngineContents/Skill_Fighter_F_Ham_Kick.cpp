@@ -31,7 +31,7 @@ bool Skill_Fighter_F_Ham_Kick::ActiveSkill(CharacterStatManager* _Stat, MoveMana
 {
 	TimePass += _DeltaTime;
 
-	if (Is_CollisionCheck == false && _Avata->GetAvata_Skin()->GetCurrentFrameStuck() == 2)
+	if (Is_CollisionCheck == false && _Avata->GetAvata_Skin()->GetCurrentFrameStuck() == 1)
 	{
 		CheckCollision();
 		Is_CollisionCheck = true;
@@ -46,11 +46,18 @@ bool Skill_Fighter_F_Ham_Kick::ActiveSkill(CharacterStatManager* _Stat, MoveMana
 
 void Skill_Fighter_F_Ham_Kick::StartSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata)
 {
-	_Avata->ChangeAvataAnimation("Att_BaseKick");
-	_Avata->SetSuperArmor();
+
+	GamePlayCharacter::SetVoice("ft_ham_kick.ogg");
+	
+
+	_Avata->ChangeAvataAnimation("Att_HamKick");
 }
 
 bool Skill_Fighter_F_Ham_Kick::TriggerSkill_ect(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
+	if (!Object_HitList.empty())
+	{
+		GameEngineSound::SoundPlayControl("lowkick_hit_01.ogg").Volume(0.6f);
+	}
 	return false;
 }

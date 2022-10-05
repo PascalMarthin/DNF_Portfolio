@@ -60,9 +60,9 @@ void Luke_Stage1::Update(float _DeltaTime)
 			Pos.x = 1350.f * MonitorX;
 		}
 
-		if ((Pos.y <= -580.f * MonitorY))
+		if ((Pos.y <= -700.f * MonitorY))
 		{
-			Pos.y = -580.f * MonitorY;
+			Pos.y = -700.f * MonitorY;
 		}
 		else if (Pos.y >= -460.f * MonitorY)
 		{
@@ -85,8 +85,7 @@ void Luke_Stage1::LevelStartEvent()
 	}
 	else
 	{
-		BGM_Player.Stop();
-		BGM_Player = GameEngineSound::SoundPlayControl("luke_phase2.ogg");
+		SetPlayer("luke_phase2.ogg");
 		Player_Character->GetMoveManager()->SetObjectPos({});
 		
 		Player_Character->GetTransform().SetLocalPosition({500.f, -500.f, -500.f });

@@ -55,6 +55,7 @@ InteractOption GamePlayNPCInteraction::CheckInput()
 	case InteractOption::Talking:
 		if (Actor_Talk->CheckInput() == InteractOption::Exit)
 		{
+			GamePlayObjectNPC::SetVoice(NPC_Interaction->map_NPCVoice[InteractOptionNPCVoice::Off][GameEngineRandom::MainRandom.RandomInt(0, NPC_Interaction->map_NPCVoice[InteractOptionNPCVoice::Off].size() - 1)]);
 			return InteractOption::Exit;
 		}
 		break;
@@ -69,6 +70,12 @@ void GamePlayNPCInteraction::SetNPCInteractionMenu(GamePlayObjectNPC* _NPC)
 {
 	NPC_Interaction = _NPC;
 	Actor_InteractWindow->SetInteractUIOn(NPC_Interaction);
+
+	GamePlayObjectNPC::SetVoice(NPC_Interaction->map_NPCVoice[InteractOptionNPCVoice::Click][GameEngineRandom::MainRandom.RandomInt(0, NPC_Interaction->map_NPCVoice[InteractOptionNPCVoice::Click].size() - 1)]);
+
+	
+
+
 	CurrentActiveInteract = InteractOption::None;
 
 }

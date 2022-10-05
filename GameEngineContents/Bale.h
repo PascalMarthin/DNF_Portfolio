@@ -22,7 +22,7 @@ protected:
 
 	// void End() override {}
 	//void OnEvent();
-	// void OffEvent() override {}
+	void OffEvent() override;
 	void LevelStartEvent() override;
 
 	unsigned int SetHPFromHit(unsigned int _Damage) override;
@@ -144,6 +144,9 @@ private:
 	void FSM_Att_Dash_End(const StateInfo& _Info);
 	bool DashUpdate;
 
+	bool PlayerDashHit;
+	GameEngineCollision* Collision_DashHit;
+
 	GameEngineCollision* Collision_ect;
 
 
@@ -210,6 +213,13 @@ private:
 	//void FSM_Move_Walk_Update(float _DeltaTime, const StateInfo& _Info);
 	//void FSM_Move_Walk_End(const StateInfo& _Info);
 
+	GameEngineSoundPlayer Sound_BaleVoice;
+	inline void SetVoice(const std::string& _Name)
+	{
+		Sound_BaleVoice.Stop();
+		Sound_BaleVoice = GameEngineSound::SoundPlayControl(_Name);
+		Sound_BaleVoice.Volume(0.8f);
+	}
 
 
 };

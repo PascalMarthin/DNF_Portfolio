@@ -17,6 +17,7 @@ public:
 	Skill_Fighter_F_Upper& operator=(Skill_Fighter_F_Upper&& _Other) noexcept = delete;
 
 	void StartSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata) override;
+	void EndSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata) override;
 	bool TriggerSkill_ect(GameEngineCollision* _This, GameEngineCollision* _Other) override;
 	bool ActiveSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata, float _DeltaTime) override;
 protected:

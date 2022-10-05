@@ -3,6 +3,7 @@
 #include "Luke_Stage2_BackGround.h"
 
 class Bale;
+class GamePlayResultWindow;
 class Luke_Stage2 : public Dungeon_Luke
 {
 public:
@@ -32,5 +33,5 @@ private:
 
 	Luke_Stage2_BackGround* Texture_Luke_Stage2;
 	Bale* Debug_Bale;
-
+	GamePlayResultWindow* Window_Result;
 };

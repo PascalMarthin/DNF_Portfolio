@@ -38,7 +38,6 @@ void DungeonLoding::LevelStartEvent()
 
 	case LocalDungeon::Luke_LightOfAltar:
 		{
-			GamePlayLevelTemplate::GetPlayer().Stop();
 			DNF::GetInst()->CreateLoadLevel<Luke_Stage1>("Luke_Stage1");
 			DNF::GetInst()->CreateLoadLevel<Luke_Stage2>("Luke_Stage2");
 

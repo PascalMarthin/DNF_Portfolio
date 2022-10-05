@@ -22,6 +22,7 @@
 GamePlayDataBase* GamePlayCharacter::CurrentCharacterData = nullptr;
 std::list<GamePlayDataBase*> GamePlayCharacter::AllCharacterData;
 GamePlayCharacter* GamePlayCharacter::Inst = nullptr;
+GameEngineSoundPlayer GamePlayCharacter::Fighter_Voice;
 
 GamePlayCharacter::GamePlayCharacter()
 	: Manager_AvataManager(nullptr)
@@ -98,6 +99,11 @@ void GamePlayCharacter::Start()
 
 	Collision_NPCVoice = CreateComponent<GameEngineCollision>("NPCVoice");
 
+
+	Collision_NearMiss = CreateComponent<GameEngineCollision>("Player_NearMiss");
+	Collision_NPCCanInteraction->GetTransform().SetLocalScale({ 200, 100, 200 });
+	Collision_NPCCanInteraction->ChangeOrder(CollisionOrder::Player_NearMiss);
+
 	//Collision_HitBody_Top = CreateComponent<GameEngineCollision>("Hit_Collision");
 	//Collision_HitBody_Top->ChangeOrder(CollisionOrder::Player);
 	//Collision_HitBody_Top->GetTransform().SetLocalPosition({ 0, -80 });
@@ -133,8 +139,19 @@ void GamePlayCharacter::Update(float _Delta)
 		}
 	}
 
+	if (GameEngineInput::GetInst()->IsDown("Debug7"))
+	{
+		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
+	}
 
 }
+
+//CollisionReturn GamePlayCharacter::NearMissFunc(GameEngineCollision* _This, GameEngineCollision* _Other)
+//{
+//	NearList.find(_Other) == 
+//	NearList[]
+//
+//}
 
 CollisionReturn GamePlayCharacter::NPCInteraction(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
@@ -147,7 +164,13 @@ CollisionReturn GamePlayCharacter::NPCInteraction(GameEngineCollision* _This, Ga
 		NPC_Interaction->SetOutLineOff();
 	}
 
+
 	NPC_Interaction = _Other->GetActor<GamePlayObjectNPC>();
+	if (GameEngineRandom::MainRandom.RandomInt(0, 3) == 0)
+	{
+		GamePlayObjectNPC::SetVoice(NPC_Interaction->map_NPCVoice[InteractOptionNPCVoice::Nomal][GameEngineRandom::MainRandom.RandomInt(0, NPC_Interaction->map_NPCVoice[InteractOptionNPCVoice::Nomal].size() - 1)]);
+	}
+	
 	NPC_Interaction->SetOutLine();
 	return CollisionReturn::Break;
 
@@ -330,7 +353,7 @@ void GamePlayCharacter::LevelStartEvent()
 
 
 	GamePlayCharacter::Inst = this;
-
+	Fighter_Voice.Stop();
 	//GetTransform().SetLocalMove({0 , 0 , GetTransform().GetLocalPosition().y });
 	//Class_ItemInventory->GetTransform().SetLocalPosition({ GetTransform().GetLocalPosition().x, GetTransform().GetLocalPosition().y, 0 });
 }
@@ -340,6 +363,8 @@ void GamePlayCharacter::LevelEndEvent()
 	JumpGoingDown = false;
 	HoldCam = false;
 	GamePlayCharacter::Inst = nullptr;
+
+	Fighter_Voice.Stop();
 }
 
 //void GamePlayCharacter::SkillCollisionActive(const std::string& _Name, int _Frame)
@@ -353,3 +378,24 @@ void GamePlayCharacter::LevelEndEvent()
 //		SetOff(map_AllSkill[_Name]);
 //	}
 //}
+void GamePlayCharacter::SetVoice(const std::string& _Name)
+{
+	Fighter_Voice.Stop();
+	Fighter_Voice = GameEngineSound::SoundPlayControl(_Name);
+	Fighter_Voice.Volume(0.8f);
+}
+
+unsigned int GamePlayCharacter::SetHPFromHit(unsigned int _Damage)
+{
+	//if (CurrentCharacterData->GetAbilityStat()->HP < static_cast<int>(_Damage))
+	//{
+	//	Manager_StatManager->SetDead();
+	//	CurrentCharacterData->GetAbilityStat()->HP = 0;
+	//}
+	//else
+	{
+		CurrentCharacterData->GetAbilityStat()->HP -= _Damage;
+	}
+
+	return _Damage;
+}

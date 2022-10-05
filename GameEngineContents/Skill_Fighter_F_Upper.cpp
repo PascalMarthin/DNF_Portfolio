@@ -50,17 +50,20 @@ bool Skill_Fighter_F_Upper::ActiveSkill(CharacterStatManager* _Stat, MoveManager
 	if (Is_CollisionCheck == false && _Avata->GetAvata_Skin()->GetCurrentFrameStuck() == 3)
 	{
 		Texture_Upper->On();
+		GamePlayCharacter::SetVoice("ft_upper2.ogg");
 		CheckCollision();
 		Is_CollisionCheck = true;
 	}
 	if (_Avata->GetAvata_Skin()->GetCurrentFrameStuck() < 5 && _Avata->GetAvata_Skin()->GetCurrentFrameStuck() > 1)
 	{
 		_Move->SetCharacterMove({( GetActor<GamePlayObject>()->GetObjectDir() ? 1.f : -1.f ) * (2.f)* DefaultMove* _Stat->GetMoveSpeed()* _DeltaTime, 0});
+
 		return false;
 	}
 	if (_Avata->GetAvata_Skin()->IsEndFrame())
 	{
 		Off();
+		_Stat->SetSuperarmorEnd();
 		return true;
 	}
 	return false;
@@ -69,11 +72,24 @@ bool Skill_Fighter_F_Upper::ActiveSkill(CharacterStatManager* _Stat, MoveManager
 
 void Skill_Fighter_F_Upper::StartSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata)
 {
+	GamePlayCharacter::SetVoice("ft_upper1.ogg");
+
 	_Avata->ChangeAvataAnimation("Att_Upper");
 	_Avata->SetSuperArmor();
+	_Stat->SetSuperarmor();
 }
 
 bool Skill_Fighter_F_Upper::TriggerSkill_ect(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
+	if (!Object_HitList.empty())
+	{
+		GameEngineSound::SoundPlayControl("upper_hit.ogg").Volume(0.6f);
+
+	}
 	return false;
+}
+
+void Skill_Fighter_F_Upper::EndSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata)
+{
+	_Stat->SetSuperarmorEnd();
 }

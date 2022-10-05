@@ -41,6 +41,11 @@ public:
 		return true;
 	}
 
+	inline std::vector<GamePlayMonster*>& GetAllMonster()
+	{
+		return vector_AllMonster;
+	}
+
 protected:
 	inline static void SetStage(Luke_Stage _Stage)
 	{

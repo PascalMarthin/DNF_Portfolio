@@ -706,7 +706,9 @@ if (_DESC.Renderer->GetPixelData().MulColor.a < 0)
 
 	// 대쉬
 	{
-		
+		Collision_DashHit = CreateComponent<GameEngineCollision>();
+		Collision_DashHit->GetTransform().SetLocalScale({ 200, 100, 100 });
+		Collision_DashHit->ChangeOrder(CollisionOrder::Monster_Att);
 	}
 	// 추적
 	{
@@ -766,15 +768,25 @@ if (_DESC.Renderer->GetPixelData().MulColor.a < 0)
 
 		BringTentacleIndex = 0; 
 	}
+
+	Texture_Thumbnail = GameEngineTexture::Find("Bale_25.png");
 }
 
 
 
 CollisionReturn Bale::GetPlayer(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
+	PlayerHit = true;
 	Hit_Player = _Other->GetActor<GamePlayObject>();
+	if (Hit_Player->GetStatManager()->IsInvincibility())
+	{
+		return CollisionReturn::ContinueCheck;
+	}
+	else
+	{
+		return CollisionReturn::Break;
 
-	return CollisionReturn::Break;
+	}
 }
 
 
@@ -782,6 +794,15 @@ CollisionReturn Bale::GetPlayer(GameEngineCollision* _This, GameEngineCollision*
 void Bale::Update(float _DeltaTime)
 {
 	GamePlayMonster::Update(_DeltaTime); 
+
+	if (GameEngineInput::GetInst()->IsDown("Debug8"))
+	{
+		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
+	}
+	else if (GameEngineInput::GetInst()->IsDown("Debug9"))
+	{
+		Barrier_HP = 0;
+	}
 
 	if (Barrier_On == false)
 	{
@@ -807,7 +828,7 @@ void Bale::Update(float _DeltaTime)
 			Texure_Barrier_Effect_FrontDodge->Off();
 			Manager_StatManager->SetSuperarmorEnd();
 			Manager_StatManager->SetBuildEnd();
-
+			SetVoice("bale_skill_05.ogg");
 			Actor_SpeechPopUp->CreatePopup("크르르... 루크님의 선물이...!");
 		}
 		else
@@ -887,6 +908,8 @@ void Bale::Update(float _DeltaTime)
 		{
 			if (CanSkill[RandomIndex] != "None")
 			{
+				NearMiss = false;
+				PlayerHit = false;
 				Manager_StatManager->GetFSMManager().ChangeState(CanSkill[RandomIndex]);
 			}
 		}
@@ -1246,6 +1269,7 @@ void Bale::FSM_Att_Sting_Start(const StateInfo& _Info)
 
 	Actor_TrackingObject->GetTransform().SetLocalPosition(GetTransform().GetWorldPosition());
 	GetTransform().GetLocalScale().x > 0 ? Actor_TrackingObject->GetTransform().PixLocalPositiveX() : Actor_TrackingObject->GetTransform().PixLocalNegativeX();
+	Manager_StatManager->SetSuperarmor();
 
 }
 void Bale::FSM_Att_Sting_Update(float _DeltaTime, const StateInfo& _Info)
@@ -1256,6 +1280,11 @@ void Bale::FSM_Att_Sting_End(const StateInfo& _Info)
 {
 	All_CollTime["Att_Sting"] = 2.f;
 	Manager_StatManager->SetDoSkillEnd();
+	Manager_StatManager->SetSuperarmorEnd();
+	if (NearMiss == true && PlayerHit == false)
+	{
+		GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::NearMiss);
+	}
 }
 
 
@@ -1264,6 +1293,7 @@ void Bale::Sting_Update(const FrameAnimation_DESC& _DESC)
 	switch (_DESC.CurFrame)
 	{
 	case 2:
+		SetVoice("bale_atk_01.ogg");
 		Texture_StingEffect_Puple[0]->On();
 		Texture_StingEffect_Puple[0]->ChangeFrameAnimation("Sting", true);
 
@@ -1295,13 +1325,43 @@ void Bale::Sting_Update(const FrameAnimation_DESC& _DESC)
 		if (Collision_StingHit->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player, CollisionType::CT_AABB,
 			std::bind(&Bale::GetPlayer, this, std::placeholders::_1, std::placeholders::_2)))
 		{
+			switch (GameEngineRandom::MainRandom.RandomInt(0, 6))
+			{
+			case 0:
+				GameEngineSound::SoundPlayControl("mon_long_sword_hit_01.ogg").Volume(0.8f);
+				break;
+			case 1:
+				GameEngineSound::SoundPlayControl("mon_long_sword_hit_02.ogg").Volume(0.8f);
+				break;
+			case 2:
+				GameEngineSound::SoundPlayControl("mon_long_sword_hit_03.ogg").Volume(0.8f);
+				break;
+			case 3:
+				GameEngineSound::SoundPlayControl("mon_long_sword_hit_04.ogg").Volume(0.8f);
+				break;
+			case 4:
+				GameEngineSound::SoundPlayControl("mon_long_sword_hit_05.ogg").Volume(0.8f);
+				break;
+			case 5:
+				GameEngineSound::SoundPlayControl("mon_long_sword_hit_06.ogg").Volume(0.8f);
+				break;
+			case 6:
+				GameEngineSound::SoundPlayControl("mon_long_sword_hit_07.ogg").Volume(0.8f);
+				break;
+			default:
+				break;
+			}
 			int Dir = Collision_StampingHit->GetTransform().GetWorldPosition().x - Hit_Player->GetTransform().GetWorldPosition().x > 0 ? -1 : 1;
 			Hit_Player->BeHit({ 30, 0, 0, 40.f }, HitPostureType::Standing, nullptr, nullptr, Dir, 300);
+		}
+		else if (Collision_StingHit->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player, CollisionType::CT_AABB))
+		{
+			NearMiss = true;
 		}
 		Collision_StingHit->Off();
 		break;
 	case 7:
-
+		SetVoice("bale_atk_02.ogg");
 		Texture_StingEffect_Puple[4]->On();
 		Texture_StingEffect_Puple[4]->ChangeFrameAnimation("Sting", true);
 
@@ -1333,9 +1393,41 @@ void Bale::Sting_Update(const FrameAnimation_DESC& _DESC)
 		if (Collision_StingHit->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player, CollisionType::CT_AABB,
 			std::bind(&Bale::GetPlayer, this, std::placeholders::_1, std::placeholders::_2)))
 		{
+			switch (GameEngineRandom::MainRandom.RandomInt(0, 6))
+			{
+			case 0:
+				GameEngineSound::SoundPlayControl("mon_long_sword_hit_01.ogg").Volume(0.8f);
+				break;
+			case 1:
+				GameEngineSound::SoundPlayControl("mon_long_sword_hit_02.ogg").Volume(0.8f);
+				break;
+			case 2:
+				GameEngineSound::SoundPlayControl("mon_long_sword_hit_03.ogg").Volume(0.8f);
+				break;
+			case 3:
+				GameEngineSound::SoundPlayControl("mon_long_sword_hit_04.ogg").Volume(0.8f);
+				break;
+			case 4:
+				GameEngineSound::SoundPlayControl("mon_long_sword_hit_05.ogg").Volume(0.8f);
+				break;
+			case 5:
+				GameEngineSound::SoundPlayControl("mon_long_sword_hit_06.ogg").Volume(0.8f);
+				break;
+			case 6:
+				GameEngineSound::SoundPlayControl("mon_long_sword_hit_07.ogg").Volume(0.8f);
+				break;
+			default:
+				break;
+			}
+
 			int Dir = Collision_StampingHit->GetTransform().GetWorldPosition().x - Hit_Player->GetTransform().GetWorldPosition().x > 0 ? -1 : 1;
 			Hit_Player->BeHit({ 30, 0, 0, 40.f }, HitPostureType::Standing, nullptr, nullptr, Dir, 300);
 		}
+		else if (Collision_StingHit->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player, CollisionType::CT_AABB))
+		{
+			NearMiss = true;
+		}
+
 		Collision_StingHit->Off();
 
 
@@ -1349,13 +1441,17 @@ void Bale::Sting_Update(const FrameAnimation_DESC& _DESC)
 void Bale::Sting_End(const FrameAnimation_DESC& _DESC)
 {
 	Manager_StatManager->GetFSMManager().ChangeState("None");
+
 }
 
 void Bale::FSM_Att_Stamping_Start(const StateInfo& _Info)
 {
+
 	Manager_StatManager->SetDoSkill();
 	Texture_Monster->ChangeFrameAnimation("Bale_Stamping");
 	StampingEnd = 10.f;
+
+	Manager_StatManager->SetSuperarmor();
 
 }
 void Bale::FSM_Att_Stamping_Update(float _DeltaTime, const StateInfo& _Info)
@@ -1376,13 +1472,22 @@ void Bale::FSM_Att_Stamping_End(const StateInfo& _Info)
 	Manager_StatManager->SetDoSkillEnd();
 	StampingEnd = 10.f;
 
+	Manager_StatManager->SetSuperarmorEnd();
+
+	if (NearMiss == true)
+	{
+		GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::NearMiss);
+	}
+
 }
 
 void Bale::Bale_Stamping(const FrameAnimation_DESC& _DESC)
 {
 	if (_DESC.CurFrame == 3)
 	{
+		SetVoice("bale_atk_04.ogg");
 
+		
 		const float4& Pos = GetTransform().GetWorldPosition();
 
 
@@ -1438,11 +1543,51 @@ void Bale::Bale_Stamping(const FrameAnimation_DESC& _DESC)
 
 
 		Collision_StampingHit->On();
+		GameEngineSound::SoundPlayControl("shockwave_hit_01.ogg").Volume(0.8f);
 		if (Collision_StampingHit->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player ,CollisionType::CT_AABB,
 			std::bind(&Bale::GetPlayer, this, std::placeholders::_1, std::placeholders::_2)))
 		{
+
+
+			switch (GameEngineRandom::MainRandom.RandomInt(0, 8))
+			{
+			case 0:
+				GameEngineSound::SoundPlayControl("mon_dark_hit_01.ogg").Volume(0.8f);
+				break;
+			case 1:
+				GameEngineSound::SoundPlayControl("mon_dark_hit_02.ogg").Volume(0.8f);
+				break;
+			case 2:
+				GameEngineSound::SoundPlayControl("mon_dark_hit_03.ogg").Volume(0.8f);
+				break;
+			case 3:
+				GameEngineSound::SoundPlayControl("mon_dark_hit_04.ogg").Volume(0.8f);
+				break;
+			case 4:
+				GameEngineSound::SoundPlayControl("mon_dark_hit_05.ogg").Volume(0.8f);
+				break;
+			case 5:
+				GameEngineSound::SoundPlayControl("mon_dark_hit_06.ogg").Volume(0.8f);
+				break;
+			case 6:
+				GameEngineSound::SoundPlayControl("mon_dark_hit_07.ogg").Volume(0.8f);
+				break;
+			case 7:
+				GameEngineSound::SoundPlayControl("mon_dark_hit_08.ogg").Volume(0.8f);
+				break;
+			case 8:
+				GameEngineSound::SoundPlayControl("mon_dark_hit_09.ogg").Volume(0.8f);
+				break;
+			default:
+				break;
+			}
+
 			int Dir = Collision_StampingHit->GetTransform().GetWorldPosition().x - Hit_Player->GetTransform().GetWorldPosition().x > 0 ? -1 : 1;
 			Hit_Player->BeHit({ 50, 300 }, HitPostureType::Aerial, nullptr, nullptr, Dir, 500);
+		}
+		else if (Collision_StampingHit->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player, CollisionType::CT_AABB))
+		{
+			NearMiss = true;
 		}
 		Collision_StampingHit->Off();
 	}
@@ -1457,6 +1602,7 @@ void Bale::Bale_Stamping(const FrameAnimation_DESC& _DESC)
 
 void Bale::FSM_Att_Dash_Start(const StateInfo& _Info)
 {
+
 	Manager_StatManager->SetDoSkill();
 	Texture_Monster->ChangeFrameAnimation("Bale_RunReady");
 
@@ -1494,10 +1640,12 @@ void Bale::FSM_Att_Dash_Start(const StateInfo& _Info)
 	{
 		Dir.z = -20.f;
 	}
-
+	PlayerDashHit = false;
 	Collision_ect->GetTransform().SetWorldPosition({ Dir.x + GetTransform().GetWorldPosition().x, Dir.z + GetTransform().GetWorldPosition().y, Dir.z + GetTransform().GetWorldPosition().z });
 	DashUpdate = false;
 	MoveDelay = 0;
+
+	Manager_StatManager->SetSuperarmor();
 
 }
 
@@ -1510,6 +1658,10 @@ void Bale::Bale_DashStart(const FrameAnimation_DESC& _DESC)
 	Texture_BlackBack->GetPixelData().PlusColor = { 1, 1, 1, 0 };
 	DashColorDelay = 1;
 	VisionDelay = 0;
+
+	SetVoice("bale_atk_05.ogg");
+	GameEngineSound::SoundPlayControl("bale_dash.ogg").Volume(0.7f);
+
 	//Texture_BlackBack->GetPixelData().MulColor.a = 1;
 	// 마구 베면서 전진
 }
@@ -1525,12 +1677,64 @@ void Bale::FSM_Att_Dash_Update(float _DeltaTime, const StateInfo& _Info)
 		float4 Move = float4::LerpLimit(BeforePos, Collision_ect->GetTransform().GetWorldPosition(), MoveDelay);
 		Move -= GetTransform().GetWorldPosition();
 		Manager_MoveManager->SetCharacterMove({ Move.x, Move.y });
+
+
+		if (Collision_DashHit->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player, CollisionType::CT_AABB,
+			std::bind(&Bale::GetPlayer, this, std::placeholders::_1, std::placeholders::_2)))
+		{
+			switch (GameEngineRandom::MainRandom.RandomInt(0, 9))
+			{
+			case 0:
+				GameEngineSound::SoundPlayControl("mon_sword_hit_01.ogg").Volume(0.8f);
+				break;
+			case 1:
+				GameEngineSound::SoundPlayControl("mon_sword_hit_02.ogg").Volume(0.8f);
+				break;
+			case 2:
+				GameEngineSound::SoundPlayControl("mon_sword_hit_03.ogg").Volume(0.8f);
+				break;
+			case 3:
+				GameEngineSound::SoundPlayControl("mon_sword_hit_04.ogg").Volume(0.8f);
+				break;
+			case 4:
+				GameEngineSound::SoundPlayControl("mon_sword_hit_05.ogg").Volume(0.8f);
+				break;
+			case 5:
+				GameEngineSound::SoundPlayControl("mon_sword_hit_06.ogg").Volume(0.8f);
+				break;
+			case 6:
+				GameEngineSound::SoundPlayControl("mon_sword_hit_07.ogg").Volume(0.8f);
+				break;
+			case 7:
+				GameEngineSound::SoundPlayControl("mon_sword_hit_08.ogg").Volume(0.8f);
+				break;
+			case 8:
+				GameEngineSound::SoundPlayControl("mon_sword_hit_09.ogg").Volume(0.8f);
+				break;
+			case 9:
+				GameEngineSound::SoundPlayControl("mon_sword_hit_10.ogg").Volume(0.8f);
+				break;
+
+			default:
+				break;
+			}
+
+			int Dir = Collision_StampingHit->GetTransform().GetWorldPosition().x - Hit_Player->GetTransform().GetWorldPosition().x > 0 ? -1 : 1;
+			Hit_Player->BeHit({ 50, 0,0,30 }, HitPostureType::Standing, nullptr, nullptr, Dir, 500);
+			Collision_DashHit->Off();
+		}
+		else if (Collision_StampingHit->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player, CollisionType::CT_AABB))
+		{
+			NearMiss = true;
+		}
 	}
 
-	if (Collision_ect->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Monster, CollisionType::CT_SPHERE))
+	if (Collision_ect->IsCollision(CollisionType::CT_SPHERE, CollisionOrder::Monster, CollisionType::CT_SPHERE) || _Info.StateTime > 4.f)
 	{
 		Texture_Monster->ChangeFrameAnimation("Bale_RunEnd");
 	}
+
+
 	//Bale_RunReady
 	//	Bale_Running"
 	//	Bale_RunEnd",
@@ -1591,6 +1795,7 @@ void Bale::Bale_DashFrame(const FrameAnimation_DESC& _DESC)
 	{
 	case 1:
 	{
+		Collision_DashHit->On();
 		const float4& Pos = GetTransform().GetWorldPosition();
 
 		GameEngineEffectRenderer* Renderer = CreateComponent<GameEngineEffectRenderer>();
@@ -1693,11 +1898,21 @@ void Bale::FSM_Att_Dash_End(const StateInfo& _Info)
 	Texture_BlackBack->GetPixelData().PlusColor.a = 0;
 	Manager_StatManager->SetDoSkillEnd();
 
+	Manager_StatManager->SetSuperarmorEnd();
+
+	if (NearMiss == true && PlayerHit == false)
+	{
+		GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::NearMiss);
+	}
+
 }
 
 
 void Bale::FSM_Move_Teleport_Start(const StateInfo& _Info)
 {
+
+
+
 	Manager_StatManager->SetDoSkill();
 	AllCollision["Move_Teleport"]->SetParent(GamePlayCharacter::GetInst());
 
@@ -1710,6 +1925,8 @@ void Bale::FSM_Move_Teleport_Start(const StateInfo& _Info)
 	{
 		Texture_Monster->ChangeFrameAnimation("Bale_Teleport_Before"); // 중단점용
 	}
+
+	Manager_StatManager->SetSuperarmor();
 }
 void Bale::Bale_TeleportStart(const FrameAnimation_DESC& _DESC)
 {
@@ -1734,16 +1951,32 @@ void Bale::FSM_Move_Teleport_End(const StateInfo& _Info)
 	All_CollTime["Move_Teleport"] = 10.f;
 	All_CollTime["Att_Dash"] = 5.f;
 	Manager_StatManager->SetDoSkillEnd();
-
+	Manager_StatManager->SetSuperarmorEnd();
 }
 
 void Bale::FSM_Skill_Tracking_Start(const StateInfo& _Info)
 {
+	switch (GameEngineRandom::MainRandom.RandomInt(0, 2))
+	{
+	case 0:
+		SetVoice("bale_skill_01_1.ogg");
+		break;
+	case 1:
+		SetVoice("bale_skill_01_2.ogg");
+		break;
+	case 2:
+		SetVoice("bale_skill_01_3.ogg");
+		break;
+	default:
+		break;
+	}
+	GameEngineSound::SoundPlayControl("bale_cast.ogg").Volume(0.6f);
 	Manager_StatManager->SetDoSkill();
 	Texture_Monster->ChangeFrameAnimation("Bale_TrackingReady");
 	Texture_BlackBack->GetPixelData().PlusColor = {0, 0, 0, 0};
 	Collision_PlayerLessPos->SetParent(GamePlayCharacter::GetInst());
 	Collision_PlayerLessPos->GetTransform().SetLocalPosition({80,0,0});
+	Manager_StatManager->SetSuperarmor();
 }
 void Bale::FSM_Skill_Tracking_Update(float _DeltaTime, const StateInfo& _Info)
 {
@@ -1761,15 +1994,27 @@ void Bale::FSM_Skill_Tracking_Update(float _DeltaTime, const StateInfo& _Info)
 		Texture_Monster->ChangeFrameAnimation("Bale_TrackEnd");
 		Texture_BlackBack->GetPixelData().PlusColor.a -= _DeltaTime * 2.f;
 	}
+
+
 	
 }
 void Bale::FSM_Skill_Tracking_End(const StateInfo& _Info)
 {
 	Texture_BlackBack->GetPixelData().PlusColor.a = 0;
-	Collision_PlayerLessPos->GetTransform().SetLocalPosition(float4::ZERO);
-	dynamic_cast<GamePlayCharacter*>(Hit_Player)->SetCamHoldOff();
-	All_CollTime["Skill_Tracking"] = 10.f;
+	Collision_PlayerLessPos->GetTransform().SetLocalPosition(float4::ZERO); 
+	if (dynamic_cast<GamePlayCharacter*>(Hit_Player) != nullptr)
+	{
+		dynamic_cast<GamePlayCharacter*>(Hit_Player)->SetCamHoldOff();
+	}
+	
+	All_CollTime["Skill_Tracking"] = 20.f;
 	Manager_StatManager->SetDoSkillEnd();
+	Manager_StatManager->SetSuperarmorEnd();
+
+	if (NearMiss == true && PlayerHit == false)
+	{
+		GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::NearMiss);
+	}
 }
 
 void Bale::Bale_TrackReadyEnd(const FrameAnimation_DESC& _DESC)
@@ -1796,6 +2041,7 @@ void Bale::Bale_TrackUpdate(const FrameAnimation_DESC& _DESC, float _Time)
 	if (Collision_HitBody_Mid->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player, CollisionType::CT_AABB,
 		std::bind(&Bale::GetPlayer, this, std::placeholders::_1, std::placeholders::_2)))
 	{
+
 		Texture_Monster->ChangeFrameAnimation("Bale_TrackCatch");
 		Texture_Monster->CurAnimationPauseOff();
 		int Dir = Collision_StampingHit->GetTransform().GetWorldPosition().x - Hit_Player->GetTransform().GetWorldPosition().x > 0 ? -1 : 1;
@@ -1866,8 +2112,10 @@ void Bale::Bale_TrackCatchFrame(const FrameAnimation_DESC& _DESC)
 		//{
 		//	Hit_Player->GetTransform().SetWorldPosition({ Pos.x + 30, Pos.y + 100, Pos.z });
 		//}
-		//break;
+		break;
 	case 12:
+		SetVoice("bale_atk_03.ogg");
+
 		if (GetTransform().GetLocalScale().x >= 0)
 		{
 			Hit_Player->GetTransform().SetWorldPosition({ Pos.x + 50, Pos.y + 100, Pos.z });
@@ -1915,6 +2163,7 @@ void Bale::Bale_TrackCatchFrame(const FrameAnimation_DESC& _DESC)
 		Renderer->GetTransform().SetWorldPosition(Pos);
 		Renderer->ScaleToTexture();
 
+
 	}
 	break;
 	case 16:
@@ -1956,12 +2205,30 @@ void Bale::FSM_Skill_BringTentacle_Start(const StateInfo& _Info)
 
 	Actor_Tentacle = GetLevel()->CreateActor<BaleTentacle>();
 	Actor_Tentacle->GetTransform().SetLocalPosition(GetTransform().GetWorldPosition());
+	Manager_StatManager->SetSuperarmor();
+
+	switch (GameEngineRandom::MainRandom.RandomInt(0, 2))
+	{
+	case 0:
+		SetVoice("bale_skill_03_1.ogg");
+		break;
+	case 1:
+		SetVoice("bale_skill_03_2.ogg");
+		break;
+	case 2:
+		SetVoice("bale_skill_03_3.ogg");
+		break;
+	default:
+		break;
+	}
+
 
 
 }
 
 void Bale::Bale_TentacleReadyEnd(const FrameAnimation_DESC& _DESC)
 {
+
 	if (GameEngineRandom::MainRandom.RandomInt(0, 3) == 0)
 	{
 		BringTentacleIndex = 17000;
@@ -1981,6 +2248,7 @@ void Bale::Bale_TentacleFrame(const FrameAnimation_DESC& _DESC)
 			Actor_SpeechPopUp->CreatePopup("카카하! 어둠의 송곳니!");
 		}
 	
+		GameEngineSound::SoundPlayControl("scyclone_crash.ogg").Volume(0.9f);
 
 		Actor_Tentacle->CreateTentacle();
 
@@ -2053,19 +2321,28 @@ void Bale::FSM_Skill_BringTentacle_Update(float _DeltaTime, const StateInfo& _In
 		Texture_Monster->ChangeFrameAnimation("Bale_TentacleReady", true);
 		BringTentacleIndex = 0;
 	}
+
+	if (_Info.StateTime > 20.f)
+	{
+		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
+	}
 }
 void Bale::FSM_Skill_BringTentacle_End(const StateInfo& _Info)
 {
 	All_CollTime["Skill_Tentacle"] = 60.f;
 	Manager_StatManager->SetDoSkillEnd();
+	Manager_StatManager->SetSuperarmorEnd();
 }
 
 
 void Bale::LevelStartEvent()
 {
+	SetVoice("bale_meet_01.ogg");
+
 	All_CollTime["Move_Teleport"] = 10.f;
 	All_CollTime["Att_Dash"] = 10.f;
-	All_CollTime["Skill_Tentacle"] = 10.f;
+	All_CollTime["Skill_Tentacle"] = 25.f;
+	All_CollTime["Skill_Tracking"] = 10.f;
 }
 
 
@@ -2179,4 +2456,12 @@ unsigned int Bale::SetHPFromHit(unsigned int _Damage, const std::vector<float>& 
 
 
 	return Damage;
+}
+
+
+void Bale::OffEvent()
+{
+	GamePlayMonster::OffEvent();
+	SetVoice("bale_die.ogg");
+	Actor_SpeechPopUp->CreatePopup("이럴...수가...");
 }

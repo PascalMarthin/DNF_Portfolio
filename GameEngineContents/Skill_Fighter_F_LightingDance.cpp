@@ -121,14 +121,14 @@ void Skill_Fighter_F_LightingDance::Start()
 			{
 				_Desc.Renderer->Off();
 			});
-		Texture_Illusion_2->CreateFrameAnimationFolder("Illusion_230", FrameAnimation_DESC("Illusion_230", 0.0625f, true));
+		Texture_Illusion_2->CreateFrameAnimationFolder("Illusion_230", FrameAnimation_DESC("Illusion_230", 0.1f, true));
 		//Texture_Illusion_2->AnimationBindFrame("Illusion_230", std::bind(&Skill_Fighter_F_LightingDance::CheckEffectFrame, this, std::placeholders::_1));
 		Texture_Illusion_2->AnimationBindEnd("Illusion_230",
 			[](const FrameAnimation_DESC& _Desc)
 			{
 				_Desc.Renderer->Off();
 			});
-		Texture_Illusion_2->CreateFrameAnimationFolder("Illusion_310", FrameAnimation_DESC("Illusion_310", 0.0625f, true));
+		Texture_Illusion_2->CreateFrameAnimationFolder("Illusion_310", FrameAnimation_DESC("Illusion_310", 0.1f, true));
 		//Texture_Illusion_2->AnimationBindFrame("Illusion_310", std::bind(&Skill_Fighter_F_LightingDance::CheckEffectFrame, this, std::placeholders::_1));
 		Texture_Illusion_2->AnimationBindEnd("Illusion_310",
 			[](const FrameAnimation_DESC& _Desc)
@@ -252,13 +252,29 @@ bool Skill_Fighter_F_LightingDance::ActiveSkill(CharacterStatManager* _Stat, Mov
 		_Stat->SetInvincibility();
 		if (LightingStuck <= 0)
 		{
-			GetActor<GamePlayCharacter>()->SetCamHoldOff();
+		
 			_Stat->SetInvincibilityEnd();
 			return true;
 		}
 		HitDelay += _DeltaTime;
-		if (HitDelay > 0.08f)
+		if (HitDelay > 0.1f)
 		{
+
+			switch (GameEngineRandom::MainRandom.RandomInt(0, 2))
+			{
+			case 0:
+				GamePlayCharacter::SetVoice("ft_lowkick_01.ogg");
+				break;
+			case 1:
+				GamePlayCharacter::SetVoice("ft_lowkick_02.ogg");
+				break;
+			case 2:
+				GamePlayCharacter::SetVoice("ft_lowkick_03.ogg");
+				break;
+			default:
+				break;
+			}
+
 			if (Collision_CheckHitArea->IsCollision(CollisionType::CT_AABB, CollisionOrder::Monster, CollisionType::CT_AABB,
 				std::bind(&Skill_Fighter_F_LightingDance::GetTarget, this, std::placeholders::_1, std::placeholders::_2)))
 			{
@@ -275,6 +291,7 @@ bool Skill_Fighter_F_LightingDance::ActiveSkill(CharacterStatManager* _Stat, Mov
 				else
 				{
 					_Avata->ChangeAvataAnimation("Move_QuickStand");
+					GetActor<GamePlayCharacter>()->SetCamHoldOn();
 					NoHitFunction();
 				}
 			}
@@ -377,6 +394,27 @@ void Skill_Fighter_F_LightingDance::NoHitFunction()
 {
 	GameEngineTextureRenderer* Renderer = nullptr;
 
+	switch (GameEngineRandom::MainRandom.RandomInt(0, 4))
+	{case 0:
+		GameEngineSound::SoundPlayControl("lightning_dance_01.ogg").Volume(0.6f);
+		break;
+	case 1:
+		GameEngineSound::SoundPlayControl("lightning_dance_02.ogg").Volume(0.6f);
+		break;
+	case 2:
+		GameEngineSound::SoundPlayControl("lightning_dance_03.ogg").Volume(0.6f);
+		break;
+	case 3:
+		GameEngineSound::SoundPlayControl("lightning_dance_04.ogg").Volume(0.6f);
+		break;
+	case 4:
+		GameEngineSound::SoundPlayControl("lightning_dance_05.ogg").Volume(0.6f);
+		break;
+	default:
+		break;
+	}
+
+
 
 	if (LightingStuck % 2)
 	{
@@ -440,6 +478,9 @@ bool Skill_Fighter_F_LightingDance::TriggerSkill_ect(GameEngineCollision* _This,
 
 void Skill_Fighter_F_LightingDance::StartSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata)
 {
+	GamePlayCharacter::SetVoice("ft_lightning_dance.ogg");
+	
+
 	_Avata->ChangeAvataAnimation("Att_BaseKick");
 	Texture_Illusion_1->Off();
 	Texture_Illusion_2->Off();
@@ -468,10 +509,29 @@ CollisionReturn Skill_Fighter_F_LightingDance::GetTarget(GameEngineCollision* _T
 	}
 	float4 PlayerPos = GetActor()->GetTransform().GetWorldPosition();
 	float4 PoePos = _Other->GetActor()->GetTransform().GetWorldPosition();
-	float Dir = GetActor<GamePlayObject>()->GetObjectDir() ? 1.f : -1.f;
+	float Dir = GetActor()->GetTransform().GetWorldScale().x > 0 ? 1.f : -1.f;
 
-
-
+	GetActor<GamePlayCharacter>()->SetCamHoldOff();
+	switch (GameEngineRandom::MainRandom.RandomInt(0, 4))
+	{
+	case 0:
+		GameEngineSound::SoundPlayControl("lightning_dance_hit_01.ogg").Volume(0.6f);
+		break;
+	case 1:
+		GameEngineSound::SoundPlayControl("lightning_dance_hit_02.ogg").Volume(0.6f);
+		break;
+	case 2:
+		GameEngineSound::SoundPlayControl("lightning_dance_hit_03.ogg").Volume(0.6f);
+		break;
+	case 3:
+		GameEngineSound::SoundPlayControl("lightning_dance_hit_04.ogg").Volume(0.6f);
+		break;
+	case 4:
+		GameEngineSound::SoundPlayControl("lightning_dance_hit_05.ogg").Volume(0.6f);
+		break;
+	default:
+		break;
+	}
 
 	GameEngineTextureRenderer* Renderer = nullptr;
 	if (LightingStuck % 2)
@@ -485,12 +545,28 @@ CollisionReturn Skill_Fighter_F_LightingDance::GetTarget(GameEngineCollision* _T
 
 	}
 	Renderer->On();
-	Renderer->ChangeFrameAnimation("Illusion_310", true);
+	float Range = PoePos.x - PlayerPos.x;
 
+	if (abs(Range) < 140.f)
+	{
+		Renderer->ChangeFrameAnimation("Illusion_70", true);
+	}
+	else if (abs(Range) < 220.f)
+	{
+		Renderer->ChangeFrameAnimation("Illusion_150", true);
+	}
+	else if (abs(Range) < 300.f)
+	{
+		Renderer->ChangeFrameAnimation("Illusion_230", true);
+	}
+	else
+	{
+		Renderer->ChangeFrameAnimation("Illusion_310", true);
+	}
+	Renderer->ScaleToTexture();
 
 	float PoeScale = 80.f;
 
-	float Range = PoePos.x - PlayerPos.x;
 
 	if (Range > 0)
 	{
@@ -500,20 +576,21 @@ CollisionReturn Skill_Fighter_F_LightingDance::GetTarget(GameEngineCollision* _T
 
 	GetActor()->GetTransform().SetLocalPosition({ PoePos.x + PoeScale, PoePos.y, PoePos.y });
 
+
+
+
+
+
 	if (Range > 0)
 	{
-		PlayerPos.y -= 50.f;
-		PoePos.y -= 50.f;
-		Renderer->GetTransform().PixLocalNegativeX();
+		//Renderer->GetTransform().PixLocalNegativeX();
 
-		Renderer->GetTransform().SetLocalRotation({ 0, 0 , float4::VectorXYtoRadian(PoePos, PlayerPos) });
+		Renderer->GetTransform().SetLocalRotation({ 0, 0 , float4::VectorXYtoDegree(PoePos, PlayerPos) });
 	}
 	else
 	{
-		PoePos.y -= 50.f;
-		PlayerPos.y -= 50.f;
-		Renderer->GetTransform().PixLocalPositiveX();
-		Renderer->GetTransform().SetLocalRotation({ 0, 0 , -float4::VectorXYtoRadian(PoePos, PlayerPos) });
+		//Renderer->GetTransform().PixLocalPositiveX();
+		Renderer->GetTransform().SetLocalRotation({ 0, 0 , float4::VectorXYtoDegree(PoePos, PlayerPos) });
 	}
 	//if (Range > 0)
 	//{
@@ -527,7 +604,8 @@ CollisionReturn Skill_Fighter_F_LightingDance::GetTarget(GameEngineCollision* _T
 	//}
 
 
-	Renderer->GetTransform().SetWorldPosition({ PoePos.x - (PoePos.x - PlayerPos.x) * 0.5f, PoePos.y - 25.f + (PoePos.y - PlayerPos.y) * 0.5f, -10.f });
+	Renderer->GetTransform().SetWorldPosition({PlayerPos.x + ((PoePos.x - PlayerPos.x) * 0.5f),
+	PlayerPos.y - 25.f + (PoePos.y - PlayerPos.y) * 0.5f, -800.f });
 
 	if (Range > 0)
 	{
@@ -558,6 +636,7 @@ CollisionReturn Skill_Fighter_F_LightingDance::GetTarget(GameEngineCollision* _T
 	}
 	Texture_Flash->GetTransform().SetWorldPosition({GetActor()->GetTransform().GetWorldPosition().x, GetActor()->GetTransform().GetWorldPosition().y + 20.f });
 
+	Texture_Shock->GetTransform().SetWorldPosition({ GetActor()->GetTransform().GetWorldPosition().x, GetActor()->GetTransform().GetWorldPosition().y + 20.f });
 	Texture_Shock->ChangeFrameAnimation("Lighting_Shock", true);
 	Texture_Shock->On();
 
@@ -566,12 +645,12 @@ CollisionReturn Skill_Fighter_F_LightingDance::GetTarget(GameEngineCollision* _T
 	//Texture_Shock->GetTransform().SetWorldPosition(PoePos);
 
 
-	
+	Texture_Apply->GetTransform().SetWorldPosition({ GetActor()->GetTransform().GetWorldPosition().x, GetActor()->GetTransform().GetWorldPosition().y + 20.f });
 	Texture_Apply->ChangeFrameAnimation("Lighting_Apply", true);
 	Texture_Apply->On();
 
 	//
-	Actor_DummyActor->GetTransform().SetLocalPosition(PoePos);
+	//Actor_DummyActor->GetTransform().SetLocalPosition(PoePos);
 
 	//if (PastPlayerPos.x > PoePos.x)
 	//{
@@ -600,7 +679,7 @@ void Skill_Fighter_F_LightingDance::LightingAnimition(CharacterStatManager* _Sta
 
 void Skill_Fighter_F_LightingDance::EndSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata)
 {
-	
+	GetActor<GamePlayCharacter>()->SetCamHoldOff();
 }
 
 void Skill_Fighter_F_LightingDance::CheckEffectFrame(const FrameAnimation_DESC& _Desc)

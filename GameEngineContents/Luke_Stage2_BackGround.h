@@ -29,4 +29,6 @@ private:
 	GameEngineTextureRenderer* Texture_Stage2_Door_Close;
 
 	GameEngineCollision* Collision_Stage2_Door;
+	GameEngineUIRenderer* FadeInOut;
+	bool IntotheMap;
 };

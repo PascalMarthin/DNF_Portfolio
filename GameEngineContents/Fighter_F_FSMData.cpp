@@ -509,6 +509,7 @@ void GamePlayCharacter::FSM_Att_Skill_Update(float _DeltaTime, const StateInfo& 
 }
 void GamePlayCharacter::FSM_Att_Skill_End(const StateInfo& _Info)
 {
+	Skill_CurrentSkill->EndSkill(Manager_StatManager, Manager_MoveManager, Manager_AvataManager);
 	Skill_CurrentSkill->Off();
 	Manager_StatManager->SetDoSkillEnd();
 	Manager_AvataManager->SetAllAvataAutoControl();
@@ -543,6 +544,7 @@ void GamePlayCharacter::FSM_Interaction_Update(float _DeltaTime, const StateInfo
 
 	if (GamePlayNPCInteraction::GetInst()->CheckInput() == InteractOption::Exit)
 	{
+		GamePlayObjectNPC::SetVoice(NPC_Interaction->map_NPCVoice[InteractOptionNPCVoice::Off][GameEngineRandom::MainRandom.RandomInt(0, NPC_Interaction->map_NPCVoice[InteractOptionNPCVoice::Off].size() - 1)]);
 		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
 	}
 	
@@ -618,6 +620,28 @@ void GamePlayCharacter::FSM_Hit_Down_End(const StateInfo& _Info)
 
 void GamePlayCharacter::FSM_Hit_Stand_Start(const StateInfo& _Info)
 {
+	if (!Manager_StatManager->IsHold())
+	{
+		switch (GameEngineRandom::MainRandom.RandomInt(0, 3))
+		{
+		case 0:
+			GamePlayCharacter::SetVoice("ft_dmg_01.ogg");
+			break;
+		case 1:
+			GamePlayCharacter::SetVoice("ft_dmg_02.ogg");
+			break;
+		case 2:
+			GamePlayCharacter::SetVoice("ft_dmg_03.ogg");
+			break;
+		case 3:
+			GamePlayCharacter::SetVoice("ft_dmg_04.ogg");
+			break;
+		default:
+			break;
+		}
+	}
+
+
 	if (_Info.PrevState == "Hit_Stand" && GameEngineRandom::MainRandom.RandomInt(0, 1) == 1)
 	{
 		Manager_AvataManager->ChangeAvataAnimation("Hit_Stand1");

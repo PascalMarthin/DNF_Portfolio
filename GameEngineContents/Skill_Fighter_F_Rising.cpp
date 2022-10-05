@@ -330,7 +330,7 @@ bool Skill_Fighter_F_Rising::ActiveSkill(CharacterStatManager* _Stat, MoveManage
 			LandPos = GetActor()->GetTransform().GetWorldPosition();
 			JumpTime = _DeltaTime;
 			int_ComboStuck = 1;
-
+			GamePlayCharacter::SetVoice("ft_rising_knuckle_attack.ogg");
 			{
 				Texture_Rising_spin[0]->ChangeFrameAnimation("None");
 				Texture_Rising_spin[0]->ChangeFrameAnimation("Texture_Rising_spin");
@@ -386,6 +386,8 @@ bool Skill_Fighter_F_Rising::ActiveSkill(CharacterStatManager* _Stat, MoveManage
 
 			Texture_Wind[3]->ChangeFrameAnimation("Texture_Wind", true);
 			Texture_Wind[3]->On();
+
+			GameEngineSound::SoundPlayControl("rising_upper_pull.ogg").Volume(0.65f);
 
 			Is_CollisionCheck = true;
 		}
@@ -545,8 +547,7 @@ bool Skill_Fighter_F_Rising::TriggerSkill_ect(GameEngineCollision* _This, GameEn
 	case 1:
 		if (!Object_HitList.empty())
 		{
-			//Texture_Punch02->On();
-			//Texture_Punch03->On();
+			 GameEngineSound::SoundPlayControl("bgloveb_Hit_02.ogg").Volume(0.6f);
 		}
 		break;
 	default:
@@ -559,6 +560,8 @@ bool Skill_Fighter_F_Rising::TriggerSkill_ect(GameEngineCollision* _This, GameEn
 
 void Skill_Fighter_F_Rising::StartSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata)
 {
+	GamePlayCharacter::SetVoice("ft_rising_knuckle_dash.ogg");
+	
 	_Avata->SetSuperArmor();
 	_Stat->SetSuperarmor();
 	_Avata->ChangeAvataAnimation("Att_RisingUpper_Ready");
@@ -572,5 +575,10 @@ void Skill_Fighter_F_Rising::StartSkill(CharacterStatManager* _Stat, MoveManager
 
 
 
+}
+
+void Skill_Fighter_F_Rising::EndSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata)
+{
+	_Stat->SetSuperarmorEnd();
 }
 

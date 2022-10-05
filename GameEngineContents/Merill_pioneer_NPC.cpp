@@ -24,6 +24,17 @@ void Merill_pioneer_NPC::Start()
 	Texture_NPCStanding_Smoke->ScaleToTexture();
 	Texture_NPCStanding_Smoke->GetOutLine()->Off();
 
+	map_NPCVoice[InteractOptionNPCVoice::Nomal].push_back("merill_amb_01.ogg");
+	map_NPCVoice[InteractOptionNPCVoice::Nomal].push_back("merill_amb_02.ogg");
+	map_NPCVoice[InteractOptionNPCVoice::Nomal].push_back("merill_amb_03.ogg");
+
+	map_NPCVoice[InteractOptionNPCVoice::Click].push_back("merill_tk_01.ogg");
+	map_NPCVoice[InteractOptionNPCVoice::Click].push_back("merill_tk_02.ogg");
+	map_NPCVoice[InteractOptionNPCVoice::Click].push_back("merill_tk_03.ogg");
+
+	map_NPCVoice[InteractOptionNPCVoice::Off].push_back("merill_fw_01.ogg");
+	map_NPCVoice[InteractOptionNPCVoice::Off].push_back("merill_fw_02.ogg");
+	map_NPCVoice[InteractOptionNPCVoice::Off].push_back("merill_fw_03.ogg");
 
 
 	EnumNPC = NPCEnum::Merill_pioneer;

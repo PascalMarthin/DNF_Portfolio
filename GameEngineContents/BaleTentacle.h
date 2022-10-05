@@ -6,6 +6,7 @@ class TentacleTextureCollision;
 class GameEngineCollision;
 class GameEngineEffectRenderer;
 class GameEngineFolderTexture;
+class GamePlayCharacter;
 class BaleTentacle : public GameEngineActor
 {
 public:
@@ -63,7 +64,6 @@ private:
 	float Lenb;
 
 	float Delay;
-	GameEngineTextureRenderer* Texture_Test;
 
 };
 
@@ -104,6 +104,6 @@ private:
 
 	float Time;
 
-
-
+	GameEngineSoundPlayer Sound_Hit;
+	GamePlayCharacter* Player_Target;
 };

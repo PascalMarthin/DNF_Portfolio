@@ -77,8 +77,8 @@ public:
 
 
 	virtual void StartSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata) {}
-private:
 	virtual void EndSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata) { int a = 0; }
+private:
 protected:
 	int int_ComboStuck;
 	float TimePass;
@@ -107,7 +107,7 @@ protected:
 	float CastingTime;
 	float CurrentCastingTime;
 	void Start() override;
-	void Update(float _DeltaTime) final;
+	void Update(float _DeltaTime) override;
 
 	void LevelStartEvent() override;
 	void LevelEndEvent() override;
@@ -119,6 +119,7 @@ protected:
 
 	std::vector<GameEngineCollision*> Collision_AllCollisionList;
 	std::map<GamePlayObject*, int> Object_HitList;
+	bool bool_MultiHit;
 
 	static int CheckDir(GameEngineCollision* _This, GameEngineCollision* _Other);
 	float FSM_Move_Helper();
@@ -139,7 +140,7 @@ private:
 
 	GameEngineTexture* Texture_Thumbnail;
 
-
+	
 	//------SkillLevel----
 	unsigned int int_SkillLevel;
 };

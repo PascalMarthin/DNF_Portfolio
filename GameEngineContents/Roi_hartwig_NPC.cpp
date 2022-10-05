@@ -28,6 +28,18 @@ void Roi_hartwig_NPC::Start()
 	map_InteractionTalk[InteractOption::Talking].push_back("연구자라면 모름지기 정확한 생활 패턴과 사소한 아이디어라도 놓치지 않는 꼼꼼함이 필요하지. 너도 잘 알 아둬.");
 	map_InteractionTalk[InteractOption::Talking].push_back("뭐… 모험가에게 그런 걸 기대하기는 힘드려나 ?");
 
+	map_NPCVoice[InteractOptionNPCVoice::Nomal].push_back("roi_amb_01.ogg");
+	map_NPCVoice[InteractOptionNPCVoice::Nomal].push_back("roi_amb_02.ogg");
+	map_NPCVoice[InteractOptionNPCVoice::Nomal].push_back("roi_amb_03.ogg");
+
+	map_NPCVoice[InteractOptionNPCVoice::Click].push_back("roi_tk_01.ogg");
+	map_NPCVoice[InteractOptionNPCVoice::Click].push_back("roi_tk_02.ogg");
+	map_NPCVoice[InteractOptionNPCVoice::Click].push_back("roi_tk_03.ogg");
+
+	map_NPCVoice[InteractOptionNPCVoice::Off].push_back("roi_fw_01.ogg");
+	map_NPCVoice[InteractOptionNPCVoice::Off].push_back("roi_fw_02.ogg");
+	map_NPCVoice[InteractOptionNPCVoice::Off].push_back("roi_fw_03.ogg");
+
 
 	TexureR_Face = GameEngineTexture::Find("NPC_Dialog_Face_Roi.png");
 

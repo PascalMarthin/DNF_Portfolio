@@ -38,6 +38,12 @@ void Luke_Stage1_BackGround::Start()
 	Collision_Stage2_Door->GetTransform().SetLocalPosition({ 1870, -600, -600 });
 	Collision_Stage2_Door->GetTransform().SetLocalScale({100, 200, 1000});
 
+
+	FadeInOut = CreateComponent<GameEngineUIRenderer>();
+	FadeInOut->GetTransform().SetLocalPosition({ 0,0,-100 });
+	FadeInOut->GetTransform().SetLocalScale({ 2000,1000,1 });
+	FadeInOut->GetPixelData().MulColor = { 0,0,0,0 };
+
 	//SetBackGroundZOrder();
 }
 
@@ -48,21 +54,45 @@ void Luke_Stage1_BackGround::Update(float _DeltaTime)
 		Texture_Stage2_Door_Close->Off();
 		if (Collision_Stage2_Door->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player, CollisionType::CT_AABB))
 		{
-			GEngine::ChangeLevel("Luke_Stage2");
+			MoveMap = true;
+			IntotheMap = false;
+			
 		}
 	}
 	else
 	{
 		Texture_Stage2_Door_Close->On();
 	}
+
+	if (MoveMap == true && FadeInOut->GetPixelData().MulColor.a < 1.f)
+	{
+		FadeInOut->GetPixelData().MulColor.a += _DeltaTime * 5.f;
+		if (FadeInOut->GetPixelData().MulColor.a > 1.f)
+		{
+			FadeInOut->GetPixelData().MulColor.a = 1.f;
+			GEngine::ChangeLevel("Luke_Stage2");
+		}
+	}
+
+	if (IntotheMap == true && FadeInOut->GetPixelData().MulColor.a > 0)
+	{
+		FadeInOut->GetPixelData().MulColor.a -= _DeltaTime * 5.f;		
+		if (FadeInOut->GetPixelData().MulColor.a < 0)
+		{
+			FadeInOut->GetPixelData().MulColor.a = 0;
+			IntotheMap = false;
+		}
+	}
 }
 
 void Luke_Stage1_BackGround::LevelStartEvent()
 {
-
+	FadeInOut->GetPixelData().MulColor.a = 1.f;
+	IntotheMap = true;
 }
 void Luke_Stage1_BackGround::LevelEndEvent()
 {
-
+	MoveMap = false;
+	IntotheMap = false;
 }
 

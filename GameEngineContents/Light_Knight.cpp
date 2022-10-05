@@ -4,6 +4,7 @@
 #include "GamePlayCharacter.h"
 #include "BattleLevel.h"
 #include "GamePlaySkill.h"
+#include "GamePlayComboSystem.h"
 
 Light_Knight::Light_Knight()
 	: MoveDelay(0)
@@ -122,13 +123,14 @@ void Light_Knight::Start()
 
 
 	Collision_SlashHitPos = CreateComponent<GameEngineCollision>();
-	Collision_SlashHitPos->GetTransform().SetLocalScale({ 500, 500, 500 });
+	Collision_SlashHitPos->GetTransform().SetLocalScale({ 200, 100, 100 });
 	Collision_SlashHitPos->SetDebugSetting(CollisionType::CT_AABB, float4::ZERO);
 	//Collision_SlashHitPos->SetParent(Actor_Dummy);
 
 	//Collision_ArrivePos = CreateComponent<GameEngineCollision>();
 	//Collision_ArrivePos->GetTransform().SetLocalScale({ 50, 50, 50 });
 	//Collision_ArrivePos->SetDebugSetting(CollisionType::CT_AABB, float4::ZERO);
+	Texture_Thumbnail = GameEngineTexture::Find("light_archer_25.png");
 
 	SetFSManager();
 }
@@ -561,7 +563,7 @@ void Light_Knight::FSM_Att_Slash_Start(const StateInfo& _Info)
 
 	SlashArrivePos = GamePlayCharacter::GetInst()->GetTransform().GetWorldPosition() - GetTransform().GetWorldPosition();
 	SlashArrivePos.Normalize();
-
+	NearMiss = false;
 	CheckDir();
 }
 void Light_Knight::FSM_Att_Slash_Update(float _DeltaTime, const StateInfo& _Info)
@@ -591,7 +593,49 @@ void Light_Knight::Att_SlashFrame(const FrameAnimation_DESC& _DESC)
 	{
 		if (Collision_SlashHitPos->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player, CollisionType::CT_AABB, std::bind(&GamePlayMonster::GetTarget, this, std::placeholders::_1, std::placeholders::_2)))
 		{
+			switch (GameEngineRandom::MainRandom.RandomInt(0,9))
+			{
+			case 0:
+				GameEngineSound::SoundPlayControl("mon_sword_hit_01.ogg").Volume(0.8f);
+				break;
+			case 1:
+				GameEngineSound::SoundPlayControl("mon_sword_hit_02.ogg").Volume(0.8f);
+				break;
+			case 2:
+				GameEngineSound::SoundPlayControl("mon_sword_hit_03.ogg").Volume(0.8f);
+				break;
+			case 3:
+				GameEngineSound::SoundPlayControl("mon_sword_hit_04.ogg").Volume(0.8f);
+				break;
+			case 4:
+				GameEngineSound::SoundPlayControl("mon_sword_hit_05.ogg").Volume(0.8f);
+				break;
+			case 5:
+				GameEngineSound::SoundPlayControl("mon_sword_hit_06.ogg").Volume(0.8f);
+				break;
+			case 6:
+				GameEngineSound::SoundPlayControl("mon_sword_hit_07.ogg").Volume(0.8f);
+				break;
+			case 7:
+				GameEngineSound::SoundPlayControl("mon_sword_hit_08.ogg").Volume(0.8f);
+				break;
+			case 8:
+				GameEngineSound::SoundPlayControl("mon_sword_hit_09.ogg").Volume(0.8f);
+				break;
+			case 9:
+				GameEngineSound::SoundPlayControl("mon_sword_hit_10.ogg").Volume(0.8f);
+				break;
+			
+			default:
+				break;
+			}
+
 			Player_Target->BeHit({ 50, 0, 0, 65 }, HitPostureType::Standing, nullptr, Player_Target, (GetTransform().GetWorldPosition().x > Player_Target->GetTransform().GetWorldPosition().x ? -1 : 1), 2000);
+	
+		}
+		else if (Collision_SlashHitPos->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player_NearMiss, CollisionType::CT_AABB))
+		{
+			NearMiss = true;
 		}
 
 	}
@@ -630,5 +674,9 @@ void Light_Knight::Att_SlashUpdate(const FrameAnimation_DESC& _DESC, float _Time
 void Light_Knight::FSM_Att_Slash_End(const StateInfo& _Info)
 {
 	Manager_StatManager->SetDoSkillEnd();
-	All_CollTime["Att_Slash"] = 5.f;
+	All_CollTime["Att_Slash"] = 5.f; 
+	if (NearMiss == true)
+	{
+		GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::NearMiss);
+	}
 }

@@ -426,20 +426,11 @@ void ComboSystemScore::LevelStartEvent()
 	DoEffect = false;
 	DoEffectDelay = 0;
 
-	//{
-	//	Texture_Dungeon_Rank->SetScaleRatio(1.f);
-	//	Texture_Dungeon_RankColor->SetScaleRatio(1.f);
-	//	Texture_Dungeon_Rank->ScaleToTexture();
-	//	Texture_Dungeon_RankColor->ScaleToTexture();
-	//}
-
-
-
 
 	if (BeforeInst == nullptr || BeforeInst->CurrentRank == RankClass::None)
 	{
-		CurrentRank = RankClass::F;
-		SetRankTexure(CurrentRank);
+		//CurrentRank = RankClass::F;
+		//SetRankTexure(CurrentRank);
 	}
 	BeforeInst = nullptr;
 }

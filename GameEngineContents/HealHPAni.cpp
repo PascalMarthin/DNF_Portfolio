@@ -34,10 +34,12 @@ void HealHPAni::SetMPHPHeal(HPMPEnum _Enum, int _Heal)
 	{
 		Texture_EffectAni->ChangeFrameAnimation("HPHeal");
 		Renderer->SetDamage(_Heal, DamageFontClass::HPHeal);
+		GameEngineSound::SoundPlayControl("hp_recovered.ogg").Volume(0.8f);
 	}
 
 	if (_Enum == HPMPEnum::MP)
 	{
+		GameEngineSound::SoundPlayControl("mp_recovered.ogg").Volume(0.8f);
 		Texture_EffectAni->ChangeFrameAnimation("MPHeal");
 		Renderer->SetDamage(_Heal, DamageFontClass::MPHeal);
 	}

@@ -90,8 +90,7 @@ void Jelva_2F::LevelStartEvent()
 	}
 	else// Debug
 	{
-		BGM_Player.Stop();
-		BGM_Player = GameEngineSound::SoundPlayControl("jelva.ogg");
+		SetPlayer("jelva.ogg");
 		Player_Character->GetTransform().SetLocalPosition({ 1500.f  , -500.f , -500.f });
 	}
 

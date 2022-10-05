@@ -309,6 +309,22 @@ GamePlaySkill* GamePlayKeyManager::Input_SkillKeyCheck(CharacterSkillManager* _S
 	{
 		return Skill;
 	}
+
+	if (GameEngineInput::GetInst()->IsDown("Key_U") && (Skill = _SkillManager->PossibleSkillReturn('U')))
+	{
+		return Skill;
+	}
+
+	if (GameEngineInput::GetInst()->IsDown("Key_Z") && (Skill = _SkillManager->PossibleSkillReturn('Z')))
+	{
+		return Skill;
+	}
+
+	if (GameEngineInput::GetInst()->IsDown("Key_V") && (Skill = _SkillManager->PossibleSkillReturn('V')))
+	{
+		return Skill;
+	}
+
 	return Skill;
 }
 

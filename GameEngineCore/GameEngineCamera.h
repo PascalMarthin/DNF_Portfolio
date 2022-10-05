@@ -90,6 +90,12 @@ public:
 	int PushInstancingData(GameEngineRenderingPipeLine* _Pipe, void* _DataPtr, int _Size);
 	int PushInstancingIndex(GameEngineRenderingPipeLine* _Pipe);
 
+
+	inline D3D11_VIEWPORT& GetViewDesc()
+	{
+		return ViewPortDesc;
+	}
+
 protected:
 	void Start();
 

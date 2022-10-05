@@ -71,7 +71,7 @@ unsigned int GamePlayMonster::SetHPFromHit(unsigned int _Damage)
 	//{
 
 	//}
-	unsigned int Damage = _Damage / static_cast<unsigned int>(MonsterAbilityStat.Def); /*- static_cast<unsigned int>((255.f * MonsterAbilityStat.Def) * 0.8f);*/
+	int Damage = _Damage / static_cast<int>(MonsterAbilityStat.Def); /*- static_cast<unsigned int>((255.f * MonsterAbilityStat.Def) * 0.8f);*/
 
 	if (MonsterAbilityStat.HP < Damage)
 	{
@@ -146,6 +146,7 @@ void GamePlayMonster::Dead()
 
 CollisionReturn GamePlayMonster::GetTarget(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
+	NearMiss = false;
 	Player_Target = _Other->GetActor<GamePlayCharacter>();
 	if (Player_Target == nullptr)
 	{
@@ -206,6 +207,7 @@ void GamePlayMonster::Update(float _Delta)
 			}
 
 			//GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::BackAttack);
+			GamePlayComboSystem::GetInst()->SetKill();
 			Off();
 		}
 	}

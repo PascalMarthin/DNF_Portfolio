@@ -5,6 +5,7 @@
 #include "MoveManager.h"
 #include "AvataManager.h"
 #include "Bale.h"
+#include "GamePlayResultWindow.h"
 
 Luke_Stage2::Luke_Stage2() 
 {
@@ -24,6 +25,9 @@ void Luke_Stage2::Start()
 
 	Debug_Bale = CreateActor<Bale>();
 
+
+	vector_AllMonster.push_back(Debug_Bale);
+
 	for (auto& Actor : GetGroup(0))
 	{
 		Actor->GetTransform().SetLocalScale({ MonitorX, MonitorY, 1.f });
@@ -34,8 +38,6 @@ void Luke_Stage2::Update(float _DeltaTime)
 {
 	if (!GetMainCameraActor()->IsFreeCameraMode() && Player_Character->GetHoldCam() == false)
 	{
-
-
 		float4 Pos = Player_Character->GetMoveManager()->GetMoveCollision()->GetTransform().GetWorldPosition();
 		if (Pos.x <= 705.f * MonitorX)
 		{
@@ -46,9 +48,9 @@ void Luke_Stage2::Update(float _DeltaTime)
 			Pos.x = 1350.f * MonitorX;
 		}
 
-		if ((Pos.y <= -580.f * MonitorY))
+		if ((Pos.y <= -700.f * MonitorY))
 		{
-			Pos.y = -580.f * MonitorY;
+			Pos.y = -700.f * MonitorY;
 		}
 		else if (Pos.y >= -460.f * MonitorY)
 		{
@@ -60,6 +62,11 @@ void Luke_Stage2::Update(float _DeltaTime)
 		GetUIFontCamera()->GetTransform().SetWorldPosition(Pos);
 	}
 
+
+	if (!Debug_Bale->IsUpdate() && Window_Result == nullptr)
+	{
+		Window_Result = CreateActor<GamePlayResultWindow>();
+	}
 }
 
 void Luke_Stage2::LevelStartEvent()

@@ -203,7 +203,7 @@ void AvataManager::CreateVision()
 	Avata_Vision* Vision = GetLevel()->CreateActor<Avata_Vision>();
 	Vision->GetTransform().SetLocalPosition(GetTransform().GetWorldPosition());
 	Vision->GetTransform().SetLocalMove({0, 0, 10});
-	Vision->GetTransform().SetLocalScale({ MonitorX, MonitorY });
+	Vision->GetTransform().SetLocalScale({ MonitorX, MonitorY, 1 });
 	if (GetParent<GameEngineActor>()->GetTransform().GetLocalScale().x < 0)
 	{
 		Vision->GetTransform().PixLocalNegativeX();
@@ -1013,10 +1013,14 @@ void AvataManager::LevelStartEvent()
 
 void AvataManager::LevelEndEvent()
 {
-	AvataManager::CurrentInst = nullptr;
-	for (auto& Avata : AllAvatas)
+
+	if (GetLevel()->GetNameConstRef() != "SELECTCHARACTER")
 	{
-		Avata->ChangeFolderTexturePlus(nullptr);
+		AvataManager::CurrentInst = nullptr;
+		for (auto& Avata : AllAvatas)
+		{
+			Avata->ChangeFolderTexturePlus(nullptr);
+		}
+		BeforeAvata = this;
 	}
-	BeforeAvata = this;
 }

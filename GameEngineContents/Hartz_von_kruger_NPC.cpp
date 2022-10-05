@@ -27,7 +27,17 @@ void Hartz_von_kruger_NPC::Start()
 	map_InteractionTalk[InteractOption::Talking].push_back("뭐냐, 그 눈은? 내가 책을 읽는다는 게 그렇게 신기하냐?");
 	map_InteractionTalk[InteractOption::Talking].push_back("... 뭐... 나 역시도 책보다는 창이 더 좋지만, 부하 들에게 공부하라고 하는 입장에서 손을 놓을 수는 없 잖냐.");
 	
-	
+	map_NPCVoice[InteractOptionNPCVoice::Nomal].push_back("hartz_amb_01.ogg");
+	map_NPCVoice[InteractOptionNPCVoice::Nomal].push_back("hartz_amb_02.ogg");
+	map_NPCVoice[InteractOptionNPCVoice::Nomal].push_back("hartz_amb_03.ogg");
+
+	map_NPCVoice[InteractOptionNPCVoice::Click].push_back("hartz_tk_01.ogg");
+	map_NPCVoice[InteractOptionNPCVoice::Click].push_back("hartz_tk_02.ogg");
+	map_NPCVoice[InteractOptionNPCVoice::Click].push_back("hartz_tk_03.ogg");
+
+	map_NPCVoice[InteractOptionNPCVoice::Off].push_back("hartz_fw_01.ogg");
+	map_NPCVoice[InteractOptionNPCVoice::Off].push_back("hartz_fw_02.ogg");
+	map_NPCVoice[InteractOptionNPCVoice::Off].push_back("hartz_fw_03.ogg");
 
 
 	TexureR_Face = GameEngineTexture::Find("NPC_Dialog_Face_Hartz.png");

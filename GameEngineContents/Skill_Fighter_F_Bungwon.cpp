@@ -129,6 +129,8 @@ bool Skill_Fighter_F_Bungwon::TriggerSkill_ect(GameEngineCollision* _This, GameE
 	if (!Texture_Dashpunchsub->IsUpdate())
 	{
 		Texture_Dashpunchsub->On();
+		GameEngineSound::SoundPlayControl("bglovec_Hit.ogg").Volume(0.7f);;
+		
 	}
 
 	return false;
@@ -136,6 +138,7 @@ bool Skill_Fighter_F_Bungwon::TriggerSkill_ect(GameEngineCollision* _This, GameE
 
 void Skill_Fighter_F_Bungwon::StartSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata)
 {
+	GamePlayCharacter::SetVoice("ft_boong.ogg");
 	_Avata->ChangeAvataAnimation("Att_Punch_Off");
 	_Avata->SetAllAvataAutoControl(false);
 	MoveDistance = FSM_Move_Helper();

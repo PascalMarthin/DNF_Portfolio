@@ -320,6 +320,12 @@
     <ClInclude Include="Light_Knight.h">
       <Filter>Object\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="Skill_Fighter_F_ShoulderDash.h">
+      <Filter>Object\Character\Fighter</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlayResultWindow.h">
+      <Filter>Management</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNF.cpp" />
@@ -637,6 +643,12 @@
     </ClCompile>
     <ClCompile Include="Light_Knight.cpp">
       <Filter>Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill_Fighter_F_ShoulderDash.cpp">
+      <Filter>Object\Character\Fighter</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlayResultWindow.cpp">
+      <Filter>Management</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

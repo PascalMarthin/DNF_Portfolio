@@ -27,5 +27,9 @@ protected:
 private:
 	GameEngineCollision* Collision_SeriaRoom_Door;
 	GameEngineCollision* Collision_Jelva2F_Door;
+
+	GameEngineCollision* Collision_SeriaRoom_Gate;
+	GameEngineTextureRenderer* Texture_SeriaGate;
+
 };
 

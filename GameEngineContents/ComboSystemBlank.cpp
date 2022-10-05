@@ -122,10 +122,16 @@ void ComboSystemBlank::SetComboClass(ComboClass _Class)
 {
 	CurrentClass = _Class;
 
+	GamePlayComboSystem::GetInst()->map_ComboStuck[_Class] += 1;
+	if (ComboClass::BeHit == _Class || ComboClass::MultiHit == _Class || ComboClass::None == _Class)
+	{
+		return;
+	}
 	for (size_t i = 0; i < 3; i++)
 	{
 		Texture_Combo_num[i]->Off();
 	}
+
 
 	switch (CurrentClass)
 	{
@@ -161,7 +167,9 @@ void ComboSystemBlank::SetComboClass(ComboClass _Class)
 		Off();
 		break;
 	default:
-		MsgBoxAssert("아직 설저오디지 않았습니다");
+
+		return;
+		//MsgBoxAssert("아직 설저오디지 않았습니다");
 		break;
 	}
 	ReSet();

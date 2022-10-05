@@ -80,6 +80,32 @@ void GameEngineTransform::SetParentTransform(GameEngineTransform& _Parent)
 	SetLocalPosition(Data.LocalPosition);
 }
 
+void GameEngineTransform::PixLocalNegativeY()
+{
+	if (0.0f > Data.LocalScaling.y)
+	{
+		return;
+	}
+
+	Data.LocalScaling.y = -Data.LocalScaling.y;
+
+	SetLocalScale(Data.LocalScaling);
+}
+
+void GameEngineTransform::PixLocalPositiveY()
+{
+	if (0.0f < Data.LocalScaling.y)
+	{
+		return;
+	}
+
+	// abs 어떤 숫자를 넣으면 무조건 양수(절대값)으로 변경해주는 함수.
+	Data.LocalScaling.y = abs(Data.LocalScaling.y);
+
+	SetLocalScale(Data.LocalScaling);
+}
+
+
 
 void GameEngineTransform::PixLocalNegativeX()
 {

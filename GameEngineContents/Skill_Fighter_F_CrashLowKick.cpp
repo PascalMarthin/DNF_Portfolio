@@ -168,6 +168,9 @@ bool Skill_Fighter_F_CrashLowKick::TriggerSkill_ect(GameEngineCollision* _This, 
 		Texture_CrashLowKick_Hit3->On();
 		Texture_CrashLowKick_Bone->SetParent(Object);
 		Texture_CrashLowKick_Bone->On();
+
+		GameEngineSound::SoundPlayControl("lowkick_hit_01.ogg").Volume(0.8f);
+		GameEngineSound::SoundPlayControl("ob_bone_hit_01.ogg").Volume(0.8f);
 	}
 
 	return false;
@@ -175,6 +178,21 @@ bool Skill_Fighter_F_CrashLowKick::TriggerSkill_ect(GameEngineCollision* _This, 
 
 void Skill_Fighter_F_CrashLowKick::StartSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata)
 {
+	switch (GameEngineRandom::MainRandom.RandomInt(0, 2))
+	{
+	case 0:
+		GamePlayCharacter::SetVoice("ft_lowkick_01.ogg");
+		break;
+	case 1:
+		GamePlayCharacter::SetVoice("ft_lowkick_02.ogg");
+		break;
+	case 2:
+		GamePlayCharacter::SetVoice("ft_lowkick_03.ogg");
+		break;
+	default:
+		break;
+	}
+	GameEngineSound::SoundPlayControl("lowkick_01.ogg").Volume(0.6f);
 	_Avata->ChangeAvataAnimation("Att_LowKick2");
 	Texture_CrashLowKick->ChangeFrameAnimation("CrashLowKick_Base");
 	Texture_CrashLowKick->On();

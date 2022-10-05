@@ -297,7 +297,7 @@ void GameEngineDamageRenderer::SetDamage(unsigned int _Damage, const std::vector
 
 		float BigDamageScale = -XPos;
 
-		float HightY = 10.f;
+		float HightY = 14.f;
 		for (int i = 0; i < _AddDamage.size(); i++)
 		{
 			std::string Damage = std::to_string(static_cast<int>(static_cast<float>(_Damage) * _AddDamage[i]));

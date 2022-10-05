@@ -40,6 +40,7 @@ void GameEnginePlusTextureRenderer::Start()
 	Texture_OutLine->SetPipeLine("OutLine");
 	Texture_OutLine->ShaderResources.SetConstantBufferLink("PixelData", Texture_OutLine->GetPixelData());
 	Texture_OutLine->ShaderResources.SetConstantBufferLink("AtlasData", AtlasDatas);
+	Texture_OutLine->GetTransform().SetLocalPosition(GetTransform().GetLocalPosition());
 	Texture_OutLine->GetTransform().SetLocalMove({ 0, 0, 0.01f });
 	Texture_OutLine->GetPixelData().MulColor = float4::ZERO;
 	Texture_OutLine->GetPixelData().PlusColor = float4::YELLOW;

@@ -335,6 +335,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GamePlayResultWindow.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="GameSkillBuff.h">
       <SubType>
       </SubType>
@@ -509,6 +513,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Skill_Fighter_F_Rising.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Skill_Fighter_F_ShoulderDash.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -755,6 +763,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GamePlayResultWindow.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GameSkillBuff.cpp">
       <SubType>
       </SubType>
@@ -928,6 +940,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Skill_Fighter_F_Rising.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Skill_Fighter_F_ShoulderDash.cpp">
       <SubType>
       </SubType>
     </ClCompile>

@@ -302,6 +302,23 @@ void DNF::BaseTextureLoad()
 		Dir.Move("Resource");
 		Dir.Move("Texture");
 		Dir.Move("UI");
+		Dir.Move("Cutin");
+
+		std::vector<GameEngineFile> Texture = Dir.GetAllFile();
+
+		for (size_t i = 0; i < Texture.size(); i++)
+		{
+			GameEngineTexture::Load(Texture[i].GetFullPath());
+		}
+	}
+	
+
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resource");
+		Dir.Move("Resource");
+		Dir.Move("Texture");
+		Dir.Move("UI");
 		Dir.Move("DungeonSelect");
 
 		std::vector<GameEngineFile> Texture = Dir.GetAllFile();
@@ -414,6 +431,41 @@ void DNF::BaseTextureLoad()
 		Dir.Move("UI");
 		Dir.Move("PopUp");
 		Dir.Move("NPCInteraction");
+
+		std::vector<GameEngineFile> Texture = Dir.GetAllFile();
+
+		for (size_t i = 0; i < Texture.size(); i++)
+		{
+			GameEngineTexture::Load(Texture[i].GetFullPath());
+		}
+	}
+
+	{
+
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resource");
+		Dir.Move("Resource");
+		Dir.Move("Texture");
+		Dir.Move("UI");
+		Dir.Move("Monster");
+		Dir.Move("Monster_thunail");
+
+		std::vector<GameEngineFile> Texture = Dir.GetAllFile();
+
+		for (size_t i = 0; i < Texture.size(); i++)
+		{
+			GameEngineTexture::Load(Texture[i].GetFullPath());
+		}
+	}
+
+	{
+
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resource");
+		Dir.Move("Resource");
+		Dir.Move("Texture");
+		Dir.Move("UI");
+		Dir.Move("result_ver2.0");
 
 		std::vector<GameEngineFile> Texture = Dir.GetAllFile();
 
@@ -709,11 +761,13 @@ void DNF::BaseKeySetting()
 		GameEngineInput::GetInst()->CreateKey("Key_R", 'R');
 		GameEngineInput::GetInst()->CreateKey("Key_T", 'T');
 		GameEngineInput::GetInst()->CreateKey("Key_Y", 'Y');
+		GameEngineInput::GetInst()->CreateKey("Key_U", 'U');
+		GameEngineInput::GetInst()->CreateKey("Key_Z", 'Z');
+		GameEngineInput::GetInst()->CreateKey("Key_V", 'V');
 	}
 	{
 		GameEngineInput::GetInst()->CreateKey("BaseAtt", 'X');
 		GameEngineInput::GetInst()->CreateKey("Jump", 'C');
-		GameEngineInput::GetInst()->CreateKey("Key_Upper", 'Z');
 		GameEngineInput::GetInst()->CreateKey("SpaceBar", VK_SPACE);
 		GameEngineInput::GetInst()->CreateKey("UP_Arrow", VK_UP);
 		GameEngineInput::GetInst()->CreateKey("Down_Arrow", VK_DOWN);
@@ -730,7 +784,7 @@ void DNF::BaseKeySetting()
 	{
 		GameEngineInput::GetInst()->CreateKey("ESC", VK_ESCAPE);
 		GameEngineInput::GetInst()->CreateKey("Inventory", 'I');
-		GameEngineInput::GetInst()->CreateKey("Avata", 'U');
+		GameEngineInput::GetInst()->CreateKey("Avata", 'O');
 		GameEngineInput::GetInst()->CreateKey("Skill", 'K');
 		GameEngineInput::GetInst()->CreateKey("MyProfile", 'M');
 		GameEngineInput::GetInst()->CreateKey("Enter", VK_RETURN);
@@ -748,6 +802,10 @@ void DNF::BaseKeySetting()
 		GameEngineInput::GetInst()->CreateKey("Debug3", VK_NUMPAD3);
 		GameEngineInput::GetInst()->CreateKey("Debug4", VK_NUMPAD4);
 		GameEngineInput::GetInst()->CreateKey("Debug5", VK_NUMPAD5);
+		GameEngineInput::GetInst()->CreateKey("Debug6", VK_NUMPAD6);
+		GameEngineInput::GetInst()->CreateKey("Debug7", VK_NUMPAD7);
+		GameEngineInput::GetInst()->CreateKey("Debug8", VK_NUMPAD8);
+		GameEngineInput::GetInst()->CreateKey("Debug9", VK_NUMPAD9);
 	}
 }
 

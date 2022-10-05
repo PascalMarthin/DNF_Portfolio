@@ -139,6 +139,7 @@ void GamePlayMonsterHPBar::Start()
 	Font_MonsterName->SetLeftAndRightSort(LeftAndRightSort::LEFT);
 
 	Texture_Thumbnail = CreateComponent<GameEngineUIRenderer>();
+	Texture_Thumbnail->GetTransform().SetLocalPosition({-6, 6});
 	//Texture_Thumbnail->
 
 }
@@ -152,8 +153,9 @@ void GamePlayMonsterHPBar::SetMonster_InMember(GamePlayMonster* _Monster)
 	}
 
 	Monster_Target = _Monster;
-	
-	
+	Texture_Thumbnail->SetTexture(Monster_Target->GetThumbnail());
+	Texture_Thumbnail->ScaleToTexture();
+
 	DeathOff = 5.f;
 
 	Monster_CurrentHP = Monster_Target->GetMonsterStat()->GetHP();
@@ -581,10 +583,15 @@ void GamePlayMonsterHPBar::SetHitDamage_InMember(unsigned int _CurrentHP)
 			MaxSpeed = static_cast<int>(Speed);
 			FrameSpeed = 0;
 		}
-		else if ((Monster_BeforeHPLine - Monster_GoalHPLine) > 100 && MaxSpeed < 2)
+		else if ((Monster_BeforeHPLine - Monster_GoalHPLine) > 1000 && MaxSpeed < 2)
 		{
 			MaxSpeed = 1;
 			FrameSpeed = 0.025f;
+		}
+		else if ((Monster_BeforeHPLine - Monster_GoalHPLine) > 100 && MaxSpeed < 2)
+		{
+			MaxSpeed = 1;
+			FrameSpeed = 0.125f;
 		}
 		//else
 		//{
@@ -757,8 +764,11 @@ void GamePlayMonsterHPBar::LevelEndEvent()
 	FrameSpeed = 0;
 	for (auto& Iter : All_MonsterCategory)
 	{
-		Iter->Death();
-		Iter = nullptr;
+		if (Iter != nullptr)
+		{
+			Iter->Death();
+			Iter = nullptr;
+		}
 	}
-	//Monster_CurrentMonsterClass = MonsterClass::None;
+	All_MonsterCategory.clear();
 }

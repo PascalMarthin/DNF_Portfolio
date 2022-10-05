@@ -23,6 +23,12 @@ enum class InteractOption
 	Talking,
 	Exit,
 };
+enum class InteractOptionNPCVoice
+{
+	Nomal,
+	Click,
+	Off
+};
 
 class GameEnginePlusTextureRenderer;
 class GamePlayObjectNPC : public GameEngineActor
@@ -71,17 +77,21 @@ public:
 		return TexureR_Face;
 	}
 
-
+	static void SetVoice(const std::string& _Name);
+	std::map<InteractOptionNPCVoice, std::vector<std::string>> map_NPCVoice;
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 
 	// void End() override {}
-	// void OnEvent() override {}
+	//void OnEvent() override { Texture_NPCStanding->GetOutLine()->GetTransform().SetLocalPosition({ 0,0, 0.001f }); }
 	// void OffEvent() override {}
 
 
 	NPCEnum EnumNPC;
+
+	
+
 	std::map<InteractOption, std::vector<std::string>> map_InteractionTalk;
 	std::vector<InteractOption> vector_Option;
 	std::string Name;
@@ -97,6 +107,7 @@ protected:
 
 private:
 
+	static GameEngineSoundPlayer NPC_Voice;
 
 
 
