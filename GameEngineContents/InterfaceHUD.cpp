@@ -64,7 +64,37 @@ void InterfaceHUD::Start()
 				Skillicon->GetTransform().SetLocalPosition(SkillInterfacePivot);
 				Skillicon->GetTransform().SetLocalMove({ 32.f * j , 32.f * i  });
 				SkillInterface.push_back(Skillicon);
+
+
+				Skillicon = CreateComponent<GameEngineUIRenderer>();
+				Skillicon->SetTexture("HUD_SkillIcon.png");
+				Skillicon->ScaleToTexture();
+				Skillicon->GetTransform().SetLocalPosition(SkillInterfacePivot);
+				Skillicon->GetTransform().SetLocalMove({ 32.f * j , 32.f * i });
+				SkillInterIcon.push_back(Skillicon);
+
+
 				// 컴포넌트화 예정
+			}
+		}
+
+		{
+			SkillInterIcon[7]->SetTexture("SkillHUD_Shoulder.png");
+			SkillInterIcon[8]->SetTexture("SkillHUD_RN.png");
+			SkillInterIcon[9]->SetTexture("SkillHUD_LD.png");
+			SkillInterIcon[10]->SetTexture("SkillHUD_Strongest.png");
+			SkillInterIcon[11]->SetTexture("SkillHUD_Am.png");
+			SkillInterIcon[12]->SetTexture("SkillHUD_Kaiken.png");
+			SkillInterIcon[0]->SetTexture("SkillHUD_1punch.png");
+			SkillInterIcon[1]->SetTexture("SkillHUD_Upper.png");
+			SkillInterIcon[2]->SetTexture("SkillHUD_Lowkick.png");
+			SkillInterIcon[3]->SetTexture("SkillHUD_Carsh.png");
+			SkillInterIcon[4]->SetTexture("SkillHUD_Kick.png");
+			SkillInterIcon[5]->SetTexture("SkillHUD_Boong.png");
+
+			for (size_t i = 0; i < SkillInterIcon.size(); i++)
+			{
+				SkillInterIcon[i]->ScaleToTexture();
 			}
 		}
 
@@ -155,7 +185,7 @@ void InterfaceHUD::HPUpdate(float _Time)
 	int MAXHP = CharacterStatManager::GetInst()->GetAbilityStat()->GetMAXHP();
 	if (CurrentHP < HP) // 체력 회복
 	{
-		CurrentHP += 3;
+		CurrentHP += MAXHP / 500;
 		CurrentBeHindHP = CurrentHP;
 		CurrentHitHP = CurrentHP;
 		if (CurrentHP > HP)
@@ -186,7 +216,7 @@ void InterfaceHUD::HPUpdate(float _Time)
 		}
 		else
 		{
-			CurrentBeHindHP -= 2;
+			CurrentBeHindHP -= MAXHP / 1000;
 		}
 	}
 

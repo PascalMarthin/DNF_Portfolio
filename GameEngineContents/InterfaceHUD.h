@@ -54,7 +54,9 @@ private:
 
 	GameEngineTextureRenderer* EXPBar;
 
-	std::vector<GameEngineTextureRenderer*> SkillInterface;
+
+	std::vector<GameEngineUIRenderer*> SkillInterface;
+	std::vector<GameEngineUIRenderer*> SkillInterIcon;
 	GameEngineTextureRenderer* SkillPage;
 
 

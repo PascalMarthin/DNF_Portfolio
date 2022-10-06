@@ -414,21 +414,27 @@ void GamePlayMonsterHPBar::Update(float _DeltaTime)
 
 		if (Monster_BeforeHPLine > Monster_GoalHPLine)
 		{
-			DecreaseTime += _DeltaTime;
-			if (DecreaseTime > FrameSpeed)
+			if (Texture_HP1_White->GetPixelData().MulColor.a > 0 || Texture_HP2_White->GetPixelData().MulColor.a > 0)
 			{
-				//int Index = static_cast<int>(static_cast<float>(Monster_BeforeHPLine) * (1.0f - (DecreaseTime / 0.3f)) + static_cast<float>(Monster_GoalHPLine * (DecreaseTime / 0.3f)));
-				//int Index = Monster_BeforeHPLine - Monster_GoalHPLine;
 
-				SetDecreaseHP(MaxSpeed);
-
-				SetHPBarRatioTexture_Front(Monster_BeforeHPLine - Monster_GoalHPLine);
-				SetHPTexture();
-				SetHPStack();
-
-				DecreaseTime = 0.f;
 			}
+			else
+			{
+				DecreaseTime += _DeltaTime;
+				if (DecreaseTime > FrameSpeed)
+				{
+					//int Index = static_cast<int>(static_cast<float>(Monster_BeforeHPLine) * (1.0f - (DecreaseTime / 0.3f)) + static_cast<float>(Monster_GoalHPLine * (DecreaseTime / 0.3f)));
+					//int Index = Monster_BeforeHPLine - Monster_GoalHPLine;
 
+					SetDecreaseHP(MaxSpeed);
+
+					SetHPBarRatioTexture_Front(Monster_BeforeHPLine - Monster_GoalHPLine);
+					SetHPTexture();
+					SetHPStack();
+
+					DecreaseTime = 0.f;
+				}
+			}
 		}
 
 		if (Monster_GoalHPLine <= 0)
@@ -554,13 +560,26 @@ void GamePlayMonsterHPBar::SetHitDamage_InMember(unsigned int _CurrentHP)
 	unsigned int Damage = Monster_CurrentHP - _CurrentHP;
 	if (Damage >= 0)
 	{
+		if (!(Monster_BeforeHPLine - Monster_GoalHPLine > 200))
+		{
+			Texture_HP1_White->GetPixelData().MulColor = { 1,1,1,1 };
+			Texture_HP2_White->GetPixelData().MulColor = { 1,1,1,1 };
+
+			if (FlashTime > 0)
+			{
+				FlashTime = 0.125f;
+			}
+			else
+			{
+				FlashTime = 0.2f;
+			}
+		}
 
 
 		Monster_CurrentHP = _CurrentHP;
 		Monster_GoalHPLine = static_cast<int>(((static_cast<float>(Monster_CurrentHP) * Monster_Target->GetMonsterStat()->GetMaxHPLine()) / Monster_Target->GetMonsterStat()->GetMAXHP()) * 100.f);
 
-		Texture_HP1_White->GetPixelData().MulColor = { 1,1,1,1 };
-		Texture_HP2_White->GetPixelData().MulColor = { 1,1,1,1 };
+
 
 		Texture_HP1_White->GetTransform().SetLocalScale(Texture_HP1_Front->GetTransform().GetLocalScale());
 		Texture_HP2_White->GetTransform().SetLocalScale(Texture_HP2_Front->GetTransform().GetLocalScale());
@@ -604,15 +623,9 @@ void GamePlayMonsterHPBar::SetHitDamage_InMember(unsigned int _CurrentHP)
 
 		//MaxSpeed = 10;  // 최대 속도 조절
 
+
 		
-		if (FlashTime > 0)
-		{
-			FlashTime = 0.12f;
-		}
-		else
-		{
-			FlashTime = 0.2f;
-		}
+
 		DecreaseTime = 0.0f;
 		//if ()
 		//{
