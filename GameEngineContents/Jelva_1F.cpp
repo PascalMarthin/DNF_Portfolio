@@ -67,6 +67,7 @@ void Jelva_1F::Update(float _DeltaTime)
 		Pos.y += 100.f;
 
 		GetMainCameraActor()->GetTransform().SetWorldPosition(Pos);
+		GetUIFontCamera()->GetTransform().SetWorldPosition(Pos);
 	}
 }
 
@@ -92,6 +93,7 @@ void Jelva_1F::LevelStartEvent()
 	}
 
 	GetMainCameraActor()->GetTransform().SetWorldPosition(Player_Character->GetMoveManager()->GetMoveCollision()->GetTransform().GetLocalPosition());
+
 	GamePlayDataBase::GetCurrentCharacterData()->SetCurrentMap(TownMap::Jelva1F);
 
 }	

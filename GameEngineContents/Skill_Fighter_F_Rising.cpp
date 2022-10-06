@@ -38,7 +38,7 @@ void Skill_Fighter_F_Rising::Start()
 	Actor_DummyActor = GetActor()->GetLevel()->CreateActor<DummyActor>();
 	{
 		GameEngineCollision* Rising = GetActor()->CreateComponent<GameEngineCollision>("Rising_Up_1");
-		Rising->GetTransform().SetLocalScale({ 120.f, 40.f, 30.f });
+		Rising->GetTransform().SetLocalScale({ 150.f, 100.f, 100.f });
 		Rising->GetTransform().SetLocalPosition({ 0, 0.f, 0 });
 		Rising->ChangeOrder(CollisionOrder::Player_Att);
 		Rising->SetDebugSetting(CollisionType::CT_AABB, { 0, 0 ,0, 0 });
@@ -48,7 +48,7 @@ void Skill_Fighter_F_Rising::Start()
 
 	{
 		GameEngineCollision* Rising = GetActor()->CreateComponent<GameEngineCollision>("Rising_Up_2");
-		Rising->GetTransform().SetLocalScale({ 80.f, 60.f, 30.f });
+		Rising->GetTransform().SetLocalScale({ 220.f, 100.f, 120.f });
 		Rising->GetTransform().SetLocalPosition({ 0, 0.f, 0 });
 		Rising->ChangeOrder(CollisionOrder::Player_Att);
 		Rising->SetDebugSetting(CollisionType::CT_AABB, { 0, 0 ,0, 0 });

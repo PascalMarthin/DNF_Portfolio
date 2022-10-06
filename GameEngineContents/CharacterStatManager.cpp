@@ -185,9 +185,28 @@ bool CharacterStatManager::HealHP(int _Heal, HPMPEnum _Enum)
 			CurrentPlayerAbilityStat->MP = CurrentPlayerAbilityStat->MAXMP;
 		}
 	}
+
 	HealHPAni* Heal = GetParent<GameEngineActor>()->GetLevel()->CreateActor<HealHPAni>();
 	Heal->SetParent(GetParent());
 	Heal->SetMPHPHeal(_Enum, _Heal);
+
+	GameEngineDamageRenderer* Renderer = GetParent<GameEngineActor>()->GetLevel()->CreateActor<GameEngineDamageRenderer>();
+	//GetTransform().SetLocalPosition(GetParent<GameEngineTransformBase>()->GetTransform().GetLocalPosition());
+	Renderer->GetTransform().SetLocalPosition({ GamePlayCharacter::GetInst()->GetTransform().GetLocalPosition().x ,GamePlayCharacter::GetInst()->GetTransform().GetLocalPosition().y, -10.f });
+
+	const float4& Pos = GamePlayCharacter::GetInst()->GetTransform().GetWorldPosition();
+	const float4& Pos1 = Renderer->GetTransform().GetWorldPosition();
+	if (_Enum == HPMPEnum::HP)
+	{
+		Renderer->SetDamage(_Heal, DamageFontClass::HPHeal);
+		GameEngineSound::SoundPlayControl("hp_recovered.ogg").Volume(0.8f);
+	}
+
+	if (_Enum == HPMPEnum::MP)
+	{
+		GameEngineSound::SoundPlayControl("mp_recovered.ogg").Volume(0.8f);
+		Renderer->SetDamage(_Heal, DamageFontClass::MPHeal);
+	}
 
 	return true;
 }

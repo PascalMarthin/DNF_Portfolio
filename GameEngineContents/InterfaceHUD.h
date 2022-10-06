@@ -54,6 +54,9 @@ private:
 
 	GameEngineTextureRenderer* EXPBar;
 
+	std::vector<GameEngineUIRenderer*> vector_LevelFont;
+
+
 
 	std::vector<GameEngineUIRenderer*> SkillInterface;
 	std::vector<GameEngineUIRenderer*> SkillInterIcon;

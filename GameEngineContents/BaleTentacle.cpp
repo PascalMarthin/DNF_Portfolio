@@ -259,7 +259,7 @@ void TentacleKal::Update(float _Time)
 				Texture_Kal->On();
 				Delay = 1.5f;
 				Player_Target->BeHit({ 0,0,0,20.f }, HitPostureType::Standing, nullptr, nullptr, GetTransform().GetWorldPosition().x > Player_Target->GetTransform().GetWorldPosition().x ? 1 : -1
-					, 300);
+					, Player_Target->GetStatManager()->GetAbilityStat()->GetMAXHP() / 100);
 
 			}
 		}

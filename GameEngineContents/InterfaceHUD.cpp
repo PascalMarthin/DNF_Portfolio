@@ -40,7 +40,7 @@ InterfaceHUD::~InterfaceHUD()
 
 void InterfaceHUD::Start()
 {
-	GetTransform().SetLocalScale({ MonitorX , MonitorY });
+	GetTransform().SetLocalScale({ MonitorX , MonitorY, 1 });
 	{
 		GetTransform().SetLocalPosition({ 0, (-720 + (84 * MonitorY )) / 2 });
 		HUDBase        = CreateComponent<GameEngineUIRenderer>();
@@ -62,7 +62,7 @@ void InterfaceHUD::Start()
 				Skillicon->SetTexture("HUD_SkillIcon.png");
 				Skillicon->ScaleToTexture();
 				Skillicon->GetTransform().SetLocalPosition(SkillInterfacePivot);
-				Skillicon->GetTransform().SetLocalMove({ 32.f * j , 32.f * i  });
+				Skillicon->GetTransform().SetLocalMove({ 32.f * j , 32.f * i });
 				SkillInterface.push_back(Skillicon);
 
 
@@ -74,28 +74,28 @@ void InterfaceHUD::Start()
 				SkillInterIcon.push_back(Skillicon);
 
 
-				// 컴포넌트화 예정
+// 컴포넌트화 예정
 			}
 		}
 
 		{
-			SkillInterIcon[7]->SetTexture("SkillHUD_Shoulder.png");
-			SkillInterIcon[8]->SetTexture("SkillHUD_RN.png");
-			SkillInterIcon[9]->SetTexture("SkillHUD_LD.png");
-			SkillInterIcon[10]->SetTexture("SkillHUD_Strongest.png");
-			SkillInterIcon[11]->SetTexture("SkillHUD_Am.png");
-			SkillInterIcon[12]->SetTexture("SkillHUD_Kaiken.png");
-			SkillInterIcon[0]->SetTexture("SkillHUD_1punch.png");
-			SkillInterIcon[1]->SetTexture("SkillHUD_Upper.png");
-			SkillInterIcon[2]->SetTexture("SkillHUD_Lowkick.png");
-			SkillInterIcon[3]->SetTexture("SkillHUD_Carsh.png");
-			SkillInterIcon[4]->SetTexture("SkillHUD_Kick.png");
-			SkillInterIcon[5]->SetTexture("SkillHUD_Boong.png");
+		SkillInterIcon[7]->SetTexture("SkillHUD_Shoulder.png");
+		SkillInterIcon[8]->SetTexture("SkillHUD_RN.png");
+		SkillInterIcon[9]->SetTexture("SkillHUD_LD.png");
+		SkillInterIcon[10]->SetTexture("SkillHUD_Strongest.png");
+		SkillInterIcon[11]->SetTexture("SkillHUD_Am.png");
+		SkillInterIcon[12]->SetTexture("SkillHUD_Kaiken.png");
+		SkillInterIcon[0]->SetTexture("SkillHUD_1punch.png");
+		SkillInterIcon[1]->SetTexture("SkillHUD_Upper.png");
+		SkillInterIcon[2]->SetTexture("SkillHUD_Lowkick.png");
+		SkillInterIcon[3]->SetTexture("SkillHUD_Carsh.png");
+		SkillInterIcon[4]->SetTexture("SkillHUD_Kick.png");
+		SkillInterIcon[5]->SetTexture("SkillHUD_Boong.png");
 
-			for (size_t i = 0; i < SkillInterIcon.size(); i++)
-			{
-				SkillInterIcon[i]->ScaleToTexture();
-			}
+		for (size_t i = 0; i < SkillInterIcon.size(); i++)
+		{
+			SkillInterIcon[i]->ScaleToTexture();
+		}
 		}
 
 		HUDBase->SetTexture("HUD_HUDBase.png");
@@ -114,25 +114,25 @@ void InterfaceHUD::Start()
 		HPBar->SetTexture("HUD_HPBar.png");
 		HPBar->ScaleToTexture();
 		HPBar->GetTransform().SetLocalPosition(HPBarPivot);
-	
-		
+
+
 		HPBar_Behind->SetTexture("HUD_HPBar.png");
 		HPBar_Behind->ScaleToTexture();
 		HPBar_Behind->GetTransform().SetLocalPosition(HPBarPivot);
 		HPBar_Behind->GetTransform().SetLocalMove({ 0,0, 0.002f });
-		HPBar_Behind->GetPixelData().PlusColor = {-0.2f, -0.2f, -0.2f, 0};
+		HPBar_Behind->GetPixelData().PlusColor = { -0.2f, -0.2f, -0.2f, 0 };
 
 		HPBar_Hit->SetTexture("HUD_HPBarHit.png");
 		HPBar_Hit->ScaleToTexture();
 		HPBar_Hit->GetTransform().SetLocalPosition(HPBarPivot);
-		HPBar_Hit->GetTransform().SetLocalMove({ 0,0, 0.002f });	
+		HPBar_Hit->GetTransform().SetLocalMove({ 0,0, 0.002f });
 
 
 		MPBar->SetTexture("HUD_MPBar.png");
 		MPBar->ScaleToTexture();
 		MPBar->GetTransform().SetLocalPosition(MPBarPivot);
 
-		
+
 		MPBar_Behind->SetTexture("HUD_MPBar.png");
 		MPBar_Behind->ScaleToTexture();
 		MPBar_Behind->GetTransform().SetLocalPosition(MPBarPivot);
@@ -144,20 +144,45 @@ void InterfaceHUD::Start()
 		MPBar_Hit->ScaleToTexture();
 		MPBar_Hit->GetTransform().SetLocalPosition(MPBarPivot);
 		MPBar_Hit->GetTransform().SetLocalMove({ 0,0, 0.002f });
-		
+
 
 		EXPBar->SetTexture("HUD_ExpBar.png");
 		EXPBar->ScaleToTexture();
 		EXPBar->GetTransform().SetLocalPosition(EXPBarPivot);
 
-	/*	SkillInterface->SetTexture("HUD_SkillInterface.png");
-		SkillInterface->ScaleToTexture(); 
-		SkillInterface->GetTransform().SetLocalPosition(SkillInterfacePivot);*/
+		/*	SkillInterface->SetTexture("HUD_SkillInterface.png");
+			SkillInterface->ScaleToTexture();
+			SkillInterface->GetTransform().SetLocalPosition(SkillInterfacePivot);*/
 
-		//HPBar_Hit->Off();
+			//HPBar_Hit->Off();
 	}
 
 
+
+	{
+		GameEngineUIRenderer* Font = CreateComponent<GameEngineUIRenderer>();
+		Font->SetFolderTextureToIndex("Level_Font",10);
+		Font->GetTransform().SetLocalScale({18,11,1});
+		Font->GetTransform().SetLocalPosition({-200, -40 , -0.3f});
+		Font->SetPivot(PIVOTMODE::LEFTBOT);
+
+		vector_LevelFont.push_back(Font);
+
+		Font = CreateComponent<GameEngineUIRenderer>();
+		Font->GetTransform().SetLocalScale({ 12,11,1 });
+		Font->GetTransform().SetLocalPosition({ -169, -40 , -0.3f });
+		Font->SetPivot(PIVOTMODE::RIGHTBOT);
+		Font->Off();
+		vector_LevelFont.push_back(Font);
+
+		Font = CreateComponent<GameEngineUIRenderer>();
+		Font->GetTransform().SetLocalScale({ 12,11,1 });
+		Font->GetTransform().SetLocalPosition({ -159, -40 , -0.3f });
+		Font->SetPivot(PIVOTMODE::RIGHTBOT);
+		Font->Off();
+		vector_LevelFont.push_back(Font);
+
+	}
 }
 
 void InterfaceHUD::Update(float _DeltaTime)
@@ -177,6 +202,29 @@ void InterfaceHUD::Update(float _DeltaTime)
 
 	HPUpdate(_DeltaTime);
 	MPUpdate(_DeltaTime);
+
+	{
+		std::string Level = std::to_string(CharacterStatManager::GetInst()->GetAbilityStat()->GetLevel()); 
+		if (Level.size() == 1)
+		{
+			vector_LevelFont[2]->SetFolderTextureToIndex("Level_Font", Level[0] - 48);
+			vector_LevelFont[2]->ScaleToTexture();
+			vector_LevelFont[2]->On();
+
+			vector_LevelFont[1]->Off();
+		}
+		else if (Level.size() == 2)
+		{
+			vector_LevelFont[2]->SetFolderTextureToIndex("Level_Font", Level[1] - 48);
+			vector_LevelFont[2]->ScaleToTexture();
+			vector_LevelFont[2]->On();
+
+			vector_LevelFont[1]->SetFolderTextureToIndex("Level_Font", Level[0] - 48);
+			vector_LevelFont[1]->ScaleToTexture();
+			vector_LevelFont[1]->On();
+		}
+
+	}
 }
 
 void InterfaceHUD::HPUpdate(float _Time)
@@ -233,7 +281,7 @@ void InterfaceHUD::MPUpdate(float _Time)
 	int MAXMP = CharacterStatManager::GetInst()->GetAbilityStat()->GetMAXMP();
 	if (CurrentMP < MP) // 체력 회복
 	{
-		CurrentMP += 3;
+		CurrentMP += MAXMP / 500;
 		CurrentBeHindMP = CurrentMP;
 		CurrentHitMP = CurrentMP;
 		if (CurrentMP > MP)
@@ -264,7 +312,7 @@ void InterfaceHUD::MPUpdate(float _Time)
 		}
 		else
 		{
-			CurrentBeHindMP -= 2;
+			CurrentBeHindMP -= MAXMP / 1000;
 		}
 	}
 

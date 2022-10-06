@@ -73,6 +73,7 @@ void Jelva_2F::Update(float _DeltaTime)
 		Pos.y += 100.f;
 
 		GetMainCameraActor()->GetTransform().SetWorldPosition(Pos);
+		GetUIFontCamera()->GetTransform().SetWorldPosition(Pos);
 	}
 }
 

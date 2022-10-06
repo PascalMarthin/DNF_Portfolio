@@ -94,11 +94,12 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitColli
 	
 
 	CharacterAbilityStat* Stat = GamePlayCharacter::GetInst()->GetStatManager()->GetAbilityStat();
-	_Damage *= (Stat->GetSTR());
+	_Damage *= (Stat->GetSTR() * ((Stat->GetPhysical_Damage() / 100) + 1));
 	if (GameEngineInput::GetInst()->IsPress("Debug6"))
 	{
-		_Damage = 999999900;
+		_Damage = 9999999999;
 	}
+
 
 
 	// Á¡¼ö
@@ -212,6 +213,7 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitColli
 				{
 					SetDamage(_Damage * 2, AddDamage, DamageFontClass::Critical);
 					GamePlayComboSystem::GetInst()->SetComboClass(ComboClass::Critical);
+
 				}
 				else
 				{

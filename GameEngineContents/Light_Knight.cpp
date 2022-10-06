@@ -60,7 +60,7 @@ void Light_Knight::Start()
 	Texture_Eff->CreateFrameAnimationFolder("Monster_Hit2", FrameAnimation_DESC("light_knight_effect1", 35, 35, 0.15f, false));
 
 	Texture_Eff->CreateFrameAnimationFolder("Monster_Att", FrameAnimation_DESC("light_knight_effect1", 4, 13, 0.075f, false));
-	Texture_Eff->AnimationBindFrame("Monster_Att", std::bind(&Light_Knight::Att_SlashFrame, this, std::placeholders::_1));
+	//Texture_Eff->AnimationBindFrame("Monster_Att", std::bind(&Light_Knight::Att_SlashFrame, this, std::placeholders::_1));
 	Texture_Eff->AnimationBindEnd("Monster_Att", std::bind(&Light_Knight::Bale_BackToNone, this, std::placeholders::_1));
 
 	Texture_Eff->ChangeFrameAnimation("Monster_Walk");
@@ -584,11 +584,6 @@ void Light_Knight::Att_SlashFrame(const FrameAnimation_DESC& _DESC)
 	//}
 	switch (_DESC.CurFrame)
 	{
-	case 7:
-	{
-
-	}
-	break;
 	case 8:
 	{
 		if (Collision_SlashHitPos->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player, CollisionType::CT_AABB, std::bind(&GamePlayMonster::GetTarget, this, std::placeholders::_1, std::placeholders::_2)))

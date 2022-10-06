@@ -1352,7 +1352,7 @@ void Bale::Sting_Update(const FrameAnimation_DESC& _DESC)
 				break;
 			}
 			int Dir = Collision_StampingHit->GetTransform().GetWorldPosition().x - Hit_Player->GetTransform().GetWorldPosition().x > 0 ? -1 : 1;
-			Hit_Player->BeHit({ 30, 0, 0, 40.f }, HitPostureType::Standing, nullptr, nullptr, Dir, 300);
+			Hit_Player->BeHit({ 30, 0, 0, 40.f }, HitPostureType::Standing, nullptr, nullptr, Dir, 1000);
 		}
 		else if (Collision_StingHit->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player, CollisionType::CT_AABB))
 		{
@@ -1421,7 +1421,7 @@ void Bale::Sting_Update(const FrameAnimation_DESC& _DESC)
 			}
 
 			int Dir = Collision_StampingHit->GetTransform().GetWorldPosition().x - Hit_Player->GetTransform().GetWorldPosition().x > 0 ? -1 : 1;
-			Hit_Player->BeHit({ 30, 0, 0, 40.f }, HitPostureType::Standing, nullptr, nullptr, Dir, 300);
+			Hit_Player->BeHit({ 30, 0, 0, 40.f }, HitPostureType::Standing, nullptr, nullptr, Dir, 1000);
 		}
 		else if (Collision_StingHit->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player, CollisionType::CT_AABB))
 		{
@@ -1583,7 +1583,7 @@ void Bale::Bale_Stamping(const FrameAnimation_DESC& _DESC)
 			}
 
 			int Dir = Collision_StampingHit->GetTransform().GetWorldPosition().x - Hit_Player->GetTransform().GetWorldPosition().x > 0 ? -1 : 1;
-			Hit_Player->BeHit({ 50, 300 }, HitPostureType::Aerial, nullptr, nullptr, Dir, 500);
+			Hit_Player->BeHit({ 50, 300 }, HitPostureType::Aerial, nullptr, nullptr, Dir, 4200);
 		}
 		else if (Collision_StampingHit->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player, CollisionType::CT_AABB))
 		{
@@ -1719,8 +1719,8 @@ void Bale::FSM_Att_Dash_Update(float _DeltaTime, const StateInfo& _Info)
 				break;
 			}
 
-			int Dir = Collision_StampingHit->GetTransform().GetWorldPosition().x - Hit_Player->GetTransform().GetWorldPosition().x > 0 ? -1 : 1;
-			Hit_Player->BeHit({ 50, 0,0,30 }, HitPostureType::Standing, nullptr, nullptr, Dir, 500);
+			int Dir = Collision_DashHit->GetTransform().GetWorldPosition().x - Hit_Player->GetTransform().GetWorldPosition().x > 0 ? -1 : 1;
+			Hit_Player->BeHit({ 50, 0,0,30 }, HitPostureType::Standing, nullptr, nullptr, Dir, 1000);
 			Collision_DashHit->Off();
 		}
 		else if (Collision_StampingHit->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player, CollisionType::CT_AABB))
@@ -2045,7 +2045,7 @@ void Bale::Bale_TrackUpdate(const FrameAnimation_DESC& _DESC, float _Time)
 		Texture_Monster->ChangeFrameAnimation("Bale_TrackCatch");
 		Texture_Monster->CurAnimationPauseOff();
 		int Dir = Collision_StampingHit->GetTransform().GetWorldPosition().x - Hit_Player->GetTransform().GetWorldPosition().x > 0 ? -1 : 1;
-		Hit_Player->BeHit({ 0, 0, 0, 3000}, HitPostureType::Hold, nullptr, nullptr, Dir, 500);
+		Hit_Player->BeHit({ 0, 0, 0, 2000}, HitPostureType::Hold, nullptr, nullptr, Dir, 500);
 
 		const float4& Pos = GetTransform().GetWorldPosition();
 		if (GetTransform().GetLocalScale().x >= 0)
@@ -2169,7 +2169,7 @@ void Bale::Bale_TrackCatchFrame(const FrameAnimation_DESC& _DESC)
 	case 16:
 	{
 	
-		Hit_Player->BeHit({ 200, 600, 0, 0 }, HitPostureType::Aerial, nullptr, nullptr, -Dir, 3000);
+		Hit_Player->BeHit({ 200, 600, 0, 0 }, HitPostureType::Aerial, nullptr, nullptr, -Dir, 8000);
 		GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
 		Renderer->CreateFrameAnimationFolder("Bale_boom_purple_026", FrameAnimation_DESC("Bale_boom_purple_026", 15, 28, 0.075f, false));
 		Renderer->ChangeFrameAnimation("Bale_boom_purple_026");
@@ -2359,7 +2359,10 @@ unsigned int Bale::SetHPFromHit(unsigned int _Damage)
 
 	//}
 	unsigned int Damage = _Damage / static_cast<unsigned int>(Def); /*- static_cast<unsigned int>((255.f * MonsterAbilityStat.Def) * 0.8f);*/
-
+	if (GameEngineInput::GetInst()->IsPress("Debug6"))
+	{
+		Damage = 100000000; // 99,999,999
+	}
 
 
 	if (Barrier_HP <= 0)
@@ -2407,19 +2410,23 @@ unsigned int Bale::SetHPFromHit(unsigned int _Damage, const std::vector<float>& 
 	//{
 
 	//}
-	int Damage = _Damage / static_cast<int>(MonsterAbilityStat.Def); /*- static_cast<unsigned int>((255.f * MonsterAbilityStat.Def) * 0.8f);*/
-	int AddDamage = _Damage;
+	unsigned int Damage = _Damage / static_cast<unsigned int>(MonsterAbilityStat.Def); /*- static_cast<unsigned int>((255.f * MonsterAbilityStat.Def) * 0.8f);*/
+	if (GameEngineInput::GetInst()->IsPress("Debug6"))
+	{
+		Damage = 100000000; // 99,999,999
+	}
+	unsigned int AddDamage = Damage;
 
 	for (float Iter : _AddDamage)
 	{
-		AddDamage += static_cast<int>(static_cast<float>(_Damage) * Iter);
+		AddDamage += static_cast<unsigned int>(static_cast<float>(_Damage) * Iter);
 	}
 
 
 
 	if (Barrier_HP <= 0)
 	{
-		if (MonsterAbilityStat.HP < Damage)
+		if (MonsterAbilityStat.HP < AddDamage)
 		{
 			Dead();
 			GamePlayMonsterHPBar::SetHitDamage(MonsterAbilityStat.HP);

@@ -28,20 +28,14 @@ void HealHPAni::EndFrame(const FrameAnimation_DESC& _DESC)
 
 void HealHPAni::SetMPHPHeal(HPMPEnum _Enum, int _Heal)
 {
-	GameEngineDamageRenderer* Renderer = GetLevel()->CreateActor<GameEngineDamageRenderer>();
-	Renderer->GetTransform().SetLocalPosition(GetParent<GameEngineTransformBase>()->GetTransform().GetLocalPosition());
 	if (_Enum == HPMPEnum::HP)
 	{
 		Texture_EffectAni->ChangeFrameAnimation("HPHeal");
-		Renderer->SetDamage(_Heal, DamageFontClass::HPHeal);
-		GameEngineSound::SoundPlayControl("hp_recovered.ogg").Volume(0.8f);
 	}
 
 	if (_Enum == HPMPEnum::MP)
 	{
-		GameEngineSound::SoundPlayControl("mp_recovered.ogg").Volume(0.8f);
 		Texture_EffectAni->ChangeFrameAnimation("MPHeal");
-		Renderer->SetDamage(_Heal, DamageFontClass::MPHeal);
 	}
 
 	Texture_EffectAni->ScaleToTexture();

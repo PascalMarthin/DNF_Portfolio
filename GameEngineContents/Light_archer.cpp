@@ -528,6 +528,7 @@ void Light_archer::FSM_Att_Shoot_Start(const StateInfo& _Info)
 	Texture_Eff->ChangeFrameAnimation("Monster_Att", true);
 	Manager_StatManager->SetDoSkill();
 	NearMiss = false;
+	Actor_SpeechPopUp->CreatePopup("ºûÀÌ¿©...");
 }
 void Light_archer::FSM_Att_Shoot_Update(float _DeltaTime, const StateInfo& _Info)
 {

@@ -72,6 +72,10 @@ unsigned int GamePlayMonster::SetHPFromHit(unsigned int _Damage)
 
 	//}
 	int Damage = _Damage / static_cast<int>(MonsterAbilityStat.Def); /*- static_cast<unsigned int>((255.f * MonsterAbilityStat.Def) * 0.8f);*/
+	if (GameEngineInput::GetInst()->IsPress("Debug6"))
+	{
+		Damage = 100000000; // 99,999,999
+	}
 
 	if (MonsterAbilityStat.HP < Damage)
 	{
@@ -102,12 +106,20 @@ unsigned int GamePlayMonster::SetHPFromHit(unsigned int _Damage, const std::vect
 
 	//}
 	unsigned int Damage = _Damage / static_cast<unsigned int>(MonsterAbilityStat.Def); /*- static_cast<unsigned int>((255.f * MonsterAbilityStat.Def) * 0.8f);*/
-	unsigned int AddDamage = _Damage;
+	if (GameEngineInput::GetInst()->IsPress("Debug6"))
+	{
+		Damage = 100000000; // 99,999,999
+	}
+
+	unsigned int AddDamage = Damage;
 
 	for (float Iter : _AddDamage)
 	{
-		AddDamage += static_cast<unsigned int>(static_cast<float>(_Damage) * Iter);
+		AddDamage += static_cast<unsigned int>(static_cast<float>(Damage) * Iter);
 	}
+
+
+
 
 
 	if (MonsterAbilityStat.HP < AddDamage)

@@ -105,6 +105,12 @@ public:
 		Magcial_Armor = Level * 7;
 	}
 
+	inline unsigned int GetLevel() const
+	{
+		return Level;
+	}
+
+
 	inline int GetHP() const
 	{
 		return HP;

@@ -427,6 +427,7 @@ void AvataManager::SetSuperArmor()
 }
 void AvataManager::SetSuperArmorUpdate(float _DeltaTime)
 {
+
 	if (AllAvatas[0]->GetOutLine()->GetPixelData().PlusColor.y <= 0 )
 	{
 		SuperArmorColorIndex = 1.f;
@@ -440,6 +441,7 @@ void AvataManager::SetSuperArmorUpdate(float _DeltaTime)
 
 	for (auto& Avata : AllAvatas)
 	{
+		Avata->GetOutLine()->On();
 		Avata->GetOutLine()->GetPixelData().PlusColor.y += Time;
 	}
 }

@@ -560,7 +560,7 @@ void GamePlayMonsterHPBar::SetHitDamage_InMember(unsigned int _CurrentHP)
 	unsigned int Damage = Monster_CurrentHP - _CurrentHP;
 	if (Damage >= 0)
 	{
-		if (!(Monster_BeforeHPLine - Monster_GoalHPLine > 200))
+		if (!(Monster_BeforeHPLine - Monster_GoalHPLine > 100))
 		{
 			Texture_HP1_White->GetPixelData().MulColor = { 1,1,1,1 };
 			Texture_HP2_White->GetPixelData().MulColor = { 1,1,1,1 };
