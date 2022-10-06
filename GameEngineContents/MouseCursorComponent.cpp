@@ -32,6 +32,8 @@ void MouseCursorComponent::Start()
 	Collision_UICam_MouseCursor = CreateComponent<GameEngineCollision>("Collision_UICam_MouseCursor");
 	Collision_UICam_MouseCursor->GetTransform().SetLocalScale({ 8, 8 });
 	Collision_UICam_MouseCursor->ChangeOrder(CollisionOrder::UI_UIMouse);
+
+	ShowCursor(false);
 }
 
 void MouseCursorComponent::Update(float _DeltaTime)

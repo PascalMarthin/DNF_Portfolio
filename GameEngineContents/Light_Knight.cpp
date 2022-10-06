@@ -551,7 +551,7 @@ void Light_Knight::FSM_Move_Walk_End(const StateInfo& _Info)
 
 void Light_Knight::LevelStartEvent()
 {
-
+	All_CollTime["Att_Slash"] = 5.f;
 }
 
 void Light_Knight::FSM_Att_Slash_Start(const StateInfo& _Info)

@@ -542,6 +542,7 @@ void Light_archer::Att_ShootFrame(const FrameAnimation_DESC& _DESC)
 	{
 	case 7:
 	{
+		
 		if (Collision_Arrow == nullptr)
 		{
 			Collision_Arrow = CreateComponent<GameEngineCollision>();

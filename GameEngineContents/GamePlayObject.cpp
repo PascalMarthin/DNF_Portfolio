@@ -95,6 +95,10 @@ void GamePlayObject::BeHit(GamePlaySkill* _Skill, GameEngineCollision* _HitColli
 
 	CharacterAbilityStat* Stat = GamePlayCharacter::GetInst()->GetStatManager()->GetAbilityStat();
 	_Damage *= (Stat->GetSTR());
+	if (GameEngineInput::GetInst()->IsPress("Debug6"))
+	{
+		_Damage = 999999900;
+	}
 
 
 	// Á¡¼ö
