@@ -214,10 +214,26 @@ public:
 	void FSM_Hit_Stand_End(const StateInfo& _Info);
 	
 	
+	void FSM_Move_Sit_Start(const StateInfo& _Info);
+	void FSM_Move_Sit_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Move_Sit_End(const StateInfo& _Info);
+
+	void FSM_Dead_Start(const StateInfo& _Info);
+	void FSM_Dead_Update(float _DeltaTime, const StateInfo& _Info);
+	void FSM_Dead_End(const StateInfo& _Info);
+
+	float DeadDelay;
+	float DeadFlashDelay;
+
+	GameEngineUIRenderer* Texture_Death;
+	GameEngineUIRenderer* Texture_DeathFont;
+	GameEngineTextureRenderer* Texture_DeathBackGronud;
 
 
-
+	GameEngineUIRenderer* Texture_Daed_Window;
 	
+	GameEngineFontRenderer* Texture_Dead_Font;
+	GameEngineFontRenderer* Texture_Dead_Coin;
 	//float Att_BaseAtt_Delay;
 
 	//void FSM_Att_BasePunch2_Start(const StateInfo& _Info);

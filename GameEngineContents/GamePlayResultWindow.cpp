@@ -153,6 +153,18 @@ void GamePlayResultWindow::Start()
 		Font->SetText(std::to_string(GamePlayComboSystem::GetInst()->map_ComboStuck[ComboClass::BeHit]), "±¼¸²");
 		//Font->SetText("0", "±¼¸²");
 
+		Font = CreateComponent<GameEngineUIFontRenderer>();
+		Font->SetRenderingOrder(10000);
+		Font->SetColor({ 1.f,  1,  1, 1.0 });
+		Font->SetPositionMode(FontPositionMode::WORLD);
+		Font->GetTransform().SetLocalPosition({ 70, -86 });
+		Font->SetSize(12.f);
+		Font->SetLeftAndRightSort(LeftAndRightSort::LEFT);
+		Font->SetTopAndBotSort(TopAndBotSort::VCENTER);
+		Font->SetText(std::to_string(GamePlayComboSystem::GetInst()->UsingCoin), "±¼¸²");
+
+
+		
 	}
 
 

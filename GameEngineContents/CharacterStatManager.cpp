@@ -218,6 +218,14 @@ void CharacterStatManager::Update(float _DeltaTime)
 
 	if (CurrentPlayerAbilityStat != nullptr)
 	{
+		if (CurrentPlayerAbilityStat->HP <= 0)
+		{
+			SetDead();
+			SetSuperarmorEnd();
+			SetDoSkillEnd();
+		}
+
+
 		if (GameEngineInput::GetInst()->IsPress("Debug1"))
 		{
 			CurrentPlayerAbilityStat->HP -= 1;
@@ -575,6 +583,11 @@ void CharacterStatManager::SetSuperarmorEnd()
 void CharacterStatManager::SetDead()
 {
 	PlayerCurrentState &= ~CharacterStat::Player_Character_ALive;
+}
+
+void CharacterStatManager::SetLive()
+{
+	PlayerCurrentState |= CharacterStat::Player_Character_ALive;
 }
 
 void CharacterStatManager::SetBuild()

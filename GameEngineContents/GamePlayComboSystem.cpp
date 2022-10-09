@@ -23,6 +23,7 @@ GamePlayComboSystem::GamePlayComboSystem()
 	, Actor_ComboSystemScore(nullptr)
 	, DoEffect(false)
 	, DoEffectDelay(0)
+	, UsingCoin(0)
 {
 }
 
@@ -594,6 +595,7 @@ void GamePlayComboSystem::LevelStartEvent()
 		ComboScore = Before->ComboScore;
 		map_ComboStuck = GamePlayComboSystem::Before->map_ComboStuck;
 		MaxComboStack = GamePlayComboSystem::Before->MaxComboStack;
+		UsingCoin = GamePlayComboSystem::Before->UsingCoin;
 	}
 	Queue_ComboClass = std::queue<ComboClass>();
 

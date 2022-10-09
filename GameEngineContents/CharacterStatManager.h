@@ -169,6 +169,7 @@ public:
 	void SetSuperarmor();
 	void SetSuperarmorEnd();
 	void SetDead();
+	void SetLive();
 	void SetBuild();
 	void SetBuildEnd();
 

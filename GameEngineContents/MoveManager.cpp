@@ -54,7 +54,7 @@ void MoveManager::Start()
 void MoveManager::Update(float _DeltaTime)
 {
 	const float4& A = ParentCharacter->GetTransform().GetLocalPosition();
-	if (ManagerStat != nullptr && ManagerStat->IsLive())
+	if (ManagerStat != nullptr)
 	{
 		if (!ManagerStat->IsHold() && !ManagerStat->IsDoSkill())
 		{

@@ -51,7 +51,10 @@ public:
 	void ComboTimeEnd();
 	void ComboShowEnd();
 
-
+	inline void PlusCoin()
+	{
+		UsingCoin++;
+	}
 protected:
 	void Start() override;
 
@@ -60,7 +63,7 @@ protected:
 	void LevelStartEvent() override;
 	void LevelEndEvent() override;
 private:
-
+	int UsingCoin;
 	unsigned __int64 ComboScore;
 	
 	ComboSystemScore* Actor_ComboSystemScore;

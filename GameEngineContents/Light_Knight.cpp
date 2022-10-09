@@ -236,7 +236,7 @@ void Light_Knight::Update(float _DeltaTime)
 
 		if (RandomIndex >= 0)
 		{
-			if (CanSkill[RandomIndex] != "None")
+			if (CanSkill[RandomIndex] != "None" && GamePlayCharacter::GetInst()->GetStatManager()->IsLive())
 			{
 				Manager_StatManager->GetFSMManager().ChangeState(CanSkill[RandomIndex]);
 			}

@@ -10,6 +10,8 @@
 #include "GamePlayNPCInteraction.h"
 #include "GamePlayObjectNPC.h"
 #include "GamePlayInteractionWindow.h"
+#include "GameEngineUIFontRenderer.h"
+#include "GamePlayComboSystem.h"
 
 void GamePlayCharacter::Create_Fighter_F_Default_FSManager()
 {
@@ -82,6 +84,17 @@ void GamePlayCharacter::Create_Fighter_F_Default_FSManager()
 		, std::bind(&GamePlayCharacter::FSM_Hit_Stand_Start, this, std::placeholders::_1)
 		, std::bind(&GamePlayCharacter::FSM_Hit_Stand_End, this, std::placeholders::_1));
 
+	Manager_StatManager->GetFSMManager().CreateStateMember
+	("Move_Sit", std::bind(&GamePlayCharacter::FSM_Move_Sit_Update, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&GamePlayCharacter::FSM_Move_Sit_Start, this, std::placeholders::_1)
+		, std::bind(&GamePlayCharacter::FSM_Move_Sit_End, this, std::placeholders::_1));
+
+	Manager_StatManager->GetFSMManager().CreateStateMember
+	("Dead", std::bind(&GamePlayCharacter::FSM_Dead_Update, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&GamePlayCharacter::FSM_Dead_Start, this, std::placeholders::_1)
+		, std::bind(&GamePlayCharacter::FSM_Dead_End, this, std::placeholders::_1));
+
+	
 
 	Skill_BaseHit = CreateComponent<Skill_Fighter_F_BaseHit>();
 	Skill_BaseDashAtt = CreateComponent<Skill_Fighter_F_DashHit>();
@@ -245,12 +258,9 @@ void GamePlayCharacter::FSM_Move_Dash_End(const StateInfo& _Info)
 void GamePlayCharacter::FSM_Move_Stand_Start(const StateInfo& _Info)
 {
 
-	//if (_Info.PrevState == "Hit_Down")
+	//if (_Info.PrevState == "Dead")
 	//{
 	//	Manager_StatManager->SetInvincibility();
-	//	Manager_AvataManager->ChangeAvataAnimation("Move_QuickStand");
-
-
 	//}
 
 
@@ -608,7 +618,7 @@ void GamePlayCharacter::FSM_Hit_Down_Update(float _DeltaTime, const StateInfo& _
 	if (DownWait <= 0.f)
 	{
 		Manager_StatManager->SetDownEnd();
-		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
+		Manager_StatManager->GetFSMManager().ChangeState("Move_Sit");
 	}
 }
 void GamePlayCharacter::FSM_Hit_Down_End(const StateInfo& _Info)
@@ -662,4 +672,142 @@ void GamePlayCharacter::FSM_Hit_Stand_Update(float _DeltaTime, const StateInfo& 
 void GamePlayCharacter::FSM_Hit_Stand_End(const StateInfo& _Info)
 {
 
+}
+
+
+
+void GamePlayCharacter::FSM_Move_Sit_Start(const StateInfo& _Info)
+{
+	Manager_AvataManager->ChangeAvataAnimation("Move_QuickStand");
+	Manager_StatManager->SetInvincibility();
+}
+void GamePlayCharacter::FSM_Move_Sit_Update(float _DeltaTime, const StateInfo& _Info)
+{
+	if (Manager_AvataManager->GetAvata_Skin()->IsEndFrame())
+	{
+		Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
+	}
+}
+void GamePlayCharacter::FSM_Move_Sit_End(const StateInfo& _Info)
+{
+	Manager_StatManager->SetInvincibilityEnd();
+}
+
+void GamePlayCharacter::FSM_Dead_Start(const StateInfo& _Info)
+{
+	DeadDelay = 0;
+	DeadFlashDelay = 0;
+	Manager_StatManager->SetInvincibility();
+	Manager_AvataManager->ChangeAvataAnimation("Hit_Down");
+
+	SetVoice("ft_die.ogg");
+	if (Texture_Daed_Window == nullptr)
+	{
+		GameEngineActor* Actor = GetLevel()->CreateActor<GameEngineActor>();
+
+		Texture_Daed_Window = CreateComponent<GameEngineUIRenderer>(); 
+		Texture_Daed_Window->SetTexture("Daed_Window.png");
+		Texture_Daed_Window->SetScaleRatio(1.2f);
+		Texture_Daed_Window->ScaleToTexture();
+		Texture_Daed_Window->Off();
+		Texture_Daed_Window->SetParent(Actor);
+		
+
+		Texture_Dead_Font = CreateComponent<GameEngineUIFontRenderer>();
+	//	Texture_Dead_Font->SetPositionMode(FontPositionMode::WORLD);
+	//	Texture_Dead_Font->GetTransform().SetLocalPosition({ GetLevel()->GetMainCameraActorTransform().GetWorldPosition().x, GetLevel()->GetMainCameraActorTransform().GetWorldPosition().y - 10, -10});
+		Texture_Dead_Font->SetRenderingOrder(0);
+		Texture_Dead_Font->SetColor(float4::WHITE);
+		Texture_Dead_Font->SetSize(12.f);
+		Texture_Dead_Font->SetLeftAndRightSort(LeftAndRightSort::CENTER);
+		Texture_Dead_Font->SetTopAndBotSort(TopAndBotSort::VCENTER);
+		Texture_Dead_Font->SetParent(Actor);
+		Texture_Dead_Font->SetScreenPostion({ GameEngineWindow::GetScale().hx(), GameEngineWindow::GetScale().hy() + 12});
+		Texture_Dead_Font->SetText("'x'키를 눌러 코인을 사용하세요", "굴림");
+		Texture_Dead_Font->Off();
+
+		Texture_Dead_Coin = CreateComponent<GameEngineUIFontRenderer>();
+		Texture_Dead_Coin->SetRenderingOrder(0);
+	//	Texture_Dead_Coin->SetPositionMode(FontPositionMode::WORLD);
+	//	Texture_Dead_Font->GetTransform().SetLocalPosition({ GetLevel()->GetMainCameraActorTransform().GetWorldPosition().x + 30, GetLevel()->GetMainCameraActorTransform().GetWorldPosition().y - 40, -10 });
+	//	Texture_Dead_Coin->GetTransform().SetLocalPosition({0, -100, -10});
+		Texture_Dead_Coin->SetColor(float4::WHITE);
+		Texture_Dead_Coin->SetSize(15.f);
+		Texture_Dead_Coin->SetLeftAndRightSort(LeftAndRightSort::CENTER);
+		Texture_Dead_Coin->SetTopAndBotSort(TopAndBotSort::VCENTER);
+		Texture_Dead_Coin->SetText(std::to_string(Manager_StatManager->GetAbilityStat()->Coin), "굴림");
+		Texture_Dead_Coin->SetScreenPostion({ GameEngineWindow::GetScale().hx() + 30, GameEngineWindow::GetScale().hy() + 40 });
+		Texture_Dead_Coin->SetParent(Actor);
+		Texture_Dead_Coin->Off();
+	}
+	Texture_Daed_Window->Off();
+}
+void GamePlayCharacter::FSM_Dead_Update(float _DeltaTime, const StateInfo& _Info)
+{	
+	if (DeadDelay < 1.f)
+	{
+		DeadDelay += _DeltaTime;
+		DeadFlashDelay += _DeltaTime;
+
+		if (DeadDelay > 1.f)
+		{
+			const std::vector<GameEnginePlusTextureRenderer*>& Avatas = Manager_AvataManager->GetAllAvatas();
+			for (auto& Avata : Avatas)
+			{
+				Avata->On();
+			}
+			Texture_Daed_Window->On();
+			Texture_Dead_Font->On();
+			Texture_Dead_Coin->On();
+		}
+		else if (DeadFlashDelay > 0.125f)
+		{
+			const std::vector<GameEnginePlusTextureRenderer*>& Avatas = Manager_AvataManager->GetAllAvatas();
+			for (auto& Avata : Avatas)
+			{
+				Avata->IsUpdateRef() = !(Avata->IsUpdateRef());
+			}
+			DeadFlashDelay = 0;
+		}
+
+	}
+	else
+	{
+		if (PlayerUserInterface->GetUI_KeyManager()->Input_BaseAttKey_DownAndPress())
+		{
+			GameEngineSound::SoundPlayOneShot("buff_icon.ogg");
+			GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
+
+
+			GamePlayComboSystem::GetInst()->PlusCoin();
+
+			Renderer->CreateFrameAnimationFolder("Blast1", FrameAnimation_DESC("Blast1", 0.125f, false));
+			Renderer->AnimationBindEnd("Blast1", [](const FrameAnimation_DESC& _DESC)
+				{
+					_DESC.Renderer->Death();
+				});
+			Renderer->ChangeFrameAnimation("Blast1");
+			Renderer->ScaleToTexture();
+			Renderer->GetTransform().SetLocalPosition({0, -100});
+			Renderer->SetPivot(PIVOTMODE::BOT);
+
+			Manager_StatManager->GetAbilityStat()->HP = Manager_StatManager->GetAbilityStat()->MAXHP;
+			Manager_StatManager->GetAbilityStat()->MP = Manager_StatManager->GetAbilityStat()->MAXMP;
+			Manager_StatManager->SetLive();
+			Manager_StatManager->GetAbilityStat()->Coin -= 1;
+			Manager_StatManager->GetFSMManager().ChangeState("Move_Stand");
+
+			return;
+		}
+	}
+
+
+}
+void GamePlayCharacter::FSM_Dead_End(const StateInfo& _Info)
+{
+	Texture_Daed_Window->Off();
+	Texture_Dead_Font->Off();
+	Texture_Dead_Coin->Off();
+	Manager_StatManager->SetInvincibilityEnd();
+	//Collision_Body->On();
 }

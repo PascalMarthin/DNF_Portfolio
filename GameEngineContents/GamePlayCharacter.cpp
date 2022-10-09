@@ -48,6 +48,9 @@ GamePlayCharacter::GamePlayCharacter()
 	, NPC_Interaction(nullptr)
 	, Collision_Body(nullptr)
 	, Class_EquipmentInventory(nullptr)
+	, DeadDelay(0)
+	, DeadFlashDelay(0)
+
 {
 }
 
@@ -121,6 +124,69 @@ void GamePlayCharacter::Start()
 void GamePlayCharacter::Update(float _Delta)
 {
 	CheckInventoryKey();
+	if (!Manager_StatManager->IsLive() && Manager_StatManager->GetFSMManager().GetCurStateStateName() != "Dead")
+	{
+		if (Texture_Death == nullptr)
+		{
+			GameEngineActor* Actor = GetLevel()->CreateActor<GameEngineActor>();
+			Texture_Death = CreateComponent<GameEngineUIRenderer>();
+			Texture_Death->SetTexture("HUD_Death.png");
+			Texture_Death->GetTransform().SetLocalPosition({ 0 ,-200 });
+			Texture_Death->ScaleToTexture();
+			Texture_Death->SetParent(Actor);
+
+
+			Texture_DeathFont = CreateComponent<GameEngineUIRenderer>();
+			Texture_DeathFont->SetTexture("HUD_DeathFont.png");
+			Texture_DeathFont->GetTransform().SetLocalPosition({ 0 ,-200 });
+			Texture_DeathFont->ScaleToTexture();
+			Texture_DeathFont->SetParent(Actor);
+
+
+			Texture_DeathBackGronud = CreateComponent<GameEngineTextureRenderer>();
+			//Texture_DeathBackGronud->SetTexture("HUD_Death.png");
+			Texture_DeathBackGronud->GetTransform().SetLocalScale({ 2000, 1000 });
+			Texture_DeathBackGronud->GetPixelData().MulColor = float4::ZERO;
+			Texture_DeathBackGronud->GetPixelData().PlusColor = float4::BLACK;
+			Texture_DeathBackGronud->GetPixelData().PlusColor.a = 0.35f;
+			Texture_DeathBackGronud->SetParent(Actor);
+
+
+		}
+
+		Texture_DeathBackGronud->GetTransform().SetLocalPosition({ GetTransform().GetWorldPosition().x, GetTransform().GetWorldPosition().y, -5000 });
+		Texture_Death->On();
+		Texture_DeathFont->On();
+		Texture_DeathBackGronud->On();
+
+		if (Manager_StatManager->IsAerial())
+		{
+			return;
+		}
+		else if (Manager_StatManager->IsDown())
+		{
+			Manager_StatManager->GetFSMManager().ChangeState("Dead");
+		}
+		else
+		{
+			Manager_StatManager->SetHit_BlowUp();
+			Manager_MoveManager->SetAerial();
+			Manager_MoveManager->SetHit({ 20.f * (GetTransform().GetWorldScale().x > 0 ? -1.f : 1.f), 100, 0 });
+			
+		}
+	}
+	else if(Manager_StatManager->IsLive())
+	{
+
+		if (Texture_Death != nullptr)
+		{
+			Texture_Death->Off();
+			Texture_DeathFont->Off();
+			Texture_DeathBackGronud->Off();
+		}
+
+	}
+
 
 	if (Manager_StatManager->GetFSMManager().GetCurStateStateName() != "Interaction")
 	{
@@ -308,6 +374,8 @@ void GamePlayCharacter::SetPlayerCharacter()
 
 
 
+
+
 void GamePlayCharacter::SetFSManager()
 {
 	if (PlayerFormerClass == CurrentCharacterData->GetFormerClass())
@@ -399,3 +467,4 @@ unsigned int GamePlayCharacter::SetHPFromHit(unsigned int _Damage)
 
 	return _Damage;
 }
+
