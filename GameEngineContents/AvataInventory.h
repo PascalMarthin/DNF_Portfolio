@@ -23,6 +23,9 @@ public:
 	{
 		return Inst;
 	}
+
+	void SetClone();
+
 protected:
 	void Start() override;
 	//void Update(float _DeltaTime) override;
@@ -43,6 +46,8 @@ private:
 	}
 
 	static AvataInventory* Inst;
+
+	std::vector<GameEngineUIRenderer*> Avata_Clone;
 
 };
 

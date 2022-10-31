@@ -778,11 +778,11 @@ CollisionReturn Bale::GetPlayer(GameEngineCollision* _This, GameEngineCollision*
 {
 	PlayerHit = true;
 	Hit_Player = _Other->GetActor<GamePlayObject>();
-	if (Hit_Player->GetStatManager()->IsInvincibility())
-	{
-		return CollisionReturn::ContinueCheck;
-	}
-	else
+	//if (Hit_Player->GetStatManager()->IsInvincibility())
+	//{
+	//	return CollisionReturn::ContinueCheck;
+	//}
+	//else
 	{
 		return CollisionReturn::Break;
 
@@ -2041,27 +2041,33 @@ void Bale::Bale_TrackUpdate(const FrameAnimation_DESC& _DESC, float _Time)
 	if (Collision_HitBody_Mid->IsCollision(CollisionType::CT_AABB, CollisionOrder::Player, CollisionType::CT_AABB,
 		std::bind(&Bale::GetPlayer, this, std::placeholders::_1, std::placeholders::_2)))
 	{
-
-		Texture_Monster->ChangeFrameAnimation("Bale_TrackCatch");
-		Texture_Monster->CurAnimationPauseOff();
-		int Dir = Collision_StampingHit->GetTransform().GetWorldPosition().x - Hit_Player->GetTransform().GetWorldPosition().x > 0 ? -1 : 1;
-		Hit_Player->BeHit({ 0, 0, 0, 2000}, HitPostureType::Hold, nullptr, nullptr, Dir, 500);
-
-		const float4& Pos = GetTransform().GetWorldPosition();
-		if (GetTransform().GetLocalScale().x >= 0)
+		if (Hit_Player->GetStatManager()->IsInvincibility())
 		{
-			Hit_Player->GetTransform().SetWorldPosition({ Pos.x + 50, Pos.y + 100, Pos.z });
-			Hit_Player->GetTransform().PixLocalNegativeX();
+			PlayerHit = false;
 		}
 		else
 		{
-			Hit_Player->GetTransform().SetWorldPosition({ Pos.x - 50, Pos.y + 100, Pos.z });
-			Hit_Player->GetTransform().PixLocalPositiveX();
+			Texture_Monster->ChangeFrameAnimation("Bale_TrackCatch");
+			Texture_Monster->CurAnimationPauseOff();
+			int Dir = Collision_StampingHit->GetTransform().GetWorldPosition().x - Hit_Player->GetTransform().GetWorldPosition().x > 0 ? -1 : 1;
+			Hit_Player->BeHit({ 0, 0, 0, 2000 }, HitPostureType::Hold, nullptr, nullptr, Dir, 500);
+
+			const float4& Pos = GetTransform().GetWorldPosition();
+			if (GetTransform().GetLocalScale().x >= 0)
+			{
+				Hit_Player->GetTransform().SetWorldPosition({ Pos.x + 50, Pos.y + 100, Pos.z });
+				Hit_Player->GetTransform().PixLocalNegativeX();
+			}
+			else
+			{
+				Hit_Player->GetTransform().SetWorldPosition({ Pos.x - 50, Pos.y + 100, Pos.z });
+				Hit_Player->GetTransform().PixLocalPositiveX();
+			}
+			Hit_Player->GetStatManager()->SetAerial();
+			dynamic_cast<GamePlayCharacter*>(Hit_Player)->SetCamHoldOn();
+			Texture_BlackBack->GetPixelData().PlusColor.a = 0;
+			return;
 		}
-		Hit_Player->GetStatManager()->SetAerial();
-		dynamic_cast<GamePlayCharacter*>(Hit_Player)->SetCamHoldOn();
-		Texture_BlackBack->GetPixelData().PlusColor.a = 0;
-		return;
 	}
 	float4 Dir = Collision_PlayerLessPos->GetTransform().GetWorldPosition() - GetTransform().GetWorldPosition();
 

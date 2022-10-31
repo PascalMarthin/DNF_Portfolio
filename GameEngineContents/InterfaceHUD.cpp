@@ -233,7 +233,7 @@ void InterfaceHUD::HPUpdate(float _Time)
 	int MAXHP = CharacterStatManager::GetInst()->GetAbilityStat()->GetMAXHP();
 	if (CurrentHP < HP) // 체력 회복
 	{
-		CurrentHP += MAXHP / 500;
+		CurrentHP += MAXHP / 250;
 		CurrentBeHindHP = CurrentHP;
 		CurrentHitHP = CurrentHP;
 		if (CurrentHP > HP)
@@ -264,7 +264,7 @@ void InterfaceHUD::HPUpdate(float _Time)
 		}
 		else
 		{
-			CurrentBeHindHP -= MAXHP / 1000;
+			CurrentBeHindHP -= MAXHP / 500;
 		}
 	}
 
@@ -281,7 +281,7 @@ void InterfaceHUD::MPUpdate(float _Time)
 	int MAXMP = CharacterStatManager::GetInst()->GetAbilityStat()->GetMAXMP();
 	if (CurrentMP < MP) // 체력 회복
 	{
-		CurrentMP += MAXMP / 500;
+		CurrentMP += MAXMP / 250;
 		CurrentBeHindMP = CurrentMP;
 		CurrentHitMP = CurrentMP;
 		if (CurrentMP > MP)
@@ -312,7 +312,7 @@ void InterfaceHUD::MPUpdate(float _Time)
 		}
 		else
 		{
-			CurrentBeHindMP -= MAXMP / 1000;
+			CurrentBeHindMP -= MAXMP / 500;
 		}
 	}
 

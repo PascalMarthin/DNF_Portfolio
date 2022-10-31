@@ -39,7 +39,7 @@ void TitleCreateCharacterThumbnail::Update(float _DeltaTime)
 	if (Collision_Thumbnails->IsCollision(CollisionType::CT_AABB2D, CollisionOrder::UI_MainMouse, CollisionType::CT_AABB2D,
 		[](GameEngineCollision* _This, GameEngineCollision* _Other)
 		{
-			if (_Other->GetNameConstRef() == "Collision_MouseCursor")
+			if (_Other->GetNameConstRef() == "Collision_MainCam_MouseCursor")
 			{
 				return CollisionReturn::Break;
 			}

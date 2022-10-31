@@ -171,7 +171,45 @@ void AvataInventory::Mouse_RClick(GamePlayItem* _Item)
 
 void AvataInventory::OnEvent()
 {
-	
+	SetClone();
+}
+
+void AvataInventory::SetClone()
+{
+
+	std::vector<GameEnginePlusTextureRenderer*>& AllRenderer = AvataManager::GetInst()->GetAllAvatas();
+	Avata_Clone.resize(AllRenderer.size());
+	float ZSort = -20.f;
+	for (auto& Iter : Avata_Clone)
+	{
+		if (Iter != nullptr)
+		{
+			Iter->Death();
+			Iter = nullptr;
+		}
+	}
+
+	for (size_t i = 0; i < AllRenderer.size(); i++)
+	{
+
+		if (Avata_Clone[i] == nullptr)
+		{
+			Avata_Clone[i] = CreateComponent<GameEngineUIRenderer>();
+			Avata_Clone[i]->GetTransform().SetLocalPosition({ -60, 200, ZSort });
+			ZSort += 0.01f;
+		}
+
+		if (AllRenderer[i]->GetFolderTexture() == nullptr)
+		{
+			Avata_Clone[i]->Off();
+			continue;
+		}
+
+		Avata_Clone[i]->SetTexture(AllRenderer[i]->GetFolderTexture()->GetTexture(113));
+		Avata_Clone[i]->ScaleToTexture();
+		Avata_Clone[i]->On();
+	}
+
 }
 
 

@@ -81,6 +81,9 @@ void GamePlayInventory::Update(float _DeltaTime)
 			if (Item_DragData != nullptr)
 			{
 				Item_DragData->SetUITextureTransform(Component_MouseCursorComponent->GetUIMouseTexture());
+				Item_DragData->Texture_Item->GetTransform().SetLocalMove({-15.f, 15.f });
+				Item_DragData->Collision_Item->GetTransform().SetLocalMove({ -15.f, 15.f });
+
 			}
 			int a = 0;
 		}

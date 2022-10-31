@@ -61,7 +61,7 @@ bool Skill_Fighter_F_KaiKen::ActiveSkill(CharacterStatManager* _Stat, MoveManage
 
 		_Avata->CreateEctAvata(AllSkillEnum::Fighter_F_KaiKen, "Keiken_Buff", { 0.9f, 0.25f, 0.25f, 0.8f });
 		GetActor<GamePlayCharacter>()->GetSkillManager()->InsertBuff(AllSkillEnum::Fighter_F_KaiKen, 120.f);
-		GetActor<GamePlayCharacter>()->GetSkillManager()->InsertBuffStat(AllSkillEnum::Fighter_F_KaiKen, StatClass::STR, (static_cast<__int64>(500) * GetSkillLevel()));
+		GetActor<GamePlayCharacter>()->GetSkillManager()->InsertBuffStat(AllSkillEnum::Fighter_F_KaiKen, StatClass::STR, (static_cast<__int64>(2000) * GetSkillLevel()));
 
 		Texture_Casting->On();
 		Texture_Casting->ChangeFrameAnimation("Casting", true);

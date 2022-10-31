@@ -7,6 +7,9 @@
 #include "GameEnginePlusTextureRenderer.h"
 #include "GamePlayCharacter.h"
 
+
+StatWindow* StatWindow::Inst = nullptr;
+
 StatWindow::StatWindow() 
 	: Texture_Profile(nullptr)
 {
@@ -221,6 +224,15 @@ void StatWindow::SetClone()
 	std::vector<GameEnginePlusTextureRenderer*>& AllRenderer = AvataManager::GetInst()->GetAllAvatas();
 	Avata_Clone.resize(AllRenderer.size());
 	float ZSort = -20.f;
+	for (auto& Iter : Avata_Clone)
+	{
+		if (Iter != nullptr)
+		{
+			Iter->Death();
+			Iter = nullptr;
+		}
+	}
+
 	for (size_t i = 0 ; i < AllRenderer.size(); i++)
 	{
 		
@@ -331,8 +343,11 @@ void StatWindow::OffEvent()
 void StatWindow::LevelStartEvent()
 {
 	OnEvent();
+	Inst = this;
+
 }
 void StatWindow::LevelEndEvent()
 {
 	Off();
+	Inst = nullptr;
 }

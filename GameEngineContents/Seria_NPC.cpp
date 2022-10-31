@@ -48,18 +48,18 @@ void Seria_NPC::Start()
 
 
 		map_SellItemList[GamePlayItemCode::Tropica_Coat] = 50000;
-		map_SellItemList[GamePlayItemCode::Tropica_Belt] = 50000;
-		map_SellItemList[GamePlayItemCode::Tropica_Pants] = 50000;
-		map_SellItemList[GamePlayItemCode::Tropica_Neck] = 50000;
-		map_SellItemList[GamePlayItemCode::Tropica_Shoes] = 50000;
+		map_SellItemList[GamePlayItemCode::Tropica_Belt] = 52500;
+		map_SellItemList[GamePlayItemCode::Tropica_Pants] = 20000;
+		map_SellItemList[GamePlayItemCode::Tropica_Neck] = 40000;
+		map_SellItemList[GamePlayItemCode::Tropica_Shoes] = 12500;
 		EnumNPC = NPCEnum::Seria;
 		//std::map<InteractOption, std::vector<std::string>> map_InteractionTalk;
 		vector_Option.push_back(InteractOption::Deal);
 		vector_Option.push_back(InteractOption::Talking);
 		Name = "세리아 키르민";
 
-		map_InteractionTalk[InteractOption::Talking].push_back("테스트 1231232 32123 1233123     3213   213213 3213213");
-		map_InteractionTalk[InteractOption::Talking].push_back("가나다라 마바사 아자차카마바사하 1234567890 abcdefghijklmnopqrstuvwxyz");
+		map_InteractionTalk[InteractOption::Talking].push_back("안녕하세요. 세리아 키르민이라고 해요. 곁에서 도와 드리기 위해 여기 있어요.");
+		map_InteractionTalk[InteractOption::Talking].push_back("제가 도울 수 있는 일이라면 언제든지 말씀해주세요");
 
 		TexureR_Face = GameEngineTexture::Find("NPC_Dialog_Face_Seria.png");
 

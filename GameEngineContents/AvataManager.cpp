@@ -6,6 +6,7 @@
 #include "GamePlayItem_DESC.h"
 #include "GameSkillBuff.h"
 #include "Item_Avata.h"
+#include "AvataInventory.h"
 
 std::map<GamePlayItem_DESC*, std::map<char, GameEngineTexture*>> AvataManager::Static_AllAvataItemData;
 AvataManager* AvataManager::CurrentInst = nullptr;
@@ -470,6 +471,12 @@ void AvataManager::ReadCharacterDataBase(GamePlayDataBase* _Data)
 			}
 		}
 
+		if (StatWindow::GetInst() != nullptr)
+		{
+			StatWindow::GetInst()->SetClone();
+			AvataInventory::GetInst()->SetClone();
+		}
+
 	}
 
 }
@@ -870,6 +877,8 @@ void AvataManager::ReadAvataCodeandApply(GamePlayItemCode _Code)
 	default:
 		break;
 	}
+
+
 
 
 }

@@ -788,6 +788,9 @@ void DNF::BaseKeySetting()
 		GameEngineInput::GetInst()->CreateKey("Skill", 'K');
 		GameEngineInput::GetInst()->CreateKey("MyProfile", 'M');
 		GameEngineInput::GetInst()->CreateKey("Enter", VK_RETURN);
+		GameEngineInput::GetInst()->CreateKey("Equipment_Inventory", 'P');
+
+		
 
 		
 	}

@@ -17,6 +17,10 @@ public:
 	StatWindow& operator=(const StatWindow& _Other) = delete;
 	StatWindow& operator=(StatWindow&& _Other) noexcept = delete;
 
+	inline static StatWindow* GetInst()
+	{
+		return Inst;
+	}
 
 	void RefreshStat();
 	void SetClone();
@@ -38,5 +42,6 @@ private:
 	GameEngineUIRenderer* Texture_Profile;
 	std::map<StatClass ,GameEngineFontRenderer*> Font_Renderer;
 	
+	static StatWindow* Inst;
 };
 

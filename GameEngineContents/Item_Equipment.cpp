@@ -39,11 +39,11 @@ void Item_Equipment::SetStatClass(GamePlayItemCode _Code)
 		map_Stat[StatClass::Physical_Armor] = 100000;
 		break;
 	case GamePlayItemCode::Tropica_Pants:
-		map_Stat[StatClass::STR] = 5000;
+		map_Stat[StatClass::STR] = 1200;
 		AddDamage = 0.03f;
 		break;
 	case GamePlayItemCode::Tropica_Neck:
-		map_Stat[StatClass::Physical_Damage] = 5000;
+		map_Stat[StatClass::Physical_Damage] = 1200;
 		AddDamage = 0.04f;
 		break;
 	case GamePlayItemCode::Tropica_Shoes:

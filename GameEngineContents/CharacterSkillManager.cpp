@@ -143,7 +143,7 @@ void CharacterSkillManager::LevelStartEvent()
 	map_SkillSlot['G'] = List_AllSkill[AllSkillEnum::Fighter_HamKick];
 	map_SkillSlot['H'] = List_AllSkill[AllSkillEnum::Fighter_Bungwon];
 
-	map_SkillSlot['U'] = List_AllSkill[AllSkillEnum::Fighter_F_CrashLowKick];
+	map_SkillSlot['U'] = nullptr;
 	map_SkillSlot['V'] = List_AllSkill[AllSkillEnum::Fighter_F_CrashLowKick];
 	map_SkillSlot['Z'] = List_AllSkill[AllSkillEnum::Fighter_F_ShoulderDash];
 

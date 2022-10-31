@@ -38,7 +38,7 @@ void GamePlayItem::SetDESC(GamePlayItem_DESC* _DESC)
 
 void GamePlayItem::SetUITextureTransform(GameEngineTransformBase* _TextureParent)
 {
-	Texture_Item->GetTransform().SetLocalPosition(_TextureParent->GetTransform().GetLocalPosition());
+	Texture_Item->GetTransform().SetLocalPosition({ _TextureParent->GetTransform().GetLocalPosition().x , _TextureParent->GetTransform().GetLocalPosition().y , _TextureParent->GetTransform().GetLocalPosition().z + 1.f });
 	Texture_Item->ScaleToTexture();
 	Collision_Item->GetTransform().SetLocalPosition(_TextureParent->GetTransform().GetLocalPosition());
 	Collision_Item->GetTransform().SetLocalScale(_TextureParent->GetTransform().GetLocalScale());

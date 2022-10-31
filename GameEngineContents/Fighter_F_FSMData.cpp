@@ -651,6 +651,12 @@ void GamePlayCharacter::FSM_Hit_Stand_Start(const StateInfo& _Info)
 		}
 	}
 
+	if (_Info.PrevState == "Move_Jump")
+	{
+		Manager_StatManager->SetJumpEnd();
+		Manager_StatManager->SetAerial();
+		Manager_StatManager->GetFSMManager().ChangeState("Hit_Aerial");
+	}
 
 	if (_Info.PrevState == "Hit_Stand" && GameEngineRandom::MainRandom.RandomInt(0, 1) == 1)
 	{
@@ -660,6 +666,7 @@ void GamePlayCharacter::FSM_Hit_Stand_Start(const StateInfo& _Info)
 	{
 		Manager_AvataManager->ChangeAvataAnimation("Hit_Stand2");
 	}
+
 
 }
 void GamePlayCharacter::FSM_Hit_Stand_Update(float _DeltaTime, const StateInfo& _Info)

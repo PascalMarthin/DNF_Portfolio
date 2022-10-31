@@ -573,6 +573,7 @@ void Skill_Fighter_F_Rising::StartSkill(CharacterStatManager* _Stat, MoveManager
 	AttDealy = 0;
 	HitCount = 0;
 
+	GetActor<GamePlayCharacter>()->SetCamHoldOn();
 
 
 }
@@ -580,5 +581,6 @@ void Skill_Fighter_F_Rising::StartSkill(CharacterStatManager* _Stat, MoveManager
 void Skill_Fighter_F_Rising::EndSkill(CharacterStatManager* _Stat, MoveManager* _Move, AvataManager* _Avata)
 {
 	_Stat->SetSuperarmorEnd();
+	GetActor<GamePlayCharacter>()->SetCamHoldOff();
 }
 

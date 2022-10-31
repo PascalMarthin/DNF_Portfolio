@@ -178,7 +178,7 @@ void GamePlayCharacter::Update(float _Delta)
 	else if(Manager_StatManager->IsLive())
 	{
 
-		if (Texture_Death != nullptr)
+		if (Texture_Death != nullptr && Texture_Death->IsUpdate() == true)
 		{
 			Texture_Death->Off();
 			Texture_DeathFont->Off();
@@ -257,6 +257,21 @@ void GamePlayCharacter::CheckInventoryKey()
 			Class_ItemInventory->On();
 		}
 	}
+	if (GameEngineInput::GetInst()->IsDown("Equipment_Inventory"))
+	{
+		if (Class_EquipmentInventory->IsUpdate())
+		{
+			Class_EquipmentInventory->Off();
+		}
+		else
+		{
+			Class_EquipmentInventory->On();
+			Class_AvataInventory->Off();
+			Class_ItemInventory->Off();
+		}
+	}
+
+	
 
 	if (GameEngineInput::GetInst()->IsDown("Avata"))
 	{

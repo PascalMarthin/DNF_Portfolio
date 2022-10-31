@@ -41,8 +41,8 @@ void CharacterCreateLevel::Start()
 
 
 	// Debug
-	CharacterCreateLevel::Enum_CurrentClass = AllCharacterClass::Fighter_F;
-	CharacterCreateLevel::CreateCharacter();
+	//CharacterCreateLevel::Enum_CurrentClass = AllCharacterClass::Fighter_F;
+	//CharacterCreateLevel::CreateCharacter();
 	// Debug
 
 	

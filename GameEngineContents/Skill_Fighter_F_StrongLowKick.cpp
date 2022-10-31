@@ -570,7 +570,7 @@ bool Skill_Fighter_F_StrongLowKick::ActiveSkill(CharacterStatManager* _Stat, Mov
 
 		if (Map != nullptr)
 		{
-			float4 Pos = { GetTransform().GetWorldPosition().x + (50 * (GetTransform().GetWorldScale().x > 0 ? 1.f : -1.f)), GetTransform().GetWorldPosition().y - 30, GetTransform().GetWorldPosition().y - 30 };
+			float4 Pos = { GetTransform().GetWorldPosition().x + (50 * (GetTransform().GetWorldScale().x > 0 ? 1.f : -1.f)), GetTransform().GetWorldPosition().y - 10, GetTransform().GetWorldPosition().y - 10 };
 			for (auto& Iter : Map->GetAllMonster())
 			{
 				float4 Dir = Pos - Iter->GetTransform().GetWorldPosition();

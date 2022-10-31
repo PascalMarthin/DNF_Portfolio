@@ -58,7 +58,7 @@ class CharacterAbilityStat
 	friend class StatWindow;
 public:
 	CharacterAbilityStat()
-		: Level(1)
+		: Level(5)
 		, MaxEXP(1000)
 		, EXP(0)
 		, MoveSpeed(2.0f)
@@ -67,7 +67,7 @@ public:
 		, MAXHP(1000)
 		, MAXMP(1000)
 		, HP(1000)
-		, MP(1000)
+		, MP(300)
 		, Physical_Armor(10)
 		, Magcial_Armor(10)
 		, STR(10)
@@ -86,14 +86,20 @@ public:
 		, JumpPower(600.f)
 		, Coin(100)
 	{
-
+		HP = MAXHP;
+		MP = MAXMP;
 	}
 
 	inline void SetRefreshbyLevel()
 	{
 		MaxEXP = static_cast<unsigned long long>(Level) * 1000;
-		MAXHP = Level * 1520;
+		
+
+		MAXHP = Level * 820;
 		MAXMP = Level * 300;
+
+
+
 		STR = Level * 31;
 		INT = Level * 31;
 		Health = Level * 30;
